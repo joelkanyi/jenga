@@ -77,6 +77,8 @@ roborazzi {
     generateComposePreviewRobolectricTests {
         enable = true
         packages = listOf("io.github.joelkanyi.jenga")
+        // Cross-OS-tolerant screenshot comparison (macOS dev vs Linux CI).
+        testerQualifiedClassName = "io.github.joelkanyi.jenga.JengaPreviewTester"
     }
 }
 
