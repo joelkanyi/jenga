@@ -19,7 +19,10 @@ import io.github.joelkanyi.jenga.component.banner.JengaBanner
 import io.github.joelkanyi.jenga.component.banner.JengaBannerTone
 import io.github.joelkanyi.jenga.component.card.JengaCard
 import io.github.joelkanyi.jenga.component.chip.JengaChip
+import io.github.joelkanyi.jenga.component.button.JengaIconButton
+import io.github.joelkanyi.jenga.component.button.JengaIconButtonVariant
 import io.github.joelkanyi.jenga.component.fab.JengaFab
+import io.github.joelkanyi.jenga.component.refresh.JengaPullToRefresh
 import io.github.joelkanyi.jenga.component.menu.JengaDropdownMenu
 import io.github.joelkanyi.jenga.component.menu.JengaDropdownMenuItem
 import io.github.joelkanyi.jenga.component.tooltip.JengaTooltip
@@ -74,6 +77,20 @@ internal fun JengaTextSample() {
 @Composable
 internal fun JengaButtonSample() {
     JengaButton(text = "Check in", onClick = { }, variant = JengaButtonVariant.Primary)
+}
+
+@Composable
+internal fun JengaIconButtonSample() {
+    JengaIconButton(onClick = { }, variant = JengaIconButtonVariant.Standard) {
+        JengaIcon(JengaIcons.Search, contentDescription = "Search")
+    }
+}
+
+@Composable
+internal fun JengaPullToRefreshSample() {
+    JengaPullToRefresh(isRefreshing = false, onRefresh = { }) {
+        JengaText("Pull down to refresh")
+    }
 }
 
 @Composable
