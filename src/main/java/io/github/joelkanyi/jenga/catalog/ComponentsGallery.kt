@@ -24,6 +24,8 @@ import io.github.joelkanyi.jenga.component.banner.JengaBanner
 import io.github.joelkanyi.jenga.component.banner.JengaBannerTone
 import io.github.joelkanyi.jenga.component.button.JengaButton
 import io.github.joelkanyi.jenga.component.button.JengaButtonVariant
+import io.github.joelkanyi.jenga.component.button.JengaIconButton
+import io.github.joelkanyi.jenga.component.button.JengaIconButtonVariant
 import io.github.joelkanyi.jenga.component.card.JengaCard
 import io.github.joelkanyi.jenga.component.card.JengaCardVariant
 import io.github.joelkanyi.jenga.component.chip.JengaChip
@@ -46,6 +48,8 @@ import io.github.joelkanyi.jenga.component.menu.JengaDropdownMenu
 import io.github.joelkanyi.jenga.component.menu.JengaDropdownMenuItem
 import io.github.joelkanyi.jenga.component.navigation.JengaNavigationBar
 import io.github.joelkanyi.jenga.component.navigation.JengaNavigationBarItem
+import io.github.joelkanyi.jenga.component.progress.JengaCircularProgress
+import io.github.joelkanyi.jenga.component.progress.JengaCircularProgressIndeterminate
 import io.github.joelkanyi.jenga.component.progress.JengaLinearProgress
 import io.github.joelkanyi.jenga.component.progress.JengaLinearProgressIndeterminate
 import io.github.joelkanyi.jenga.component.progress.jengaShimmer
@@ -98,6 +102,15 @@ fun ComponentsGallery() {
             }
             JengaInline {
                 JengaFab(onClick = {}) { JengaIcon(JengaIcons.Add, contentDescription = "Add") }
+                JengaIconButton(onClick = {}, variant = JengaIconButtonVariant.Standard) {
+                    JengaIcon(JengaIcons.Search, contentDescription = "Search")
+                }
+                JengaIconButton(onClick = {}, variant = JengaIconButtonVariant.Filled) {
+                    JengaIcon(JengaIcons.Add, contentDescription = "Add")
+                }
+                JengaIconButton(onClick = {}, variant = JengaIconButtonVariant.Tonal) {
+                    JengaIcon(JengaIcons.Info, contentDescription = "Info")
+                }
             }
         }
 
@@ -181,6 +194,10 @@ fun ComponentsGallery() {
             }
             JengaLinearProgress(progress = 0.6f)
             JengaLinearProgressIndeterminate()
+            JengaInline {
+                JengaCircularProgress(progress = 0.7f)
+                JengaCircularProgressIndeterminate()
+            }
             JengaSlider(value = slider, onValueChange = { slider = it })
             Box(Modifier.size(width = 160.dp, height = 16.dp).clip(JengaTheme.shapes.sm).jengaShimmer())
             JengaWrap {
