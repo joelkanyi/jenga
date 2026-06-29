@@ -56,6 +56,7 @@ roborazzi {
     generateComposePreviewRobolectricTests {
         enable = true
         packages = listOf("io.github.joelkanyi.jenga.catalog")
+        testerQualifiedClassName = "io.github.joelkanyi.jenga.catalog.CatalogPreviewTester"
     }
 }
 
