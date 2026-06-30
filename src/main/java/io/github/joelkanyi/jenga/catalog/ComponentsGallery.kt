@@ -1,7 +1,10 @@
 package io.github.joelkanyi.jenga.catalog
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -53,6 +56,10 @@ import io.github.joelkanyi.jenga.component.progress.JengaCircularProgressIndeter
 import io.github.joelkanyi.jenga.component.progress.JengaLinearProgress
 import io.github.joelkanyi.jenga.component.progress.JengaLinearProgressIndeterminate
 import io.github.joelkanyi.jenga.component.progress.jengaShimmer
+import io.github.joelkanyi.jenga.component.scaffold.JengaBottomBar
+import io.github.joelkanyi.jenga.component.scanner.JengaScanFeedback
+import io.github.joelkanyi.jenga.component.scanner.JengaScannerStatus
+import io.github.joelkanyi.jenga.component.scanner.JengaScannerViewfinder
 import io.github.joelkanyi.jenga.component.search.JengaSearchField
 import io.github.joelkanyi.jenga.component.selection.JengaCheckbox
 import io.github.joelkanyi.jenga.component.selection.JengaRadioButton
@@ -110,6 +117,11 @@ fun ComponentsGallery() {
                 }
                 JengaIconButton(onClick = {}, variant = JengaIconButtonVariant.Tonal) {
                     JengaIcon(JengaIcons.Info, contentDescription = "Info")
+                }
+                Box(Modifier.background(androidx.compose.ui.graphics.Color.Black)) {
+                    JengaIconButton(onClick = {}, variant = JengaIconButtonVariant.Overlay) {
+                        JengaIcon(JengaIcons.Flash, contentDescription = "Torch")
+                    }
                 }
             }
         }
@@ -178,6 +190,15 @@ fun ComponentsGallery() {
                 JengaNavigationBarItem(false, {}, { JengaIcon(JengaIcons.Check, contentDescription = null) }, label = "Scan")
                 JengaNavigationBarItem(false, {}, { JengaIcon(JengaIcons.Info, contentDescription = null) }, label = "Stats")
             }
+            JengaBottomBar {
+                JengaIconButton(onClick = {}, variant = JengaIconButtonVariant.Standard) {
+                    JengaIcon(JengaIcons.Search, contentDescription = "Search")
+                }
+                JengaButton("Manual entry", {}, modifier = Modifier.weight(1f))
+                JengaIconButton(onClick = {}, variant = JengaIconButtonVariant.Standard) {
+                    JengaIcon(JengaIcons.History, contentDescription = "History")
+                }
+            }
         }
 
         Group("Data display") {
@@ -231,6 +252,27 @@ fun ComponentsGallery() {
             JengaTicketRow("Joel Kanyi", "VIP · TKT-2026-001", "Valid", JengaBadgeTone.Success)
             JengaTicketRow("Ada Lovelace", "Regular · TKT-2026-114", "Used", JengaBadgeTone.Neutral)
         }
+
+        Group("Scanner") {
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(220.dp)
+                    .clip(JengaTheme.shapes.lg)
+                    .background(androidx.compose.ui.graphics.Color.Black),
+            ) {
+                JengaScannerViewfinder(status = JengaScannerStatus.Scanning)
+            }
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(220.dp)
+                    .clip(JengaTheme.shapes.lg)
+                    .background(androidx.compose.ui.graphics.Color.Black),
+            ) {
+                JengaScanFeedback(status = JengaScannerStatus.Success)
+            }
+        }
     }
 
     if (showDialog) {
@@ -257,7 +299,7 @@ private fun Group(title: String, content: @Composable () -> Unit) {
     JengaSection(title = title) { content() }
 }
 
-@Preview(name = "Components — Light", showBackground = true, heightDp = 3400)
+@Preview(name = "Components — Light", showBackground = true, heightDp = 4100)
 @Composable
 internal fun ComponentsGalleryLightPreview() {
     JengaTheme(darkTheme = false) {
@@ -268,7 +310,7 @@ internal fun ComponentsGalleryLightPreview() {
     }
 }
 
-@Preview(name = "Components — Dark", showBackground = true, heightDp = 3400)
+@Preview(name = "Components — Dark", showBackground = true, heightDp = 4100)
 @Composable
 internal fun ComponentsGalleryDarkPreview() {
     JengaTheme(darkTheme = true) {
