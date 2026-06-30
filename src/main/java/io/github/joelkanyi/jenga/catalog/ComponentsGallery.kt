@@ -61,6 +61,7 @@ import io.github.joelkanyi.jenga.component.scanner.JengaScanFeedback
 import io.github.joelkanyi.jenga.component.scanner.JengaScannerStatus
 import io.github.joelkanyi.jenga.component.scanner.JengaScannerViewfinder
 import io.github.joelkanyi.jenga.component.search.JengaSearchField
+import io.github.joelkanyi.jenga.component.status.JengaStatusPill
 import io.github.joelkanyi.jenga.component.selection.JengaCheckbox
 import io.github.joelkanyi.jenga.component.selection.JengaRadioButton
 import io.github.joelkanyi.jenga.component.selection.JengaToggle
@@ -251,6 +252,11 @@ fun ComponentsGallery() {
             }
             JengaTicketRow("Joel Kanyi", "VIP · TKT-2026-001", "Valid", JengaBadgeTone.Success)
             JengaTicketRow("Ada Lovelace", "Regular · TKT-2026-114", "Used", JengaBadgeTone.Neutral)
+            JengaInline {
+                JengaStatusPill("Synced", tone = JengaBadgeTone.Success)
+                JengaStatusPill("3 pending", tone = JengaBadgeTone.Warning, loading = true)
+                JengaStatusPill("Offline", tone = JengaBadgeTone.Error)
+            }
         }
 
         Group("Scanner") {
@@ -299,7 +305,7 @@ private fun Group(title: String, content: @Composable () -> Unit) {
     JengaSection(title = title) { content() }
 }
 
-@Preview(name = "Components — Light", showBackground = true, heightDp = 4100)
+@Preview(name = "Components — Light", showBackground = true, heightDp = 4250)
 @Composable
 internal fun ComponentsGalleryLightPreview() {
     JengaTheme(darkTheme = false) {
@@ -310,7 +316,7 @@ internal fun ComponentsGalleryLightPreview() {
     }
 }
 
-@Preview(name = "Components — Dark", showBackground = true, heightDp = 4100)
+@Preview(name = "Components — Dark", showBackground = true, heightDp = 4250)
 @Composable
 internal fun ComponentsGalleryDarkPreview() {
     JengaTheme(darkTheme = true) {
