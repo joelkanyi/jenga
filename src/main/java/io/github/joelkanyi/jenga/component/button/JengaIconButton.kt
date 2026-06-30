@@ -37,6 +37,11 @@ public enum class JengaIconButtonVariant {
 
     /** Soft brand-subtle fill — medium emphasis. */
     Tonal,
+
+    /** Dark translucent circle for controls floating over a camera feed / photo /
+     *  video. Uses the always-dark media-overlay tokens so it stays legible on any
+     *  backdrop, in light or dark theme. */
+    Overlay,
 }
 
 /** Resolved colors for a [JengaIconButton]. Override via [JengaIconButtonDefaults.colors]. */
@@ -79,6 +84,12 @@ public object JengaIconButtonDefaults {
                 content = c.onBrandSubtle,
                 disabledContainer = c.surfaceDisabled,
                 disabledContent = c.contentDisabled,
+            )
+            JengaIconButtonVariant.Overlay -> JengaIconButtonColors(
+                container = c.overlaySurface,
+                content = c.onOverlay,
+                disabledContainer = c.overlaySurface,
+                disabledContent = c.onOverlayMuted,
             )
         }
     }
@@ -160,6 +171,9 @@ private fun IconButtonShowcase() {
         }
         JengaIconButton(onClick = {}, variant = JengaIconButtonVariant.Tonal) {
             JengaIcon(JengaIcons.Info, contentDescription = "Info")
+        }
+        JengaIconButton(onClick = {}, variant = JengaIconButtonVariant.Overlay) {
+            JengaIcon(JengaIcons.Flash, contentDescription = "Torch")
         }
         JengaIconButton(onClick = {}, enabled = false) {
             JengaIcon(JengaIcons.Close, contentDescription = "Close")

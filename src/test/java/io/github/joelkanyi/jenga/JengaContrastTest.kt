@@ -3,6 +3,7 @@ package io.github.joelkanyi.jenga
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.compositeOver
 import io.github.joelkanyi.jenga.foundation.color.JengaColors
+import io.github.joelkanyi.jenga.foundation.color.JengaPalette
 import io.github.joelkanyi.jenga.foundation.color.jengaDarkColors
 import io.github.joelkanyi.jenga.foundation.color.jengaLightColors
 import io.github.joelkanyi.jenga.foundation.sizing.jengaSizing
@@ -57,6 +58,11 @@ class JengaContrastTest {
         // High-contrast inverse surfaces (snackbars/tooltips) — AA 4.5:1
         atLeast(AA, c.inverseOnSurface, c.inverseSurface, "inverseOnSurface on inverseSurface")
         atLeast(AA, c.onInk, c.ink, "onInk on ink")
+
+        // Media overlay: primary content on the (translucent) overlay surface, in
+        // its worst-case darkest backdrop — AA 4.5:1. (onOverlayMuted is decorative
+        // secondary text and intentionally not contrast-gated.)
+        atLeast(AA, c.onOverlay, c.overlaySurface.over(JengaPalette.Black), "onOverlay on overlaySurface")
 
         // Saturated brand fill (e.g. white on orange) — large/UI 3:1
         atLeast(AA_LARGE, c.onBrand, c.brand, "onBrand on brand")

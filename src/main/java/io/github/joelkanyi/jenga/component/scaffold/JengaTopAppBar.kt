@@ -2,6 +2,7 @@ package io.github.joelkanyi.jenga.component.scaffold
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.WindowInsets
@@ -63,6 +64,7 @@ public object JengaTopAppBarDefaults {
  *
  * @param title the bar title.
  * @param modifier the [Modifier] for this bar.
+ * @param subtitle optional secondary line under the title (e.g. context/details).
  * @param navigationIcon optional leading icon (e.g. back); inherits content color.
  * @param actions trailing actions laid out in a [RowScope]; inherit content color.
  * @param colors the color set; defaults to [JengaTopAppBarDefaults.colors].
@@ -71,6 +73,7 @@ public object JengaTopAppBarDefaults {
 public fun JengaTopAppBar(
     title: String,
     modifier: Modifier = Modifier,
+    subtitle: String? = null,
     navigationIcon: (@Composable () -> Unit)? = null,
     actions: @Composable RowScope.() -> Unit = {},
     colors: JengaTopAppBarColors = JengaTopAppBarDefaults.colors(),
@@ -95,13 +98,22 @@ public fun JengaTopAppBar(
     ) {
         CompositionLocalProvider(LocalJengaContentColor provides colors.content) {
             navigationIcon?.invoke()
-            JengaText(
-                text = title,
-                style = JengaTheme.typography.titleLarge,
-                color = colors.content,
-                modifier = Modifier.weight(1f),
-                maxLines = 1,
-            )
+            Column(modifier = Modifier.weight(1f)) {
+                JengaText(
+                    text = title,
+                    style = JengaTheme.typography.titleLarge,
+                    color = colors.content,
+                    maxLines = 1,
+                )
+                if (subtitle != null) {
+                    JengaText(
+                        text = subtitle,
+                        style = JengaTheme.typography.caption,
+                        color = JengaTheme.colors.textMuted,
+                        maxLines = 1,
+                    )
+                }
+            }
             actions()
         }
     }
@@ -112,11 +124,11 @@ public fun JengaTopAppBar(
 @JengaBlockPreviews
 @Composable
 internal fun JengaTopAppBarPreview() {
-    JengaTheme { JengaTopAppBar(title = "Events") }
+    JengaTheme { JengaTopAppBar(title = "Sol Fest 2026", subtitle = "Gate A · Online") }
 }
 
 @Preview(name = "RTL", showBackground = true)
 @Composable
 internal fun JengaTopAppBarRtlPreview() {
-    JengaTheme { RtlPreview { JengaTopAppBar(title = "Events") } }
+    JengaTheme { RtlPreview { JengaTopAppBar(title = "Sol Fest 2026", subtitle = "Gate A · Online") } }
 }

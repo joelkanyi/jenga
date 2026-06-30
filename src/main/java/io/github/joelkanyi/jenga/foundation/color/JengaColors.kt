@@ -70,6 +70,12 @@ public data class JengaColors(
     public val info: Color,
     public val infoContainer: Color,
     public val onInfoContainer: Color,
+    // Media overlays — content layered over a camera feed / photo / video, whose
+    // backdrop is unpredictable. These are an *always dark-context* set: identical
+    // in light and dark so a scanner or image viewer stays legible either way.
+    public val overlaySurface: Color,
+    public val onOverlay: Color,
+    public val onOverlayMuted: Color,
     // Utility
     public val focusRing: Color,
     public val scrim: Color,
@@ -111,6 +117,9 @@ public fun jengaLightColors(): JengaColors = JengaColors(
     info = JengaPalette.Blue500,
     infoContainer = JengaPalette.BlueContainerLight,
     onInfoContainer = JengaPalette.Blue700,
+    overlaySurface = JengaPalette.Black.copy(alpha = 0.55f),
+    onOverlay = JengaPalette.White,
+    onOverlayMuted = JengaPalette.White.copy(alpha = 0.72f),
     focusRing = JengaPalette.Orange500.copy(alpha = 0.22f),
     scrim = JengaPalette.Ink900.copy(alpha = 0.55f),
     isLight = true,
@@ -151,6 +160,9 @@ public fun jengaDarkColors(): JengaColors = JengaColors(
     info = JengaPalette.Blue300,
     infoContainer = JengaPalette.Blue500.copy(alpha = 0.14f),
     onInfoContainer = JengaPalette.Blue300,
+    overlaySurface = JengaPalette.Black.copy(alpha = 0.55f),
+    onOverlay = JengaPalette.White,
+    onOverlayMuted = JengaPalette.White.copy(alpha = 0.72f),
     focusRing = JengaPalette.Orange400.copy(alpha = 0.30f),
     scrim = JengaPalette.Black.copy(alpha = 0.66f),
     isLight = false,

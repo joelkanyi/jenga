@@ -48,8 +48,12 @@ import io.github.joelkanyi.jenga.component.feedback.JengaDialog
 import io.github.joelkanyi.jenga.component.feedback.JengaSnackbar
 import io.github.joelkanyi.jenga.component.feedback.JengaSnackbarTone
 import io.github.joelkanyi.jenga.component.progress.JengaLinearProgress
+import io.github.joelkanyi.jenga.component.scaffold.JengaBottomBar
 import io.github.joelkanyi.jenga.component.scaffold.JengaScaffold
 import io.github.joelkanyi.jenga.component.scaffold.JengaTopAppBar
+import io.github.joelkanyi.jenga.component.scanner.JengaScanFeedback
+import io.github.joelkanyi.jenga.component.scanner.JengaScannerStatus
+import io.github.joelkanyi.jenga.component.scanner.JengaScannerViewfinder
 import io.github.joelkanyi.jenga.component.selection.JengaCheckbox
 import io.github.joelkanyi.jenga.component.selection.JengaToggle
 import io.github.joelkanyi.jenga.component.state.JengaEmptyState
@@ -91,6 +95,23 @@ internal fun JengaPullToRefreshSample() {
     JengaPullToRefresh(isRefreshing = false, onRefresh = { }) {
         JengaText("Pull down to refresh")
     }
+}
+
+@Composable
+internal fun JengaBottomBarSample() {
+    JengaBottomBar {
+        JengaButton(text = "Manual entry", onClick = { })
+    }
+}
+
+@Composable
+internal fun JengaScannerViewfinderSample() {
+    JengaScannerViewfinder(status = JengaScannerStatus.Scanning)
+}
+
+@Composable
+internal fun JengaScanFeedbackSample() {
+    JengaScanFeedback(status = JengaScannerStatus.Success)
 }
 
 @Composable

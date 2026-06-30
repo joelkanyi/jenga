@@ -1,0 +1,88 @@
+package io.github.joelkanyi.jenga.component.feedback
+
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
+import androidx.compose.material3.SnackbarResult
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.Stable
+import androidx.compose.runtime.remember
+import androidx.compose.ui.Modifier
+import io.github.joelkanyi.jenga.theme.JengaTheme
+
+/** The outcome of a snackbar shown via [JengaSnackbarHostState.showSnackbar]. */
+public enum class JengaSnackbarResult {
+    /** The snackbar was dismissed (timeout or swipe) without the action being used. */
+    Dismissed,
+
+    /** The user tapped the action. */
+    ActionPerformed,
+}
+
+/**
+ * Drives a [JengaSnackbarHost]: enqueue transient messages with [showSnackbar].
+ * Create one with [rememberJengaSnackbarHostState]. Wraps the Material queueing
+ * machinery, keeping it out of Jenga's public API.
+ */
+@Stable
+public class JengaSnackbarHostState internal constructor(
+    internal val m3: SnackbarHostState,
+) {
+    /**
+     * Shows a snackbar and suspends until it is dismissed or its action is tapped.
+     * A second call while one is showing replaces the current snackbar.
+     *
+     * @param message the message to display.
+     * @param tone the semantic tone (accent dot); see [JengaSnackbarTone].
+     * @param actionLabel optional action label.
+     * @return whether the action was performed or the snackbar was dismissed.
+     */
+    public suspend fun showSnackbar(
+        message: String,
+        tone: JengaSnackbarTone = JengaSnackbarTone.Neutral,
+        actionLabel: String? = null,
+    ): JengaSnackbarResult {
+        // Tone is carried out-of-band so the host can render the right accent.
+        currentTone = tone
+        val result = m3.showSnackbar(message = message, actionLabel = actionLabel)
+        return when (result) {
+            SnackbarResult.ActionPerformed -> JengaSnackbarResult.ActionPerformed
+            SnackbarResult.Dismissed -> JengaSnackbarResult.Dismissed
+        }
+    }
+
+    internal var currentTone: JengaSnackbarTone = JengaSnackbarTone.Neutral
+}
+
+/** Remembers a [JengaSnackbarHostState] for a [JengaSnackbarHost]. */
+@Composable
+public fun rememberJengaSnackbarHostState(): JengaSnackbarHostState {
+    val m3 = remember { SnackbarHostState() }
+    return remember(m3) { JengaSnackbarHostState(m3) }
+}
+
+/**
+ * Renders the snackbar queued on [hostState] as a [JengaSnackbar]. Place it in a
+ * scaffold's `snackbarHost` slot (see `JengaScaffold`).
+ *
+ * @param hostState the state from [rememberJengaSnackbarHostState].
+ * @param modifier the [Modifier] for the host.
+ */
+@Composable
+public fun JengaSnackbarHost(
+    hostState: JengaSnackbarHostState,
+    modifier: Modifier = Modifier,
+) {
+    SnackbarHost(
+        hostState = hostState.m3,
+        modifier = modifier,
+    ) { data ->
+        JengaSnackbar(
+            message = data.visuals.message,
+            modifier = Modifier.padding(JengaTheme.spacing.lg),
+            tone = hostState.currentTone,
+            actionLabel = data.visuals.actionLabel,
+            onAction = data.visuals.actionLabel?.let { { data.performAction() } },
+        )
+    }
+}
