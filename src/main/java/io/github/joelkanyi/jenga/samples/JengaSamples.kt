@@ -50,6 +50,7 @@ import io.github.joelkanyi.jenga.component.feedback.JengaSnackbarTone
 import io.github.joelkanyi.jenga.component.progress.JengaLinearProgress
 import io.github.joelkanyi.jenga.component.scaffold.JengaBottomBar
 import io.github.joelkanyi.jenga.component.scaffold.JengaScaffold
+import io.github.joelkanyi.jenga.component.status.JengaStatusPill
 import io.github.joelkanyi.jenga.component.scaffold.JengaTopAppBar
 import io.github.joelkanyi.jenga.component.scanner.JengaScanFeedback
 import io.github.joelkanyi.jenga.component.scanner.JengaScannerStatus
@@ -102,6 +103,11 @@ internal fun JengaBottomBarSample() {
     JengaBottomBar {
         JengaButton(text = "Manual entry", onClick = { })
     }
+}
+
+@Composable
+internal fun JengaStatusPillSample() {
+    JengaStatusPill(label = "Synced", tone = JengaBadgeTone.Success)
 }
 
 @Composable
