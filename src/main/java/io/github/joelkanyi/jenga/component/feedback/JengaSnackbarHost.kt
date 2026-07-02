@@ -67,6 +67,8 @@ public fun rememberJengaSnackbarHostState(): JengaSnackbarHostState {
  *
  * @param hostState the state from [rememberJengaSnackbarHostState].
  * @param modifier the [Modifier] for the host.
+ *
+ * @sample io.github.joelkanyi.jenga.samples.JengaSnackbarHostSample
  */
 @Composable
 public fun JengaSnackbarHost(

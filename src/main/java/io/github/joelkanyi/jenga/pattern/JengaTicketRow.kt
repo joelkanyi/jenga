@@ -36,6 +36,8 @@ import io.github.joelkanyi.jenga.theme.JengaTheme
  * @param statusTone the status pill tone; see [JengaBadgeTone].
  * @param modifier the [Modifier] for this row.
  * @param onClick optional row click handler.
+ *
+ * @sample io.github.joelkanyi.jenga.samples.JengaTicketRowSample
  */
 @Composable
 public fun JengaTicketRow(

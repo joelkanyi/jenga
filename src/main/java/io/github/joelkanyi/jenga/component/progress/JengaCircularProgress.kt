@@ -62,6 +62,8 @@ public object JengaCircularProgressDefaults {
  * @param strokeWidth the ring thickness; defaults to [JengaCircularProgressDefaults.StrokeWidth].
  * @param color the indicator color; defaults to the brand color.
  * @param trackColor the background track color.
+ *
+ * @sample io.github.joelkanyi.jenga.samples.JengaCircularProgressSample
  */
 @Composable
 public fun JengaCircularProgress(

@@ -37,6 +37,8 @@ public object JengaProgressDefaults {
  *
  * @param progress the progress in `0f..1f` (coerced into range).
  * @param modifier the [Modifier] for this bar.
+ *
+ * @sample io.github.joelkanyi.jenga.samples.JengaLinearProgressSample
  */
 @Composable
 public fun JengaLinearProgress(

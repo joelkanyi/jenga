@@ -36,6 +36,9 @@ import io.github.joelkanyi.jenga.component.layout.JengaSection
 import io.github.joelkanyi.jenga.component.layout.JengaStack
 import io.github.joelkanyi.jenga.component.layout.JengaWrap
 import io.github.joelkanyi.jenga.component.list.JengaListItem
+import io.github.joelkanyi.jenga.component.progress.JengaCircularProgress
+import io.github.joelkanyi.jenga.component.feedback.JengaSnackbarHost
+import io.github.joelkanyi.jenga.component.feedback.rememberJengaSnackbarHostState
 import io.github.joelkanyi.jenga.component.navigation.JengaNavigationBar
 import io.github.joelkanyi.jenga.component.navigation.JengaNavigationBarItem
 import io.github.joelkanyi.jenga.component.search.JengaSearchField
@@ -402,4 +405,16 @@ internal fun JengaSectionSample() {
         JengaText("Row one")
         JengaText("Row two")
     }
+}
+
+@Composable
+internal fun JengaCircularProgressSample() {
+    JengaCircularProgress(progress = 0.6f)
+}
+
+@Composable
+internal fun JengaSnackbarHostSample() {
+    val hostState = rememberJengaSnackbarHostState()
+    // Host it in your scaffold; call hostState.showSnackbar("Saved offline") to display one.
+    JengaSnackbarHost(hostState)
 }
