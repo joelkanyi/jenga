@@ -226,6 +226,10 @@ fun ComponentsGallery() {
                 listOf(
                     JengaIcons.Check, JengaIcons.Close, JengaIcons.Add, JengaIcons.Search,
                     JengaIcons.ChevronRight, JengaIcons.ChevronDown, JengaIcons.ArrowBack, JengaIcons.Info,
+                    JengaIcons.Volume, JengaIcons.Vibrate, JengaIcons.Sun, JengaIcons.Cloud,
+                    JengaIcons.CloudOff, JengaIcons.Refresh, JengaIcons.Bell, JengaIcons.Trash,
+                    JengaIcons.Smartphone, JengaIcons.Database, JengaIcons.Logout, JengaIcons.Shield,
+                    JengaIcons.Settings,
                 ).forEach { JengaIcon(it, contentDescription = null) }
             }
         }
