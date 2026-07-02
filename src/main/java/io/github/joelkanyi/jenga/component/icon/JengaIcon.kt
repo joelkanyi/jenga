@@ -116,6 +116,32 @@ public object JengaIcons {
         @Composable get() = ImageVector.vectorResource(R.drawable.jenga_ic_chart)
     public val User: ImageVector
         @Composable get() = ImageVector.vectorResource(R.drawable.jenga_ic_user)
+    public val Volume: ImageVector
+        @Composable get() = ImageVector.vectorResource(R.drawable.jenga_ic_volume)
+    public val Vibrate: ImageVector
+        @Composable get() = ImageVector.vectorResource(R.drawable.jenga_ic_vibrate)
+    public val Sun: ImageVector
+        @Composable get() = ImageVector.vectorResource(R.drawable.jenga_ic_sun)
+    public val Cloud: ImageVector
+        @Composable get() = ImageVector.vectorResource(R.drawable.jenga_ic_cloud)
+    public val CloudOff: ImageVector
+        @Composable get() = ImageVector.vectorResource(R.drawable.jenga_ic_cloud_off)
+    public val Refresh: ImageVector
+        @Composable get() = ImageVector.vectorResource(R.drawable.jenga_ic_refresh)
+    public val Bell: ImageVector
+        @Composable get() = ImageVector.vectorResource(R.drawable.jenga_ic_bell)
+    public val Trash: ImageVector
+        @Composable get() = ImageVector.vectorResource(R.drawable.jenga_ic_trash)
+    public val Smartphone: ImageVector
+        @Composable get() = ImageVector.vectorResource(R.drawable.jenga_ic_smartphone)
+    public val Database: ImageVector
+        @Composable get() = ImageVector.vectorResource(R.drawable.jenga_ic_database)
+    public val Logout: ImageVector
+        @Composable get() = ImageVector.vectorResource(R.drawable.jenga_ic_logout)
+    public val Shield: ImageVector
+        @Composable get() = ImageVector.vectorResource(R.drawable.jenga_ic_shield)
+    public val Settings: ImageVector
+        @Composable get() = ImageVector.vectorResource(R.drawable.jenga_ic_settings)
 }
 
 // ---- Previews --------------------------------------------------------------
@@ -162,5 +188,18 @@ private fun IconShowcase() {
         JengaIcon(JengaIcons.Calendar, contentDescription = null)
         JengaIcon(JengaIcons.Chart, contentDescription = null)
         JengaIcon(JengaIcons.User, contentDescription = null)
+        JengaIcon(JengaIcons.Volume, contentDescription = null)
+        JengaIcon(JengaIcons.Vibrate, contentDescription = null)
+        JengaIcon(JengaIcons.Sun, contentDescription = null)
+        JengaIcon(JengaIcons.Cloud, contentDescription = null)
+        JengaIcon(JengaIcons.CloudOff, contentDescription = null)
+        JengaIcon(JengaIcons.Refresh, contentDescription = null)
+        JengaIcon(JengaIcons.Bell, contentDescription = null)
+        JengaIcon(JengaIcons.Trash, contentDescription = null, tint = JengaTheme.colors.error)
+        JengaIcon(JengaIcons.Smartphone, contentDescription = null)
+        JengaIcon(JengaIcons.Database, contentDescription = null)
+        JengaIcon(JengaIcons.Logout, contentDescription = null)
+        JengaIcon(JengaIcons.Shield, contentDescription = null, tint = JengaTheme.colors.brand)
+        JengaIcon(JengaIcons.Settings, contentDescription = null)
     }
 }
