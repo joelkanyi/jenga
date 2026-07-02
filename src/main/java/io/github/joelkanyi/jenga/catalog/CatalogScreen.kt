@@ -234,6 +234,66 @@ private fun ScaleSections() {
                 ElevationSample("lg", JengaTheme.elevation.lg)
             }
         }
+        Section("Sizing") {
+            val z = JengaTheme.sizing
+            JengaStack(space = JengaTheme.spacing.sm) {
+                listOf(
+                    z.minTouchTarget to "minTouchTarget",
+                    z.iconSmall to "iconSmall",
+                    z.iconMedium to "iconMedium",
+                    z.iconLarge to "iconLarge",
+                    z.controlHeightSmall to "controlHeightSmall",
+                    z.controlHeightMedium to "controlHeightMedium",
+                    z.controlHeightLarge to "controlHeightLarge",
+                    z.fieldHeight to "fieldHeight",
+                ).forEach { (value, label) ->
+                    JengaInline {
+                        JengaBox(
+                            modifier = Modifier.size(value),
+                            background = JengaTheme.colors.brandSubtle,
+                            shape = JengaTheme.shapes.xs,
+                            border = BorderStroke(1.dp, JengaTheme.colors.border),
+                        ) {}
+                        JengaText(
+                            "$label (${value.value.toInt()})",
+                            style = JengaTheme.typography.bodySmall,
+                            color = JengaTheme.colors.textSecondary,
+                        )
+                    }
+                }
+            }
+        }
+        Section("Motion") {
+            val m = JengaTheme.motion
+            JengaStack(space = JengaTheme.spacing.md) {
+                JengaText("Durations", style = JengaTheme.typography.titleSmall)
+                listOf(
+                    m.durationFast to "fast",
+                    m.durationMedium to "medium",
+                    m.durationSlow to "slow",
+                    m.durationSlowest to "slowest",
+                ).forEach { (ms, label) ->
+                    JengaInline {
+                        JengaBox(
+                            modifier = Modifier.width((ms / 4).dp).height(12.dp),
+                            background = JengaTheme.colors.brand,
+                            shape = JengaTheme.shapes.xs,
+                        ) {}
+                        JengaText(
+                            "$label (${ms}ms)",
+                            style = JengaTheme.typography.bodySmall,
+                            color = JengaTheme.colors.textSecondary,
+                        )
+                    }
+                }
+                JengaText("Easing", style = JengaTheme.typography.titleSmall)
+                JengaText(
+                    "emphasized · standard · linear",
+                    style = JengaTheme.typography.bodySmall,
+                    color = JengaTheme.colors.textMuted,
+                )
+            }
+        }
     }
 }
 
@@ -266,7 +326,7 @@ private fun ElevationSample(name: String, elevation: Dp) {
 
 // ---- Catalog screenshot goldens (Roborazzi) --------------------------------
 
-@Preview(name = "Catalog — Light", showBackground = true, heightDp = 1700)
+@Preview(name = "Catalog — Light", showBackground = true, heightDp = 3200)
 @Composable
 internal fun CatalogScreenLightPreview() {
     JengaTheme(darkTheme = false) {
@@ -274,7 +334,7 @@ internal fun CatalogScreenLightPreview() {
     }
 }
 
-@Preview(name = "Catalog — Dark", showBackground = true, heightDp = 1700)
+@Preview(name = "Catalog — Dark", showBackground = true, heightDp = 3200)
 @Composable
 internal fun CatalogScreenDarkPreview() {
     JengaTheme(darkTheme = true) {
