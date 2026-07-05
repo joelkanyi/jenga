@@ -29,7 +29,9 @@ kotlin {
         }
     }
 
-    iosX64()
+    // iosArm64 = physical devices, iosSimulatorArm64 = Apple-Silicon simulator.
+    // iosX64 (Intel-Mac simulator) is legacy and no longer published by Compose
+    // Multiplatform, so it is intentionally omitted.
     iosArm64()
     iosSimulatorArm64()
 
