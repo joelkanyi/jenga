@@ -54,7 +54,10 @@ jobs:
 
   apple:
     name: iOS
-    runs-on: macos-latest
+    # Compose Multiplatform 1.11 builds its iOS framework against the iOS 26 SDK
+    # (it references iOS-26 UIKit symbols such as UIViewLayoutRegion), so the app
+    # link and simulator run need Xcode 26. macos-latest (Xcode 16.x) is too old.
+    runs-on: macos-26
     steps:
       - uses: actions/checkout@v4
 
