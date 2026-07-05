@@ -7,6 +7,7 @@ shared `commonMain` codebase.
 > *Jenga* is Swahili for "to build". You build screens out of Jenga blocks, not out of raw
 > Compose or Material primitives.
 
+[![CI](https://github.com/joelkanyi/jenga/actions/workflows/ci.yml/badge.svg)](https://github.com/joelkanyi/jenga/actions/workflows/ci.yml)
 [![Maven Central](https://img.shields.io/maven-central/v/io.github.joelkanyi/jenga.svg)](https://central.sonatype.com/artifact/io.github.joelkanyi/jenga)
 [![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](LICENSE)
 ![Platforms](https://img.shields.io/badge/platforms-Android%20%7C%20Desktop%20%7C%20iOS-brightgreen)

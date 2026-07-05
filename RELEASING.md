@@ -45,28 +45,66 @@ signingInMemoryKeyPassword=<the key passphrase>
 
 A commented template lives in `gradle/publish.properties.template`.
 
-## Cutting a release
+## Cutting a release with CI (recommended)
 
-1. Bump `version` in `jenga/build.gradle.kts` to the release version (no `-SNAPSHOT`).
-2. Make sure everything is green:
+Releases run from GitHub Actions (`.github/workflows/publish.yml`) on a macOS runner, so the
+iOS artifacts are built and signed too.
+
+One-time: add the four credentials from the setup section as **GitHub repository secrets**
+(Settings -> Secrets and variables -> Actions):
+
+| Secret | Value |
+|--------|-------|
+| `MAVEN_CENTRAL_USERNAME` | Central Portal token username |
+| `MAVEN_CENTRAL_PASSWORD` | Central Portal token password |
+| `SIGNING_KEY` | the armored GPG secret key (`gpg --armor --export-secret-keys <KEY_ID>`) |
+| `SIGNING_KEY_PASSWORD` | the GPG key passphrase |
+
+Then, to release:
+
+1. Bump `version` in `jenga/build.gradle.kts` to the release version (no `-SNAPSHOT`), commit
+   and push to `main`. Let CI go green.
+2. Tag and push:
 
    ```bash
-   ./gradlew :jenga:check
+   git tag v0.1.0
+   git push origin v0.1.0
    ```
 
-3. Publish and release:
+   The push of a `v*` tag triggers the Publish workflow, which runs
+   `publishAndReleaseToMavenCentral`.
+3. After it succeeds, bump `version` to the next `-SNAPSHOT` on `main`.
+
+You can also run the workflow manually from the Actions tab (`workflow_dispatch`), with a
+`dry_run` option that publishes to Maven Local only.
+
+## Cutting a release locally
+
+1. Bump `version` in `jenga/build.gradle.kts` to the release version (no `-SNAPSHOT`).
+2. Make sure everything is green: `./gradlew :jenga:check`.
+3. Publish and release (builds, signs and uploads every target; takes a few minutes):
 
    ```bash
    ./gradlew publishAndReleaseToMavenCentral --no-configuration-cache
    ```
 
-   This builds every target (Android, Desktop, iOS), signs them, uploads to the Central
-   Portal and triggers the release. It takes a few minutes.
-
 4. Tag the release and bump `version` to the next `-SNAPSHOT`.
 
 To publish a snapshot instead (no release, consumable from the Central snapshots repo), use a
 `-SNAPSHOT` version and run `./gradlew publishToMavenCentral`.
+
+## CI
+
+`.github/workflows/ci.yml` runs on every push to `main` and every PR:
+
+- **JVM & Android** (Ubuntu): `:jenga:check` (compile Android + Desktop, apiCheck, lint,
+  token-usage check, contrast tests, Roborazzi goldens) and the catalog's Android + Desktop
+  builds, plus it generates and uploads the Dokka API docs as an artifact.
+- **iOS** (macOS): compiles both iOS targets, links the catalog framework, and builds the iOS
+  sample app with `xcodebuild` against the simulator.
+
+Dependabot (`.github/dependabot.yml`) opens weekly update PRs for Gradle dependencies (Kotlin
+and Compose grouped) and the GitHub Actions themselves.
 
 ## Consuming the published artifact
 
