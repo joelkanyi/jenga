@@ -78,9 +78,24 @@ jobs:
       - name: Compile iOS targets
         run: ./gradlew :jenga:compileKotlinIosSimulatorArm64 :jenga:compileKotlinIosArm64 :catalog:linkDebugFrameworkIosSimulatorArm64 --stacktrace
 
-      - name: Build iOS sample (simulator)
+      # Build AND launch on a simulator. xcodebuild alone only compiles/links, so it
+      # misses runtime failures (e.g. the Compose PlistSanityCheck abort). This boots
+      # a sim, installs, launches, and asserts the app is still alive.
+      - name: Build & smoke-test iOS sample on simulator
         run: |
+          set -euo pipefail
+          UDID=$(xcrun simctl list devices available | grep -m1 "iPhone" | grep -oE "[0-9A-F-]{36}")
+          echo "Using simulator $UDID"
+          xcrun simctl boot "$UDID" || true
           cd catalog/iosApp
-          xcodebuild -project iosApp.xcodeproj -scheme iosApp \
-            -sdk iphonesimulator -configuration Debug \
-            -destination 'generic/platform=iOS Simulator' build
+          xcodebuild -project iosApp.xcodeproj -scheme iosApp -sdk iphonesimulator \
+            -configuration Debug -derivedDataPath build/ddata -destination "id=$UDID" ARCHS=arm64 build
+          xcrun simctl install "$UDID" build/ddata/Build/Products/Debug-iphonesimulator/iosApp.app
+          xcrun simctl launch "$UDID" io.github.joelkanyi.jenga.catalog
+          sleep 8
+          if xcrun simctl spawn "$UDID" launchctl list | grep -q io.github.joelkanyi.jenga.catalog; then
+            echo "iOS sample launched and is running (no crash)."
+          else
+            echo "::error::iOS sample crashed on launch."
+            exit 1
+          fi
