@@ -1,11 +1,83 @@
+@file:OptIn(com.github.takahirom.roborazzi.ExperimentalRoborazziApi::class)
+
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 plugins {
+    alias(libs.plugins.kotlin.multiplatform)
     alias(libs.plugins.android.library)
-    alias(libs.plugins.kotlin.android)
+    alias(libs.plugins.compose.multiplatform)
     alias(libs.plugins.kotlin.compose)
     alias(libs.plugins.roborazzi)
     alias(libs.plugins.dokka)
+}
+
+kotlin {
+    // Public API of a published library must be explicit: every public/protected
+    // declaration needs an explicit visibility modifier and return type.
+    explicitApi()
+
+    androidTarget {
+        publishLibraryVariants("release")
+        compilerOptions {
+            jvmTarget.set(JvmTarget.JVM_17)
+        }
+    }
+
+    jvm("desktop") {
+        compilerOptions {
+            jvmTarget.set(JvmTarget.JVM_17)
+        }
+    }
+
+    iosX64()
+    iosArm64()
+    iosSimulatorArm64()
+
+    sourceSets {
+        commonMain.dependencies {
+            // Exposed as `api` because Jenga's public API surfaces Compose types
+            // (Color, Modifier, Dp, TextStyle, @Composable, RowScope, BorderStroke …),
+            // so consumers must receive these transitively.
+            @Suppress("DEPRECATION")
+            api(compose.runtime)
+            @Suppress("DEPRECATION")
+            api(compose.foundation)
+            @Suppress("DEPRECATION")
+            api(compose.ui)
+            @Suppress("DEPRECATION")
+            api(compose.uiUtil)
+            // Material 3 is an internal implementation detail (the bridge for ripple,
+            // text selection and reused M3 primitives). Not part of Jenga's API.
+            @Suppress("DEPRECATION")
+            implementation(compose.material3)
+            // Compose Resources: fonts + vector-drawable icons bundled with Jenga.
+            @Suppress("DEPRECATION")
+            implementation(compose.components.resources)
+        }
+
+        androidMain.dependencies {
+            // Preview tooling is Android-only; the previews + Roborazzi goldens live
+            // in androidMain/androidUnitTest.
+            implementation(project.dependencies.platform(libs.androidx.compose.bom))
+            implementation(libs.androidx.compose.ui.tooling.preview)
+            implementation(libs.androidx.compose.ui.tooling)
+        }
+
+        val androidUnitTest by getting {
+            dependencies {
+                implementation(project.dependencies.platform(libs.androidx.compose.bom))
+                implementation(libs.junit)
+                implementation(libs.robolectric)
+                implementation(libs.roborazzi)
+                implementation(libs.roborazzi.compose)
+                implementation(libs.roborazzi.junit.rule)
+                implementation(libs.roborazzi.compose.preview.scanner.support)
+                implementation(libs.composable.preview.scanner)
+                implementation(libs.androidx.compose.ui.test.junit4)
+                implementation(libs.androidx.compose.ui.tooling)
+            }
+        }
+    }
 }
 
 android {
@@ -14,27 +86,12 @@ android {
 
     defaultConfig {
         minSdk = 24
-        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles("consumer-rules.pro")
-    }
-
-    buildTypes {
-        release {
-            isMinifyEnabled = false
-            proguardFiles(
-                getDefaultProguardFile("proguard-android-optimize.txt"),
-                "proguard-rules.pro",
-            )
-        }
     }
 
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_17
         targetCompatibility = JavaVersion.VERSION_17
-    }
-
-    buildFeatures {
-        compose = true
     }
 
     lint {
@@ -60,20 +117,24 @@ android {
     }
 }
 
-kotlin {
-    // Public API of a published library must be explicit: every public/protected
-    // declaration needs an explicit visibility modifier and return type.
-    explicitApi()
-
-    compilerOptions {
-        jvmTarget.set(JvmTarget.JVM_17)
-    }
+// Compose Resources: generate an internal `Res` accessor for the bundled fonts
+// and icons in commonMain/composeResources.
+compose.resources {
+    publicResClass = false
+    packageOfResClass = "io.github.joelkanyi.jenga.resources"
+    generateResClass = auto
 }
 
-// Auto-generate Roborazzi screenshot tests from every @Preview in the library.
-// Goldens are committed under src/test/screenshots so CI can `verify` against them.
+// Machine-enforced Compose API conventions (param order, modifier rules, naming) —
+// Slack's compose-lints, run on the Android target via `./gradlew :jenga:lint`.
+dependencies {
+    lintChecks(libs.compose.lint.checks)
+}
+
+// Auto-generate Roborazzi screenshot tests from every @Preview in the library
+// (Android target only). Goldens are committed under src/androidUnitTest/screenshots.
 roborazzi {
-    outputDir.set(layout.projectDirectory.dir("src/test/screenshots"))
+    outputDir.set(layout.projectDirectory.dir("src/androidUnitTest/screenshots"))
     generateComposePreviewRobolectricTests {
         enable = true
         packages = listOf("io.github.joelkanyi.jenga")
@@ -82,55 +143,16 @@ roborazzi {
     }
 }
 
-dependencies {
-    val composeBom = platform(libs.androidx.compose.bom)
-
-    // Exposed as `api` because Jenga's public API surfaces Compose types
-    // (Color, Modifier, Dp, TextStyle, @Composable, RowScope, BorderStroke …),
-    // so consumers must receive these transitively.
-    api(composeBom)
-    api(libs.androidx.compose.runtime)
-    api(libs.androidx.compose.ui)
-    api(libs.androidx.compose.ui.graphics)
-    api(libs.androidx.compose.ui.text)
-    api(libs.androidx.compose.foundation)
-
-    // Material 3 is an internal implementation detail (the bridge for ripple,
-    // text selection and any reused M3 primitive). Not part of Jenga's API.
-    implementation(libs.androidx.compose.material3)
-
-    implementation(libs.androidx.compose.ui.tooling.preview)
-    debugImplementation(libs.androidx.compose.ui.tooling)
-
-    // Machine-enforced Compose API conventions (param order, modifier rules,
-    // naming) — Slack's compose-lints, run via `./gradlew :jenga:lint`.
-    lintChecks(libs.compose.lint.checks)
-
-    // Screenshot testing (JVM, no emulator) — runs under JDK 17 by pinning
-    // Robolectric to SDK 35 via src/test/resources/robolectric.properties.
-    testImplementation(composeBom)
-    testImplementation(libs.junit)
-    testImplementation(libs.robolectric)
-    testImplementation(libs.roborazzi)
-    testImplementation(libs.roborazzi.compose)
-    testImplementation(libs.roborazzi.junit.rule)
-    testImplementation(libs.roborazzi.compose.preview.scanner.support)
-    testImplementation(libs.composable.preview.scanner)
-    testImplementation(libs.androidx.compose.ui.test.junit4)
-    testImplementation(libs.androidx.compose.ui.tooling)
-}
-
 // ---- Design-token pipeline -------------------------------------------------
 // `tokens/primitives.json` is the single source of truth (a Figma -> JSON export
-// stand-in). This task regenerates the primitive layer (JengaPalette.kt) from it,
-// committing the output (the Bolt "generate -> PR" model). Run:
+// stand-in). This task regenerates the primitive layer (JengaPalette.kt) from it.
 //   ./gradlew :jenga:generateJengaTokens
 tasks.register("generateJengaTokens") {
     group = "jenga"
     description = "Regenerates JengaPalette.kt from tokens/primitives.json."
     val tokensFile = layout.projectDirectory.file("tokens/primitives.json")
     val outFile = layout.projectDirectory.file(
-        "src/main/java/io/github/joelkanyi/jenga/foundation/color/JengaPalette.kt",
+        "src/commonMain/kotlin/io/github/joelkanyi/jenga/foundation/color/JengaPalette.kt",
     )
     inputs.file(tokensFile)
     outputs.file(outFile)
@@ -166,13 +188,11 @@ tasks.register("generateJengaTokens") {
 
 // ---- Token-usage enforcement -----------------------------------------------
 // Fails the build if component/pattern code hardcodes raw `Color(0x…)` literals
-// instead of reading JengaTheme.colors tokens (the #1 design-system audit
-// failure; Glovo enforces the same). Primitives legitimately live in
-// foundation/, which is exempt. Wired into `check` and CI.
+// instead of reading JengaTheme.colors tokens.
 tasks.register("checkJengaTokenUsage") {
     group = "verification"
     description = "Fails if component/pattern code uses raw Color(0x…) literals instead of tokens."
-    val srcRoot = layout.projectDirectory.dir("src/main/java/io/github/joelkanyi/jenga")
+    val srcRoot = layout.projectDirectory.dir("src/commonMain/kotlin/io/github/joelkanyi/jenga")
     inputs.dir(srcRoot)
     doLast {
         val rootDirFile = srcRoot.asFile

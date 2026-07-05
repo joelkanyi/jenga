@@ -1,0 +1,74 @@
+package io.github.joelkanyi.jenga.component.badge
+
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.padding
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.Immutable
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.unit.dp
+import io.github.joelkanyi.jenga.component.text.JengaText
+import io.github.joelkanyi.jenga.theme.JengaTheme
+
+/** Semantic tone of a [JengaBadge]. */
+public enum class JengaBadgeTone { Neutral, Brand, Success, Warning, Error, Info }
+
+/** Resolved colors for a [JengaBadge]. */
+@Immutable
+public data class JengaBadgeColors(
+    public val container: Color,
+    public val content: Color,
+)
+
+/** Defaults and token mappings for [JengaBadge]. */
+public object JengaBadgeDefaults {
+    /** Themed colors per [tone]. */
+    @Composable
+    public fun colors(tone: JengaBadgeTone): JengaBadgeColors {
+        val c = JengaTheme.colors
+        return when (tone) {
+            JengaBadgeTone.Neutral -> JengaBadgeColors(c.surfaceSunk, c.textMuted)
+            JengaBadgeTone.Brand -> JengaBadgeColors(c.brandSubtle, c.onBrandSubtle)
+            JengaBadgeTone.Success -> JengaBadgeColors(c.successContainer, c.onSuccessContainer)
+            JengaBadgeTone.Warning -> JengaBadgeColors(c.warningContainer, c.onWarningContainer)
+            JengaBadgeTone.Error -> JengaBadgeColors(c.errorContainer, c.onErrorContainer)
+            JengaBadgeTone.Info -> JengaBadgeColors(c.infoContainer, c.onInfoContainer)
+        }
+    }
+}
+
+/**
+ * A small status/label pill.
+ *
+ * @sample io.github.joelkanyi.jenga.samples.JengaBadgeSample
+ *
+ * @param text the badge label (rendered in the uppercase label style).
+ * @param modifier the [Modifier] for this badge.
+ * @param tone the semantic tone; see [JengaBadgeTone].
+ * @param colors the color set; defaults to [JengaBadgeDefaults.colors] for [tone].
+ */
+@Composable
+public fun JengaBadge(
+    text: String,
+    modifier: Modifier = Modifier,
+    tone: JengaBadgeTone = JengaBadgeTone.Neutral,
+    colors: JengaBadgeColors = JengaBadgeDefaults.colors(tone),
+) {
+    Row(
+        modifier = modifier
+            .clip(JengaTheme.shapes.pill)
+            .background(colors.container)
+            .padding(horizontal = JengaTheme.spacing.sm, vertical = JengaTheme.spacing.xxs),
+        horizontalArrangement = Arrangement.Center,
+    ) {
+        JengaText(
+            text = text.uppercase(),
+            style = JengaTheme.typography.label,
+            color = colors.content,
+            maxLines = 1,
+        )
+    }
+}
