@@ -17,7 +17,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import io.github.joelkanyi.jenga.component.avatar.JengaAvatar
 import io.github.joelkanyi.jenga.component.avatar.JengaAvatarSize
@@ -307,26 +306,4 @@ fun ComponentsGallery() {
 @Composable
 private fun Group(title: String, content: @Composable () -> Unit) {
     JengaSection(title = title) { content() }
-}
-
-@Preview(name = "Components — Light", showBackground = true, heightDp = 4250)
-@Composable
-internal fun ComponentsGalleryLightPreview() {
-    JengaTheme(darkTheme = false) {
-        JengaBox(
-            padding = PaddingValues(JengaTheme.spacing.lg),
-            background = JengaTheme.colors.background,
-        ) { ComponentsGallery() }
-    }
-}
-
-@Preview(name = "Components — Dark", showBackground = true, heightDp = 4250)
-@Composable
-internal fun ComponentsGalleryDarkPreview() {
-    JengaTheme(darkTheme = true) {
-        JengaBox(
-            padding = PaddingValues(JengaTheme.spacing.lg),
-            background = JengaTheme.colors.background,
-        ) { ComponentsGallery() }
-    }
 }

@@ -16,6 +16,12 @@ local.properties
 # OS
 .DS_Store
 
+# Xcode
+xcuserdata/
+*.xcworkspace/xcuserdata/
+DerivedData/
+*.xcuserstate
+
 # Publishing secrets (never commit)
 secrets.properties
 *.gpg
