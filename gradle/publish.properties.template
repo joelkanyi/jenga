@@ -1,0 +1,13 @@
+# Template for Maven Central publishing credentials.
+#
+# DO NOT put real values here or commit them. Copy these keys into your private
+# ~/.gradle/gradle.properties (or provide them as ORG_GRADLE_PROJECT_* env vars in CI).
+# See RELEASING.md for how to obtain each value.
+
+# Central Portal user token (Account -> Generate User Token)
+mavenCentralUsername=
+mavenCentralPassword=
+
+# GPG signing key, in-memory form (gpg --armor --export-secret-keys <KEY_ID>)
+signingInMemoryKey=
+signingInMemoryKeyPassword=

@@ -9,7 +9,11 @@ plugins {
     alias(libs.plugins.kotlin.compose)
     alias(libs.plugins.roborazzi)
     alias(libs.plugins.dokka)
+    alias(libs.plugins.maven.publish)
 }
+
+group = "io.github.joelkanyi"
+version = "0.1.0"
 
 kotlin {
     // Public API of a published library must be explicit: every public/protected
@@ -131,6 +135,47 @@ compose.resources {
 // Slack's compose-lints, run on the Android target via `./gradlew :jenga:lint`.
 dependencies {
     lintChecks(libs.compose.lint.checks)
+}
+
+// ---- Maven Central publishing ----------------------------------------------
+// Publishes all targets (Android, Desktop, iOS) plus a sources and javadoc jar to
+// Maven Central via the Central Portal. Credentials and the signing key are read
+// from ~/.gradle/gradle.properties or ORG_GRADLE_PROJECT_* env vars — never from a
+// committed file. See RELEASING.md.
+mavenPublishing {
+    publishToMavenCentral()
+    signAllPublications()
+
+    coordinates(group.toString(), "jenga", version.toString())
+
+    pom {
+        name.set("Jenga")
+        description.set(
+            "Jenga is a Kotlin Multiplatform + Compose Multiplatform design system: " +
+                "brandable tokens and ready-made blocks for Android, Desktop and iOS.",
+        )
+        inceptionYear.set("2026")
+        url.set("https://github.com/joelkanyi/jenga")
+        licenses {
+            license {
+                name.set("The Apache License, Version 2.0")
+                url.set("https://www.apache.org/licenses/LICENSE-2.0.txt")
+                distribution.set("https://www.apache.org/licenses/LICENSE-2.0.txt")
+            }
+        }
+        developers {
+            developer {
+                id.set("joelkanyi")
+                name.set("Joel Kanyi")
+                url.set("https://github.com/joelkanyi")
+            }
+        }
+        scm {
+            url.set("https://github.com/joelkanyi/jenga")
+            connection.set("scm:git:git://github.com/joelkanyi/jenga.git")
+            developerConnection.set("scm:git:ssh://git@github.com/joelkanyi/jenga.git")
+        }
+    }
 }
 
 // Auto-generate Roborazzi screenshot tests from every @Preview in the library
