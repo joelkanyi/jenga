@@ -1,0 +1,22 @@
+# Gradle
+.gradle/
+build/
+*/build/
+
+# Local configuration
+local.properties
+
+# Android Studio / IntelliJ
+.idea/
+*.iml
+*.ipr
+*.iws
+.kotlin/
+
+# OS
+.DS_Store
+
+# Publishing secrets (never commit)
+secrets.properties
+*.gpg
+*.asc
