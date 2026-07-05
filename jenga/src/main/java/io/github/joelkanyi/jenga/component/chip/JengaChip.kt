@@ -1,0 +1,165 @@
+package io.github.joelkanyi.jenga.component.chip
+
+import androidx.compose.foundation.background
+import androidx.compose.foundation.border
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.defaultMinSize
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.selection.selectable
+import androidx.compose.material3.minimumInteractiveComponentSize
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.Immutable
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.Shape
+import androidx.compose.ui.semantics.Role
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.unit.dp
+import io.github.joelkanyi.jenga.component.text.JengaText
+import io.github.joelkanyi.jenga.core.preview.JengaBlockPreviews
+import io.github.joelkanyi.jenga.core.preview.RtlPreview
+import io.github.joelkanyi.jenga.theme.JengaTheme
+import io.github.joelkanyi.jenga.theme.LocalJengaContentColor
+
+/** Resolved colors for a [JengaChip] across its states. Override via [JengaChipDefaults.colors]. */
+@Immutable
+public data class JengaChipColors(
+    public val selectedContainer: Color,
+    public val selectedContent: Color,
+    public val unselectedContainer: Color,
+    public val unselectedContent: Color,
+    public val unselectedBorder: Color,
+    public val disabledContainer: Color,
+    public val disabledContent: Color,
+)
+
+/** Defaults and token mappings for [JengaChip]. Override any of these per call. */
+public object JengaChipDefaults {
+    /** Default chip shape. */
+    public val shape: Shape
+        @Composable get() = JengaTheme.shapes.pill
+
+    /** Minimum visual height (touch target is expanded to 48dp separately). */
+    public val MinHeight: Dp = 36.dp
+
+    /** Themed colors for all chip states. */
+    @Composable
+    public fun colors(): JengaChipColors {
+        val c = JengaTheme.colors
+        return JengaChipColors(
+            selectedContainer = c.brand,
+            selectedContent = c.onBrand,
+            unselectedContainer = c.surface,
+            unselectedContent = c.textSecondary,
+            unselectedBorder = c.borderStrong,
+            disabledContainer = c.surfaceDisabled,
+            disabledContent = c.contentDisabled,
+        )
+    }
+}
+
+/**
+ * A compact, toggleable chip for filters and selections.
+ *
+ * @sample io.github.joelkanyi.jenga.samples.JengaChipSample
+ *
+ * @param label the chip text.
+ * @param selected whether the chip is currently selected.
+ * @param onClick called when the chip is tapped.
+ * @param modifier the [Modifier] for this chip.
+ * @param enabled whether the chip is interactive.
+ * @param leadingIcon optional icon before the label (inherits the content color).
+ * @param shape the chip shape; defaults to [JengaChipDefaults.shape].
+ * @param colors the color set; defaults to [JengaChipDefaults.colors].
+ */
+@Composable
+public fun JengaChip(
+    label: String,
+    selected: Boolean,
+    onClick: () -> Unit,
+    modifier: Modifier = Modifier,
+    enabled: Boolean = true,
+    leadingIcon: (@Composable () -> Unit)? = null,
+    shape: Shape = JengaChipDefaults.shape,
+    colors: JengaChipColors = JengaChipDefaults.colors(),
+) {
+    val container = when {
+        !enabled -> colors.disabledContainer
+        selected -> colors.selectedContainer
+        else -> colors.unselectedContainer
+    }
+    val contentColor = when {
+        !enabled -> colors.disabledContent
+        selected -> colors.selectedContent
+        else -> colors.unselectedContent
+    }
+    val borderColor = if (selected || !enabled) Color.Transparent else colors.unselectedBorder
+
+    Row(
+        modifier = modifier
+            .minimumInteractiveComponentSize()
+            .clip(shape)
+            .background(container)
+            .then(
+                if (borderColor != Color.Transparent) {
+                    Modifier.border(1.dp, borderColor, shape)
+                } else {
+                    Modifier
+                },
+            )
+            .selectable(
+                selected = selected,
+                enabled = enabled,
+                role = Role.Tab,
+                onClick = onClick,
+            )
+            .defaultMinSize(minHeight = JengaChipDefaults.MinHeight)
+            .padding(horizontal = JengaTheme.spacing.lg, vertical = JengaTheme.spacing.sm),
+        horizontalArrangement = Arrangement.spacedBy(JengaTheme.spacing.xs),
+        verticalAlignment = Alignment.CenterVertically,
+    ) {
+        CompositionLocalProvider(LocalJengaContentColor provides contentColor) {
+            leadingIcon?.invoke()
+            JengaText(
+                text = label,
+                style = JengaTheme.typography.bodySmall,
+                color = contentColor,
+                maxLines = 1,
+            )
+        }
+    }
+}
+
+// ---- Previews --------------------------------------------------------------
+
+@JengaBlockPreviews
+@Composable
+internal fun JengaChipPreview() {
+    JengaTheme { ChipShowcase() }
+}
+
+@Preview(name = "RTL", showBackground = true)
+@Composable
+internal fun JengaChipRtlPreview() {
+    JengaTheme { RtlPreview { ChipShowcase() } }
+}
+
+@Composable
+private fun ChipShowcase() {
+    Row(
+        modifier = Modifier
+            .background(JengaTheme.colors.background)
+            .padding(JengaTheme.spacing.xl),
+        horizontalArrangement = Arrangement.spacedBy(JengaTheme.spacing.sm),
+    ) {
+        JengaChip(label = "All", selected = true, onClick = {})
+        JengaChip(label = "Music", selected = false, onClick = {})
+        JengaChip(label = "Sports", selected = false, onClick = {})
+        JengaChip(label = "Off", selected = false, onClick = {}, enabled = false)
+    }
+}
