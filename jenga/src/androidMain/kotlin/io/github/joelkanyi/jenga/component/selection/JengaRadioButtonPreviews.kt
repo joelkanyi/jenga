@@ -1,0 +1,50 @@
+package io.github.joelkanyi.jenga.component.selection
+
+import androidx.compose.foundation.Canvas
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.selection.selectable
+import androidx.compose.material3.minimumInteractiveComponentSize
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.Immutable
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.semantics.Role
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.unit.dp
+import io.github.joelkanyi.jenga.core.preview.JengaBlockPreviews
+import io.github.joelkanyi.jenga.core.preview.RtlPreview
+import io.github.joelkanyi.jenga.theme.JengaTheme
+
+// ---- Previews --------------------------------------------------------------
+
+@JengaBlockPreviews
+@Composable
+internal fun JengaRadioButtonPreview() {
+    JengaTheme { RadioShowcase() }
+}
+
+@Preview(name = "RTL", showBackground = true)
+@Composable
+internal fun JengaRadioButtonRtlPreview() {
+    JengaTheme { RtlPreview { RadioShowcase() } }
+}
+
+@Composable
+private fun RadioShowcase() {
+    Row(
+        modifier = Modifier
+            .background(JengaTheme.colors.background)
+            .padding(JengaTheme.spacing.xl),
+        horizontalArrangement = Arrangement.spacedBy(JengaTheme.spacing.lg),
+    ) {
+        JengaRadioButton(selected = true, onClick = {})
+        JengaRadioButton(selected = false, onClick = {})
+        JengaRadioButton(selected = true, onClick = {}, enabled = false)
+        JengaRadioButton(selected = false, onClick = {}, enabled = false)
+    }
+}
