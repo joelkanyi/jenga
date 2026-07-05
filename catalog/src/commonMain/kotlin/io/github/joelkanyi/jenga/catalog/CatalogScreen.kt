@@ -26,7 +26,6 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import io.github.joelkanyi.jenga.component.button.JengaButton
@@ -321,23 +320,5 @@ private fun ElevationSample(name: String, elevation: Dp) {
                 .background(JengaTheme.colors.surface),
         )
         JengaText(name, style = JengaTheme.typography.caption, color = JengaTheme.colors.textMuted)
-    }
-}
-
-// ---- Catalog screenshot goldens (Roborazzi) --------------------------------
-
-@Preview(name = "Catalog — Light", showBackground = true, heightDp = 3200)
-@Composable
-internal fun CatalogScreenLightPreview() {
-    JengaTheme(darkTheme = false) {
-        CatalogScreen(darkTheme = false, onToggleTheme = {})
-    }
-}
-
-@Preview(name = "Catalog — Dark", showBackground = true, heightDp = 3200)
-@Composable
-internal fun CatalogScreenDarkPreview() {
-    JengaTheme(darkTheme = true) {
-        CatalogScreen(darkTheme = true, onToggleTheme = {})
     }
 }
