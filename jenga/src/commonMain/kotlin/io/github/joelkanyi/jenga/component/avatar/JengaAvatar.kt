@@ -16,7 +16,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import io.github.joelkanyi.jenga.component.text.JengaText
 import io.github.joelkanyi.jenga.theme.JengaTheme
-import java.util.Locale
 
 /** Size of a [JengaAvatar]. */
 public enum class JengaAvatarSize { Small, Medium, Large }
@@ -102,5 +101,5 @@ private fun initialsOf(name: String): String {
         parts.size == 1 -> parts[0].take(2)
         else -> "${parts.first().first()}${parts.last().first()}"
     }
-    return initials.uppercase(Locale.getDefault())
+    return initials.uppercase()
 }
