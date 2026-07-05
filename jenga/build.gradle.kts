@@ -137,6 +137,24 @@ dependencies {
     lintChecks(libs.compose.lint.checks)
 }
 
+// ---- API docs (Dokka) ------------------------------------------------------
+// Generate browsable HTML API docs from the KDoc with `./gradlew :jenga:dokkaGenerateHtml`
+// (output under jenga/build/dokka/html). Module + package overviews come from Module.md.
+dokka {
+    moduleName.set("Jenga")
+    dokkaSourceSets.configureEach {
+        includes.from("Module.md")
+        sourceLink {
+            localDirectory.set(projectDir.resolve("src"))
+            remoteUrl("https://github.com/joelkanyi/jenga/tree/main/jenga/src")
+            remoteLineSuffix.set("#L")
+        }
+    }
+    pluginsConfiguration.html {
+        footerMessage.set("Jenga — a Kotlin Multiplatform + Compose Multiplatform design system")
+    }
+}
+
 // ---- Maven Central publishing ----------------------------------------------
 // Publishes all targets (Android, Desktop, iOS) plus a sources and javadoc jar to
 // Maven Central via the Central Portal. Credentials and the signing key are read

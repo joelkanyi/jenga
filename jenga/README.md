@@ -1,11 +1,14 @@
 # Jenga
 
-A custom **Jetpack Compose design system** for Ticketfiti — its own semantic token
-API and `Jenga*` components built on Compose Foundation, with Material 3 bridged
-*internally only*. Designed to be reusable, themeable, accessible, and
-open-source-ready (stable public API, screenshot-tested, lint-enforced).
+A **Kotlin Multiplatform + Compose Multiplatform** design system: its own semantic token API
+and `Jenga*` components built on Compose Foundation, with Material 3 bridged *internally only*.
+Runs on Android, Desktop (JVM) and iOS. Reusable, themeable, accessible, and published to Maven
+Central (stable public API, screenshot-tested, lint-enforced).
 
-> *Jenga* — Swahili for **"to build."**
+> *Jenga* is Swahili for **"to build."**
+
+> This is the module-level reference. For installation, branding, the full block inventory and
+> how to run the sample on each platform, see the [repository README](../README.md).
 
 ---
 
