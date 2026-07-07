@@ -415,6 +415,10 @@ internal fun JengaCircularProgressSample() {
 @Composable
 internal fun JengaSnackbarHostSample() {
     val hostState = rememberJengaSnackbarHostState()
-    // Host it in your scaffold; call hostState.showSnackbar("Saved offline") to display one.
+    // Host it in your scaffold, then call showSnackbar from a coroutine. A plain
+    // confirmation can stay Short; give an action (e.g. Undo) a Long window so it
+    // still auto-dismisses instead of sitting there indefinitely:
+    //   hostState.showSnackbar("Removed", actionLabel = "Undo",
+    //       duration = JengaSnackbarDuration.Long)
     JengaSnackbarHost(hostState)
 }
