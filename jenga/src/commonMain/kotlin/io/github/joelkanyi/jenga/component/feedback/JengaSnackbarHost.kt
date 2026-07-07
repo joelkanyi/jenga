@@ -1,6 +1,7 @@
 package io.github.joelkanyi.jenga.component.feedback
 
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.SnackbarDuration
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.SnackbarResult
@@ -20,6 +21,31 @@ public enum class JengaSnackbarResult {
 }
 
 /**
+ * How long a snackbar stays before it auto-dismisses.
+ *
+ * Unlike Material — which forces an *indefinite* duration the moment an action
+ * label is present, so an "Undo" can sit on screen forever — Jenga defaults an
+ * action snackbar to [Short] as well. Opt into [Indefinite] explicitly when a
+ * message must persist until acted upon (and pair it with a dismiss affordance).
+ */
+public enum class JengaSnackbarDuration {
+    /** Brief, for a simple confirmation. */
+    Short,
+
+    /** Longer, the sensible default for a snackbar carrying an action (e.g. Undo). */
+    Long,
+
+    /** Stays until acted upon or explicitly dismissed. Use sparingly. */
+    Indefinite,
+}
+
+private fun JengaSnackbarDuration.toMaterial(): SnackbarDuration = when (this) {
+    JengaSnackbarDuration.Short -> SnackbarDuration.Short
+    JengaSnackbarDuration.Long -> SnackbarDuration.Long
+    JengaSnackbarDuration.Indefinite -> SnackbarDuration.Indefinite
+}
+
+/**
  * Drives a [JengaSnackbarHost]: enqueue transient messages with [showSnackbar].
  * Create one with [rememberJengaSnackbarHostState]. Wraps the Material queueing
  * machinery, keeping it out of Jenga's public API.
@@ -35,16 +61,25 @@ public class JengaSnackbarHostState internal constructor(
      * @param message the message to display.
      * @param tone the semantic tone (accent dot); see [JengaSnackbarTone].
      * @param actionLabel optional action label.
+     * @param duration how long it stays; defaults to [JengaSnackbarDuration.Short]
+     *   even with an action, so an Undo never sits on screen indefinitely. Pass
+     *   [JengaSnackbarDuration.Long] for a comfortable Undo window, or
+     *   [JengaSnackbarDuration.Indefinite] to keep it until acted upon.
      * @return whether the action was performed or the snackbar was dismissed.
      */
     public suspend fun showSnackbar(
         message: String,
         tone: JengaSnackbarTone = JengaSnackbarTone.Neutral,
         actionLabel: String? = null,
+        duration: JengaSnackbarDuration = JengaSnackbarDuration.Short,
     ): JengaSnackbarResult {
         // Tone is carried out-of-band so the host can render the right accent.
         currentTone = tone
-        val result = m3.showSnackbar(message = message, actionLabel = actionLabel)
+        val result = m3.showSnackbar(
+            message = message,
+            actionLabel = actionLabel,
+            duration = duration.toMaterial(),
+        )
         return when (result) {
             SnackbarResult.ActionPerformed -> JengaSnackbarResult.ActionPerformed
             SnackbarResult.Dismissed -> JengaSnackbarResult.Dismissed
