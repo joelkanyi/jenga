@@ -13,7 +13,7 @@ plugins {
 }
 
 group = "io.github.joelkanyi"
-version = "0.1.0"
+version = "0.2.0"
 
 kotlin {
     // Public API of a published library must be explicit: every public/protected
@@ -67,6 +67,11 @@ kotlin {
             implementation(project.dependencies.platform(libs.androidx.compose.bom))
             implementation(libs.androidx.compose.ui.tooling.preview)
             implementation(libs.androidx.compose.ui.tooling)
+            // Coil3 async image loading powers JengaImage's actual on Android (the
+            // network engine comes from the consuming app). Desktop/iOS fall back to
+            // the placeholder until their Coil toolchain lines up.
+            implementation(libs.coil.compose)
+            implementation(libs.coil.network.ktor3)
         }
 
         val androidUnitTest by getting {
