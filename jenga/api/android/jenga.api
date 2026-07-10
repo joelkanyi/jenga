@@ -548,6 +548,33 @@ public final class io/github/joelkanyi/jenga/component/icon/JengaIcons {
 	public final fun getWarning (Landroidx/compose/runtime/Composer;I)Landroidx/compose/ui/graphics/vector/ImageVector;
 }
 
+public final class io/github/joelkanyi/jenga/component/image/ComposableSingletons$JengaImagePreviewsKt {
+	public static final field INSTANCE Lio/github/joelkanyi/jenga/component/image/ComposableSingletons$JengaImagePreviewsKt;
+	public fun <init> ()V
+	public final fun getLambda$-257362486$jenga_release ()Lkotlin/jvm/functions/Function2;
+	public final fun getLambda$1812573397$jenga_release ()Lkotlin/jvm/functions/Function2;
+	public final fun getLambda$250405494$jenga_release ()Lkotlin/jvm/functions/Function2;
+}
+
+public final class io/github/joelkanyi/jenga/component/image/JengaImageDefaults {
+	public static final field $stable I
+	public static final field INSTANCE Lio/github/joelkanyi/jenga/component/image/JengaImageDefaults;
+	public final fun getPlaceholderColor (Landroidx/compose/runtime/Composer;I)J
+	public final fun getShape (Landroidx/compose/runtime/Composer;I)Landroidx/compose/ui/graphics/Shape;
+}
+
+public final class io/github/joelkanyi/jenga/component/image/JengaImageFit : java/lang/Enum {
+	public static final field Contain Lio/github/joelkanyi/jenga/component/image/JengaImageFit;
+	public static final field Cover Lio/github/joelkanyi/jenga/component/image/JengaImageFit;
+	public static fun getEntries ()Lkotlin/enums/EnumEntries;
+	public static fun valueOf (Ljava/lang/String;)Lio/github/joelkanyi/jenga/component/image/JengaImageFit;
+	public static fun values ()[Lio/github/joelkanyi/jenga/component/image/JengaImageFit;
+}
+
+public final class io/github/joelkanyi/jenga/component/image/JengaImageKt {
+	public static final fun JengaImage-V-9fs2A (Ljava/lang/String;Ljava/lang/String;Landroidx/compose/ui/Modifier;Landroidx/compose/ui/graphics/Shape;Lio/github/joelkanyi/jenga/component/image/JengaImageFit;JLandroidx/compose/runtime/Composer;II)V
+}
+
 public final class io/github/joelkanyi/jenga/component/layout/ComposableSingletons$JengaBoxPreviewsKt {
 	public static final field INSTANCE Lio/github/joelkanyi/jenga/component/layout/ComposableSingletons$JengaBoxPreviewsKt;
 	public fun <init> ()V
