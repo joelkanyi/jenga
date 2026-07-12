@@ -13,7 +13,7 @@ plugins {
 }
 
 group = "io.github.joelkanyi"
-version = "0.2.1"
+version = "0.2.2-SNAPSHOT"
 
 kotlin {
     // Public API of a published library must be explicit: every public/protected
