@@ -22,11 +22,10 @@ plugins {
 spotless {
     val ktlintVersion = libs.versions.ktlint.get()
     // Compose bends three ktlint naming rules: composables are PascalCase
-    // (function-naming); *Defaults constants are PascalCase like Material3's
-    // ButtonDefaults.MinWidth (property-naming); and a block file bundles
-    // Foo + FooColors + FooDefaults, so the file name need not match one
-    // declaration (filename). Passed as overrides because spotless does not
-    // forward these rule-disable keys from .editorconfig to ktlint.
+    // (function-naming); *Defaults constants are PascalCase (property-naming);
+    // and a block file bundles Foo + FooColors + FooDefaults, so the file name
+    // need not match one declaration (filename). Passed as overrides because
+    // spotless does not forward these rule-disable keys from .editorconfig.
     val rules = mapOf(
         "ktlint_standard_function-naming" to "disabled",
         "ktlint_standard_property-naming" to "disabled",
