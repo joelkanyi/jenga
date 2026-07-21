@@ -50,24 +50,54 @@ internal fun JengaNavigationBarRtlPreview() {
 
 @Composable
 private fun NavBarShowcase() {
-    JengaNavigationBar(modifier = Modifier.background(JengaTheme.colors.background)) {
-        JengaNavigationBarItem(
-            selected = true,
-            onClick = {},
-            icon = { JengaIcon(JengaIcons.Search, contentDescription = null) },
-            label = "Events",
-        )
-        JengaNavigationBarItem(
-            selected = false,
-            onClick = {},
-            icon = { JengaIcon(JengaIcons.Check, contentDescription = null) },
-            label = "Scan",
-        )
-        JengaNavigationBarItem(
-            selected = false,
-            onClick = {},
-            icon = { JengaIcon(JengaIcons.Info, contentDescription = null) },
-            label = "Stats",
-        )
+    Column(
+        modifier = Modifier.background(JengaTheme.colors.background),
+        verticalArrangement = Arrangement.spacedBy(JengaTheme.spacing.lg),
+    ) {
+        // Classic (underline/tint) indicator — the default.
+        JengaNavigationBar {
+            JengaNavigationBarItem(
+                selected = true,
+                onClick = {},
+                icon = { JengaIcon(JengaIcons.Search, contentDescription = null) },
+                label = "Events",
+            )
+            JengaNavigationBarItem(
+                selected = false,
+                onClick = {},
+                icon = { JengaIcon(JengaIcons.Check, contentDescription = null) },
+                label = "Scan",
+            )
+            JengaNavigationBarItem(
+                selected = false,
+                onClick = {},
+                icon = { JengaIcon(JengaIcons.Info, contentDescription = null) },
+                label = "Stats",
+            )
+        }
+        // Material 3 pill active-indicator — opt-in per item.
+        JengaNavigationBar {
+            JengaNavigationBarItem(
+                selected = true,
+                onClick = {},
+                icon = { JengaIcon(JengaIcons.Sun, contentDescription = null) },
+                label = "Today",
+                indicator = JengaNavIndicator.Pill,
+            )
+            JengaNavigationBarItem(
+                selected = false,
+                onClick = {},
+                icon = { JengaIcon(JengaIcons.Search, contentDescription = null) },
+                label = "Discover",
+                indicator = JengaNavIndicator.Pill,
+            )
+            JengaNavigationBarItem(
+                selected = false,
+                onClick = {},
+                icon = { JengaIcon(JengaIcons.Calendar, contentDescription = null) },
+                label = "Plan",
+                indicator = JengaNavIndicator.Pill,
+            )
+        }
     }
 }

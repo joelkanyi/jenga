@@ -15,7 +15,9 @@ import io.github.joelkanyi.jenga.component.layout.JengaWrap
 import io.github.joelkanyi.jenga.resources.Res
 import io.github.joelkanyi.jenga.resources.jenga_ic_add
 import io.github.joelkanyi.jenga.resources.jenga_ic_arrow_back
+import io.github.joelkanyi.jenga.resources.jenga_ic_arrow_right
 import io.github.joelkanyi.jenga.resources.jenga_ic_ban
+import io.github.joelkanyi.jenga.resources.jenga_ic_bulb
 import io.github.joelkanyi.jenga.resources.jenga_ic_bell
 import io.github.joelkanyi.jenga.resources.jenga_ic_calendar
 import io.github.joelkanyi.jenga.resources.jenga_ic_chart
@@ -31,23 +33,33 @@ import io.github.joelkanyi.jenga.resources.jenga_ic_cloud_off
 import io.github.joelkanyi.jenga.resources.jenga_ic_database
 import io.github.joelkanyi.jenga.resources.jenga_ic_eye
 import io.github.joelkanyi.jenga.resources.jenga_ic_eye_off
+import io.github.joelkanyi.jenga.resources.jenga_ic_clock
 import io.github.joelkanyi.jenga.resources.jenga_ic_flash
 import io.github.joelkanyi.jenga.resources.jenga_ic_flash_off
+import io.github.joelkanyi.jenga.resources.jenga_ic_heart
 import io.github.joelkanyi.jenga.resources.jenga_ic_history
+import io.github.joelkanyi.jenga.resources.jenga_ic_image
 import io.github.joelkanyi.jenga.resources.jenga_ic_info
 import io.github.joelkanyi.jenga.resources.jenga_ic_keyboard
 import io.github.joelkanyi.jenga.resources.jenga_ic_lock
 import io.github.joelkanyi.jenga.resources.jenga_ic_logout
 import io.github.joelkanyi.jenga.resources.jenga_ic_mail
+import io.github.joelkanyi.jenga.resources.jenga_ic_message_circle
 import io.github.joelkanyi.jenga.resources.jenga_ic_qr_code
 import io.github.joelkanyi.jenga.resources.jenga_ic_refresh
 import io.github.joelkanyi.jenga.resources.jenga_ic_remove
 import io.github.joelkanyi.jenga.resources.jenga_ic_search
 import io.github.joelkanyi.jenga.resources.jenga_ic_settings
+import io.github.joelkanyi.jenga.resources.jenga_ic_share
 import io.github.joelkanyi.jenga.resources.jenga_ic_shield
+import io.github.joelkanyi.jenga.resources.jenga_ic_shield_check
+import io.github.joelkanyi.jenga.resources.jenga_ic_sliders
 import io.github.joelkanyi.jenga.resources.jenga_ic_smartphone
+import io.github.joelkanyi.jenga.resources.jenga_ic_sparkles
 import io.github.joelkanyi.jenga.resources.jenga_ic_sun
 import io.github.joelkanyi.jenga.resources.jenga_ic_swap
+import io.github.joelkanyi.jenga.resources.jenga_ic_thumbs_down
+import io.github.joelkanyi.jenga.resources.jenga_ic_thumbs_up
 import io.github.joelkanyi.jenga.resources.jenga_ic_trash
 import io.github.joelkanyi.jenga.resources.jenga_ic_user
 import io.github.joelkanyi.jenga.resources.jenga_ic_vibrate
@@ -179,4 +191,30 @@ public object JengaIcons {
         @Composable get() = vectorResource(Res.drawable.jenga_ic_shield)
     public val Settings: ImageVector
         @Composable get() = vectorResource(Res.drawable.jenga_ic_settings)
+
+    // --- Feedback, media & directional line icons (broadly reusable) ---
+    public val ThumbsUp: ImageVector
+        @Composable get() = vectorResource(Res.drawable.jenga_ic_thumbs_up)
+    public val ThumbsDown: ImageVector
+        @Composable get() = vectorResource(Res.drawable.jenga_ic_thumbs_down)
+    public val Heart: ImageVector
+        @Composable get() = vectorResource(Res.drawable.jenga_ic_heart)
+    public val Share: ImageVector
+        @Composable get() = vectorResource(Res.drawable.jenga_ic_share)
+    public val Image: ImageVector
+        @Composable get() = vectorResource(Res.drawable.jenga_ic_image)
+    public val Clock: ImageVector
+        @Composable get() = vectorResource(Res.drawable.jenga_ic_clock)
+    public val ArrowRight: ImageVector
+        @Composable get() = vectorResource(Res.drawable.jenga_ic_arrow_right)
+    public val Sliders: ImageVector
+        @Composable get() = vectorResource(Res.drawable.jenga_ic_sliders)
+    public val MessageCircle: ImageVector
+        @Composable get() = vectorResource(Res.drawable.jenga_ic_message_circle)
+    public val ShieldCheck: ImageVector
+        @Composable get() = vectorResource(Res.drawable.jenga_ic_shield_check)
+    public val Sparkles: ImageVector
+        @Composable get() = vectorResource(Res.drawable.jenga_ic_sparkles)
+    public val Bulb: ImageVector
+        @Composable get() = vectorResource(Res.drawable.jenga_ic_bulb)
 }

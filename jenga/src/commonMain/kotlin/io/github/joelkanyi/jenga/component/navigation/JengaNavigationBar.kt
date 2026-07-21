@@ -2,6 +2,7 @@ package io.github.joelkanyi.jenga.component.navigation
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.RowScope
@@ -18,11 +19,13 @@ import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.Immutable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.semantics.Role
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import io.github.joelkanyi.jenga.component.icon.JengaIcon
@@ -39,7 +42,21 @@ public data class JengaNavigationBarColors(
     public val selectedContent: Color,
     public val unselectedContent: Color,
     public val disabledContent: Color,
+    /** Fill of the [JengaNavIndicator.Pill] behind a selected item's icon. */
+    public val selectedIndicator: Color,
+    /** Icon color inside the [JengaNavIndicator.Pill]. */
+    public val selectedIndicatorContent: Color,
 )
+
+/**
+ * How a [JengaNavigationBarItem] marks the selected state.
+ *
+ * [None] tints the icon + label with the selected content color (the classic
+ * bar). [Pill] additionally draws a rounded "pill" fill behind the icon, the
+ * Material 3 active-indicator look. Defaults to [None] so existing bars are
+ * unchanged; opt in per item.
+ */
+public enum class JengaNavIndicator { None, Pill }
 
 /** Defaults and token mappings for [JengaNavigationBar]. */
 public object JengaNavigationBarDefaults {
@@ -56,6 +73,8 @@ public object JengaNavigationBarDefaults {
             selectedContent = c.brand,
             unselectedContent = c.textMuted,
             disabledContent = c.contentDisabled,
+            selectedIndicator = c.brandSubtle,
+            selectedIndicatorContent = c.onBrandSubtle,
         )
     }
 }
@@ -116,13 +135,16 @@ public fun RowScope.JengaNavigationBarItem(
     modifier: Modifier = Modifier,
     label: String? = null,
     enabled: Boolean = true,
+    indicator: JengaNavIndicator = JengaNavIndicator.None,
     colors: JengaNavigationBarColors = JengaNavigationBarDefaults.colors(),
 ) {
+    val showPill = indicator == JengaNavIndicator.Pill && selected && enabled
     val contentColor = when {
         !enabled -> colors.disabledContent
         selected -> colors.selectedContent
         else -> colors.unselectedContent
     }
+    val iconColor = if (showPill) colors.selectedIndicatorContent else contentColor
     Column(
         modifier = modifier
             .weight(1f)
@@ -131,16 +153,30 @@ public fun RowScope.JengaNavigationBarItem(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.spacedBy(JengaTheme.spacing.xxs),
     ) {
-        CompositionLocalProvider(LocalJengaContentColor provides contentColor) {
-            icon()
-            if (label != null) {
-                JengaText(
-                    text = label,
-                    style = JengaTheme.typography.caption,
-                    color = contentColor,
-                    maxLines = 1,
-                )
+        Box(
+            modifier = if (showPill) {
+                Modifier
+                    .clip(JengaTheme.shapes.pill)
+                    .background(colors.selectedIndicator)
+                    .padding(horizontal = 18.dp, vertical = 5.dp)
+            } else {
+                Modifier.padding(vertical = 5.dp)
+            },
+            contentAlignment = Alignment.Center,
+        ) {
+            CompositionLocalProvider(LocalJengaContentColor provides iconColor) {
+                icon()
             }
+        }
+        if (label != null) {
+            JengaText(
+                text = label,
+                style = JengaTheme.typography.caption.copy(
+                    fontWeight = if (selected) FontWeight.Bold else FontWeight.Medium,
+                ),
+                color = contentColor,
+                maxLines = 1,
+            )
         }
     }
 }

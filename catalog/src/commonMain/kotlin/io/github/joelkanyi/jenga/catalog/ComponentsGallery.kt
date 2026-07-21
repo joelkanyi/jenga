@@ -18,10 +18,23 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
+import io.github.joelkanyi.jenga.component.action.JengaAction
 import io.github.joelkanyi.jenga.component.avatar.JengaAvatar
 import io.github.joelkanyi.jenga.component.avatar.JengaAvatarSize
 import io.github.joelkanyi.jenga.component.badge.JengaBadge
 import io.github.joelkanyi.jenga.component.badge.JengaBadgeTone
+import io.github.joelkanyi.jenga.component.expandable.JengaExpandableRow
+import io.github.joelkanyi.jenga.component.media.JengaMediaHero
+import io.github.joelkanyi.jenga.component.progress.JengaDotStrip
+import io.github.joelkanyi.jenga.component.reaction.JengaReactionBar
+import io.github.joelkanyi.jenga.component.shelf.JengaImageShelf
+import io.github.joelkanyi.jenga.component.shelf.JengaShelfCard
+import io.github.joelkanyi.jenga.component.stat.JengaStatTile
+import io.github.joelkanyi.jenga.component.stat.JengaStatTone
+import io.github.joelkanyi.jenga.component.stepper.JengaStepper
+import io.github.joelkanyi.jenga.component.swipe.JengaSwipeToDismiss
+import io.github.joelkanyi.jenga.component.verdict.JengaVerdictBar
+import io.github.joelkanyi.jenga.component.verdict.JengaVerdictTone
 import io.github.joelkanyi.jenga.component.banner.JengaBanner
 import io.github.joelkanyi.jenga.component.banner.JengaBannerTone
 import io.github.joelkanyi.jenga.component.button.JengaButton
@@ -94,6 +107,8 @@ fun ComponentsGallery() {
     var showDialog by remember { mutableStateOf(false) }
     var showSheet by remember { mutableStateOf(false) }
     var menuOpen by remember { mutableStateOf(false) }
+    var quantity by remember { mutableIntStateOf(2) }
+    var expanded by remember { mutableStateOf(false) }
 
     JengaStack(space = JengaTheme.spacing.xxl) {
         Group("Buttons") {
@@ -259,6 +274,52 @@ fun ComponentsGallery() {
                 JengaStatusPill("Synced", tone = JengaBadgeTone.Success)
                 JengaStatusPill("3 pending", tone = JengaBadgeTone.Warning, loading = true)
                 JengaStatusPill("Offline", tone = JengaBadgeTone.Error)
+            }
+        }
+
+        Group("Content blocks") {
+            JengaVerdictBar(
+                amount = "KES 1,190",
+                amountSuffix = "left",
+                tone = JengaVerdictTone.Positive,
+                label = "This month",
+                progress = 0.62f,
+                sublineStart = "KES 710 of 1,900 spent",
+                sublineEnd = "8 of 11 priced",
+                action = JengaAction("Change") {},
+            )
+            JengaInline {
+                JengaStatTile(label = "Revenue", value = "1,284", unit = "KES", tone = JengaStatTone.Success)
+                JengaStatTile(label = "Refunds", value = "37", tone = JengaStatTone.Error)
+            }
+            JengaInline {
+                JengaStepper(value = quantity, onValueChange = { quantity = it }, min = 1, max = 9)
+                JengaDotStrip(filled = 3, total = 5, contentDescription = "3 of 5 done")
+            }
+            JengaMediaHero(title = "Night Market", support = "Fri · 7pm · Riverside")
+            JengaExpandableRow(
+                expanded = expanded,
+                onToggle = { expanded = !expanded },
+                header = { JengaText("Delivery details", modifier = Modifier.weight(1f)) },
+            ) {
+                JengaText("Ships in 2 to 3 business days. Free returns within 30 days.")
+            }
+            JengaReactionBar(
+                onPositive = {},
+                onNegative = {},
+                positiveContentDescription = "Helpful",
+                negativeContentDescription = "Not helpful",
+            )
+            JengaSwipeToDismiss(onDismiss = {}) {
+                JengaListItem(headline = "Swipe me away", supporting = "End to start to dismiss")
+            }
+        }
+
+        Group("Media shelf") {
+            JengaImageShelf(title = "Picked for tonight", action = JengaAction("See all") {}) {
+                JengaShelfCard(title = "Grilled veg bowl", meta = "25 min · ~540 kcal")
+                JengaShelfCard(title = "Miso ramen", meta = "30 min · ~610 kcal")
+                JengaShelfCard(title = "Poke bowl", meta = "15 min · ~480 kcal")
             }
         }
 

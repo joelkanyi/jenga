@@ -40,6 +40,10 @@ public enum class JengaButtonVariant {
     /** Low-emphasis, transparent — for tertiary actions. */
     Ghost,
 
+    /** Secondary — filled neutral (surface-variant), no border, for the calm
+     *  companion to a Primary action (e.g. an "Another"/"Skip" beside "Confirm"). */
+    Neutral,
+
     /** Medium-emphasis — bordered on a surface fill. */
     Outline,
 
@@ -128,6 +132,14 @@ public object JengaButtonDefaults {
                 content = c.textSecondary,
                 border = Color.Transparent,
                 disabledContainer = Color.Transparent,
+                disabledContent = c.contentDisabled,
+                disabledBorder = Color.Transparent,
+            )
+            JengaButtonVariant.Neutral -> JengaButtonColors(
+                container = c.surfaceVariant,
+                content = c.textPrimary,
+                border = Color.Transparent,
+                disabledContainer = c.surfaceDisabled,
                 disabledContent = c.contentDisabled,
                 disabledBorder = Color.Transparent,
             )
