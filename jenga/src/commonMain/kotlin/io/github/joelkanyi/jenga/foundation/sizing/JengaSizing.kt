@@ -8,9 +8,9 @@ import dev.drewhamilton.poko.Poko
 /**
  * **Sizing token set** — component dimensions, kept separate from [spacing][io.github.joelkanyi.jenga.foundation.spacing.JengaSpacing].
  *
- * Following Uber Base and PayPal, sizing (touch targets, icon sizes, control
- * heights) is its own token category rather than being conflated with spacing
- * or hardcoded per component. Read via `JengaTheme.sizing`.
+ * Sizing (touch targets, icon sizes, control heights) is its own token category
+ * rather than being conflated with spacing or hardcoded per component. Read via
+ * `JengaTheme.sizing`.
  *
  * [minTouchTarget] is the accessibility minimum (48dp — Material/Lyft); Jenga's
  * interactive blocks expand their touch area to at least this even when drawn

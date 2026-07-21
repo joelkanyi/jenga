@@ -49,11 +49,11 @@ public class JengaColors(
     // Lines
     public val border: Color,
     public val borderStrong: Color,
-    // Disabled states (Uber Base: content/background/border StateDisabled)
+    // Disabled states
     public val contentDisabled: Color,
     public val surfaceDisabled: Color,
     public val borderDisabled: Color,
-    // Inverse (high-contrast surfaces: snackbars, tooltips) — Material inverseSurface
+    // Inverse — high-contrast surfaces (snackbars, tooltips)
     public val inverseSurface: Color,
     public val inverseOnSurface: Color,
     // Status — success
@@ -255,8 +255,7 @@ public fun jengaDarkColors(): JengaColors = JengaColors(
 /**
  * Multi-brand convenience — returns a copy of this scheme rebranded to [brand].
  * The semantic structure (surfaces, text, lines, status) is untouched; only the
- * brand accent and its subtle/on pairs change. Analogous to Uber Base's
- * `createTheme(primitives, overrides)`.
+ * brand accent and its subtle/on pairs change.
  *
  * ```
  * JengaTheme(colors = jengaLightColors().withBrand(Color(0xFF6D28D9))) { … }

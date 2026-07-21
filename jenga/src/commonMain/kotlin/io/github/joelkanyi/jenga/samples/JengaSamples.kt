@@ -89,7 +89,7 @@ import io.github.joelkanyi.jenga.theme.JengaTheme
 /**
  * Compiled usage samples surfaced in API docs via `@sample`. They are kept
  * `internal` and compile with the library, so the examples in the KDoc are
- * always valid (Glovo's "samples-as-tests" pattern).
+ * always valid.
  */
 
 @Composable

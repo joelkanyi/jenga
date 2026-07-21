@@ -8,8 +8,8 @@ import dev.drewhamilton.poko.Poko
 /**
  * **Spacing token set** — a 4dp-based scale for padding, gaps and insets.
  *
- * Named mechanically (by step, not purpose) per the Revolut/Style-Dictionary
- * approach: the scale stays predictable and consistent, while *semantic* usage
+ * Named mechanically (by step, not purpose): the scale stays predictable and
+ * consistent, while *semantic* usage
  * (screen gutter, card padding, stack gap) is documented in the catalog and
  * applied at the component layer. Read via `JengaTheme.spacing`.
  *

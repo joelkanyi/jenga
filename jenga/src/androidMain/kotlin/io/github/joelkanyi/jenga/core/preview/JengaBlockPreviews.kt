@@ -6,7 +6,7 @@ import androidx.compose.ui.tooling.preview.Preview
 /**
  * Multipreview for jenga blocks — renders each showcase in light, dark and at a
  * large font scale, so Roborazzi captures all three from a single annotated
- * function (the Cash App norm: cover light/dark **and** sizes, not just one).
+ * function, covering light/dark **and** sizes, not just one.
  *
  * Apply to an `internal` showcase that wraps content in `JengaTheme { ... }`
  * (no explicit `darkTheme`), so the "Dark" entry's night [Configuration] flips
