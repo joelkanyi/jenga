@@ -11,7 +11,7 @@ import kotlin.math.min
 import kotlin.math.pow
 
 /**
- * Depth guardrails — the sibling of [JengaContrastTest] for *separation* rather than text
+ * Depth guardrails: the sibling of [JengaContrastTest] for *separation* rather than text
  * legibility. Born from a real report: cards were nearly the same colour as the page, and
  * their borders were too faint to read the card's edge. These are enforceable so it can
  * never regress:
@@ -49,7 +49,7 @@ class JengaSurfaceSeparationTest {
     @Test
     fun theDarkElevationRampIsMonotonic() {
         val c = jengaDarkColors()
-        // recessed < page-card < raised — depth is lightness in the dark.
+        // recessed < page-card < raised; depth is lightness in the dark.
         assertTrue("surfaceSunk must be no lighter than surface", luminance(c.surfaceSunk) <= luminance(c.surface))
         assertTrue("surface must be lighter than background", luminance(c.surface) > luminance(c.background))
         assertTrue("surfaceVariant (raised) must be lighter than surface", luminance(c.surfaceVariant) > luminance(c.surface))

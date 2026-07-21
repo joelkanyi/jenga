@@ -31,23 +31,23 @@ import io.github.joelkanyi.jenga.theme.LocalJengaContentColor
 
 /** Visual style of a [JengaButton]. */
 public enum class JengaButtonVariant {
-    /** Primary call to action — filled brand orange. */
+    /** Primary call to action: filled brand orange. */
     Primary,
 
-    /** High-emphasis alternative — filled ink (navy). */
+    /** High-emphasis alternative: filled ink (navy). */
     Ink,
 
-    /** Low-emphasis, transparent — for tertiary actions. */
+    /** Low-emphasis, transparent, for tertiary actions. */
     Ghost,
 
-    /** Secondary — filled neutral (surface-variant), no border, for the calm
+    /** Secondary: filled neutral (surface-variant), no border, for the calm
      *  companion to a Primary action (e.g. an "Another"/"Skip" beside "Confirm"). */
     Neutral,
 
-    /** Medium-emphasis — bordered on a surface fill. */
+    /** Medium-emphasis: bordered on a surface fill. */
     Outline,
 
-    /** Destructive action — bordered, error-colored. */
+    /** Destructive action: bordered, error-colored. */
     Danger,
 }
 
@@ -174,7 +174,7 @@ public object JengaButtonDefaults {
 }
 
 /**
- * A Jenga button — the primary way to trigger an action.
+ * A Jenga button: the primary way to trigger an action.
  *
  * This is the convenience overload that renders a text label with the
  * size-appropriate style. For custom content (e.g. icon + multi-style text),

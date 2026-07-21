@@ -57,7 +57,7 @@ public object JengaVerdictBarDefaults {
     /**
      * Themed colors for [tone]. The verdict hero reads as a rich, saturated
      * band in **both** schemes (a decision surface, not a card), with light
-     * text — so the fill deepens the tone color and text stays bright.
+     * text, so the fill deepens the tone color and text stays bright.
      */
     @Composable
     public fun colors(tone: JengaVerdictTone): JengaVerdictBarColors {
@@ -69,7 +69,7 @@ public object JengaVerdictBarDefaults {
             JengaVerdictTone.Brand -> c.brand
         }
         // Light schemes start from an already-dark status color; dark schemes
-        // start from a bright one — deepen each into the same rich band, using
+        // start from a bright one; deepen each into the same rich band, using
         // the theme's own scrim colour (opaque) as the dark anchor.
         val ink = c.scrim.copy(alpha = 1f)
         val topMix = if (c.isLight) 0.12f else 0.50f
@@ -108,7 +108,7 @@ public class JengaVerdictSublines(
  * A full-width verdict banner: a tone-colored band with an optional [label], a
  * big [amount] (with optional [amountSuffix]), an optional [progress] bar, and an
  * optional pair of honest [sublines]. A one-glance "where do I stand" summary
- * (budget, goal, quota). Generic — numbers and copy are the caller's; color
+ * (budget, goal, quota). Generic; numbers and copy are the caller's, color
  * follows [tone].
  *
  * @param amount the headline value (e.g. "KES 1,190").

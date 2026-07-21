@@ -9,7 +9,7 @@ import androidx.compose.ui.unit.sp
 import dev.drewhamilton.poko.Poko
 
 /**
- * **Typography token set** — the Jenga type scale.
+ * **Typography token set**: the Jenga type scale.
  *
  * Sizes are fixed-point ports of the frontend's fluid (`clamp`) scale, tuned
  * for mobile. Note the negative [TextStyle.letterSpacing] that tightens as type
@@ -85,7 +85,7 @@ private val defaultLineHeightStyle = LineHeightStyle(
 /**
  * Builds the default Jenga type scale.
  *
- * A brand may run two typefaces — one for display roles (display, heading*,
+ * A brand may run two typefaces, one for display roles (display, heading*,
  * title*) and one for body text (body*, label, caption, button). Pass
  * [displayFontFamily] and [bodyFontFamily] separately for that; pass a single
  * [fontFamily] to use one face across the whole scale (it defaults both).
@@ -210,7 +210,7 @@ public fun jengaTypography(
 /**
  * Recommended per-tier caps on the system font scale. Larger type is capped
  * tighter (it scales the layout more);
- * body/label allow the full range. Pass these to `JengaText(maxFontScale = …)`.
+ * body and label allow the full range. Pass these to `JengaText(maxFontScale = …)`.
  */
 public object JengaTypographyDefaults {
     /** Display type: cap at 125%. */

@@ -40,7 +40,7 @@ import io.github.joelkanyi.jenga.component.text.JengaText
 import io.github.joelkanyi.jenga.theme.JengaTheme
 
 /**
- * The catalog shell — itself built entirely from Jenga (layout primitives,
+ * The catalog shell: itself built entirely from Jenga (layout primitives,
  * segmented control, buttons, text). Switches between the **Foundations** token
  * gallery and the live **Components** gallery; the toolbar toggles light/dark.
  */
@@ -190,7 +190,7 @@ private fun TypographySection() {
             TypeRow("headingLarge") { JengaText("Heading large", style = t.headingLarge) }
             TypeRow("headingMedium") { JengaText("Heading medium", style = t.headingMedium) }
             TypeRow("titleLarge") { JengaText("Title large", style = t.titleLarge) }
-            TypeRow("bodyMedium") { JengaText("Body — default text", style = t.bodyMedium) }
+            TypeRow("bodyMedium") { JengaText("Body: default text", style = t.bodyMedium) }
             TypeRow("label") { JengaText("LABEL", style = t.label) }
             TypeRow("caption") { JengaText("Caption", style = t.caption) }
         }

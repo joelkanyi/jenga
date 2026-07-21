@@ -89,7 +89,7 @@ import io.github.joelkanyi.jenga.pattern.JengaTicketRow
 import io.github.joelkanyi.jenga.theme.JengaTheme
 
 /**
- * A live gallery of every Jenga block, pattern and layout primitive — scroll to
+ * A live gallery of every Jenga block, pattern and layout primitive: scroll to
  * browse them all, interact with them, and flip light/dark from the toolbar.
  */
 @Composable
@@ -181,7 +181,7 @@ fun ComponentsGallery(modifier: Modifier = Modifier) {
         }
 
         Group("Feedback") {
-            JengaBanner("Working offline — scans will sync later.", tone = JengaBannerTone.Info)
+            JengaBanner("Working offline; scans will sync later.", tone = JengaBannerTone.Info)
             JengaBanner("Already scanned.", tone = JengaBannerTone.Error)
             JengaSnackbar("Saved offline", tone = JengaSnackbarTone.Neutral, actionLabel = "Undo", onAction = {})
             JengaTooltip("Re-admit this attendee")

@@ -6,7 +6,7 @@ import androidx.compose.ui.unit.dp
 import dev.drewhamilton.poko.Poko
 
 /**
- * **Spacing token set** — a 4dp-based scale for padding, gaps and insets.
+ * **Spacing token set**: a 4dp-based scale for padding, gaps and insets.
  *
  * Named mechanically (by step, not purpose): the scale stays predictable and
  * consistent, while *semantic* usage

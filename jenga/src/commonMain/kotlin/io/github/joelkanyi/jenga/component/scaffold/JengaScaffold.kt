@@ -20,7 +20,7 @@ public object JengaScaffoldDefaults {
         @Composable get() = JengaTheme.colors.textPrimary
 
     /**
-     * Window insets the content is kept clear of — the system bars by default,
+     * Window insets the content is kept clear of: the system bars by default,
      * so the content lambda's [PaddingValues] already avoids the status and
      * navigation bars in an edge-to-edge app.
      *

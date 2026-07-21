@@ -55,7 +55,7 @@ internal val LocalJengaIcons = staticCompositionLocalOf<JengaIconSet?> { null }
  * The preferred content color (text, icons) for the current subtree, mirroring
  * Material's `LocalContentColor`. Components set this so their slot content
  * inherits the right color (e.g. text inside a primary button becomes `onBrand`).
- * [Color.Unspecified] means "fall back to the theme" — see [JengaText].
+ * [Color.Unspecified] means "fall back to the theme"; see [JengaText].
  */
 public val LocalJengaContentColor: ProvidableCompositionLocal<Color> =
     compositionLocalOf { Color.Unspecified }
@@ -118,7 +118,7 @@ public object JengaTheme {
  * `JengaTheme(colors = jengaLightColors().copy(brand = Color(0xFF6D28D9))) { ... }`.
  *
  * A Material 3 theme is provided internally (mapped from these tokens) so M3
- * primitives such as ripples and text selection stay on-brand — but it is an
+ * primitives such as ripples and text selection stay on-brand, but it is an
  * implementation detail and not part of Jenga's API.
  *
  * @param darkTheme whether to use the dark scheme; follows the system by default.
@@ -174,7 +174,7 @@ public fun JengaTheme(
 }
 
 /**
- * Provides Jenga themed from a single [brand] — one seed color yields a coherent,
+ * Provides Jenga themed from a single [brand]: one seed color yields a coherent,
  * accessible light and dark scheme plus type, shape and density:
  *
  * ```

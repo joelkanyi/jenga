@@ -1,11 +1,11 @@
 # Theming
 
 Jenga ships neutral and themes from a single brand definition. Customization is a
-ladder — each rung adds one argument to the one below, and every argument defaults
+ladder: each rung adds one argument to the one below, and every argument defaults
 to the value the brand would derive. Start at the top; drop down only as far as you
 need.
 
-## L0 — zero config
+## L0: zero config
 
 ```kotlin
 JengaTheme { App() }
@@ -14,7 +14,7 @@ JengaTheme { App() }
 Jenga's default tokens (neutral palette, bundled Outfit font, rounded shapes). Good
 for prototypes and internal tools.
 
-## L1 — one seed
+## L1: one seed
 
 ```kotlin
 JengaTheme(brand = jengaBrand(seed = Color(0xFF6D28D9))) { App() }
@@ -23,7 +23,7 @@ JengaTheme(brand = jengaBrand(seed = Color(0xFF6D28D9))) { App() }
 The seed derives the brand color family for both light and dark, accessibly by
 construction: the on-colors sit at the opposite end of the seed's tonal ramp, so
 text on a brand fill always has contrast. Neutral surfaces and the semantic status
-colors (success / warning / error / info) keep Jenga's tuned defaults — meaning does
+colors (success / warning / error / info) keep Jenga's tuned defaults; meaning does
 not rotate with your hue.
 
 `jengaBrand` takes a few more inputs, all optional:
@@ -45,7 +45,7 @@ A single `fontFamily = …` sets both display and body at once.
 
 ### Fonts
 
-Jenga does not ship third-party fonts — you supply a `FontFamily`. Put the `.ttf`
+Jenga does not ship third-party fonts; you supply a `FontFamily`. Put the `.ttf`
 files under your app's `composeResources/font/` and build the family in a
 `remember`-style function (works on Android, iOS, desktop and wasm):
 
@@ -66,7 +66,7 @@ Omit the font entirely to keep the bundled **Outfit** family. Android's download
 
 ### Icons
 
-You are never limited to Jenga's icons. `JengaIcon` — and every component's icon slot —
+You are never limited to Jenga's icons. `JengaIcon` (and every component's icon slot)
 takes any `ImageVector`, so draw your own in your UI:
 
 ```kotlin
@@ -91,9 +91,9 @@ JengaTheme(icons = rememberJengaIconSet(chevron = MyChevron, trash = MyTrash)) {
 ```
 
 Unset roles fall back to Jenga's own vectors. `JengaIcons` is the bundled catalogue you
-can draw with, but it is optional — any `ImageVector` works.
+can draw with, but it is optional; any `ImageVector` works.
 
-## L2 — seed plus a targeted override
+## L2: seed plus a targeted override
 
 Every derived token is also an override argument on `JengaTheme(brand = …)`:
 
@@ -104,7 +104,7 @@ JengaTheme(
 ) { App() }
 ```
 
-## L3 — full control
+## L3: full control
 
 Override a few roles off a base, or hand-author both schemes as one pair. The
 light/dark selection is handled for you.
@@ -128,7 +128,7 @@ you don't name.
 
 ## Reading tokens
 
-Inside a theme, read tokens off `JengaTheme.*` — never inline a raw value:
+Inside a theme, read tokens off `JengaTheme.*`, never inline a raw value:
 
 ```kotlin
 JengaText(color = JengaTheme.colors.textPrimary, style = JengaTheme.typography.bodyMedium)

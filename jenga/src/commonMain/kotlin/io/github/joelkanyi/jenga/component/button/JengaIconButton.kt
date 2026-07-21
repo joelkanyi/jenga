@@ -23,13 +23,13 @@ import io.github.joelkanyi.jenga.theme.LocalJengaContentColor
 
 /** Visual style of a [JengaIconButton]. */
 public enum class JengaIconButtonVariant {
-    /** Transparent — the default for app-bar and toolbar actions. */
+    /** Transparent: the default for app-bar and toolbar actions. */
     Standard,
 
-    /** Filled brand — a prominent, single-icon action. */
+    /** Filled brand: a prominent, single-icon action. */
     Filled,
 
-    /** Soft brand-subtle fill — medium emphasis. */
+    /** Soft brand-subtle fill, medium emphasis. */
     Tonal,
 
     /** Dark translucent circle for controls floating over a camera feed / photo /
@@ -60,7 +60,7 @@ public object JengaIconButtonDefaults {
     /** Diameter of the button surface (the touch target is expanded to 48dp). */
     public val Size: Dp = 40.dp
 
-    /** Default shape — a circle. */
+    /** Default shape: a circle. */
     public val shape: Shape
         @Composable get() = JengaTheme.shapes.pill
 
@@ -98,7 +98,7 @@ public object JengaIconButtonDefaults {
 }
 
 /**
- * A compact, icon-only button — for app-bar actions, toolbars, and inline
+ * A compact, icon-only button, for app-bar actions, toolbars, and inline
  * controls where a labelled [JengaButton] would be too heavy.
  *
  * The visible surface is [JengaIconButtonDefaults.Size], but the touch target is

@@ -8,7 +8,7 @@ import io.github.joelkanyi.jenga.component.textfield.JengaTextField
 import io.github.joelkanyi.jenga.theme.JengaTheme
 
 /**
- * A search input — a pill-shaped [JengaTextField] with a leading search icon and
+ * A search input: a pill-shaped [JengaTextField] with a leading search icon and
  * a clear button that appears once there's text.
  *
  * @sample io.github.joelkanyi.jenga.samples.JengaSearchFieldSample

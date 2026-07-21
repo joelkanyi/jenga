@@ -1,4 +1,4 @@
-# Design: JengaBrand — brand a whole theme from one definition
+# Design: JengaBrand, brand a whole theme from one definition
 
 Status: proposed (design-first, pre-implementation). Written before implementation.
 
@@ -6,7 +6,7 @@ Status: proposed (design-first, pre-implementation). Written before implementati
 
 A consumer who finds jenga and wants to make it theirs must today re-specify the
 token set by hand: `jengaLightColors().copy(...)` across ~39 color roles, then
-again for `jengaDarkColors()`, plus typography, spacing, shapes — and there is no
+again for `jengaDarkColors()`, plus typography, spacing, shapes, and there is no
 single object that says "this is my brand." Fonts only support one family; icons
 are hardcoded in components and cannot be rebranded at all.
 
@@ -30,7 +30,7 @@ gentle slope from zero-config to full control.
 ## 3. The layered API
 
 Four tiers, each reachable by adding one named argument to the tier below, each
-argument defaulting to the brand-derived value — a continuum, not four doors.
+argument defaulting to the brand-derived value: a continuum, not four doors.
 
 ```kotlin
 JengaTheme { App() }                                             // L0 zero-config
@@ -50,16 +50,16 @@ JengaTheme(colors = jengaLightColors().copy(brand = Purple)) { } // L3 full manu
 @Immutable
 public class JengaBrand internal constructor(
     // Color
-    public val seed: Color,                 // required — primary brand accent
-    public val accent: Color?,              // optional — drives ink/onInk; derived if null
-    public val neutral: Color?,             // optional — surface/text tint hint; null = seed hue @ low chroma (see depth note)
-    public val contrast: JengaContrast,     // Standard | Medium | High — widens tonal deltas
-    // Type — display + body, not one family
+    public val seed: Color,                 // required: primary brand accent
+    public val accent: Color?,              // optional: drives ink/onInk; derived if null
+    public val neutral: Color?,             // optional: surface/text tint hint; null = seed hue @ low chroma (see depth note)
+    public val contrast: JengaContrast,     // Standard | Medium | High: widens tonal deltas
+    // Type: display + body, not one family
     public val displayFontFamily: FontFamily?,  // headings; null = jenga default (Outfit)
     public val bodyFontFamily: FontFamily?,      // body/text; null = jenga default
     // Shape + density
-    public val corner: JengaCornerStyle,    // Rounded | Soft | Sharp — drives JengaShapes
-    public val density: JengaDensity,       // Compact | Comfortable | Spacious — drives spacing + sizing
+    public val corner: JengaCornerStyle,    // Rounded | Soft | Sharp: drives JengaShapes
+    public val density: JengaDensity,       // Compact | Comfortable | Spacious: drives spacing + sizing
     // Icons
     public val icons: JengaIconSet,         // themeable semantic icon set
 )
@@ -89,18 +89,18 @@ public fun JengaBrand.spacing(): JengaSpacing
 public fun JengaBrand.sizing(): JengaSizing
 ```
 
-### 4.2 Color derivation — hybrid HCT (decision: HCT brand family, fixed neutrals)
+### 4.2 Color derivation: hybrid HCT (decision: HCT brand family, fixed neutrals)
 
 Vendor a minimal HCT subset into `commonMain` (pure Kotlin math, Apache-2.0,
-license header — own the core, and validate it in tests against a reference
+license header, own the core, and validate it in tests against a reference
 implementation's known values). Only what is needed:
 
 ```
 foundation/color/hct/   (internal)
-  Hct.kt        — HCT <-> ARGB (CAM16 + L*)
+  Hct.kt        : HCT <-> ARGB (CAM16 + L*)
   Cam16.kt
-  ColorUtils.kt — sRGB <-> XYZ, luminance
-  TonalPalette.kt — tone(0..100) off a fixed hue+chroma
+  ColorUtils.kt : sRGB <-> XYZ, luminance
+  TonalPalette.kt : tone(0..100) off a fixed hue+chroma
 ```
 
 Pipeline (hybrid scope):
@@ -125,7 +125,7 @@ Accessibility is **structural**: onBrand/onBrandSubtle are pulled from the
 opposite end of the brand ramp from their background, so contrast holds by
 construction; `contrast` widens the delta.
 
-### 4.3 Typography — display + body split
+### 4.3 Typography: display + body split
 
 `JengaTypography` stays a 13-role value type. `jengaTypography` gains a second
 family so headings and body can differ:
@@ -143,7 +143,7 @@ public fun jengaTypography(
 
 #### Bring your own font (adopter side)
 
-jenga does not ship third-party fonts — font files are the consumer's assets
+jenga does not ship third-party fonts; font files are the consumer's assets
 (licensing + size). jenga accepts a `FontFamily`, which is Compose's standard
 currency, and stays out of font loading. The adopter supplies the family; the
 `.ttf`-in-`composeResources` path is the one that works on Android + iOS +
@@ -158,7 +158,7 @@ yourApp/src/commonMain/composeResources/font/
     nunito_regular.ttf   nunito_bold.ttf
 ```
 
-2. Build the `FontFamily` — Compose Resources `Font()` is `@Composable`, so wrap
+2. Build the `FontFamily`: Compose Resources `Font()` is `@Composable`, so wrap
    it in a `remember`-style function (the same shape as jenga's own
    `rememberJengaFontFamily()`):
 
@@ -176,7 +176,7 @@ fun rememberPoppins() = FontFamily(
 )
 ```
 
-3. Hand it to the brand — one face everywhere, or a display/body pair:
+3. Hand it to the brand, one face everywhere, or a display/body pair:
 
 ```kotlin
 JengaTheme(brand = jengaBrand(seed = Color(0xFF6D28D9), fontFamily = rememberPoppins())) {
@@ -196,11 +196,11 @@ Omitting `fontFamily` keeps jenga's bundled Outfit default (zero setup). If an
 adopter prefers not to use Compose Resources, they can build the `FontFamily` any
 other way (platform fonts, etc.) and still just pass it in.
 
-### 4.4 Icons — themeable `JengaIconSet` (architecture change)
+### 4.4 Icons: themeable `JengaIconSet` (architecture change)
 
 Today `JengaIcons` is a static catalog and components hardcode 11 semantic roles
 (Add, Remove, Check, CheckCircle, ChevronRight, Close, Info, Search, ThumbsUp,
-ThumbsDown, Trash) in their bodies — so icons cannot be rebranded. Introduce a
+ThumbsDown, Trash) in their bodies, so icons cannot be rebranded. Introduce a
 themeable semantic set, keeping `JengaIcons` as the default vector catalog.
 
 ```kotlin
@@ -228,7 +228,7 @@ internal val LocalJengaIcons = staticCompositionLocalOf { JengaIconSet.Default }
 // JengaTheme.icons: JengaIconSet   (new accessor, like colors/typography)
 ```
 
-- `JengaIcons` (catalog of ~all vectors) stays public and unchanged — consumers
+- `JengaIcons` (catalog of ~all vectors) stays public and unchanged; consumers
   keep using `JengaIcons.Search` in their own UI.
 - `JengaIconSet` is the semantic mapping components read. All 11 hardcoded call
   sites route through `JengaTheme.icons.*`. Components that already expose an icon
@@ -257,7 +257,7 @@ public fun JengaTheme(
 accessor over `LocalJengaIcons`. The existing L3 overload also gains an `icons`
 parameter (default `JengaIconSet.Default`).
 
-### 4.6 Full control — `JengaScheme` pair + `copy()` (L3, first-class)
+### 4.6 Full control: `JengaScheme` pair + `copy()` (L3, first-class)
 
 For a consumer with a complete token sheet (every role specified, nothing
 derived), the seed is the wrong tool. The right tool is **`copy()` off a base**
@@ -291,8 +291,8 @@ JengaTheme(scheme = AcmeColors) { App() }   // selection handled internally
 ```
 
 Why not a 39-parameter `jengaColors(...)` factory: it reintroduces exactly the
-problems a wide factory has — no named-only enforcement, positional fragility, and
-default-value duplication — while `copy()` already gives named-only, binary-safe
+problems a wide factory has: no named-only enforcement, positional fragility, and
+default-value duplication, while `copy()` already gives named-only, binary-safe
 overrides for free. Why not a `jengaColors { }` builder-DSL: `copy()` already
 delivers the DSL's benefits without the ~500-line, seven-bundle builder cost or the
 unfamiliarity tax (a prototype confirmed the DSL's only extra was a marginal
@@ -301,7 +301,7 @@ unfamiliarity tax (a prototype confirmed the DSL's only extra was a marginal
 `jengaLightColors()`/`jengaDarkColors()` remain the zero-arg default schemes;
 `JengaColors`' constructor may become `internal` since `copy()` + the factories
 cover every construction need. Full custom is inherently two palettes (light +
-dark) — expected when a consumer has a spec for both modes; `JengaScheme` makes
+dark), expected when a consumer has a spec for both modes; `JengaScheme` makes
 that pair one object, and `JengaBrand` removes the duplication for the common case.
 
 ## 5. Data flow
@@ -325,7 +325,7 @@ JengaTheme.colors / .typography / .icons / …  ◄── components read here
   × {Standard, High}, not just the two fixed default schemes.
 - **HCT correctness**: unit-test the vendored `Hct`/`TonalPalette` against known
   reference values.
-- **Determinism**: `brand.lightColors()` is pure — same input, same output; snapshot
+- **Determinism**: `brand.lightColors()` is pure, same input, same output; snapshot
   a golden set.
 
 ## 7. Packaging
@@ -351,7 +351,7 @@ JengaTheme.colors / .typography / .icons / …  ◄── components read here
 
 - Neutral tinting toward `neutral` seed: deferred to a later pass (v1 keeps jenga's
   tuned neutrals). Revisit if brands ask for tinted surfaces.
-- Whether `corner`/`density` are enums (proposed) or free scales — enums first
+- Whether `corner`/`density` are enums (proposed) or free scales, enums first
   (hard to misuse), escape hatch is L3 `shapes =`/`spacing =`.
 
 ## 10. DSL: deliberately not used (and why)
@@ -361,7 +361,7 @@ established criteria for builders vs factories and Kotlin's type-safe-builder
 guidance. Verdict: **no new DSL earns its place.** Recorded here so the decision
 isn't silently re-litigated.
 
-Rubric — a builder/DSL beats a factory only when one genuinely holds:
+Rubric: a builder/DSL beats a factory only when one genuinely holds:
 1. tree-shaped / nested construction (`html { body { } }`);
 2. a wide, same-typed, *growing* value bag where named-only + binary-compat matter
    AND `copy()` doesn't already provide them;
@@ -369,23 +369,23 @@ Rubric — a builder/DSL beats a factory only when one genuinely holds:
 4. collection / scope building (`LazyListScope { item { } }`).
 
 Per-surface outcome:
-- **JengaColors (39 roles, growing)** — the one surface where JW's builder argument
+- **JengaColors (39 roles, growing)**: the one surface where the builder argument
   bites (criterion 2). But `copy()` already delivers named-only, binary-safe
   overrides with zero new/unfamiliar API. A DSL adds surface for no net gain.
 - **Other token bundles (Typography/Spacing/Shapes/Sizing/Icons/Elevation/Motion)**
-  — flat, stable ("2D point" case). Factory + `copy()`.
-- **Full theme composition** — not tree-shaped; a flat bag of sibling bundles, and
+  are flat, stable ("2D point" case). Factory + `copy()`.
+- **Full theme composition**: not tree-shaped; a flat bag of sibling bundles, and
   `JengaTheme` must stay a `@Composable` mirroring `MaterialTheme`. No `jengaTheme { }`.
-- **JengaBrand seed** — 8 flat mixed scalars. Factory with named defaults.
-- **Components** — trailing `@Composable` content slots (not config); already correct.
-- **Collections (nav bar, menus)** — already use `RowScope`/`ColumnScope` item
+- **JengaBrand seed**: 8 flat mixed scalars. Factory with named defaults.
+- **Components**: trailing `@Composable` content slots (not config); already correct.
+- **Collections (nav bar, menus)**: already use `RowScope`/`ColumnScope` item
   scopes (the `LazyListScope` pattern). Tabs/segmented take `List<String>` (flat).
 
 A compiling prototype (`jengaColors { }` + a light/dark `jengaScheme { }`) confirmed
 it: single-scheme block ≈ `copy()`; the only extra was a marginal `shared { }`, at a
 cost of ~130 lines of hand-maintained builder per bundle (~500+ across all seven)
 plus `@DslMarker`. The prototype's real payoff was exposing that the actual missing
-piece is a **light+dark pair type** (`JengaScheme`, §4.6), not a DSL — a plain,
+piece is a **light+dark pair type** (`JengaScheme`, §4.6), not a DSL, a plain,
 familiar value type that solves the two-palette/selection pain the block syntax was
 reaching for.
 

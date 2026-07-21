@@ -16,8 +16,8 @@ public enum class JengaCornerStyle { Rounded, Soft, Sharp }
 public enum class JengaDensity { Compact, Comfortable, Spacious }
 
 /**
- * A single brand definition that derives a whole theme — a coherent, accessible
- * light and dark scheme plus type, shape and density — from a few inputs.
+ * A single brand definition that derives a whole theme: a coherent, accessible
+ * light and dark scheme plus type, shape and density, from a few inputs.
  *
  * Only the brand accent family and (optionally) the ink action color are derived
  * from color; neutral surfaces and semantic status colors keep Jenga's tuned

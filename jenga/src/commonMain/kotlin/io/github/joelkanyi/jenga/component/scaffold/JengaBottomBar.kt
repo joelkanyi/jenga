@@ -58,7 +58,7 @@ public object JengaBottomBarDefaults {
 }
 
 /**
- * A bottom app bar — a surface pinned to the bottom of a [JengaScaffold] hosting a
+ * A bottom app bar: a surface pinned to the bottom of a [JengaScaffold] hosting a
  * row of actions. Applies the navigation-bar inset itself, so it sits correctly
  * above the system bar in an edge-to-edge app, and draws a hairline divider on top.
  *

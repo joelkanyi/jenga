@@ -101,7 +101,7 @@ public fun JengaIcon(
 }
 
 /**
- * Jenga's curated icon set — a small, self-contained collection of line icons
+ * Jenga's curated icon set: a small, self-contained collection of line icons
  * shipped as vector drawables (no external icon dependency). Directional icons
  * are `autoMirrored`, so they flip in right-to-left layouts.
  *

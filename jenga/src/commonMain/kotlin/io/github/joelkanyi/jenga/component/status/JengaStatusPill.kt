@@ -59,8 +59,8 @@ public object JengaStatusPillDefaults {
 
 /**
  * A compact status pill: a leading dot (or a spinner while [loading]) plus a short
- * label, tinted by [tone]. Use it for live, glanceable state — connectivity, sync,
- * gate health — anywhere a [io.github.joelkanyi.jenga.component.badge.JengaBadge] is
+ * label, tinted by [tone]. Use it for live, glanceable state (connectivity, sync,
+ * gate health) anywhere a [io.github.joelkanyi.jenga.component.badge.JengaBadge] is
  * too static. Optionally [onClick]able to open details.
  *
  * @sample io.github.joelkanyi.jenga.samples.JengaStatusPillSample

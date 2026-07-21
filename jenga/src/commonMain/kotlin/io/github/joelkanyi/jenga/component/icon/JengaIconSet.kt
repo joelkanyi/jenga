@@ -6,7 +6,7 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import dev.drewhamilton.poko.Poko
 
 /**
- * The semantic icons that Jenga components draw for themselves — the chevron on
+ * The semantic icons that Jenga components draw for themselves: the chevron on
  * an expandable row, the +/- on a stepper, the glyph a banner shows for each
  * tone, and so on. Provide a custom set via `JengaTheme(icons = ...)` (or
  * [rememberJengaIconSet]) to give every component your own iconography.

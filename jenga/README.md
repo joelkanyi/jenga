@@ -36,13 +36,13 @@ JengaText(color = JengaTheme.colors.textMuted, style = JengaTheme.typography.bod
 Spacer(Modifier.height(JengaTheme.spacing.lg))
 ```
 
-You never touch `MaterialTheme` — the public API is entirely `JengaTheme.*` / `Jenga*`.
+You never touch `MaterialTheme`; the public API is entirely `JengaTheme.*` / `Jenga*`.
 
 ---
 
 ## Architecture
 
-Three-tier tokens → blocks → patterns (Spotify Encore / Atomic Design):
+Three-tier tokens → blocks → patterns:
 
 ```
 foundation/   primitive palette → semantic JengaColors → typography/spacing/shape/sizing/elevation/motion
@@ -62,7 +62,7 @@ pattern/      organisms composed from blocks (TicketRow, StatCard, SectionHeader
 
 ## Layout primitives
 
-Stop nesting `Row`/`Column`/`Modifier` — spacing comes from tokens:
+Stop nesting `Row`/`Column`/`Modifier`; spacing comes from tokens:
 
 | Block | Use |
 |---|---|
@@ -79,20 +79,23 @@ Stop nesting `Row`/`Column`/`Modifier` — spacing comes from tokens:
 ## Theming & multi-brand
 
 Every token is overridable via `JengaTheme(...)` params, and `JengaColors` is a `copy`-able
-`@Immutable` data class. Rebrand in one line:
+`@Immutable` data class. Brand the whole theme from a single seed: `jengaBrand(seed = …)`
+derives a coherent light and dark theme.
 
 ```kotlin
-JengaTheme(colors = jengaLightColors().withBrand(Color(0xFF6D28D9))) { … }
+JengaTheme(brand = jengaBrand(seed = Color(0xFF6D28D9))) { … }
 ```
 
-Dark mode is a semantic swap (`jengaLightColors()` / `jengaDarkColors()`), not duplicated components.
+For a single-scheme tweak, `jengaLightColors().withBrand(Color(0xFF6D28D9))` is a lower-level
+helper that rebrands one palette. Dark mode is a semantic swap (`jengaLightColors()` /
+`jengaDarkColors()`), not duplicated components.
 
 ---
 
 ## Accessibility
 
 - Interactive blocks reserve a **48dp** touch target (`minimumInteractiveComponentSize`).
-- Color pairs are **contrast-tested** (WCAG AA 4.5:1 for text; 3:1 for brand fills) — see
+- Color pairs are **contrast-tested** (WCAG AA 4.5:1 for text; 3:1 for brand fills), see
   `JengaContrastTest`.
 - Inputs show a focus ring; directional icons `autoMirror` for RTL.
 - Every block ships verified **light / dark / large-font / RTL** screenshots.
@@ -104,7 +107,7 @@ Dark mode is a semantic swap (`jengaLightColors()` / `jengaDarkColors()`), not d
 | Gate | Command |
 |---|---|
 | Build | `./gradlew :jenga:assembleDebug` |
-| Compose lint (Slack compose-lints) | `./gradlew :jenga:lintDebug` |
+| Compose lint (compose-lints) | `./gradlew :jenga:lintDebug` |
 | No raw colors in components | `./gradlew :jenga:checkJengaTokenUsage` |
 | Unit + contrast/a11y tests | `./gradlew :jenga:testDebugUnitTest` |
 | Public API compatibility (BCV) | `./gradlew apiCheck` (update: `apiDump`) |

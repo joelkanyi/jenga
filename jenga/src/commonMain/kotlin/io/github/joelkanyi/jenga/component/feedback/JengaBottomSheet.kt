@@ -43,7 +43,7 @@ public class JengaSheetState internal constructor(
  * Remembers a [JengaSheetState] for an externally-controlled [JengaBottomSheet].
  *
  * @param skipPartiallyExpanded when true (the default), the sheet has no
- *   half-expanded detent — it is either fully shown or hidden.
+ *   half-expanded detent; it is either fully shown or hidden.
  */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -55,7 +55,7 @@ public fun rememberJengaSheetState(skipPartiallyExpanded: Boolean = true): Jenga
 /**
  * A modal bottom sheet, themed with Jenga tokens.
  *
- * Control visibility by conditional composition — render this only while the
+ * Control visibility by conditional composition: render this only while the
  * sheet should be shown:
  * ```
  * if (showSheet) {

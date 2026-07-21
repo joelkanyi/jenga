@@ -345,7 +345,7 @@ internal fun JengaFabSample() {
 
 @Composable
 internal fun JengaBannerSample() {
-    JengaBanner(message = "Working offline — scans will sync later.", tone = JengaBannerTone.Info)
+    JengaBanner(message = "Working offline, scans will sync later.", tone = JengaBannerTone.Info)
 }
 
 @Composable

@@ -2,7 +2,7 @@
 
 **Jenga** is a Kotlin Multiplatform + Compose Multiplatform design system: brandable design
 tokens and ready-made `Jenga*` blocks that render identically on Android, Desktop (JVM) and
-iOS. *Jenga* is Swahili for "to build" — you build screens out of Jenga blocks rather than raw
+iOS. *Jenga* is Swahili for "to build": you build screens out of Jenga blocks rather than raw
 Compose or Material primitives.
 
 The public API is entirely `JengaTheme.*` (tokens) and `Jenga*` (blocks). Material 3 is bridged
@@ -31,13 +31,15 @@ each block's `*Defaults`, then organisms composed from blocks.
 
 The theme entry point. [JengaTheme] wraps content, exposes every token set
 (`JengaTheme.colors / typography / spacing / shapes / sizing / elevation / motion`) through
-CompositionLocals, and bridges to Material 3 internally. Brand and typeface are injected here.
+CompositionLocals, and bridges to Material 3 internally. Brand and typeface are injected here:
+brand the whole theme from one seed with `JengaTheme(brand = jengaBrand(seed = Color(0xFF6D28D9)))`.
 
 # Package io.github.joelkanyi.jenga.foundation.color
 
 The color system: the generated primitive palette, the semantic [JengaColors] roles
-(`brand`, `surface`, `textPrimary`, `success`…) that flip for dark mode, and `withBrand` for
-rebranding.
+(`brand`, `surface`, `textPrimary`, `success`…) that flip for dark mode, and `withBrand`, a
+lower-level helper that rebrands a single palette (prefer `jengaBrand(seed = …)` to brand a
+whole light+dark theme).
 
 # Package io.github.joelkanyi.jenga.foundation.typography
 
@@ -51,8 +53,8 @@ variants and `*Defaults`.
 
 # Package io.github.joelkanyi.jenga.component.layout
 
-Layout primitives — `JengaStack`, `JengaInline`, `JengaWrap`, `JengaGrid`, `JengaBox`,
-`JengaSection`, `JengaSpacer` — that read spacing tokens so you never hand-roll gaps.
+Layout primitives (`JengaStack`, `JengaInline`, `JengaWrap`, `JengaGrid`, `JengaBox`,
+`JengaSection`, `JengaSpacer`) that read spacing tokens so you never hand-roll gaps.
 
 # Package io.github.joelkanyi.jenga.component.icon
 
@@ -61,5 +63,5 @@ drawables (no external icon dependency), tinted from tokens.
 
 # Package io.github.joelkanyi.jenga.pattern
 
-Ticketfiti-flavoured organisms composed from blocks: `JengaTicketRow`, `JengaStatCard`,
+Organisms composed from blocks: `JengaTicketRow`, `JengaStatCard`,
 `JengaSectionHeader`.

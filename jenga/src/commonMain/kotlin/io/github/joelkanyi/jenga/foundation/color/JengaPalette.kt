@@ -3,11 +3,11 @@ package io.github.joelkanyi.jenga.foundation.color
 import androidx.compose.ui.graphics.Color
 
 /**
- * GENERATED FILE — DO NOT EDIT BY HAND.
+ * GENERATED FILE: DO NOT EDIT BY HAND.
  *
  * Regenerate with `./gradlew :jenga:generateJengaTokens` after editing
  * `tokens/primitives.json` (the design-token source of truth). This is the
- * **primitive** color layer — raw values with no meaning; the semantic layer
+ * **primitive** color layer, raw values with no meaning; the semantic layer
  * [JengaColors] maps these onto roles.
  */
 internal object JengaPalette {

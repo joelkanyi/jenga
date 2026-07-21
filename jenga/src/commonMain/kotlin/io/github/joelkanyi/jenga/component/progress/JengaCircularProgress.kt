@@ -76,7 +76,7 @@ public fun JengaCircularProgress(
 }
 
 /**
- * An indeterminate circular spinner — a brand-colored arc rotating around the
+ * An indeterminate circular spinner: a brand-colored arc rotating around the
  * track, for when progress can't be measured.
  *
  * @param modifier the [Modifier] for this indicator.

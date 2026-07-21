@@ -84,7 +84,7 @@ public object JengaMediaHeroDefaults {
  * top-end [action] overlays. When [imageUrl] is null/blank a themed [fallback]
  * shows instead of a grey box, so the layout never breaks.
  *
- * Generic and domain-neutral — supply your own [fallback] slot for a branded
+ * Generic and domain-neutral: supply your own [fallback] slot for a branded
  * placeholder motif, or your own [colors]/[titleStyle].
  *
  * @param title the hero title (over the scrim, bottom-start).

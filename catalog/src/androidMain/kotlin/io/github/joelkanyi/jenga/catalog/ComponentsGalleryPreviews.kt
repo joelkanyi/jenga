@@ -10,7 +10,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import io.github.joelkanyi.jenga.component.layout.JengaBox
 import io.github.joelkanyi.jenga.theme.JengaTheme
 
-@Preview(name = "Components — Light", showBackground = true, heightDp = 4250)
+@Preview(name = "Components: Light", showBackground = true, heightDp = 4250)
 @Composable
 internal fun ComponentsGalleryLightPreview() {
     JengaTheme(darkTheme = false) {
@@ -21,7 +21,7 @@ internal fun ComponentsGalleryLightPreview() {
     }
 }
 
-@Preview(name = "Components — Dark", showBackground = true, heightDp = 4250)
+@Preview(name = "Components: Dark", showBackground = true, heightDp = 4250)
 @Composable
 internal fun ComponentsGalleryDarkPreview() {
     JengaTheme(darkTheme = true) {

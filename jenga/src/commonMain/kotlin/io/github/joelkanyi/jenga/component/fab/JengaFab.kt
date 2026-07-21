@@ -51,7 +51,7 @@ public object JengaFabDefaults {
     public val shape: Shape
         @Composable get() = JengaTheme.shapes.lg
 
-    /** Extended-FAB shape — a full pill, so the label reads as one confident tap target. */
+    /** Extended-FAB shape: a full pill, so the label reads as one confident tap target. */
     public val extendedShape: Shape = RoundedCornerShape(percent = 50)
 
     /** Themed colors. */
@@ -60,7 +60,7 @@ public object JengaFabDefaults {
 }
 
 /**
- * A floating action button — a prominent, elevated action with an icon.
+ * A floating action button: a prominent, elevated action with an icon.
  *
  * @sample io.github.joelkanyi.jenga.samples.JengaFabSample
  *
@@ -95,7 +95,7 @@ public fun JengaFab(
 }
 
 /**
- * An extended floating action button — a prominent, elevated pill carrying an
+ * An extended floating action button: a prominent, elevated pill carrying an
  * optional leading [icon] and a text [label]. Use it when the primary action
  * needs a word, not just a glyph. Same elevation language as [JengaFab]; the
  * [colors] default to brand and can be overridden with any pair (e.g. a neutral
