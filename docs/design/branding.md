@@ -1,8 +1,6 @@
 # Design: JengaBrand — brand a whole theme from one definition
 
-Status: proposed (design-first, pre-implementation). Written before code per the
-project doctrine. Grounded in a research pass over Material `material-color-utilities`,
-Jake Wharton's slope-intercept / public-API writing, and Orbit / Spark / Backpack.
+Status: proposed (design-first, pre-implementation). Written before implementation.
 
 ## 1. Problem
 
@@ -17,8 +15,8 @@ gentle slope from zero-config to full control.
 
 ## 2. Non-goals
 
-- **No consumer-side KSP / codegen.** Every mature system (Orbit, Spark, Backpack,
-  M3) keeps consumer theming as plain Kotlin values; codegen is author-side only.
+- **No consumer-side KSP / codegen.** Consumer theming stays plain Kotlin values;
+  any codegen belongs on the author side only.
   A consumer processor adds a Gradle plugin + slower builds to save ~15 lines and
   kills call-site autocomplete/KDoc.
 - **No top-level configuration DSL.** A brand seed is a flat value set; a
@@ -29,7 +27,7 @@ gentle slope from zero-config to full control.
   info and media overlays must not rotate with the brand hue (red stays red). They
   remain fixed, individually-overridable defaults.
 
-## 3. The layered API (slope-intercept)
+## 3. The layered API
 
 Four tiers, each reachable by adding one named argument to the tier below, each
 argument defaulting to the brand-derived value — a continuum, not four doors.
@@ -94,8 +92,8 @@ public fun JengaBrand.sizing(): JengaSizing
 ### 4.2 Color derivation — hybrid HCT (decision: HCT brand family, fixed neutrals)
 
 Vendor a minimal HCT subset into `commonMain` (pure Kotlin math, Apache-2.0,
-license header — own the core, like Kepler; MaterialKolor is the correctness
-oracle in tests). Only what is needed:
+license header — own the core, and validate it in tests against a reference
+implementation's known values). Only what is needed:
 
 ```
 foundation/color/hct/   (internal)
@@ -293,7 +291,7 @@ JengaTheme(scheme = AcmeColors) { App() }   // selection handled internally
 ```
 
 Why not a 39-parameter `jengaColors(...)` factory: it reintroduces exactly the
-problems Jake Wharton flags — no named-only enforcement, positional fragility, and
+problems a wide factory has — no named-only enforcement, positional fragility, and
 default-value duplication — while `copy()` already gives named-only, binary-safe
 overrides for free. Why not a `jengaColors { }` builder-DSL: `copy()` already
 delivers the DSL's benefits without the ~500-line, seven-bundle builder cost or the
@@ -326,7 +324,7 @@ JengaTheme.colors / .typography / .icons / …  ◄── components read here
   assertions over `jengaBrand(seed).lightColors()/darkColors()` for a set of seeds
   × {Standard, High}, not just the two fixed default schemes.
 - **HCT correctness**: unit-test the vendored `Hct`/`TonalPalette` against known
-  values from MaterialKolor / material-color-utilities.
+  reference values.
 - **Determinism**: `brand.lightColors()` is pure — same input, same output; snapshot
   a golden set.
 
@@ -358,8 +356,8 @@ JengaTheme.colors / .typography / .icons / …  ◄── components read here
 
 ## 10. DSL: deliberately not used (and why)
 
-A receiver-lambda DSL was evaluated across every jenga surface against Jake
-Wharton's criteria (Public API Challenges in Kotlin) and Kotlin's type-safe-builder
+A receiver-lambda DSL was evaluated across every jenga surface against the
+established criteria for builders vs factories and Kotlin's type-safe-builder
 guidance. Verdict: **no new DSL earns its place.** Recorded here so the decision
 isn't silently re-litigated.
 
