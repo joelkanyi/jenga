@@ -1,6 +1,7 @@
 @file:OptIn(kotlinx.validation.ExperimentalBCVApi::class)
 
 // Top-level build file for the standalone Jenga design system.
+
 plugins {
     alias(libs.plugins.android.application) apply false
     alias(libs.plugins.android.library) apply false
@@ -12,7 +13,36 @@ plugins {
     alias(libs.plugins.dokka) apply false
     alias(libs.plugins.maven.publish) apply false
     alias(libs.plugins.poko) apply false
+    alias(libs.plugins.spotless)
     alias(libs.plugins.binary.compatibility.validator)
+}
+
+// Formatting and linting across every module, via ktlint. Run `spotlessApply`
+// to fix, `spotlessCheck` (wired into `check`) to gate.
+spotless {
+    val ktlintVersion = libs.versions.ktlint.get()
+    // Compose bends three ktlint naming rules: composables are PascalCase
+    // (function-naming); *Defaults constants are PascalCase like Material3's
+    // ButtonDefaults.MinWidth (property-naming); and a block file bundles
+    // Foo + FooColors + FooDefaults, so the file name need not match one
+    // declaration (filename). Passed as overrides because spotless does not
+    // forward these rule-disable keys from .editorconfig to ktlint.
+    val rules = mapOf(
+        "ktlint_standard_function-naming" to "disabled",
+        "ktlint_standard_property-naming" to "disabled",
+        "ktlint_standard_filename" to "disabled",
+        "max_line_length" to "off",
+    )
+    kotlin {
+        target("**/src/**/*.kt")
+        targetExclude("**/build/**")
+        ktlint(ktlintVersion).editorConfigOverride(rules)
+    }
+    kotlinGradle {
+        target("**/*.gradle.kts")
+        targetExclude("**/build/**")
+        ktlint(ktlintVersion).editorConfigOverride(rules)
+    }
 }
 
 // Public-API tracking for the published library. Only :jenga is validated;

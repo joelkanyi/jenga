@@ -2,10 +2,7 @@ package io.github.joelkanyi.jenga.component.button
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.minimumInteractiveComponentSize
 import androidx.compose.runtime.Composable
@@ -21,7 +18,6 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import dev.drewhamilton.poko.Poko
 import io.github.joelkanyi.jenga.component.icon.JengaIcon
-import io.github.joelkanyi.jenga.component.icon.JengaIcons
 import io.github.joelkanyi.jenga.theme.JengaTheme
 import io.github.joelkanyi.jenga.theme.LocalJengaContentColor
 

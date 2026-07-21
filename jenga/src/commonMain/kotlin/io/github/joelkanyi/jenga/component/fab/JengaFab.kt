@@ -23,8 +23,6 @@ import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import dev.drewhamilton.poko.Poko
-import io.github.joelkanyi.jenga.component.icon.JengaIcon
-import io.github.joelkanyi.jenga.component.icon.JengaIcons
 import io.github.joelkanyi.jenga.component.text.JengaText
 import io.github.joelkanyi.jenga.theme.JengaTheme
 import io.github.joelkanyi.jenga.theme.LocalJengaContentColor
@@ -58,8 +56,7 @@ public object JengaFabDefaults {
 
     /** Themed colors. */
     @Composable
-    public fun colors(): JengaFabColors =
-        JengaFabColors(container = JengaTheme.colors.brand, content = JengaTheme.colors.onBrand)
+    public fun colors(): JengaFabColors = JengaFabColors(container = JengaTheme.colors.brand, content = JengaTheme.colors.onBrand)
 }
 
 /**

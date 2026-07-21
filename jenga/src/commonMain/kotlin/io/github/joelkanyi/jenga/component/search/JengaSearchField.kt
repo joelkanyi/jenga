@@ -1,9 +1,6 @@
 package io.github.joelkanyi.jenga.component.search
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import io.github.joelkanyi.jenga.component.icon.JengaIcon

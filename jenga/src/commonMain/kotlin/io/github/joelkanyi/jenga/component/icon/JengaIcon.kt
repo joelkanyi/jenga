@@ -1,8 +1,6 @@
 package io.github.joelkanyi.jenga.component.icon
 
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -11,14 +9,13 @@ import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.graphics.takeOrElse
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.unit.Dp
-import io.github.joelkanyi.jenga.component.layout.JengaWrap
 import io.github.joelkanyi.jenga.resources.Res
 import io.github.joelkanyi.jenga.resources.jenga_ic_add
 import io.github.joelkanyi.jenga.resources.jenga_ic_arrow_back
 import io.github.joelkanyi.jenga.resources.jenga_ic_arrow_right
 import io.github.joelkanyi.jenga.resources.jenga_ic_ban
-import io.github.joelkanyi.jenga.resources.jenga_ic_bulb
 import io.github.joelkanyi.jenga.resources.jenga_ic_bell
+import io.github.joelkanyi.jenga.resources.jenga_ic_bulb
 import io.github.joelkanyi.jenga.resources.jenga_ic_calendar
 import io.github.joelkanyi.jenga.resources.jenga_ic_chart
 import io.github.joelkanyi.jenga.resources.jenga_ic_check
@@ -27,13 +24,13 @@ import io.github.joelkanyi.jenga.resources.jenga_ic_chevron_down
 import io.github.joelkanyi.jenga.resources.jenga_ic_chevron_left
 import io.github.joelkanyi.jenga.resources.jenga_ic_chevron_right
 import io.github.joelkanyi.jenga.resources.jenga_ic_chevron_up
+import io.github.joelkanyi.jenga.resources.jenga_ic_clock
 import io.github.joelkanyi.jenga.resources.jenga_ic_close
 import io.github.joelkanyi.jenga.resources.jenga_ic_cloud
 import io.github.joelkanyi.jenga.resources.jenga_ic_cloud_off
 import io.github.joelkanyi.jenga.resources.jenga_ic_database
 import io.github.joelkanyi.jenga.resources.jenga_ic_eye
 import io.github.joelkanyi.jenga.resources.jenga_ic_eye_off
-import io.github.joelkanyi.jenga.resources.jenga_ic_clock
 import io.github.joelkanyi.jenga.resources.jenga_ic_flash
 import io.github.joelkanyi.jenga.resources.jenga_ic_flash_off
 import io.github.joelkanyi.jenga.resources.jenga_ic_heart

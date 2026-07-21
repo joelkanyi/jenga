@@ -12,7 +12,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.window.Dialog
 import io.github.joelkanyi.jenga.component.button.JengaButton
-import io.github.joelkanyi.jenga.component.button.JengaButtonVariant
 import io.github.joelkanyi.jenga.component.text.JengaText
 import io.github.joelkanyi.jenga.theme.JengaTheme
 

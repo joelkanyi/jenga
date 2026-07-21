@@ -58,25 +58,32 @@ public val LocalJengaContentColor: ProvidableCompositionLocal<Color> =
  */
 public object JengaTheme {
     public val colors: JengaColors
-        @Composable @ReadOnlyComposable get() = LocalJengaColors.current
+        @Composable @ReadOnlyComposable
+        get() = LocalJengaColors.current
 
     public val typography: JengaTypography
-        @Composable @ReadOnlyComposable get() = LocalJengaTypography.current
+        @Composable @ReadOnlyComposable
+        get() = LocalJengaTypography.current
 
     public val spacing: JengaSpacing
-        @Composable @ReadOnlyComposable get() = LocalJengaSpacing.current
+        @Composable @ReadOnlyComposable
+        get() = LocalJengaSpacing.current
 
     public val shapes: JengaShapes
-        @Composable @ReadOnlyComposable get() = LocalJengaShapes.current
+        @Composable @ReadOnlyComposable
+        get() = LocalJengaShapes.current
 
     public val sizing: JengaSizing
-        @Composable @ReadOnlyComposable get() = LocalJengaSizing.current
+        @Composable @ReadOnlyComposable
+        get() = LocalJengaSizing.current
 
     public val elevation: JengaElevation
-        @Composable @ReadOnlyComposable get() = LocalJengaElevation.current
+        @Composable @ReadOnlyComposable
+        get() = LocalJengaElevation.current
 
     public val motion: JengaMotion
-        @Composable @ReadOnlyComposable get() = LocalJengaMotion.current
+        @Composable @ReadOnlyComposable
+        get() = LocalJengaMotion.current
 }
 
 /**
