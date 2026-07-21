@@ -1,3 +1,17 @@
+public final class io/github/joelkanyi/jenga/component/action/JengaAction {
+	public static final field $stable I
+	public fun <init> (Ljava/lang/String;Lkotlin/jvm/functions/Function0;)V
+	public final fun component1 ()Ljava/lang/String;
+	public final fun component2 ()Lkotlin/jvm/functions/Function0;
+	public final fun copy (Ljava/lang/String;Lkotlin/jvm/functions/Function0;)Lio/github/joelkanyi/jenga/component/action/JengaAction;
+	public static synthetic fun copy$default (Lio/github/joelkanyi/jenga/component/action/JengaAction;Ljava/lang/String;Lkotlin/jvm/functions/Function0;ILjava/lang/Object;)Lio/github/joelkanyi/jenga/component/action/JengaAction;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getLabel ()Ljava/lang/String;
+	public final fun getOnClick ()Lkotlin/jvm/functions/Function0;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
 public final class io/github/joelkanyi/jenga/component/avatar/JengaAvatarDefaults {
 	public static final field $stable I
 	public static final field INSTANCE Lio/github/joelkanyi/jenga/component/avatar/JengaAvatarDefaults;
@@ -143,6 +157,7 @@ public final class io/github/joelkanyi/jenga/component/button/JengaButtonVariant
 	public static final field Danger Lio/github/joelkanyi/jenga/component/button/JengaButtonVariant;
 	public static final field Ghost Lio/github/joelkanyi/jenga/component/button/JengaButtonVariant;
 	public static final field Ink Lio/github/joelkanyi/jenga/component/button/JengaButtonVariant;
+	public static final field Neutral Lio/github/joelkanyi/jenga/component/button/JengaButtonVariant;
 	public static final field Outline Lio/github/joelkanyi/jenga/component/button/JengaButtonVariant;
 	public static final field Primary Lio/github/joelkanyi/jenga/component/button/JengaButtonVariant;
 	public static fun getEntries ()Lkotlin/enums/EnumEntries;
@@ -273,6 +288,10 @@ public final class io/github/joelkanyi/jenga/component/divider/JengaDividerKt {
 	public static final fun JengaDivider-9IZ8Weo (Landroidx/compose/ui/Modifier;FJLandroidx/compose/runtime/Composer;II)V
 }
 
+public final class io/github/joelkanyi/jenga/component/expandable/JengaExpandableRowKt {
+	public static final fun JengaExpandableRow (ZLkotlin/jvm/functions/Function0;Landroidx/compose/ui/Modifier;ZLjava/lang/String;Lkotlin/jvm/functions/Function3;Lkotlin/jvm/functions/Function3;Landroidx/compose/runtime/Composer;II)V
+}
+
 public final class io/github/joelkanyi/jenga/component/fab/JengaFabColors {
 	public static final field $stable I
 	public synthetic fun <init> (JJLkotlin/jvm/internal/DefaultConstructorMarker;)V
@@ -291,11 +310,14 @@ public final class io/github/joelkanyi/jenga/component/fab/JengaFabDefaults {
 	public static final field $stable I
 	public static final field INSTANCE Lio/github/joelkanyi/jenga/component/fab/JengaFabDefaults;
 	public final fun colors (Landroidx/compose/runtime/Composer;I)Lio/github/joelkanyi/jenga/component/fab/JengaFabColors;
+	public final fun getExtendedHeight-D9Ej5fM ()F
+	public final fun getExtendedShape ()Landroidx/compose/ui/graphics/Shape;
 	public final fun getShape (Landroidx/compose/runtime/Composer;I)Landroidx/compose/ui/graphics/Shape;
 	public final fun getSize-D9Ej5fM ()F
 }
 
 public final class io/github/joelkanyi/jenga/component/fab/JengaFabKt {
+	public static final fun JengaExtendedFab (Ljava/lang/String;Lkotlin/jvm/functions/Function0;Landroidx/compose/ui/Modifier;Lkotlin/jvm/functions/Function2;Landroidx/compose/ui/graphics/Shape;Lio/github/joelkanyi/jenga/component/fab/JengaFabColors;Landroidx/compose/runtime/Composer;II)V
 	public static final fun JengaFab (Lkotlin/jvm/functions/Function0;Landroidx/compose/ui/Modifier;Landroidx/compose/ui/graphics/Shape;Lio/github/joelkanyi/jenga/component/fab/JengaFabColors;Lkotlin/jvm/functions/Function2;Landroidx/compose/runtime/Composer;II)V
 }
 
@@ -395,8 +417,10 @@ public final class io/github/joelkanyi/jenga/component/icon/JengaIcons {
 	public static final field INSTANCE Lio/github/joelkanyi/jenga/component/icon/JengaIcons;
 	public final fun getAdd (Landroidx/compose/runtime/Composer;I)Landroidx/compose/ui/graphics/vector/ImageVector;
 	public final fun getArrowBack (Landroidx/compose/runtime/Composer;I)Landroidx/compose/ui/graphics/vector/ImageVector;
+	public final fun getArrowRight (Landroidx/compose/runtime/Composer;I)Landroidx/compose/ui/graphics/vector/ImageVector;
 	public final fun getBan (Landroidx/compose/runtime/Composer;I)Landroidx/compose/ui/graphics/vector/ImageVector;
 	public final fun getBell (Landroidx/compose/runtime/Composer;I)Landroidx/compose/ui/graphics/vector/ImageVector;
+	public final fun getBulb (Landroidx/compose/runtime/Composer;I)Landroidx/compose/ui/graphics/vector/ImageVector;
 	public final fun getCalendar (Landroidx/compose/runtime/Composer;I)Landroidx/compose/ui/graphics/vector/ImageVector;
 	public final fun getChart (Landroidx/compose/runtime/Composer;I)Landroidx/compose/ui/graphics/vector/ImageVector;
 	public final fun getCheck (Landroidx/compose/runtime/Composer;I)Landroidx/compose/ui/graphics/vector/ImageVector;
@@ -405,6 +429,7 @@ public final class io/github/joelkanyi/jenga/component/icon/JengaIcons {
 	public final fun getChevronLeft (Landroidx/compose/runtime/Composer;I)Landroidx/compose/ui/graphics/vector/ImageVector;
 	public final fun getChevronRight (Landroidx/compose/runtime/Composer;I)Landroidx/compose/ui/graphics/vector/ImageVector;
 	public final fun getChevronUp (Landroidx/compose/runtime/Composer;I)Landroidx/compose/ui/graphics/vector/ImageVector;
+	public final fun getClock (Landroidx/compose/runtime/Composer;I)Landroidx/compose/ui/graphics/vector/ImageVector;
 	public final fun getClose (Landroidx/compose/runtime/Composer;I)Landroidx/compose/ui/graphics/vector/ImageVector;
 	public final fun getCloud (Landroidx/compose/runtime/Composer;I)Landroidx/compose/ui/graphics/vector/ImageVector;
 	public final fun getCloudOff (Landroidx/compose/runtime/Composer;I)Landroidx/compose/ui/graphics/vector/ImageVector;
@@ -413,21 +438,30 @@ public final class io/github/joelkanyi/jenga/component/icon/JengaIcons {
 	public final fun getEyeOff (Landroidx/compose/runtime/Composer;I)Landroidx/compose/ui/graphics/vector/ImageVector;
 	public final fun getFlash (Landroidx/compose/runtime/Composer;I)Landroidx/compose/ui/graphics/vector/ImageVector;
 	public final fun getFlashOff (Landroidx/compose/runtime/Composer;I)Landroidx/compose/ui/graphics/vector/ImageVector;
+	public final fun getHeart (Landroidx/compose/runtime/Composer;I)Landroidx/compose/ui/graphics/vector/ImageVector;
 	public final fun getHistory (Landroidx/compose/runtime/Composer;I)Landroidx/compose/ui/graphics/vector/ImageVector;
+	public final fun getImage (Landroidx/compose/runtime/Composer;I)Landroidx/compose/ui/graphics/vector/ImageVector;
 	public final fun getInfo (Landroidx/compose/runtime/Composer;I)Landroidx/compose/ui/graphics/vector/ImageVector;
 	public final fun getKeyboard (Landroidx/compose/runtime/Composer;I)Landroidx/compose/ui/graphics/vector/ImageVector;
 	public final fun getLock (Landroidx/compose/runtime/Composer;I)Landroidx/compose/ui/graphics/vector/ImageVector;
 	public final fun getLogout (Landroidx/compose/runtime/Composer;I)Landroidx/compose/ui/graphics/vector/ImageVector;
 	public final fun getMail (Landroidx/compose/runtime/Composer;I)Landroidx/compose/ui/graphics/vector/ImageVector;
+	public final fun getMessageCircle (Landroidx/compose/runtime/Composer;I)Landroidx/compose/ui/graphics/vector/ImageVector;
 	public final fun getQrCode (Landroidx/compose/runtime/Composer;I)Landroidx/compose/ui/graphics/vector/ImageVector;
 	public final fun getRefresh (Landroidx/compose/runtime/Composer;I)Landroidx/compose/ui/graphics/vector/ImageVector;
 	public final fun getRemove (Landroidx/compose/runtime/Composer;I)Landroidx/compose/ui/graphics/vector/ImageVector;
 	public final fun getSearch (Landroidx/compose/runtime/Composer;I)Landroidx/compose/ui/graphics/vector/ImageVector;
 	public final fun getSettings (Landroidx/compose/runtime/Composer;I)Landroidx/compose/ui/graphics/vector/ImageVector;
+	public final fun getShare (Landroidx/compose/runtime/Composer;I)Landroidx/compose/ui/graphics/vector/ImageVector;
 	public final fun getShield (Landroidx/compose/runtime/Composer;I)Landroidx/compose/ui/graphics/vector/ImageVector;
+	public final fun getShieldCheck (Landroidx/compose/runtime/Composer;I)Landroidx/compose/ui/graphics/vector/ImageVector;
+	public final fun getSliders (Landroidx/compose/runtime/Composer;I)Landroidx/compose/ui/graphics/vector/ImageVector;
 	public final fun getSmartphone (Landroidx/compose/runtime/Composer;I)Landroidx/compose/ui/graphics/vector/ImageVector;
+	public final fun getSparkles (Landroidx/compose/runtime/Composer;I)Landroidx/compose/ui/graphics/vector/ImageVector;
 	public final fun getSun (Landroidx/compose/runtime/Composer;I)Landroidx/compose/ui/graphics/vector/ImageVector;
 	public final fun getSwap (Landroidx/compose/runtime/Composer;I)Landroidx/compose/ui/graphics/vector/ImageVector;
+	public final fun getThumbsDown (Landroidx/compose/runtime/Composer;I)Landroidx/compose/ui/graphics/vector/ImageVector;
+	public final fun getThumbsUp (Landroidx/compose/runtime/Composer;I)Landroidx/compose/ui/graphics/vector/ImageVector;
 	public final fun getTrash (Landroidx/compose/runtime/Composer;I)Landroidx/compose/ui/graphics/vector/ImageVector;
 	public final fun getUser (Landroidx/compose/runtime/Composer;I)Landroidx/compose/ui/graphics/vector/ImageVector;
 	public final fun getVibrate (Landroidx/compose/runtime/Composer;I)Landroidx/compose/ui/graphics/vector/ImageVector;
@@ -502,26 +536,68 @@ public final class io/github/joelkanyi/jenga/component/list/JengaListItemKt {
 	public static final fun JengaListItem (Ljava/lang/String;Landroidx/compose/ui/Modifier;Ljava/lang/String;Lkotlin/jvm/functions/Function2;Lkotlin/jvm/functions/Function2;Lkotlin/jvm/functions/Function0;Lio/github/joelkanyi/jenga/component/list/JengaListItemColors;Landroidx/compose/runtime/Composer;II)V
 }
 
+public final class io/github/joelkanyi/jenga/component/media/JengaMediaHeroColors {
+	public static final field $stable I
+	public synthetic fun <init> (Landroidx/compose/ui/graphics/Brush;Landroidx/compose/ui/graphics/Brush;JJLkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun component1 ()Landroidx/compose/ui/graphics/Brush;
+	public final fun component2 ()Landroidx/compose/ui/graphics/Brush;
+	public final fun component3-0d7_KjU ()J
+	public final fun component4-0d7_KjU ()J
+	public final fun copy-0YGnOg8 (Landroidx/compose/ui/graphics/Brush;Landroidx/compose/ui/graphics/Brush;JJ)Lio/github/joelkanyi/jenga/component/media/JengaMediaHeroColors;
+	public static synthetic fun copy-0YGnOg8$default (Lio/github/joelkanyi/jenga/component/media/JengaMediaHeroColors;Landroidx/compose/ui/graphics/Brush;Landroidx/compose/ui/graphics/Brush;JJILjava/lang/Object;)Lio/github/joelkanyi/jenga/component/media/JengaMediaHeroColors;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getFallback ()Landroidx/compose/ui/graphics/Brush;
+	public final fun getScrim ()Landroidx/compose/ui/graphics/Brush;
+	public final fun getSupport-0d7_KjU ()J
+	public final fun getTitle-0d7_KjU ()J
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class io/github/joelkanyi/jenga/component/media/JengaMediaHeroDefaults {
+	public static final field $stable I
+	public static final field AspectRatio F
+	public static final field INSTANCE Lio/github/joelkanyi/jenga/component/media/JengaMediaHeroDefaults;
+	public final fun colors (Landroidx/compose/runtime/Composer;I)Lio/github/joelkanyi/jenga/component/media/JengaMediaHeroColors;
+	public final fun getShape (Landroidx/compose/runtime/Composer;I)Landroidx/compose/ui/graphics/Shape;
+}
+
+public final class io/github/joelkanyi/jenga/component/media/JengaMediaHeroKt {
+	public static final fun JengaMediaHero (Ljava/lang/String;Landroidx/compose/ui/Modifier;Ljava/lang/String;Ljava/lang/String;FLkotlin/jvm/functions/Function0;Lkotlin/jvm/functions/Function2;Lkotlin/jvm/functions/Function2;Landroidx/compose/ui/text/TextStyle;Lio/github/joelkanyi/jenga/component/media/JengaMediaHeroColors;Landroidx/compose/ui/graphics/Shape;Lkotlin/jvm/functions/Function2;Lkotlin/jvm/functions/Function3;Landroidx/compose/runtime/Composer;III)V
+}
+
 public final class io/github/joelkanyi/jenga/component/menu/JengaDropdownMenuKt {
 	public static final fun JengaDropdownMenu (ZLkotlin/jvm/functions/Function0;Landroidx/compose/ui/Modifier;Lkotlin/jvm/functions/Function3;Landroidx/compose/runtime/Composer;II)V
 	public static final fun JengaDropdownMenuItem (Ljava/lang/String;Lkotlin/jvm/functions/Function0;Landroidx/compose/ui/Modifier;Lkotlin/jvm/functions/Function2;ZLandroidx/compose/runtime/Composer;II)V
 }
 
+public final class io/github/joelkanyi/jenga/component/navigation/JengaNavIndicator : java/lang/Enum {
+	public static final field None Lio/github/joelkanyi/jenga/component/navigation/JengaNavIndicator;
+	public static final field Pill Lio/github/joelkanyi/jenga/component/navigation/JengaNavIndicator;
+	public static fun getEntries ()Lkotlin/enums/EnumEntries;
+	public static fun valueOf (Ljava/lang/String;)Lio/github/joelkanyi/jenga/component/navigation/JengaNavIndicator;
+	public static fun values ()[Lio/github/joelkanyi/jenga/component/navigation/JengaNavIndicator;
+}
+
 public final class io/github/joelkanyi/jenga/component/navigation/JengaNavigationBarColors {
 	public static final field $stable I
-	public synthetic fun <init> (JJJJJLkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public synthetic fun <init> (JJJJJJJLkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public final fun component1-0d7_KjU ()J
 	public final fun component2-0d7_KjU ()J
 	public final fun component3-0d7_KjU ()J
 	public final fun component4-0d7_KjU ()J
 	public final fun component5-0d7_KjU ()J
-	public final fun copy-t635Npw (JJJJJ)Lio/github/joelkanyi/jenga/component/navigation/JengaNavigationBarColors;
-	public static synthetic fun copy-t635Npw$default (Lio/github/joelkanyi/jenga/component/navigation/JengaNavigationBarColors;JJJJJILjava/lang/Object;)Lio/github/joelkanyi/jenga/component/navigation/JengaNavigationBarColors;
+	public final fun component6-0d7_KjU ()J
+	public final fun component7-0d7_KjU ()J
+	public final fun copy-4JmcsL4 (JJJJJJJ)Lio/github/joelkanyi/jenga/component/navigation/JengaNavigationBarColors;
+	public static synthetic fun copy-4JmcsL4$default (Lio/github/joelkanyi/jenga/component/navigation/JengaNavigationBarColors;JJJJJJJILjava/lang/Object;)Lio/github/joelkanyi/jenga/component/navigation/JengaNavigationBarColors;
 	public fun equals (Ljava/lang/Object;)Z
 	public final fun getContainer-0d7_KjU ()J
 	public final fun getDisabledContent-0d7_KjU ()J
 	public final fun getDivider-0d7_KjU ()J
 	public final fun getSelectedContent-0d7_KjU ()J
+	public final fun getSelectedIndicator-0d7_KjU ()J
+	public final fun getSelectedIndicatorContent-0d7_KjU ()J
 	public final fun getUnselectedContent-0d7_KjU ()J
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
@@ -536,7 +612,7 @@ public final class io/github/joelkanyi/jenga/component/navigation/JengaNavigatio
 
 public final class io/github/joelkanyi/jenga/component/navigation/JengaNavigationBarKt {
 	public static final fun JengaNavigationBar (Landroidx/compose/ui/Modifier;Lio/github/joelkanyi/jenga/component/navigation/JengaNavigationBarColors;Lkotlin/jvm/functions/Function3;Landroidx/compose/runtime/Composer;II)V
-	public static final fun JengaNavigationBarItem (Landroidx/compose/foundation/layout/RowScope;ZLkotlin/jvm/functions/Function0;Lkotlin/jvm/functions/Function2;Landroidx/compose/ui/Modifier;Ljava/lang/String;ZLio/github/joelkanyi/jenga/component/navigation/JengaNavigationBarColors;Landroidx/compose/runtime/Composer;II)V
+	public static final fun JengaNavigationBarItem (Landroidx/compose/foundation/layout/RowScope;ZLkotlin/jvm/functions/Function0;Lkotlin/jvm/functions/Function2;Landroidx/compose/ui/Modifier;Ljava/lang/String;ZLio/github/joelkanyi/jenga/component/navigation/JengaNavIndicator;Lio/github/joelkanyi/jenga/component/navigation/JengaNavigationBarColors;Landroidx/compose/runtime/Composer;II)V
 }
 
 public final class io/github/joelkanyi/jenga/component/progress/JengaCircularProgressDefaults {
@@ -553,6 +629,40 @@ public final class io/github/joelkanyi/jenga/component/progress/JengaCircularPro
 public final class io/github/joelkanyi/jenga/component/progress/JengaCircularProgressKt {
 	public static final fun JengaCircularProgress-AxOVJ2Y (FLandroidx/compose/ui/Modifier;FFJJLandroidx/compose/runtime/Composer;II)V
 	public static final fun JengaCircularProgressIndeterminate-7uW_0o0 (Landroidx/compose/ui/Modifier;FFJJLandroidx/compose/runtime/Composer;II)V
+}
+
+public final class io/github/joelkanyi/jenga/component/progress/JengaDotStripColors {
+	public static final field $stable I
+	public synthetic fun <init> (JJLkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun component1-0d7_KjU ()J
+	public final fun component2-0d7_KjU ()J
+	public final fun copy--OWjLjI (JJ)Lio/github/joelkanyi/jenga/component/progress/JengaDotStripColors;
+	public static synthetic fun copy--OWjLjI$default (Lio/github/joelkanyi/jenga/component/progress/JengaDotStripColors;JJILjava/lang/Object;)Lio/github/joelkanyi/jenga/component/progress/JengaDotStripColors;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getEmpty-0d7_KjU ()J
+	public final fun getFilled-0d7_KjU ()J
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class io/github/joelkanyi/jenga/component/progress/JengaDotStripDefaults {
+	public static final field $stable I
+	public static final field INSTANCE Lio/github/joelkanyi/jenga/component/progress/JengaDotStripDefaults;
+	public final fun colors (Landroidx/compose/runtime/Composer;I)Lio/github/joelkanyi/jenga/component/progress/JengaDotStripColors;
+	public final fun getBarHeight-D9Ej5fM ()F
+	public final fun getDotSize-D9Ej5fM ()F
+}
+
+public final class io/github/joelkanyi/jenga/component/progress/JengaDotStripKt {
+	public static final fun JengaDotStrip (IILandroidx/compose/ui/Modifier;Lio/github/joelkanyi/jenga/component/progress/JengaDotStripStyle;Lio/github/joelkanyi/jenga/component/progress/JengaDotStripColors;Ljava/lang/String;Landroidx/compose/runtime/Composer;II)V
+}
+
+public final class io/github/joelkanyi/jenga/component/progress/JengaDotStripStyle : java/lang/Enum {
+	public static final field Bars Lio/github/joelkanyi/jenga/component/progress/JengaDotStripStyle;
+	public static final field Dots Lio/github/joelkanyi/jenga/component/progress/JengaDotStripStyle;
+	public static fun getEntries ()Lkotlin/enums/EnumEntries;
+	public static fun valueOf (Ljava/lang/String;)Lio/github/joelkanyi/jenga/component/progress/JengaDotStripStyle;
+	public static fun values ()[Lio/github/joelkanyi/jenga/component/progress/JengaDotStripStyle;
 }
 
 public final class io/github/joelkanyi/jenga/component/progress/JengaProgressBarKt {
@@ -574,6 +684,31 @@ public final class io/github/joelkanyi/jenga/component/progress/JengaShimmerDefa
 
 public final class io/github/joelkanyi/jenga/component/progress/JengaShimmerKt {
 	public static final fun jengaShimmer (Landroidx/compose/ui/Modifier;)Landroidx/compose/ui/Modifier;
+}
+
+public final class io/github/joelkanyi/jenga/component/reaction/JengaReactionBarColors {
+	public static final field $stable I
+	public synthetic fun <init> (JJLkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun component1-0d7_KjU ()J
+	public final fun component2-0d7_KjU ()J
+	public final fun copy--OWjLjI (JJ)Lio/github/joelkanyi/jenga/component/reaction/JengaReactionBarColors;
+	public static synthetic fun copy--OWjLjI$default (Lio/github/joelkanyi/jenga/component/reaction/JengaReactionBarColors;JJILjava/lang/Object;)Lio/github/joelkanyi/jenga/component/reaction/JengaReactionBarColors;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getButtonContainer-0d7_KjU ()J
+	public final fun getButtonContent-0d7_KjU ()J
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class io/github/joelkanyi/jenga/component/reaction/JengaReactionBarDefaults {
+	public static final field $stable I
+	public static final field INSTANCE Lio/github/joelkanyi/jenga/component/reaction/JengaReactionBarDefaults;
+	public final fun colors (Landroidx/compose/runtime/Composer;I)Lio/github/joelkanyi/jenga/component/reaction/JengaReactionBarColors;
+	public final fun getButtonSize-D9Ej5fM ()F
+}
+
+public final class io/github/joelkanyi/jenga/component/reaction/JengaReactionBarKt {
+	public static final fun JengaReactionBar (Lkotlin/jvm/functions/Function0;Lkotlin/jvm/functions/Function0;Landroidx/compose/ui/Modifier;Ljava/lang/String;Ljava/lang/String;Landroidx/compose/ui/graphics/vector/ImageVector;Landroidx/compose/ui/graphics/vector/ImageVector;Lio/github/joelkanyi/jenga/component/reaction/JengaReactionBarColors;Lkotlin/jvm/functions/Function2;Landroidx/compose/runtime/Composer;II)V
 }
 
 public final class io/github/joelkanyi/jenga/component/refresh/JengaPullToRefreshDefaults {
@@ -818,6 +953,21 @@ public final class io/github/joelkanyi/jenga/component/selection/JengaToggleKt {
 	public static final fun JengaToggle (ZLkotlin/jvm/functions/Function1;Landroidx/compose/ui/Modifier;ZLio/github/joelkanyi/jenga/component/selection/JengaToggleColors;Landroidx/compose/runtime/Composer;II)V
 }
 
+public final class io/github/joelkanyi/jenga/component/shelf/JengaImageShelfKt {
+	public static final fun JengaImageShelf-WH-ejsw (Ljava/lang/String;Landroidx/compose/ui/Modifier;Ljava/lang/String;Lio/github/joelkanyi/jenga/component/action/JengaAction;FLkotlin/jvm/functions/Function2;Landroidx/compose/runtime/Composer;II)V
+	public static final fun JengaShelfCard-Fsagccs (Ljava/lang/String;Landroidx/compose/ui/Modifier;Ljava/lang/String;Ljava/lang/String;FFLkotlin/jvm/functions/Function0;Lkotlin/jvm/functions/Function2;Landroidx/compose/ui/graphics/Brush;Lkotlin/jvm/functions/Function3;Landroidx/compose/runtime/Composer;II)V
+}
+
+public final class io/github/joelkanyi/jenga/component/shelf/JengaShelfDefaults {
+	public static final field $stable I
+	public static final field CardAspectRatio F
+	public static final field INSTANCE Lio/github/joelkanyi/jenga/component/shelf/JengaShelfDefaults;
+	public final fun getCardShape (Landroidx/compose/runtime/Composer;I)Landroidx/compose/ui/graphics/Shape;
+	public final fun getCardWidth-D9Ej5fM ()F
+	public final fun getFallback (Landroidx/compose/runtime/Composer;I)Landroidx/compose/ui/graphics/Brush;
+	public final fun getGutter-D9Ej5fM ()F
+}
+
 public final class io/github/joelkanyi/jenga/component/slider/JengaSliderColors {
 	public static final field $stable I
 	public synthetic fun <init> (JJJJJJLkotlin/jvm/internal/DefaultConstructorMarker;)V
@@ -850,6 +1000,46 @@ public final class io/github/joelkanyi/jenga/component/slider/JengaSliderDefault
 
 public final class io/github/joelkanyi/jenga/component/slider/JengaSliderKt {
 	public static final fun JengaSlider (FLkotlin/jvm/functions/Function1;Landroidx/compose/ui/Modifier;ZLkotlin/ranges/ClosedFloatingPointRange;Lio/github/joelkanyi/jenga/component/slider/JengaSliderColors;Landroidx/compose/runtime/Composer;II)V
+}
+
+public final class io/github/joelkanyi/jenga/component/stat/JengaStatTileColors {
+	public static final field $stable I
+	public synthetic fun <init> (Landroidx/compose/ui/graphics/Brush;JJJLkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun component1 ()Landroidx/compose/ui/graphics/Brush;
+	public final fun component2-0d7_KjU ()J
+	public final fun component3-0d7_KjU ()J
+	public final fun component4-0d7_KjU ()J
+	public final fun copy-zSO0fhY (Landroidx/compose/ui/graphics/Brush;JJJ)Lio/github/joelkanyi/jenga/component/stat/JengaStatTileColors;
+	public static synthetic fun copy-zSO0fhY$default (Lio/github/joelkanyi/jenga/component/stat/JengaStatTileColors;Landroidx/compose/ui/graphics/Brush;JJJILjava/lang/Object;)Lio/github/joelkanyi/jenga/component/stat/JengaStatTileColors;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getFill ()Landroidx/compose/ui/graphics/Brush;
+	public final fun getLabel-0d7_KjU ()J
+	public final fun getUnit-0d7_KjU ()J
+	public final fun getValue-0d7_KjU ()J
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class io/github/joelkanyi/jenga/component/stat/JengaStatTileDefaults {
+	public static final field $stable I
+	public static final field INSTANCE Lio/github/joelkanyi/jenga/component/stat/JengaStatTileDefaults;
+	public final fun colors (Lio/github/joelkanyi/jenga/component/stat/JengaStatTone;Landroidx/compose/runtime/Composer;I)Lio/github/joelkanyi/jenga/component/stat/JengaStatTileColors;
+}
+
+public final class io/github/joelkanyi/jenga/component/stat/JengaStatTileKt {
+	public static final fun JengaStatTile (Ljava/lang/String;Ljava/lang/String;Landroidx/compose/ui/Modifier;Ljava/lang/String;Lio/github/joelkanyi/jenga/component/stat/JengaStatTone;Lkotlin/jvm/functions/Function2;Lkotlin/jvm/functions/Function3;Lio/github/joelkanyi/jenga/component/stat/JengaStatTileColors;Landroidx/compose/runtime/Composer;II)V
+}
+
+public final class io/github/joelkanyi/jenga/component/stat/JengaStatTone : java/lang/Enum {
+	public static final field Brand Lio/github/joelkanyi/jenga/component/stat/JengaStatTone;
+	public static final field Error Lio/github/joelkanyi/jenga/component/stat/JengaStatTone;
+	public static final field Info Lio/github/joelkanyi/jenga/component/stat/JengaStatTone;
+	public static final field Neutral Lio/github/joelkanyi/jenga/component/stat/JengaStatTone;
+	public static final field Success Lio/github/joelkanyi/jenga/component/stat/JengaStatTone;
+	public static final field Warning Lio/github/joelkanyi/jenga/component/stat/JengaStatTone;
+	public static fun getEntries ()Lkotlin/enums/EnumEntries;
+	public static fun valueOf (Ljava/lang/String;)Lio/github/joelkanyi/jenga/component/stat/JengaStatTone;
+	public static fun values ()[Lio/github/joelkanyi/jenga/component/stat/JengaStatTone;
 }
 
 public final class io/github/joelkanyi/jenga/component/state/JengaStateColors {
@@ -902,6 +1092,73 @@ public final class io/github/joelkanyi/jenga/component/status/JengaStatusPillDef
 
 public final class io/github/joelkanyi/jenga/component/status/JengaStatusPillKt {
 	public static final fun JengaStatusPill (Ljava/lang/String;Landroidx/compose/ui/Modifier;Lio/github/joelkanyi/jenga/component/badge/JengaBadgeTone;ZLkotlin/jvm/functions/Function0;Lio/github/joelkanyi/jenga/component/status/JengaStatusPillColors;Landroidx/compose/runtime/Composer;II)V
+}
+
+public final class io/github/joelkanyi/jenga/component/stepper/JengaStepperColors {
+	public static final field $stable I
+	public synthetic fun <init> (JJJJJJLkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun component1-0d7_KjU ()J
+	public final fun component2-0d7_KjU ()J
+	public final fun component3-0d7_KjU ()J
+	public final fun component4-0d7_KjU ()J
+	public final fun component5-0d7_KjU ()J
+	public final fun component6-0d7_KjU ()J
+	public final fun copy-tNS2XkQ (JJJJJJ)Lio/github/joelkanyi/jenga/component/stepper/JengaStepperColors;
+	public static synthetic fun copy-tNS2XkQ$default (Lio/github/joelkanyi/jenga/component/stepper/JengaStepperColors;JJJJJJILjava/lang/Object;)Lio/github/joelkanyi/jenga/component/stepper/JengaStepperColors;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getButton-0d7_KjU ()J
+	public final fun getButtonContent-0d7_KjU ()J
+	public final fun getDisabledButton-0d7_KjU ()J
+	public final fun getDisabledContent-0d7_KjU ()J
+	public final fun getTrack-0d7_KjU ()J
+	public final fun getValue-0d7_KjU ()J
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class io/github/joelkanyi/jenga/component/stepper/JengaStepperDefaults {
+	public static final field $stable I
+	public static final field INSTANCE Lio/github/joelkanyi/jenga/component/stepper/JengaStepperDefaults;
+	public final fun colors (Landroidx/compose/runtime/Composer;I)Lio/github/joelkanyi/jenga/component/stepper/JengaStepperColors;
+	public final fun getButtonSize-D9Ej5fM ()F
+	public final fun getShape (Landroidx/compose/runtime/Composer;I)Landroidx/compose/ui/graphics/Shape;
+}
+
+public final class io/github/joelkanyi/jenga/component/stepper/JengaStepperKt {
+	public static final fun JengaStepper (ILkotlin/jvm/functions/Function1;Landroidx/compose/ui/Modifier;IIIZLjava/lang/String;Ljava/lang/String;Lkotlin/jvm/functions/Function1;Lio/github/joelkanyi/jenga/component/stepper/JengaStepperColors;Landroidx/compose/runtime/Composer;III)V
+}
+
+public final class io/github/joelkanyi/jenga/component/swipe/JengaSwipeDirection : java/lang/Enum {
+	public static final field Both Lio/github/joelkanyi/jenga/component/swipe/JengaSwipeDirection;
+	public static final field EndToStart Lio/github/joelkanyi/jenga/component/swipe/JengaSwipeDirection;
+	public static final field StartToEnd Lio/github/joelkanyi/jenga/component/swipe/JengaSwipeDirection;
+	public static fun getEntries ()Lkotlin/enums/EnumEntries;
+	public static fun valueOf (Ljava/lang/String;)Lio/github/joelkanyi/jenga/component/swipe/JengaSwipeDirection;
+	public static fun values ()[Lio/github/joelkanyi/jenga/component/swipe/JengaSwipeDirection;
+}
+
+public final class io/github/joelkanyi/jenga/component/swipe/JengaSwipeToDismissColors {
+	public static final field $stable I
+	public synthetic fun <init> (JJLkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun component1-0d7_KjU ()J
+	public final fun component2-0d7_KjU ()J
+	public final fun copy--OWjLjI (JJ)Lio/github/joelkanyi/jenga/component/swipe/JengaSwipeToDismissColors;
+	public static synthetic fun copy--OWjLjI$default (Lio/github/joelkanyi/jenga/component/swipe/JengaSwipeToDismissColors;JJILjava/lang/Object;)Lio/github/joelkanyi/jenga/component/swipe/JengaSwipeToDismissColors;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getContainer-0d7_KjU ()J
+	public final fun getContent-0d7_KjU ()J
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class io/github/joelkanyi/jenga/component/swipe/JengaSwipeToDismissDefaults {
+	public static final field $stable I
+	public static final field INSTANCE Lio/github/joelkanyi/jenga/component/swipe/JengaSwipeToDismissDefaults;
+	public final fun colors (Landroidx/compose/runtime/Composer;I)Lio/github/joelkanyi/jenga/component/swipe/JengaSwipeToDismissColors;
+}
+
+public final class io/github/joelkanyi/jenga/component/swipe/JengaSwipeToDismissKt {
+	public static final fun JengaSwipeToDismiss (Lkotlin/jvm/functions/Function0;Landroidx/compose/ui/Modifier;ZLio/github/joelkanyi/jenga/component/swipe/JengaSwipeDirection;Landroidx/compose/ui/graphics/vector/ImageVector;Ljava/lang/String;Lio/github/joelkanyi/jenga/component/swipe/JengaSwipeToDismissColors;Lkotlin/jvm/functions/Function2;Lkotlin/jvm/functions/Function2;Landroidx/compose/runtime/Composer;II)V
 }
 
 public final class io/github/joelkanyi/jenga/component/tabs/JengaSegmentedControlColors {
@@ -1010,6 +1267,49 @@ public final class io/github/joelkanyi/jenga/component/tooltip/JengaTooltipDefau
 
 public final class io/github/joelkanyi/jenga/component/tooltip/JengaTooltipKt {
 	public static final fun JengaTooltip (Ljava/lang/String;Landroidx/compose/ui/Modifier;Lio/github/joelkanyi/jenga/component/tooltip/JengaTooltipColors;Landroidx/compose/runtime/Composer;II)V
+}
+
+public final class io/github/joelkanyi/jenga/component/verdict/JengaVerdictBarColors {
+	public static final field $stable I
+	public synthetic fun <init> (Landroidx/compose/ui/graphics/Brush;JJJJJLkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun component1 ()Landroidx/compose/ui/graphics/Brush;
+	public final fun component2-0d7_KjU ()J
+	public final fun component3-0d7_KjU ()J
+	public final fun component4-0d7_KjU ()J
+	public final fun component5-0d7_KjU ()J
+	public final fun component6-0d7_KjU ()J
+	public final fun copy-jdqzblg (Landroidx/compose/ui/graphics/Brush;JJJJJ)Lio/github/joelkanyi/jenga/component/verdict/JengaVerdictBarColors;
+	public static synthetic fun copy-jdqzblg$default (Lio/github/joelkanyi/jenga/component/verdict/JengaVerdictBarColors;Landroidx/compose/ui/graphics/Brush;JJJJJILjava/lang/Object;)Lio/github/joelkanyi/jenga/component/verdict/JengaVerdictBarColors;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getAccent-0d7_KjU ()J
+	public final fun getAmount-0d7_KjU ()J
+	public final fun getFill ()Landroidx/compose/ui/graphics/Brush;
+	public final fun getMuted-0d7_KjU ()J
+	public final fun getTrack-0d7_KjU ()J
+	public final fun getTrackFill-0d7_KjU ()J
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class io/github/joelkanyi/jenga/component/verdict/JengaVerdictBarDefaults {
+	public static final field $stable I
+	public static final field INSTANCE Lio/github/joelkanyi/jenga/component/verdict/JengaVerdictBarDefaults;
+	public final fun colors (Lio/github/joelkanyi/jenga/component/verdict/JengaVerdictTone;Landroidx/compose/runtime/Composer;I)Lio/github/joelkanyi/jenga/component/verdict/JengaVerdictBarColors;
+	public final fun getTrackHeight-D9Ej5fM ()F
+}
+
+public final class io/github/joelkanyi/jenga/component/verdict/JengaVerdictBarKt {
+	public static final fun JengaVerdictBar (Ljava/lang/String;Landroidx/compose/ui/Modifier;Ljava/lang/String;Lio/github/joelkanyi/jenga/component/verdict/JengaVerdictTone;Ljava/lang/String;Ljava/lang/Float;Ljava/lang/String;Ljava/lang/String;Lio/github/joelkanyi/jenga/component/action/JengaAction;Lio/github/joelkanyi/jenga/component/verdict/JengaVerdictBarColors;Landroidx/compose/runtime/Composer;II)V
+}
+
+public final class io/github/joelkanyi/jenga/component/verdict/JengaVerdictTone : java/lang/Enum {
+	public static final field Brand Lio/github/joelkanyi/jenga/component/verdict/JengaVerdictTone;
+	public static final field Caution Lio/github/joelkanyi/jenga/component/verdict/JengaVerdictTone;
+	public static final field Negative Lio/github/joelkanyi/jenga/component/verdict/JengaVerdictTone;
+	public static final field Positive Lio/github/joelkanyi/jenga/component/verdict/JengaVerdictTone;
+	public static fun getEntries ()Lkotlin/enums/EnumEntries;
+	public static fun valueOf (Ljava/lang/String;)Lio/github/joelkanyi/jenga/component/verdict/JengaVerdictTone;
+	public static fun values ()[Lio/github/joelkanyi/jenga/component/verdict/JengaVerdictTone;
 }
 
 public final class io/github/joelkanyi/jenga/foundation/color/JengaColors {
@@ -1165,9 +1465,10 @@ public final class io/github/joelkanyi/jenga/foundation/motion/JengaMotionKt {
 public final class io/github/joelkanyi/jenga/foundation/shape/JengaShapes {
 	public static final field $stable I
 	public fun <init> ()V
-	public fun <init> (Landroidx/compose/foundation/shape/RoundedCornerShape;Landroidx/compose/foundation/shape/RoundedCornerShape;Landroidx/compose/foundation/shape/RoundedCornerShape;Landroidx/compose/foundation/shape/RoundedCornerShape;Landroidx/compose/foundation/shape/RoundedCornerShape;Landroidx/compose/foundation/shape/RoundedCornerShape;Landroidx/compose/foundation/shape/RoundedCornerShape;Landroidx/compose/foundation/shape/RoundedCornerShape;Landroidx/compose/foundation/shape/RoundedCornerShape;)V
-	public synthetic fun <init> (Landroidx/compose/foundation/shape/RoundedCornerShape;Landroidx/compose/foundation/shape/RoundedCornerShape;Landroidx/compose/foundation/shape/RoundedCornerShape;Landroidx/compose/foundation/shape/RoundedCornerShape;Landroidx/compose/foundation/shape/RoundedCornerShape;Landroidx/compose/foundation/shape/RoundedCornerShape;Landroidx/compose/foundation/shape/RoundedCornerShape;Landroidx/compose/foundation/shape/RoundedCornerShape;Landroidx/compose/foundation/shape/RoundedCornerShape;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public fun <init> (Landroidx/compose/foundation/shape/RoundedCornerShape;Landroidx/compose/foundation/shape/RoundedCornerShape;Landroidx/compose/foundation/shape/RoundedCornerShape;Landroidx/compose/foundation/shape/RoundedCornerShape;Landroidx/compose/foundation/shape/RoundedCornerShape;Landroidx/compose/foundation/shape/RoundedCornerShape;Landroidx/compose/foundation/shape/RoundedCornerShape;Landroidx/compose/foundation/shape/RoundedCornerShape;Landroidx/compose/foundation/shape/RoundedCornerShape;Landroidx/compose/foundation/shape/RoundedCornerShape;)V
+	public synthetic fun <init> (Landroidx/compose/foundation/shape/RoundedCornerShape;Landroidx/compose/foundation/shape/RoundedCornerShape;Landroidx/compose/foundation/shape/RoundedCornerShape;Landroidx/compose/foundation/shape/RoundedCornerShape;Landroidx/compose/foundation/shape/RoundedCornerShape;Landroidx/compose/foundation/shape/RoundedCornerShape;Landroidx/compose/foundation/shape/RoundedCornerShape;Landroidx/compose/foundation/shape/RoundedCornerShape;Landroidx/compose/foundation/shape/RoundedCornerShape;Landroidx/compose/foundation/shape/RoundedCornerShape;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public final fun component1 ()Landroidx/compose/foundation/shape/RoundedCornerShape;
+	public final fun component10 ()Landroidx/compose/foundation/shape/RoundedCornerShape;
 	public final fun component2 ()Landroidx/compose/foundation/shape/RoundedCornerShape;
 	public final fun component3 ()Landroidx/compose/foundation/shape/RoundedCornerShape;
 	public final fun component4 ()Landroidx/compose/foundation/shape/RoundedCornerShape;
@@ -1176,10 +1477,11 @@ public final class io/github/joelkanyi/jenga/foundation/shape/JengaShapes {
 	public final fun component7 ()Landroidx/compose/foundation/shape/RoundedCornerShape;
 	public final fun component8 ()Landroidx/compose/foundation/shape/RoundedCornerShape;
 	public final fun component9 ()Landroidx/compose/foundation/shape/RoundedCornerShape;
-	public final fun copy (Landroidx/compose/foundation/shape/RoundedCornerShape;Landroidx/compose/foundation/shape/RoundedCornerShape;Landroidx/compose/foundation/shape/RoundedCornerShape;Landroidx/compose/foundation/shape/RoundedCornerShape;Landroidx/compose/foundation/shape/RoundedCornerShape;Landroidx/compose/foundation/shape/RoundedCornerShape;Landroidx/compose/foundation/shape/RoundedCornerShape;Landroidx/compose/foundation/shape/RoundedCornerShape;Landroidx/compose/foundation/shape/RoundedCornerShape;)Lio/github/joelkanyi/jenga/foundation/shape/JengaShapes;
-	public static synthetic fun copy$default (Lio/github/joelkanyi/jenga/foundation/shape/JengaShapes;Landroidx/compose/foundation/shape/RoundedCornerShape;Landroidx/compose/foundation/shape/RoundedCornerShape;Landroidx/compose/foundation/shape/RoundedCornerShape;Landroidx/compose/foundation/shape/RoundedCornerShape;Landroidx/compose/foundation/shape/RoundedCornerShape;Landroidx/compose/foundation/shape/RoundedCornerShape;Landroidx/compose/foundation/shape/RoundedCornerShape;Landroidx/compose/foundation/shape/RoundedCornerShape;Landroidx/compose/foundation/shape/RoundedCornerShape;ILjava/lang/Object;)Lio/github/joelkanyi/jenga/foundation/shape/JengaShapes;
+	public final fun copy (Landroidx/compose/foundation/shape/RoundedCornerShape;Landroidx/compose/foundation/shape/RoundedCornerShape;Landroidx/compose/foundation/shape/RoundedCornerShape;Landroidx/compose/foundation/shape/RoundedCornerShape;Landroidx/compose/foundation/shape/RoundedCornerShape;Landroidx/compose/foundation/shape/RoundedCornerShape;Landroidx/compose/foundation/shape/RoundedCornerShape;Landroidx/compose/foundation/shape/RoundedCornerShape;Landroidx/compose/foundation/shape/RoundedCornerShape;Landroidx/compose/foundation/shape/RoundedCornerShape;)Lio/github/joelkanyi/jenga/foundation/shape/JengaShapes;
+	public static synthetic fun copy$default (Lio/github/joelkanyi/jenga/foundation/shape/JengaShapes;Landroidx/compose/foundation/shape/RoundedCornerShape;Landroidx/compose/foundation/shape/RoundedCornerShape;Landroidx/compose/foundation/shape/RoundedCornerShape;Landroidx/compose/foundation/shape/RoundedCornerShape;Landroidx/compose/foundation/shape/RoundedCornerShape;Landroidx/compose/foundation/shape/RoundedCornerShape;Landroidx/compose/foundation/shape/RoundedCornerShape;Landroidx/compose/foundation/shape/RoundedCornerShape;Landroidx/compose/foundation/shape/RoundedCornerShape;Landroidx/compose/foundation/shape/RoundedCornerShape;ILjava/lang/Object;)Lio/github/joelkanyi/jenga/foundation/shape/JengaShapes;
 	public fun equals (Ljava/lang/Object;)Z
 	public final fun getCard ()Landroidx/compose/foundation/shape/RoundedCornerShape;
+	public final fun getCardLarge ()Landroidx/compose/foundation/shape/RoundedCornerShape;
 	public final fun getControl ()Landroidx/compose/foundation/shape/RoundedCornerShape;
 	public final fun getLg ()Landroidx/compose/foundation/shape/RoundedCornerShape;
 	public final fun getMd ()Landroidx/compose/foundation/shape/RoundedCornerShape;
@@ -1332,6 +1634,8 @@ public final class io/github/joelkanyi/jenga/pattern/JengaTicketRowKt {
 public final class io/github/joelkanyi/jenga/samples/ComposableSingletons$JengaSamplesKt {
 	public static final field INSTANCE Lio/github/joelkanyi/jenga/samples/ComposableSingletons$JengaSamplesKt;
 	public fun <init> ()V
+	public final fun getLambda$-1143789796$jenga ()Lkotlin/jvm/functions/Function3;
+	public final fun getLambda$-1739361293$jenga ()Lkotlin/jvm/functions/Function3;
 	public final fun getLambda$-1877431549$jenga ()Lkotlin/jvm/functions/Function3;
 	public final fun getLambda$-1954135018$jenga ()Lkotlin/jvm/functions/Function2;
 	public final fun getLambda$-1988505284$jenga ()Lkotlin/jvm/functions/Function3;
@@ -1345,7 +1649,9 @@ public final class io/github/joelkanyi/jenga/samples/ComposableSingletons$JengaS
 	public final fun getLambda$1557062852$jenga ()Lkotlin/jvm/functions/Function3;
 	public final fun getLambda$1912113536$jenga ()Lkotlin/jvm/functions/Function3;
 	public final fun getLambda$1937005648$jenga ()Lkotlin/jvm/functions/Function3;
+	public final fun getLambda$1967077901$jenga ()Lkotlin/jvm/functions/Function2;
 	public final fun getLambda$2122288746$jenga ()Lkotlin/jvm/functions/Function2;
+	public final fun getLambda$2127897924$jenga ()Lkotlin/jvm/functions/Function2;
 	public final fun getLambda$277114736$jenga ()Lkotlin/jvm/functions/Function3;
 	public final fun getLambda$380858747$jenga ()Lkotlin/jvm/functions/Function2;
 	public final fun getLambda$878903685$jenga ()Lkotlin/jvm/functions/Function2;

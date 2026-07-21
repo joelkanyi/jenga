@@ -24,6 +24,12 @@ public data class JengaShapes(
     public val control: RoundedCornerShape = RoundedCornerShape(10.dp),
     /** Cards, sheets and panels (16dp). */
     public val card: RoundedCornerShape = RoundedCornerShape(16.dp),
+    /**
+     * Large cards, heroes and expressive panels (20dp). A softer, more
+     * "M3-Expressive" corner than [card] for prominent, imagery-led surfaces;
+     * opt in per-surface or theme-wide via `JengaTheme(shapes = …)`.
+     */
+    public val cardLarge: RoundedCornerShape = RoundedCornerShape(20.dp),
     /** Fully rounded — pills, chips, avatars, FABs. */
     public val pill: RoundedCornerShape = RoundedCornerShape(percent = 50),
 )

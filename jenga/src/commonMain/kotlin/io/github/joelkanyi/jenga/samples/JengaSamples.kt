@@ -10,9 +10,23 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.runtime.mutableIntStateOf
+import io.github.joelkanyi.jenga.component.action.JengaAction
 import io.github.joelkanyi.jenga.component.avatar.JengaAvatar
 import io.github.joelkanyi.jenga.component.badge.JengaBadge
 import io.github.joelkanyi.jenga.component.badge.JengaBadgeTone
+import io.github.joelkanyi.jenga.component.expandable.JengaExpandableRow
+import io.github.joelkanyi.jenga.component.media.JengaMediaHero
+import io.github.joelkanyi.jenga.component.progress.JengaDotStrip
+import io.github.joelkanyi.jenga.component.reaction.JengaReactionBar
+import io.github.joelkanyi.jenga.component.shelf.JengaImageShelf
+import io.github.joelkanyi.jenga.component.shelf.JengaShelfCard
+import io.github.joelkanyi.jenga.component.stat.JengaStatTile
+import io.github.joelkanyi.jenga.component.stat.JengaStatTone
+import io.github.joelkanyi.jenga.component.stepper.JengaStepper
+import io.github.joelkanyi.jenga.component.swipe.JengaSwipeToDismiss
+import io.github.joelkanyi.jenga.component.verdict.JengaVerdictBar
+import io.github.joelkanyi.jenga.component.verdict.JengaVerdictTone
 import io.github.joelkanyi.jenga.component.button.JengaButton
 import io.github.joelkanyi.jenga.component.button.JengaButtonVariant
 import io.github.joelkanyi.jenga.component.banner.JengaBanner
@@ -421,4 +435,76 @@ internal fun JengaSnackbarHostSample() {
     //   hostState.showSnackbar("Removed", actionLabel = "Undo",
     //       duration = JengaSnackbarDuration.Long)
     JengaSnackbarHost(hostState)
+}
+
+@Composable
+internal fun JengaVerdictBarSample() {
+    JengaVerdictBar(
+        amount = "KES 1,190",
+        amountSuffix = "left",
+        tone = JengaVerdictTone.Positive,
+        label = "This month",
+        progress = 0.62f,
+        sublineStart = "KES 710 of 1,900 spent",
+        sublineEnd = "8 of 11 priced",
+        action = JengaAction("Change") { },
+    )
+}
+
+@Composable
+internal fun JengaStatTileSample() {
+    JengaStatTile(label = "Revenue", value = "1,284", unit = "KES", tone = JengaStatTone.Success)
+}
+
+@Composable
+internal fun JengaStepperSample() {
+    var count by remember { mutableIntStateOf(2) }
+    JengaStepper(value = count, onValueChange = { count = it }, min = 1, max = 9)
+}
+
+@Composable
+internal fun JengaDotStripSample() {
+    JengaDotStrip(filled = 3, total = 5, contentDescription = "3 of 5 steps done")
+}
+
+@Composable
+internal fun JengaMediaHeroSample() {
+    JengaMediaHero(title = "Night Market", support = "Fri · 7pm · Riverside")
+}
+
+@Composable
+internal fun JengaImageShelfSample() {
+    JengaImageShelf(title = "Picked for tonight", action = JengaAction("See all") { }) {
+        JengaShelfCard(title = "Grilled veg bowl", meta = "25 min · ~540 kcal")
+        JengaShelfCard(title = "Miso ramen", meta = "30 min · ~610 kcal")
+    }
+}
+
+@Composable
+internal fun JengaReactionBarSample() {
+    JengaReactionBar(
+        onPositive = { },
+        onNegative = { },
+        positiveContentDescription = "Helpful",
+        negativeContentDescription = "Not helpful",
+    )
+}
+
+@Composable
+internal fun JengaExpandableRowSample() {
+    var expanded by remember { mutableStateOf(false) }
+    JengaExpandableRow(
+        expanded = expanded,
+        onToggle = { expanded = !expanded },
+        header = { JengaText("Delivery details", modifier = Modifier.weight(1f)) },
+    ) {
+        JengaText("Ships in 2 to 3 business days. Free returns within 30 days.")
+    }
+}
+
+@Composable
+internal fun JengaSwipeToDismissSample() {
+    JengaSwipeToDismiss(onDismiss = { }) {
+        JengaListItem(headline = "Swipe me away", supporting = "End to start to dismiss")
+    }
 }

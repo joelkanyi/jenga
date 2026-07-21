@@ -5,8 +5,10 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.minimumInteractiveComponentSize
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
@@ -22,6 +24,7 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import io.github.joelkanyi.jenga.component.icon.JengaIcon
 import io.github.joelkanyi.jenga.component.icon.JengaIcons
+import io.github.joelkanyi.jenga.component.text.JengaText
 import io.github.joelkanyi.jenga.theme.JengaTheme
 import io.github.joelkanyi.jenga.theme.LocalJengaContentColor
 
@@ -36,9 +39,15 @@ public data class JengaFabColors(
 public object JengaFabDefaults {
     public val Size: Dp = 56.dp
 
+    /** Height of an extended (labelled) FAB. */
+    public val ExtendedHeight: Dp = 52.dp
+
     /** Default FAB shape. */
     public val shape: Shape
         @Composable get() = JengaTheme.shapes.lg
+
+    /** Extended-FAB shape — a full pill, so the label reads as one confident tap target. */
+    public val extendedShape: Shape = RoundedCornerShape(percent = 50)
 
     /** Themed colors. */
     @Composable
@@ -77,6 +86,48 @@ public fun JengaFab(
     ) {
         CompositionLocalProvider(LocalJengaContentColor provides colors.content) {
             content()
+        }
+    }
+}
+
+/**
+ * An extended floating action button — a prominent, elevated pill carrying an
+ * optional leading [icon] and a text [label]. Use it when the primary action
+ * needs a word, not just a glyph. Same elevation language as [JengaFab]; the
+ * [colors] default to brand and can be overridden with any pair (e.g. a neutral
+ * inverse) so it reads correctly on any surface.
+ *
+ * @param label the action text.
+ * @param onClick called when tapped.
+ * @param modifier the [Modifier] for this FAB.
+ * @param icon an optional leading icon; inherits the content color.
+ * @param shape the FAB shape; defaults to a full pill ([JengaFabDefaults.extendedShape]).
+ * @param colors the color set; defaults to [JengaFabDefaults.colors].
+ */
+@Composable
+public fun JengaExtendedFab(
+    label: String,
+    onClick: () -> Unit,
+    modifier: Modifier = Modifier,
+    icon: (@Composable () -> Unit)? = null,
+    shape: Shape = JengaFabDefaults.extendedShape,
+    colors: JengaFabColors = JengaFabDefaults.colors(),
+) {
+    Row(
+        modifier = modifier
+            .minimumInteractiveComponentSize()
+            .shadow(JengaTheme.elevation.lg, shape)
+            .clip(shape)
+            .background(colors.container)
+            .clickable(role = Role.Button, onClick = onClick)
+            .height(JengaFabDefaults.ExtendedHeight)
+            .padding(horizontal = JengaTheme.spacing.lg),
+        horizontalArrangement = Arrangement.spacedBy(JengaTheme.spacing.sm),
+        verticalAlignment = Alignment.CenterVertically,
+    ) {
+        CompositionLocalProvider(LocalJengaContentColor provides colors.content) {
+            if (icon != null) icon()
+            JengaText(text = label, style = JengaTheme.typography.titleSmall, color = colors.content)
         }
     }
 }

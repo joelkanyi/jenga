@@ -157,18 +157,18 @@ object and closed `enum` variants.
 |------|--------|
 | Text | `JengaText` |
 | Buttons | `JengaButton`, `JengaIconButton`, `JengaFab` |
-| Inputs | `JengaTextField`, `JengaSearchField`, `JengaSlider` |
+| Inputs | `JengaTextField`, `JengaSearchField`, `JengaSlider`, `JengaStepper` |
 | Selection | `JengaToggle`, `JengaCheckbox`, `JengaRadioButton`, `JengaSegmentedControl` |
-| Containers | `JengaCard`, `JengaListItem`, `JengaDivider` |
-| Status / tags | `JengaBadge`, `JengaChip`, `JengaBanner` |
+| Containers | `JengaCard`, `JengaListItem`, `JengaDivider`, `JengaExpandableRow`, `JengaSwipeToDismiss` |
+| Status / tags | `JengaBadge`, `JengaChip`, `JengaBanner`, `JengaVerdictBar` |
 | Scaffolding | `JengaScaffold`, `JengaTopAppBar`, `JengaNavigationBar`, `JengaTabs` |
 | Overlays / feedback | `JengaDialog`, `JengaBottomSheet`, `JengaSnackbar`, `JengaTooltip`, `JengaDropdownMenu` |
 | Refresh | `JengaPullToRefresh` |
-| Media / identity | `JengaAvatar`, `JengaIcon` + `JengaIcons` |
-| Progress | `JengaLinearProgress`, `JengaCircularProgress` (+ indeterminate), shimmer |
+| Media / identity | `JengaAvatar`, `JengaIcon` + `JengaIcons`, `JengaMediaHero`, `JengaImageShelf` |
+| Progress | `JengaLinearProgress`, `JengaCircularProgress` (+ indeterminate), `JengaDotStrip`, shimmer |
 | Empty / error | `JengaEmptyState`, `JengaErrorState` |
 | Layout primitives | `JengaStack`, `JengaInline`, `JengaWrap`, `JengaGrid`, `JengaBox`, `JengaSpacer`, `JengaSection`, `JengaSectionHeader` |
-| Patterns | `JengaTicketRow`, `JengaStatCard` |
+| Patterns | `JengaTicketRow`, `JengaStatCard`, `JengaStatTile`, `JengaReactionBar` |
 
 Prefer the layout primitives over hand-nesting `Row`/`Column` with manual spacing:
 

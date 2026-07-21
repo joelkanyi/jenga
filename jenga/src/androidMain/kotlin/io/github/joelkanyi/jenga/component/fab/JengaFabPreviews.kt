@@ -49,7 +49,13 @@ private fun FabShowcase() {
             .background(JengaTheme.colors.background)
             .padding(JengaTheme.spacing.xl),
         horizontalArrangement = Arrangement.spacedBy(JengaTheme.spacing.lg),
+        verticalAlignment = Alignment.CenterVertically,
     ) {
         JengaFab(onClick = {}) { JengaIcon(JengaIcons.Add, contentDescription = "Add") }
+        JengaExtendedFab(
+            label = "Ask",
+            onClick = {},
+            icon = { JengaIcon(JengaIcons.MessageCircle, contentDescription = null) },
+        )
     }
 }

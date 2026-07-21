@@ -59,6 +59,7 @@ private fun ButtonShowcase() {
         JengaButton(text = "Primary", onClick = {}, variant = JengaButtonVariant.Primary)
         JengaButton(text = "Ink", onClick = {}, variant = JengaButtonVariant.Ink)
         JengaButton(text = "Ghost", onClick = {}, variant = JengaButtonVariant.Ghost)
+        JengaButton(text = "Neutral", onClick = {}, variant = JengaButtonVariant.Neutral)
         JengaButton(text = "Outline", onClick = {}, variant = JengaButtonVariant.Outline)
         JengaButton(text = "Danger", onClick = {}, variant = JengaButtonVariant.Danger)
         Row(horizontalArrangement = Arrangement.spacedBy(JengaTheme.spacing.sm)) {
