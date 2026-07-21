@@ -16,7 +16,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import dev.drewhamilton.poko.Poko
 import io.github.joelkanyi.jenga.component.icon.JengaIcon
-import io.github.joelkanyi.jenga.component.icon.JengaIcons
 import io.github.joelkanyi.jenga.theme.JengaTheme
 
 /** Which way a [JengaSwipeToDismiss] row can be swiped to trigger its action. */
@@ -78,7 +77,7 @@ public fun JengaSwipeToDismiss(
     modifier: Modifier = Modifier,
     enabled: Boolean = true,
     direction: JengaSwipeDirection = JengaSwipeDirection.EndToStart,
-    icon: ImageVector = JengaIcons.Trash,
+    icon: ImageVector = JengaTheme.icons.trash,
     actionContentDescription: String? = null,
     colors: JengaSwipeToDismissColors = JengaSwipeToDismissDefaults.colors(),
     background: (@Composable () -> Unit)? = null,

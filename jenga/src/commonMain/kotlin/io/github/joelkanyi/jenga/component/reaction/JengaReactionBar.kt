@@ -20,7 +20,6 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import dev.drewhamilton.poko.Poko
 import io.github.joelkanyi.jenga.component.icon.JengaIcon
-import io.github.joelkanyi.jenga.component.icon.JengaIcons
 import io.github.joelkanyi.jenga.theme.JengaTheme
 
 /** Resolved colors for a [JengaReactionBar]'s buttons. Override via [JengaReactionBarDefaults.colors]. */
@@ -75,8 +74,8 @@ public fun JengaReactionBar(
     modifier: Modifier = Modifier,
     positiveContentDescription: String? = null,
     negativeContentDescription: String? = null,
-    positiveIcon: ImageVector = JengaIcons.ThumbsUp,
-    negativeIcon: ImageVector = JengaIcons.ThumbsDown,
+    positiveIcon: ImageVector = JengaTheme.icons.thumbsUp,
+    negativeIcon: ImageVector = JengaTheme.icons.thumbsDown,
     colors: JengaReactionBarColors = JengaReactionBarDefaults.colors(),
     action: (@Composable () -> Unit)? = null,
 ) {

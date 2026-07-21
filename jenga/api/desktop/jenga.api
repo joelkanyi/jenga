@@ -382,6 +382,29 @@ public final class io/github/joelkanyi/jenga/component/icon/JengaIconKt {
 	public static final fun JengaIcon-q9LK7_k (Landroidx/compose/ui/graphics/vector/ImageVector;Ljava/lang/String;Landroidx/compose/ui/Modifier;JFLandroidx/compose/runtime/Composer;II)V
 }
 
+public final class io/github/joelkanyi/jenga/component/icon/JengaIconSet {
+	public static final field $stable I
+	public fun <init> (Landroidx/compose/ui/graphics/vector/ImageVector;Landroidx/compose/ui/graphics/vector/ImageVector;Landroidx/compose/ui/graphics/vector/ImageVector;Landroidx/compose/ui/graphics/vector/ImageVector;Landroidx/compose/ui/graphics/vector/ImageVector;Landroidx/compose/ui/graphics/vector/ImageVector;Landroidx/compose/ui/graphics/vector/ImageVector;Landroidx/compose/ui/graphics/vector/ImageVector;Landroidx/compose/ui/graphics/vector/ImageVector;Landroidx/compose/ui/graphics/vector/ImageVector;Landroidx/compose/ui/graphics/vector/ImageVector;)V
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getAdd ()Landroidx/compose/ui/graphics/vector/ImageVector;
+	public final fun getCheck ()Landroidx/compose/ui/graphics/vector/ImageVector;
+	public final fun getCheckCircle ()Landroidx/compose/ui/graphics/vector/ImageVector;
+	public final fun getChevron ()Landroidx/compose/ui/graphics/vector/ImageVector;
+	public final fun getClose ()Landroidx/compose/ui/graphics/vector/ImageVector;
+	public final fun getInfo ()Landroidx/compose/ui/graphics/vector/ImageVector;
+	public final fun getRemove ()Landroidx/compose/ui/graphics/vector/ImageVector;
+	public final fun getSearch ()Landroidx/compose/ui/graphics/vector/ImageVector;
+	public final fun getThumbsDown ()Landroidx/compose/ui/graphics/vector/ImageVector;
+	public final fun getThumbsUp ()Landroidx/compose/ui/graphics/vector/ImageVector;
+	public final fun getTrash ()Landroidx/compose/ui/graphics/vector/ImageVector;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class io/github/joelkanyi/jenga/component/icon/JengaIconSetKt {
+	public static final fun rememberJengaIconSet (Landroidx/compose/ui/graphics/vector/ImageVector;Landroidx/compose/ui/graphics/vector/ImageVector;Landroidx/compose/ui/graphics/vector/ImageVector;Landroidx/compose/ui/graphics/vector/ImageVector;Landroidx/compose/ui/graphics/vector/ImageVector;Landroidx/compose/ui/graphics/vector/ImageVector;Landroidx/compose/ui/graphics/vector/ImageVector;Landroidx/compose/ui/graphics/vector/ImageVector;Landroidx/compose/ui/graphics/vector/ImageVector;Landroidx/compose/ui/graphics/vector/ImageVector;Landroidx/compose/ui/graphics/vector/ImageVector;Landroidx/compose/runtime/Composer;III)Lio/github/joelkanyi/jenga/component/icon/JengaIconSet;
+}
+
 public final class io/github/joelkanyi/jenga/component/icon/JengaIcons {
 	public static final field $stable I
 	public static final field INSTANCE Lio/github/joelkanyi/jenga/component/icon/JengaIcons;
@@ -1473,6 +1496,7 @@ public final class io/github/joelkanyi/jenga/theme/JengaTheme {
 	public static final field INSTANCE Lio/github/joelkanyi/jenga/theme/JengaTheme;
 	public final fun getColors (Landroidx/compose/runtime/Composer;I)Lio/github/joelkanyi/jenga/foundation/color/JengaColors;
 	public final fun getElevation (Landroidx/compose/runtime/Composer;I)Lio/github/joelkanyi/jenga/foundation/elevation/JengaElevation;
+	public final fun getIcons (Landroidx/compose/runtime/Composer;I)Lio/github/joelkanyi/jenga/component/icon/JengaIconSet;
 	public final fun getMotion (Landroidx/compose/runtime/Composer;I)Lio/github/joelkanyi/jenga/foundation/motion/JengaMotion;
 	public final fun getShapes (Landroidx/compose/runtime/Composer;I)Lio/github/joelkanyi/jenga/foundation/shape/JengaShapes;
 	public final fun getSizing (Landroidx/compose/runtime/Composer;I)Lio/github/joelkanyi/jenga/foundation/sizing/JengaSizing;
@@ -1481,7 +1505,7 @@ public final class io/github/joelkanyi/jenga/theme/JengaTheme {
 }
 
 public final class io/github/joelkanyi/jenga/theme/JengaThemeKt {
-	public static final fun JengaTheme (ZLio/github/joelkanyi/jenga/foundation/color/JengaColors;Lio/github/joelkanyi/jenga/foundation/typography/JengaTypography;Lio/github/joelkanyi/jenga/foundation/spacing/JengaSpacing;Lio/github/joelkanyi/jenga/foundation/shape/JengaShapes;Lio/github/joelkanyi/jenga/foundation/sizing/JengaSizing;Lio/github/joelkanyi/jenga/foundation/elevation/JengaElevation;Lio/github/joelkanyi/jenga/foundation/motion/JengaMotion;Lkotlin/jvm/functions/Function2;Landroidx/compose/runtime/Composer;II)V
+	public static final fun JengaTheme (ZLio/github/joelkanyi/jenga/foundation/color/JengaColors;Lio/github/joelkanyi/jenga/foundation/typography/JengaTypography;Lio/github/joelkanyi/jenga/foundation/spacing/JengaSpacing;Lio/github/joelkanyi/jenga/foundation/shape/JengaShapes;Lio/github/joelkanyi/jenga/foundation/sizing/JengaSizing;Lio/github/joelkanyi/jenga/foundation/elevation/JengaElevation;Lio/github/joelkanyi/jenga/foundation/motion/JengaMotion;Lio/github/joelkanyi/jenga/component/icon/JengaIconSet;Lkotlin/jvm/functions/Function2;Landroidx/compose/runtime/Composer;II)V
 	public static final fun getLocalJengaContentColor ()Landroidx/compose/runtime/ProvidableCompositionLocal;
 }
 

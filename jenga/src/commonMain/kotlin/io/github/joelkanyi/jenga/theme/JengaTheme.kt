@@ -9,6 +9,8 @@ import androidx.compose.runtime.ReadOnlyComposable
 import androidx.compose.runtime.compositionLocalOf
 import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.graphics.Color
+import io.github.joelkanyi.jenga.component.icon.JengaIconSet
+import io.github.joelkanyi.jenga.component.icon.rememberJengaIconSet
 import io.github.joelkanyi.jenga.foundation.color.JengaColors
 import io.github.joelkanyi.jenga.foundation.color.jengaDarkColors
 import io.github.joelkanyi.jenga.foundation.color.jengaLightColors
@@ -36,6 +38,11 @@ internal val LocalJengaShapes = staticCompositionLocalOf { jengaShapes() }
 internal val LocalJengaSizing = staticCompositionLocalOf { jengaSizing() }
 internal val LocalJengaElevation = staticCompositionLocalOf { jengaElevation() }
 internal val LocalJengaMotion = staticCompositionLocalOf { jengaMotion() }
+
+// Null until a theme provides it; the accessor falls back to the default set so a
+// component still renders outside JengaTheme. The default needs composition (it
+// resolves vector resources), so it cannot be a static default here.
+internal val LocalJengaIcons = staticCompositionLocalOf<JengaIconSet?> { null }
 
 /**
  * The preferred content color (text, icons) for the current subtree, mirroring
@@ -84,6 +91,13 @@ public object JengaTheme {
     public val motion: JengaMotion
         @Composable @ReadOnlyComposable
         get() = LocalJengaMotion.current
+
+    // Not @ReadOnlyComposable: the fallback resolves vector resources, which needs
+    // full composition. Within a JengaTheme the local is always set, so this is a
+    // plain read; outside one it builds the default set.
+    public val icons: JengaIconSet
+        @Composable
+        get() = LocalJengaIcons.current ?: rememberJengaIconSet()
 }
 
 /**
@@ -109,6 +123,7 @@ public object JengaTheme {
  * @param sizing the sizing set (touch targets, icon/control sizes).
  * @param elevation the elevation ladder.
  * @param motion the motion tokens.
+ * @param icons the semantic icons components draw; defaults to Jenga's own set.
  * @param content the themed content.
  */
 @Composable
@@ -121,12 +136,16 @@ public fun JengaTheme(
     sizing: JengaSizing = jengaSizing(),
     elevation: JengaElevation = jengaElevation(),
     motion: JengaMotion = jengaMotion(),
+    icons: JengaIconSet? = null,
     content: @Composable () -> Unit,
 ) {
     // Resolve the default type scale inside composition so the Outfit brand font
     // (loaded via Compose Resources) can be attached; callers may still pass their
     // own fully-built typography.
     val resolvedTypography = typography ?: jengaTypography(rememberJengaFontFamily())
+    // Same reason: the default icon set resolves vector resources, so build it in
+    // composition when the caller did not supply one.
+    val resolvedIcons = icons ?: rememberJengaIconSet()
     CompositionLocalProvider(
         LocalJengaColors provides colors,
         LocalJengaTypography provides resolvedTypography,
@@ -135,6 +154,7 @@ public fun JengaTheme(
         LocalJengaSizing provides sizing,
         LocalJengaElevation provides elevation,
         LocalJengaMotion provides motion,
+        LocalJengaIcons provides resolvedIcons,
         LocalJengaContentColor provides colors.textPrimary,
     ) {
         MaterialTheme(

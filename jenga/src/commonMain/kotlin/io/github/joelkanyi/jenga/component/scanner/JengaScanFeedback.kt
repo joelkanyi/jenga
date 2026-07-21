@@ -15,7 +15,6 @@ import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import io.github.joelkanyi.jenga.component.icon.JengaIcon
-import io.github.joelkanyi.jenga.component.icon.JengaIcons
 import io.github.joelkanyi.jenga.theme.JengaTheme
 
 /** Defaults and token mappings for [JengaScanFeedback]. */
@@ -50,11 +49,12 @@ public fun JengaScanFeedback(
     modifier: Modifier = Modifier,
 ) {
     val accent = JengaScannerViewfinderDefaults.accentColor(status)
+    val icons = JengaTheme.icons
     val icon = when (status) {
-        JengaScannerStatus.Success -> JengaIcons.CheckCircle
-        JengaScannerStatus.Warning -> JengaIcons.Info
-        JengaScannerStatus.Error -> JengaIcons.Close
-        JengaScannerStatus.Scanning -> JengaIcons.Search
+        JengaScannerStatus.Success -> icons.checkCircle
+        JengaScannerStatus.Warning -> icons.info
+        JengaScannerStatus.Error -> icons.close
+        JengaScannerStatus.Scanning -> icons.search
     }
 
     val scale = remember { Animatable(0.85f) }
