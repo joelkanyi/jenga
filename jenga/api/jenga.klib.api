@@ -231,6 +231,42 @@ final enum class io.github.joelkanyi.jenga.component.verdict/JengaVerdictTone : 
     final fun values(): kotlin/Array<io.github.joelkanyi.jenga.component.verdict/JengaVerdictTone> // io.github.joelkanyi.jenga.component.verdict/JengaVerdictTone.values|values#static(){}[0]
 }
 
+final enum class io.github.joelkanyi.jenga.foundation.brand/JengaContrast : kotlin/Enum<io.github.joelkanyi.jenga.foundation.brand/JengaContrast> { // io.github.joelkanyi.jenga.foundation.brand/JengaContrast|null[0]
+    enum entry High // io.github.joelkanyi.jenga.foundation.brand/JengaContrast.High|null[0]
+    enum entry Medium // io.github.joelkanyi.jenga.foundation.brand/JengaContrast.Medium|null[0]
+    enum entry Standard // io.github.joelkanyi.jenga.foundation.brand/JengaContrast.Standard|null[0]
+
+    final val entries // io.github.joelkanyi.jenga.foundation.brand/JengaContrast.entries|#static{}entries[0]
+        final fun <get-entries>(): kotlin.enums/EnumEntries<io.github.joelkanyi.jenga.foundation.brand/JengaContrast> // io.github.joelkanyi.jenga.foundation.brand/JengaContrast.entries.<get-entries>|<get-entries>#static(){}[0]
+
+    final fun valueOf(kotlin/String): io.github.joelkanyi.jenga.foundation.brand/JengaContrast // io.github.joelkanyi.jenga.foundation.brand/JengaContrast.valueOf|valueOf#static(kotlin.String){}[0]
+    final fun values(): kotlin/Array<io.github.joelkanyi.jenga.foundation.brand/JengaContrast> // io.github.joelkanyi.jenga.foundation.brand/JengaContrast.values|values#static(){}[0]
+}
+
+final enum class io.github.joelkanyi.jenga.foundation.brand/JengaCornerStyle : kotlin/Enum<io.github.joelkanyi.jenga.foundation.brand/JengaCornerStyle> { // io.github.joelkanyi.jenga.foundation.brand/JengaCornerStyle|null[0]
+    enum entry Rounded // io.github.joelkanyi.jenga.foundation.brand/JengaCornerStyle.Rounded|null[0]
+    enum entry Sharp // io.github.joelkanyi.jenga.foundation.brand/JengaCornerStyle.Sharp|null[0]
+    enum entry Soft // io.github.joelkanyi.jenga.foundation.brand/JengaCornerStyle.Soft|null[0]
+
+    final val entries // io.github.joelkanyi.jenga.foundation.brand/JengaCornerStyle.entries|#static{}entries[0]
+        final fun <get-entries>(): kotlin.enums/EnumEntries<io.github.joelkanyi.jenga.foundation.brand/JengaCornerStyle> // io.github.joelkanyi.jenga.foundation.brand/JengaCornerStyle.entries.<get-entries>|<get-entries>#static(){}[0]
+
+    final fun valueOf(kotlin/String): io.github.joelkanyi.jenga.foundation.brand/JengaCornerStyle // io.github.joelkanyi.jenga.foundation.brand/JengaCornerStyle.valueOf|valueOf#static(kotlin.String){}[0]
+    final fun values(): kotlin/Array<io.github.joelkanyi.jenga.foundation.brand/JengaCornerStyle> // io.github.joelkanyi.jenga.foundation.brand/JengaCornerStyle.values|values#static(){}[0]
+}
+
+final enum class io.github.joelkanyi.jenga.foundation.brand/JengaDensity : kotlin/Enum<io.github.joelkanyi.jenga.foundation.brand/JengaDensity> { // io.github.joelkanyi.jenga.foundation.brand/JengaDensity|null[0]
+    enum entry Comfortable // io.github.joelkanyi.jenga.foundation.brand/JengaDensity.Comfortable|null[0]
+    enum entry Compact // io.github.joelkanyi.jenga.foundation.brand/JengaDensity.Compact|null[0]
+    enum entry Spacious // io.github.joelkanyi.jenga.foundation.brand/JengaDensity.Spacious|null[0]
+
+    final val entries // io.github.joelkanyi.jenga.foundation.brand/JengaDensity.entries|#static{}entries[0]
+        final fun <get-entries>(): kotlin.enums/EnumEntries<io.github.joelkanyi.jenga.foundation.brand/JengaDensity> // io.github.joelkanyi.jenga.foundation.brand/JengaDensity.entries.<get-entries>|<get-entries>#static(){}[0]
+
+    final fun valueOf(kotlin/String): io.github.joelkanyi.jenga.foundation.brand/JengaDensity // io.github.joelkanyi.jenga.foundation.brand/JengaDensity.valueOf|valueOf#static(kotlin.String){}[0]
+    final fun values(): kotlin/Array<io.github.joelkanyi.jenga.foundation.brand/JengaDensity> // io.github.joelkanyi.jenga.foundation.brand/JengaDensity.values|values#static(){}[0]
+}
+
 final class io.github.joelkanyi.jenga.component.action/JengaAction { // io.github.joelkanyi.jenga.component.action/JengaAction|null[0]
     constructor <init>(kotlin/String, kotlin/Function0<kotlin/Unit>) // io.github.joelkanyi.jenga.component.action/JengaAction.<init>|<init>(kotlin.String;kotlin.Function0<kotlin.Unit>){}[0]
 
@@ -798,6 +834,29 @@ final class io.github.joelkanyi.jenga.component.verdict/JengaVerdictSublines { /
     final fun equals(kotlin/Any?): kotlin/Boolean // io.github.joelkanyi.jenga.component.verdict/JengaVerdictSublines.equals|equals(kotlin.Any?){}[0]
     final fun hashCode(): kotlin/Int // io.github.joelkanyi.jenga.component.verdict/JengaVerdictSublines.hashCode|hashCode(){}[0]
     final fun toString(): kotlin/String // io.github.joelkanyi.jenga.component.verdict/JengaVerdictSublines.toString|toString(){}[0]
+}
+
+final class io.github.joelkanyi.jenga.foundation.brand/JengaBrand { // io.github.joelkanyi.jenga.foundation.brand/JengaBrand|null[0]
+    final val accent // io.github.joelkanyi.jenga.foundation.brand/JengaBrand.accent|{}accent[0]
+        final fun <get-accent>(): androidx.compose.ui.graphics/Color? // io.github.joelkanyi.jenga.foundation.brand/JengaBrand.accent.<get-accent>|<get-accent>(){}[0]
+    final val bodyFontFamily // io.github.joelkanyi.jenga.foundation.brand/JengaBrand.bodyFontFamily|{}bodyFontFamily[0]
+        final fun <get-bodyFontFamily>(): androidx.compose.ui.text.font/FontFamily? // io.github.joelkanyi.jenga.foundation.brand/JengaBrand.bodyFontFamily.<get-bodyFontFamily>|<get-bodyFontFamily>(){}[0]
+    final val contrast // io.github.joelkanyi.jenga.foundation.brand/JengaBrand.contrast|{}contrast[0]
+        final fun <get-contrast>(): io.github.joelkanyi.jenga.foundation.brand/JengaContrast // io.github.joelkanyi.jenga.foundation.brand/JengaBrand.contrast.<get-contrast>|<get-contrast>(){}[0]
+    final val corner // io.github.joelkanyi.jenga.foundation.brand/JengaBrand.corner|{}corner[0]
+        final fun <get-corner>(): io.github.joelkanyi.jenga.foundation.brand/JengaCornerStyle // io.github.joelkanyi.jenga.foundation.brand/JengaBrand.corner.<get-corner>|<get-corner>(){}[0]
+    final val density // io.github.joelkanyi.jenga.foundation.brand/JengaBrand.density|{}density[0]
+        final fun <get-density>(): io.github.joelkanyi.jenga.foundation.brand/JengaDensity // io.github.joelkanyi.jenga.foundation.brand/JengaBrand.density.<get-density>|<get-density>(){}[0]
+    final val displayFontFamily // io.github.joelkanyi.jenga.foundation.brand/JengaBrand.displayFontFamily|{}displayFontFamily[0]
+        final fun <get-displayFontFamily>(): androidx.compose.ui.text.font/FontFamily? // io.github.joelkanyi.jenga.foundation.brand/JengaBrand.displayFontFamily.<get-displayFontFamily>|<get-displayFontFamily>(){}[0]
+    final val icons // io.github.joelkanyi.jenga.foundation.brand/JengaBrand.icons|{}icons[0]
+        final fun <get-icons>(): io.github.joelkanyi.jenga.component.icon/JengaIconSet? // io.github.joelkanyi.jenga.foundation.brand/JengaBrand.icons.<get-icons>|<get-icons>(){}[0]
+    final val seed // io.github.joelkanyi.jenga.foundation.brand/JengaBrand.seed|{}seed[0]
+        final fun <get-seed>(): androidx.compose.ui.graphics/Color // io.github.joelkanyi.jenga.foundation.brand/JengaBrand.seed.<get-seed>|<get-seed>(){}[0]
+
+    final fun equals(kotlin/Any?): kotlin/Boolean // io.github.joelkanyi.jenga.foundation.brand/JengaBrand.equals|equals(kotlin.Any?){}[0]
+    final fun hashCode(): kotlin/Int // io.github.joelkanyi.jenga.foundation.brand/JengaBrand.hashCode|hashCode(){}[0]
+    final fun toString(): kotlin/String // io.github.joelkanyi.jenga.foundation.brand/JengaBrand.toString|toString(){}[0]
 }
 
 final class io.github.joelkanyi.jenga.foundation.color/JengaColors { // io.github.joelkanyi.jenga.foundation.color/JengaColors|null[0]
@@ -1601,6 +1660,7 @@ final val io.github.joelkanyi.jenga.component.tooltip/io_github_joelkanyi_jenga_
 final val io.github.joelkanyi.jenga.component.verdict/io_github_joelkanyi_jenga_component_verdict_JengaVerdictBarColors$stableprop // io.github.joelkanyi.jenga.component.verdict/io_github_joelkanyi_jenga_component_verdict_JengaVerdictBarColors$stableprop|#static{}io_github_joelkanyi_jenga_component_verdict_JengaVerdictBarColors$stableprop[0]
 final val io.github.joelkanyi.jenga.component.verdict/io_github_joelkanyi_jenga_component_verdict_JengaVerdictBarDefaults$stableprop // io.github.joelkanyi.jenga.component.verdict/io_github_joelkanyi_jenga_component_verdict_JengaVerdictBarDefaults$stableprop|#static{}io_github_joelkanyi_jenga_component_verdict_JengaVerdictBarDefaults$stableprop[0]
 final val io.github.joelkanyi.jenga.component.verdict/io_github_joelkanyi_jenga_component_verdict_JengaVerdictSublines$stableprop // io.github.joelkanyi.jenga.component.verdict/io_github_joelkanyi_jenga_component_verdict_JengaVerdictSublines$stableprop|#static{}io_github_joelkanyi_jenga_component_verdict_JengaVerdictSublines$stableprop[0]
+final val io.github.joelkanyi.jenga.foundation.brand/io_github_joelkanyi_jenga_foundation_brand_JengaBrand$stableprop // io.github.joelkanyi.jenga.foundation.brand/io_github_joelkanyi_jenga_foundation_brand_JengaBrand$stableprop|#static{}io_github_joelkanyi_jenga_foundation_brand_JengaBrand$stableprop[0]
 final val io.github.joelkanyi.jenga.foundation.color/io_github_joelkanyi_jenga_foundation_color_JengaColors$stableprop // io.github.joelkanyi.jenga.foundation.color/io_github_joelkanyi_jenga_foundation_color_JengaColors$stableprop|#static{}io_github_joelkanyi_jenga_foundation_color_JengaColors$stableprop[0]
 final val io.github.joelkanyi.jenga.foundation.elevation/io_github_joelkanyi_jenga_foundation_elevation_JengaElevation$stableprop // io.github.joelkanyi.jenga.foundation.elevation/io_github_joelkanyi_jenga_foundation_elevation_JengaElevation$stableprop|#static{}io_github_joelkanyi_jenga_foundation_elevation_JengaElevation$stableprop[0]
 final val io.github.joelkanyi.jenga.foundation.motion/io_github_joelkanyi_jenga_foundation_motion_JengaMotion$stableprop // io.github.joelkanyi.jenga.foundation.motion/io_github_joelkanyi_jenga_foundation_motion_JengaMotion$stableprop|#static{}io_github_joelkanyi_jenga_foundation_motion_JengaMotion$stableprop[0]
@@ -1620,6 +1680,12 @@ final val io.github.joelkanyi.jenga.theme/io_github_joelkanyi_jenga_theme_JengaT
 
 final fun (androidx.compose.foundation.layout/RowScope).io.github.joelkanyi.jenga.component.navigation/JengaNavigationBarItem(kotlin/Boolean, kotlin/Function0<kotlin/Unit>, kotlin/Function2<androidx.compose.runtime/Composer, kotlin/Int, kotlin/Unit>, androidx.compose.ui/Modifier?, kotlin/String?, kotlin/Boolean, io.github.joelkanyi.jenga.component.navigation/JengaNavIndicator?, io.github.joelkanyi.jenga.component.navigation/JengaNavigationBarColors?, androidx.compose.runtime/Composer?, kotlin/Int, kotlin/Int) // io.github.joelkanyi.jenga.component.navigation/JengaNavigationBarItem|JengaNavigationBarItem@androidx.compose.foundation.layout.RowScope(kotlin.Boolean;kotlin.Function0<kotlin.Unit>;kotlin.Function2<androidx.compose.runtime.Composer,kotlin.Int,kotlin.Unit>;androidx.compose.ui.Modifier?;kotlin.String?;kotlin.Boolean;io.github.joelkanyi.jenga.component.navigation.JengaNavIndicator?;io.github.joelkanyi.jenga.component.navigation.JengaNavigationBarColors?;androidx.compose.runtime.Composer?;kotlin.Int;kotlin.Int){}[0]
 final fun (androidx.compose.ui/Modifier).io.github.joelkanyi.jenga.component.progress/jengaShimmer(): androidx.compose.ui/Modifier // io.github.joelkanyi.jenga.component.progress/jengaShimmer|jengaShimmer@androidx.compose.ui.Modifier(){}[0]
+final fun (io.github.joelkanyi.jenga.foundation.brand/JengaBrand).io.github.joelkanyi.jenga.foundation.brand/darkColors(): io.github.joelkanyi.jenga.foundation.color/JengaColors // io.github.joelkanyi.jenga.foundation.brand/darkColors|darkColors@io.github.joelkanyi.jenga.foundation.brand.JengaBrand(){}[0]
+final fun (io.github.joelkanyi.jenga.foundation.brand/JengaBrand).io.github.joelkanyi.jenga.foundation.brand/lightColors(): io.github.joelkanyi.jenga.foundation.color/JengaColors // io.github.joelkanyi.jenga.foundation.brand/lightColors|lightColors@io.github.joelkanyi.jenga.foundation.brand.JengaBrand(){}[0]
+final fun (io.github.joelkanyi.jenga.foundation.brand/JengaBrand).io.github.joelkanyi.jenga.foundation.brand/shapes(): io.github.joelkanyi.jenga.foundation.shape/JengaShapes // io.github.joelkanyi.jenga.foundation.brand/shapes|shapes@io.github.joelkanyi.jenga.foundation.brand.JengaBrand(){}[0]
+final fun (io.github.joelkanyi.jenga.foundation.brand/JengaBrand).io.github.joelkanyi.jenga.foundation.brand/sizing(): io.github.joelkanyi.jenga.foundation.sizing/JengaSizing // io.github.joelkanyi.jenga.foundation.brand/sizing|sizing@io.github.joelkanyi.jenga.foundation.brand.JengaBrand(){}[0]
+final fun (io.github.joelkanyi.jenga.foundation.brand/JengaBrand).io.github.joelkanyi.jenga.foundation.brand/spacing(): io.github.joelkanyi.jenga.foundation.spacing/JengaSpacing // io.github.joelkanyi.jenga.foundation.brand/spacing|spacing@io.github.joelkanyi.jenga.foundation.brand.JengaBrand(){}[0]
+final fun (io.github.joelkanyi.jenga.foundation.brand/JengaBrand).io.github.joelkanyi.jenga.foundation.brand/typography(): io.github.joelkanyi.jenga.foundation.typography/JengaTypography // io.github.joelkanyi.jenga.foundation.brand/typography|typography@io.github.joelkanyi.jenga.foundation.brand.JengaBrand(){}[0]
 final fun (io.github.joelkanyi.jenga.foundation.color/JengaColors).io.github.joelkanyi.jenga.foundation.color/withBrand(androidx.compose.ui.graphics/Color, androidx.compose.ui.graphics/Color = ..., androidx.compose.ui.graphics/Color = ..., androidx.compose.ui.graphics/Color = ...): io.github.joelkanyi.jenga.foundation.color/JengaColors // io.github.joelkanyi.jenga.foundation.color/withBrand|withBrand@io.github.joelkanyi.jenga.foundation.color.JengaColors(androidx.compose.ui.graphics.Color;androidx.compose.ui.graphics.Color;androidx.compose.ui.graphics.Color;androidx.compose.ui.graphics.Color){}[0]
 final fun io.github.joelkanyi.jenga.component.action/io_github_joelkanyi_jenga_component_action_JengaAction$stableprop_getter(): kotlin/Int // io.github.joelkanyi.jenga.component.action/io_github_joelkanyi_jenga_component_action_JengaAction$stableprop_getter|io_github_joelkanyi_jenga_component_action_JengaAction$stableprop_getter(){}[0]
 final fun io.github.joelkanyi.jenga.component.avatar/JengaAvatar(androidx.compose.ui/Modifier?, io.github.joelkanyi.jenga.component.avatar/JengaAvatarSize?, kotlin/Function2<androidx.compose.runtime/Composer, kotlin/Int, kotlin/Unit>, androidx.compose.runtime/Composer?, kotlin/Int, kotlin/Int) // io.github.joelkanyi.jenga.component.avatar/JengaAvatar|JengaAvatar(androidx.compose.ui.Modifier?;io.github.joelkanyi.jenga.component.avatar.JengaAvatarSize?;kotlin.Function2<androidx.compose.runtime.Composer,kotlin.Int,kotlin.Unit>;androidx.compose.runtime.Composer?;kotlin.Int;kotlin.Int){}[0]
@@ -1764,6 +1830,8 @@ final fun io.github.joelkanyi.jenga.component.verdict/JengaVerdictBar(kotlin/Str
 final fun io.github.joelkanyi.jenga.component.verdict/io_github_joelkanyi_jenga_component_verdict_JengaVerdictBarColors$stableprop_getter(): kotlin/Int // io.github.joelkanyi.jenga.component.verdict/io_github_joelkanyi_jenga_component_verdict_JengaVerdictBarColors$stableprop_getter|io_github_joelkanyi_jenga_component_verdict_JengaVerdictBarColors$stableprop_getter(){}[0]
 final fun io.github.joelkanyi.jenga.component.verdict/io_github_joelkanyi_jenga_component_verdict_JengaVerdictBarDefaults$stableprop_getter(): kotlin/Int // io.github.joelkanyi.jenga.component.verdict/io_github_joelkanyi_jenga_component_verdict_JengaVerdictBarDefaults$stableprop_getter|io_github_joelkanyi_jenga_component_verdict_JengaVerdictBarDefaults$stableprop_getter(){}[0]
 final fun io.github.joelkanyi.jenga.component.verdict/io_github_joelkanyi_jenga_component_verdict_JengaVerdictSublines$stableprop_getter(): kotlin/Int // io.github.joelkanyi.jenga.component.verdict/io_github_joelkanyi_jenga_component_verdict_JengaVerdictSublines$stableprop_getter|io_github_joelkanyi_jenga_component_verdict_JengaVerdictSublines$stableprop_getter(){}[0]
+final fun io.github.joelkanyi.jenga.foundation.brand/io_github_joelkanyi_jenga_foundation_brand_JengaBrand$stableprop_getter(): kotlin/Int // io.github.joelkanyi.jenga.foundation.brand/io_github_joelkanyi_jenga_foundation_brand_JengaBrand$stableprop_getter|io_github_joelkanyi_jenga_foundation_brand_JengaBrand$stableprop_getter(){}[0]
+final fun io.github.joelkanyi.jenga.foundation.brand/jengaBrand(androidx.compose.ui.graphics/Color, androidx.compose.ui.graphics/Color? = ..., io.github.joelkanyi.jenga.foundation.brand/JengaContrast = ..., androidx.compose.ui.text.font/FontFamily? = ..., androidx.compose.ui.text.font/FontFamily? = ..., androidx.compose.ui.text.font/FontFamily? = ..., io.github.joelkanyi.jenga.foundation.brand/JengaCornerStyle = ..., io.github.joelkanyi.jenga.foundation.brand/JengaDensity = ..., io.github.joelkanyi.jenga.component.icon/JengaIconSet? = ...): io.github.joelkanyi.jenga.foundation.brand/JengaBrand // io.github.joelkanyi.jenga.foundation.brand/jengaBrand|jengaBrand(androidx.compose.ui.graphics.Color;androidx.compose.ui.graphics.Color?;io.github.joelkanyi.jenga.foundation.brand.JengaContrast;androidx.compose.ui.text.font.FontFamily?;androidx.compose.ui.text.font.FontFamily?;androidx.compose.ui.text.font.FontFamily?;io.github.joelkanyi.jenga.foundation.brand.JengaCornerStyle;io.github.joelkanyi.jenga.foundation.brand.JengaDensity;io.github.joelkanyi.jenga.component.icon.JengaIconSet?){}[0]
 final fun io.github.joelkanyi.jenga.foundation.color/io_github_joelkanyi_jenga_foundation_color_JengaColors$stableprop_getter(): kotlin/Int // io.github.joelkanyi.jenga.foundation.color/io_github_joelkanyi_jenga_foundation_color_JengaColors$stableprop_getter|io_github_joelkanyi_jenga_foundation_color_JengaColors$stableprop_getter(){}[0]
 final fun io.github.joelkanyi.jenga.foundation.color/jengaDarkColors(): io.github.joelkanyi.jenga.foundation.color/JengaColors // io.github.joelkanyi.jenga.foundation.color/jengaDarkColors|jengaDarkColors(){}[0]
 final fun io.github.joelkanyi.jenga.foundation.color/jengaLightColors(): io.github.joelkanyi.jenga.foundation.color/JengaColors // io.github.joelkanyi.jenga.foundation.color/jengaLightColors|jengaLightColors(){}[0]
