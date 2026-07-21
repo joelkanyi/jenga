@@ -48,10 +48,11 @@ import io.github.joelkanyi.jenga.theme.JengaTheme
 fun CatalogScreen(
     darkTheme: Boolean,
     onToggleTheme: () -> Unit,
+    modifier: Modifier = Modifier,
 ) {
     var tab by remember { mutableIntStateOf(0) }
     Column(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxSize()
             .background(JengaTheme.colors.background)
             .windowInsetsPadding(WindowInsets.systemBars),
@@ -62,7 +63,7 @@ fun CatalogScreen(
             JengaStack(modifier = Modifier.weight(1f), space = JengaTheme.spacing.xxs) {
                 JengaText("Jenga", style = JengaTheme.typography.display)
                 JengaText(
-                    "Ticketfiti design system",
+                    "Multiplatform design system",
                     style = JengaTheme.typography.bodySmall,
                     color = JengaTheme.colors.textMuted,
                 )

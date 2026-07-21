@@ -263,7 +263,7 @@ public final class io/github/joelkanyi/jenga/component/divider/JengaDividerKt {
 }
 
 public final class io/github/joelkanyi/jenga/component/expandable/JengaExpandableRowKt {
-	public static final fun JengaExpandableRow (ZLkotlin/jvm/functions/Function1;Landroidx/compose/ui/Modifier;ZLjava/lang/String;Lkotlin/jvm/functions/Function3;Lkotlin/jvm/functions/Function3;Landroidx/compose/runtime/Composer;II)V
+	public static final fun JengaExpandableRow (ZLkotlin/jvm/functions/Function1;Lkotlin/jvm/functions/Function3;Landroidx/compose/ui/Modifier;ZLjava/lang/String;Lkotlin/jvm/functions/Function3;Landroidx/compose/runtime/Composer;II)V
 }
 
 public final class io/github/joelkanyi/jenga/component/fab/JengaFabColors {
@@ -1445,7 +1445,6 @@ public final class io/github/joelkanyi/jenga/samples/ComposableSingletons$JengaS
 	public static final field INSTANCE Lio/github/joelkanyi/jenga/samples/ComposableSingletons$JengaSamplesKt;
 	public fun <init> ()V
 	public final fun getLambda$-1143789796$jenga ()Lkotlin/jvm/functions/Function3;
-	public final fun getLambda$-1739361293$jenga ()Lkotlin/jvm/functions/Function3;
 	public final fun getLambda$-1877431549$jenga ()Lkotlin/jvm/functions/Function3;
 	public final fun getLambda$-1954135018$jenga ()Lkotlin/jvm/functions/Function2;
 	public final fun getLambda$-1988505284$jenga ()Lkotlin/jvm/functions/Function3;
@@ -1457,6 +1456,7 @@ public final class io/github/joelkanyi/jenga/samples/ComposableSingletons$JengaS
 	public final fun getLambda$-983531617$jenga ()Lkotlin/jvm/functions/Function3;
 	public final fun getLambda$1081290568$jenga ()Lkotlin/jvm/functions/Function2;
 	public final fun getLambda$1557062852$jenga ()Lkotlin/jvm/functions/Function3;
+	public final fun getLambda$183897136$jenga ()Lkotlin/jvm/functions/Function3;
 	public final fun getLambda$1912113536$jenga ()Lkotlin/jvm/functions/Function3;
 	public final fun getLambda$1937005648$jenga ()Lkotlin/jvm/functions/Function3;
 	public final fun getLambda$1967077901$jenga ()Lkotlin/jvm/functions/Function2;

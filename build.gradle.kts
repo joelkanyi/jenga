@@ -32,11 +32,26 @@ spotless {
         "ktlint_standard_property-naming" to "disabled",
         "ktlint_standard_filename" to "disabled",
         "max_line_length" to "off",
+        // A design system's theme tokens ARE its public CompositionLocals, the
+        // same mechanism MaterialTheme uses — allowlist them for compose-rules.
+        "compose_allowed_composition_locals" to listOf(
+            "LocalJengaColors",
+            "LocalJengaTypography",
+            "LocalJengaSpacing",
+            "LocalJengaShapes",
+            "LocalJengaSizing",
+            "LocalJengaElevation",
+            "LocalJengaMotion",
+            "LocalJengaContentColor",
+        ).joinToString(","),
     )
+    val composeRules = libs.compose.rules.ktlint.get().toString()
     kotlin {
         target("**/src/**/*.kt")
         targetExclude("**/build/**")
-        ktlint(ktlintVersion).editorConfigOverride(rules)
+        ktlint(ktlintVersion)
+            .customRuleSets(listOf(composeRules))
+            .editorConfigOverride(rules)
     }
     kotlinGradle {
         target("**/*.gradle.kts")
