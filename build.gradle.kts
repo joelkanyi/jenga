@@ -48,14 +48,18 @@ spotless {
     val composeRules = libs.compose.rules.ktlint.get().toString()
     kotlin {
         target("**/src/**/*.kt")
-        targetExclude("**/build/**")
+        // The vendored HCT color math is kept verbatim and re-syncable, so it is
+        // excluded from formatting/linting.
+        targetExclude("**/build/**", "**/foundation/color/hct/**")
         ktlint(ktlintVersion)
             .customRuleSets(listOf(composeRules))
             .editorConfigOverride(rules)
     }
     kotlinGradle {
         target("**/*.gradle.kts")
-        targetExclude("**/build/**")
+        // The vendored HCT color math is kept verbatim and re-syncable, so it is
+        // excluded from formatting/linting.
+        targetExclude("**/build/**", "**/foundation/color/hct/**")
         ktlint(ktlintVersion).editorConfigOverride(rules)
     }
 }
