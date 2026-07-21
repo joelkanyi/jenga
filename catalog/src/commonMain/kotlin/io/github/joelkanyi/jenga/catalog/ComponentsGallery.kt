@@ -34,6 +34,7 @@ import io.github.joelkanyi.jenga.component.stat.JengaStatTone
 import io.github.joelkanyi.jenga.component.stepper.JengaStepper
 import io.github.joelkanyi.jenga.component.swipe.JengaSwipeToDismiss
 import io.github.joelkanyi.jenga.component.verdict.JengaVerdictBar
+import io.github.joelkanyi.jenga.component.verdict.JengaVerdictSublines
 import io.github.joelkanyi.jenga.component.verdict.JengaVerdictTone
 import io.github.joelkanyi.jenga.component.banner.JengaBanner
 import io.github.joelkanyi.jenga.component.banner.JengaBannerTone
@@ -284,8 +285,7 @@ fun ComponentsGallery() {
                 tone = JengaVerdictTone.Positive,
                 label = "This month",
                 progress = 0.62f,
-                sublineStart = "KES 710 of 1,900 spent",
-                sublineEnd = "8 of 11 priced",
+                sublines = JengaVerdictSublines("KES 710 of 1,900 spent", "8 of 11 priced"),
                 action = JengaAction("Change") {},
             )
             JengaInline {
@@ -299,7 +299,7 @@ fun ComponentsGallery() {
             JengaMediaHero(title = "Night Market", support = "Fri · 7pm · Riverside")
             JengaExpandableRow(
                 expanded = expanded,
-                onToggle = { expanded = !expanded },
+                onExpandedChange = { expanded = it },
                 header = { JengaText("Delivery details", modifier = Modifier.weight(1f)) },
             ) {
                 JengaText("Ships in 2 to 3 business days. Free returns within 30 days.")

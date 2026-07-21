@@ -22,6 +22,7 @@ import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import dev.drewhamilton.poko.Poko
 import io.github.joelkanyi.jenga.component.icon.JengaIcon
 import io.github.joelkanyi.jenga.component.icon.JengaIcons
 import io.github.joelkanyi.jenga.component.text.JengaText
@@ -29,11 +30,17 @@ import io.github.joelkanyi.jenga.theme.JengaTheme
 import io.github.joelkanyi.jenga.theme.LocalJengaContentColor
 
 /** Resolved colors for a [JengaFab]. Override via [JengaFabDefaults.colors]. */
+@Poko
 @Immutable
-public data class JengaFabColors(
+public class JengaFabColors(
     public val container: Color,
     public val content: Color,
-)
+) {
+    public fun copy(
+        container: Color = this.container,
+        content: Color = this.content,
+    ): JengaFabColors = JengaFabColors(container, content)
+}
 
 /** Defaults and token mappings for [JengaFab]. */
 public object JengaFabDefaults {

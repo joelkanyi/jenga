@@ -16,18 +16,26 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import dev.drewhamilton.poko.Poko
 import io.github.joelkanyi.jenga.component.badge.JengaBadgeTone
 import io.github.joelkanyi.jenga.component.progress.JengaCircularProgressIndeterminate
 import io.github.joelkanyi.jenga.component.text.JengaText
 import io.github.joelkanyi.jenga.theme.JengaTheme
 
 /** Resolved colors for a [JengaStatusPill]. */
+@Poko
 @Immutable
-public data class JengaStatusPillColors(
+public class JengaStatusPillColors(
     public val container: Color,
     public val content: Color,
     public val accent: Color,
-)
+) {
+    public fun copy(
+        container: Color = this.container,
+        content: Color = this.content,
+        accent: Color = this.accent,
+    ): JengaStatusPillColors = JengaStatusPillColors(container, content, accent)
+}
 
 /** Defaults and token mappings for [JengaStatusPill]. */
 public object JengaStatusPillDefaults {

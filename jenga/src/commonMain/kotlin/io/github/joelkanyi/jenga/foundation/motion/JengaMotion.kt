@@ -5,6 +5,7 @@ import androidx.compose.animation.core.Easing
 import androidx.compose.animation.core.FastOutSlowInEasing
 import androidx.compose.animation.core.LinearEasing
 import androidx.compose.runtime.Immutable
+import dev.drewhamilton.poko.Poko
 
 /**
  * **Motion token set** — animation durations and easing curves.
@@ -14,8 +15,9 @@ import androidx.compose.runtime.Immutable
  * (`cubic-bezier(0.2, 0.8, 0.2, 1)`) used for entrances and prominent moves;
  * [standard] suits small state changes. Read via `JengaTheme.motion`.
  */
+@Poko
 @Immutable
-public data class JengaMotion(
+public class JengaMotion(
     /** Micro-interactions: hovers, small toggles (~120ms). */
     public val durationFast: Int = 120,
     /** Default UI transitions (~180ms). */
@@ -30,7 +32,25 @@ public data class JengaMotion(
     public val standard: Easing = FastOutSlowInEasing,
     /** Constant-rate curve for looping/indeterminate motion. */
     public val linear: Easing = LinearEasing,
-)
+) {
+    public fun copy(
+        durationFast: Int = this.durationFast,
+        durationMedium: Int = this.durationMedium,
+        durationSlow: Int = this.durationSlow,
+        durationSlowest: Int = this.durationSlowest,
+        emphasized: Easing = this.emphasized,
+        standard: Easing = this.standard,
+        linear: Easing = this.linear,
+    ): JengaMotion = JengaMotion(
+        durationFast,
+        durationMedium,
+        durationSlow,
+        durationSlowest,
+        emphasized,
+        standard,
+        linear,
+    )
+}
 
 /** The default Jenga motion set. */
 public fun jengaMotion(): JengaMotion = JengaMotion()

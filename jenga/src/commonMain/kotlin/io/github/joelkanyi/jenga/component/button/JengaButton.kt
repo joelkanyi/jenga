@@ -25,6 +25,7 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import dev.drewhamilton.poko.Poko
 import io.github.joelkanyi.jenga.component.text.JengaText
 import io.github.joelkanyi.jenga.theme.JengaTheme
 import io.github.joelkanyi.jenga.theme.LocalJengaContentColor
@@ -58,15 +59,25 @@ public enum class JengaButtonSize { Small, Medium, Large }
  * Resolved colors for a [JengaButton] in a single state set. Obtain a themed
  * instance from [JengaButtonDefaults.colors] and `copy(...)` to override.
  */
+@Poko
 @androidx.compose.runtime.Immutable
-public data class JengaButtonColors(
+public class JengaButtonColors(
     public val container: Color,
     public val content: Color,
     public val border: Color,
     public val disabledContainer: Color,
     public val disabledContent: Color,
     public val disabledBorder: Color,
-)
+) {
+    public fun copy(
+        container: Color = this.container,
+        content: Color = this.content,
+        border: Color = this.border,
+        disabledContainer: Color = this.disabledContainer,
+        disabledContent: Color = this.disabledContent,
+        disabledBorder: Color = this.disabledBorder,
+    ): JengaButtonColors = JengaButtonColors(container, content, border, disabledContainer, disabledContent, disabledBorder)
+}
 
 /** Default values and token mappings for [JengaButton]. Override any of these per call. */
 public object JengaButtonDefaults {

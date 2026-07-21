@@ -19,6 +19,7 @@ import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import dev.drewhamilton.poko.Poko
 import io.github.joelkanyi.jenga.component.text.JengaText
 import io.github.joelkanyi.jenga.theme.JengaTheme
 
@@ -26,11 +27,17 @@ import io.github.joelkanyi.jenga.theme.JengaTheme
 public enum class JengaSnackbarTone { Neutral, Success, Error }
 
 /** Resolved colors for a [JengaSnackbar]. Override via [JengaSnackbarDefaults.colors]. */
+@Poko
 @Immutable
-public data class JengaSnackbarColors(
+public class JengaSnackbarColors(
     public val container: Color,
     public val content: Color,
-)
+) {
+    public fun copy(
+        container: Color = this.container,
+        content: Color = this.content,
+    ): JengaSnackbarColors = JengaSnackbarColors(container, content)
+}
 
 /** Defaults and token mappings for [JengaSnackbar]. */
 public object JengaSnackbarDefaults {

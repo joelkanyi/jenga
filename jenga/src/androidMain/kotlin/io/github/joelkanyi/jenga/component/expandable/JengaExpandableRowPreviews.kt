@@ -37,7 +37,7 @@ private fun ExpandableShowcase() {
     ) {
         JengaExpandableRow(
             expanded = true,
-            onToggle = {},
+            onExpandedChange = {},
             showChevron = false,
             header = {
                 JengaText(text = "Friday", style = JengaTheme.typography.titleMedium, color = JengaTheme.colors.textPrimary)
@@ -54,7 +54,7 @@ private fun ExpandableShowcase() {
         }
         JengaExpandableRow(
             expanded = false,
-            onToggle = {},
+            onExpandedChange = {},
             header = {
                 Column(Modifier.weight(1f)) {
                     JengaText(text = "Sat 13", style = JengaTheme.typography.titleMedium, color = JengaTheme.colors.textPrimary)

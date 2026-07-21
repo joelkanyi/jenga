@@ -14,6 +14,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
+import dev.drewhamilton.poko.Poko
 import io.github.joelkanyi.jenga.component.icon.JengaIcon
 import io.github.joelkanyi.jenga.component.icon.JengaIcons
 import io.github.joelkanyi.jenga.component.text.JengaText
@@ -24,12 +25,19 @@ import io.github.joelkanyi.jenga.theme.LocalJengaContentColor
 public enum class JengaBannerTone { Info, Success, Warning, Error }
 
 /** Resolved colors for a [JengaBanner]. Override via [JengaBannerDefaults.colors]. */
+@Poko
 @Immutable
-public data class JengaBannerColors(
+public class JengaBannerColors(
     public val container: Color,
     public val content: Color,
     public val icon: Color,
-)
+) {
+    public fun copy(
+        container: Color = this.container,
+        content: Color = this.content,
+        icon: Color = this.icon,
+    ): JengaBannerColors = JengaBannerColors(container, content, icon)
+}
 
 /** Defaults and token mappings for [JengaBanner]. */
 public object JengaBannerDefaults {

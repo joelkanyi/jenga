@@ -15,6 +15,7 @@ coil = "3.5.0"
 bcv = "0.18.1"
 dokka = "2.2.0"
 mavenPublish = "0.37.0"
+poko = "0.21.2"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -61,3 +62,4 @@ roborazzi = { id = "io.github.takahirom.roborazzi", version.ref = "roborazzi" }
 binary-compatibility-validator = { id = "org.jetbrains.kotlinx.binary-compatibility-validator", version.ref = "bcv" }
 dokka = { id = "org.jetbrains.dokka", version.ref = "dokka" }
 maven-publish = { id = "com.vanniktech.maven.publish", version.ref = "mavenPublish" }
+poko = { id = "dev.drewhamilton.poko", version.ref = "poko" }

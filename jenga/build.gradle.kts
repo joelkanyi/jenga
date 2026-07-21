@@ -10,6 +10,7 @@ plugins {
     alias(libs.plugins.roborazzi)
     alias(libs.plugins.dokka)
     alias(libs.plugins.maven.publish)
+    alias(libs.plugins.poko)
 }
 
 group = "io.github.joelkanyi"
@@ -167,7 +168,11 @@ dokka {
 // committed file. See RELEASING.md.
 mavenPublishing {
     publishToMavenCentral()
-    signAllPublications()
+    // Sign only when a key is present, so local builds and `publishToMavenLocal`
+    // work without one. Releases supply `signingInMemoryKey` (see RELEASING.md).
+    if (providers.gradleProperty("signingInMemoryKey").isPresent) {
+        signAllPublications()
+    }
 
     coordinates(group.toString(), "jenga", version.toString())
 

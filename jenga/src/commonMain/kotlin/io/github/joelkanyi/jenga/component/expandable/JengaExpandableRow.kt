@@ -28,7 +28,7 @@ import io.github.joelkanyi.jenga.theme.JengaTheme
  * Domain-neutral and token-driven.
  *
  * @param expanded whether the [content] is currently shown.
- * @param onToggle called when the header is tapped.
+ * @param onExpandedChange called with the requested new state when the header is tapped.
  * @param modifier the [Modifier] for the card.
  * @param showChevron whether to append a chevron that rotates when expanded.
  * @param chevronContentDescription accessibility label for the chevron.
@@ -38,7 +38,7 @@ import io.github.joelkanyi.jenga.theme.JengaTheme
 @Composable
 public fun JengaExpandableRow(
     expanded: Boolean,
-    onToggle: () -> Unit,
+    onExpandedChange: (Boolean) -> Unit,
     modifier: Modifier = Modifier,
     showChevron: Boolean = true,
     chevronContentDescription: String? = null,
@@ -56,7 +56,7 @@ public fun JengaExpandableRow(
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .clickable(onClick = onToggle)
+                .clickable { onExpandedChange(!expanded) }
                 .padding(horizontal = JengaTheme.spacing.lg, vertical = JengaTheme.spacing.md),
             verticalAlignment = Alignment.CenterVertically,
         ) {

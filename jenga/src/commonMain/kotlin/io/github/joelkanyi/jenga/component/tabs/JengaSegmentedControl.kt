@@ -20,17 +20,26 @@ import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import dev.drewhamilton.poko.Poko
 import io.github.joelkanyi.jenga.component.text.JengaText
 import io.github.joelkanyi.jenga.theme.JengaTheme
 
 /** Resolved colors for a [JengaSegmentedControl]. Override via [JengaSegmentedControlDefaults.colors]. */
+@Poko
 @Immutable
-public data class JengaSegmentedControlColors(
+public class JengaSegmentedControlColors(
     public val track: Color,
     public val selectedSegment: Color,
     public val selectedContent: Color,
     public val unselectedContent: Color,
-)
+) {
+    public fun copy(
+        track: Color = this.track,
+        selectedSegment: Color = this.selectedSegment,
+        selectedContent: Color = this.selectedContent,
+        unselectedContent: Color = this.unselectedContent,
+    ): JengaSegmentedControlColors = JengaSegmentedControlColors(track, selectedSegment, selectedContent, unselectedContent)
+}
 
 /** Defaults and token mappings for [JengaSegmentedControl]. */
 public object JengaSegmentedControlDefaults {

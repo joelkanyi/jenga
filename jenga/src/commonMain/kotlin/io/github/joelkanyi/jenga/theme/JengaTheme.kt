@@ -84,7 +84,7 @@ public object JengaTheme {
  *
  * Wrap your app (or any subtree) once; everything below can then read tokens via
  * [JengaTheme] and use `Jenga*` components. Every parameter has a sensible
- * Ticketfiti default, so the simplest usage is just `JengaTheme { ... }`.
+ * default, so the simplest usage is just `JengaTheme { ... }`.
  *
  * Rebrand or white-label by supplying your own tokens, e.g.
  * `JengaTheme(colors = jengaLightColors().copy(brand = Color(0xFF6D28D9))) { ... }`.
@@ -94,7 +94,7 @@ public object JengaTheme {
  * implementation detail and not part of Jenga's API.
  *
  * @param darkTheme whether to use the dark scheme; follows the system by default.
- * @param colors semantic colors; defaults to the Ticketfiti light/dark scheme
+ * @param colors semantic colors; defaults to the built-in light/dark scheme
  *   based on [darkTheme].
  * @param typography the type scale.
  * @param spacing the spacing scale.

@@ -18,6 +18,7 @@ import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import dev.drewhamilton.poko.Poko
 import io.github.joelkanyi.jenga.component.text.JengaText
 import io.github.joelkanyi.jenga.theme.JengaTheme
 
@@ -34,11 +35,17 @@ public enum class JengaCardVariant {
 }
 
 /** Resolved colors for a [JengaCard]. */
+@Poko
 @Immutable
-public data class JengaCardColors(
+public class JengaCardColors(
     public val container: Color,
     public val border: Color,
-)
+) {
+    public fun copy(
+        container: Color = this.container,
+        border: Color = this.border,
+    ): JengaCardColors = JengaCardColors(container, border)
+}
 
 /** Defaults and token mappings for [JengaCard]. */
 public object JengaCardDefaults {

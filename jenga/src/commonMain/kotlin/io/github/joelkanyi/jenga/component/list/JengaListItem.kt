@@ -17,6 +17,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import dev.drewhamilton.poko.Poko
 import io.github.joelkanyi.jenga.component.icon.JengaIcon
 import io.github.joelkanyi.jenga.component.icon.JengaIcons
 import io.github.joelkanyi.jenga.component.text.JengaText
@@ -24,13 +25,21 @@ import io.github.joelkanyi.jenga.theme.JengaTheme
 import io.github.joelkanyi.jenga.theme.LocalJengaContentColor
 
 /** Resolved colors for a [JengaListItem]. Override via [JengaListItemDefaults.colors]. */
+@Poko
 @Immutable
-public data class JengaListItemColors(
+public class JengaListItemColors(
     public val container: Color,
     public val headline: Color,
     public val supporting: Color,
     public val leadingTrailing: Color,
-)
+) {
+    public fun copy(
+        container: Color = this.container,
+        headline: Color = this.headline,
+        supporting: Color = this.supporting,
+        leadingTrailing: Color = this.leadingTrailing,
+    ): JengaListItemColors = JengaListItemColors(container, headline, supporting, leadingTrailing)
+}
 
 /** Defaults and token mappings for [JengaListItem]. */
 public object JengaListItemDefaults {

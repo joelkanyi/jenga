@@ -17,6 +17,7 @@ import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import dev.drewhamilton.poko.Poko
 import io.github.joelkanyi.jenga.theme.JengaTheme
 
 /** How a [JengaDotStrip] draws its segments. */
@@ -29,11 +30,17 @@ public enum class JengaDotStripStyle {
 }
 
 /** Resolved colors for a [JengaDotStrip]. Override via [JengaDotStripDefaults.colors]. */
+@Poko
 @Immutable
-public data class JengaDotStripColors(
+public class JengaDotStripColors(
     public val filled: Color,
     public val empty: Color,
-)
+) {
+    public fun copy(
+        filled: Color = this.filled,
+        empty: Color = this.empty,
+    ): JengaDotStripColors = JengaDotStripColors(filled, empty)
+}
 
 /** Defaults and token mappings for [JengaDotStrip]. */
 public object JengaDotStripDefaults {

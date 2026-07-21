@@ -28,19 +28,37 @@ import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
+import dev.drewhamilton.poko.Poko
 import io.github.joelkanyi.jenga.theme.JengaTheme
 import kotlin.math.roundToInt
 
 /** Resolved colors for a [JengaSlider]. Override via [JengaSliderDefaults.colors]. */
+@Poko
 @Immutable
-public data class JengaSliderColors(
+public class JengaSliderColors(
     public val activeTrack: Color,
     public val inactiveTrack: Color,
     public val thumb: Color,
     public val disabledActiveTrack: Color,
     public val disabledInactiveTrack: Color,
     public val disabledThumb: Color,
-)
+) {
+    public fun copy(
+        activeTrack: Color = this.activeTrack,
+        inactiveTrack: Color = this.inactiveTrack,
+        thumb: Color = this.thumb,
+        disabledActiveTrack: Color = this.disabledActiveTrack,
+        disabledInactiveTrack: Color = this.disabledInactiveTrack,
+        disabledThumb: Color = this.disabledThumb,
+    ): JengaSliderColors = JengaSliderColors(
+        activeTrack,
+        inactiveTrack,
+        thumb,
+        disabledActiveTrack,
+        disabledInactiveTrack,
+        disabledThumb,
+    )
+}
 
 /** Defaults and token mappings for [JengaSlider]. */
 public object JengaSliderDefaults {

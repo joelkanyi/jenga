@@ -1,8 +1,6 @@
 public final class io/github/joelkanyi/jenga/component/action/JengaAction {
 	public static final field $stable I
 	public fun <init> (Ljava/lang/String;Lkotlin/jvm/functions/Function0;)V
-	public final fun component1 ()Ljava/lang/String;
-	public final fun component2 ()Lkotlin/jvm/functions/Function0;
 	public final fun copy (Ljava/lang/String;Lkotlin/jvm/functions/Function0;)Lio/github/joelkanyi/jenga/component/action/JengaAction;
 	public static synthetic fun copy$default (Lio/github/joelkanyi/jenga/component/action/JengaAction;Ljava/lang/String;Lkotlin/jvm/functions/Function0;ILjava/lang/Object;)Lio/github/joelkanyi/jenga/component/action/JengaAction;
 	public fun equals (Ljava/lang/Object;)Z
@@ -35,8 +33,6 @@ public final class io/github/joelkanyi/jenga/component/avatar/JengaAvatarSize : 
 public final class io/github/joelkanyi/jenga/component/badge/JengaBadgeColors {
 	public static final field $stable I
 	public synthetic fun <init> (JJLkotlin/jvm/internal/DefaultConstructorMarker;)V
-	public final fun component1-0d7_KjU ()J
-	public final fun component2-0d7_KjU ()J
 	public final fun copy--OWjLjI (JJ)Lio/github/joelkanyi/jenga/component/badge/JengaBadgeColors;
 	public static synthetic fun copy--OWjLjI$default (Lio/github/joelkanyi/jenga/component/badge/JengaBadgeColors;JJILjava/lang/Object;)Lio/github/joelkanyi/jenga/component/badge/JengaBadgeColors;
 	public fun equals (Ljava/lang/Object;)Z
@@ -71,9 +67,6 @@ public final class io/github/joelkanyi/jenga/component/badge/JengaBadgeTone : ja
 public final class io/github/joelkanyi/jenga/component/banner/JengaBannerColors {
 	public static final field $stable I
 	public synthetic fun <init> (JJJLkotlin/jvm/internal/DefaultConstructorMarker;)V
-	public final fun component1-0d7_KjU ()J
-	public final fun component2-0d7_KjU ()J
-	public final fun component3-0d7_KjU ()J
 	public final fun copy-ysEtTa8 (JJJ)Lio/github/joelkanyi/jenga/component/banner/JengaBannerColors;
 	public static synthetic fun copy-ysEtTa8$default (Lio/github/joelkanyi/jenga/component/banner/JengaBannerColors;JJJILjava/lang/Object;)Lio/github/joelkanyi/jenga/component/banner/JengaBannerColors;
 	public fun equals (Ljava/lang/Object;)Z
@@ -108,12 +101,6 @@ public final class io/github/joelkanyi/jenga/component/banner/JengaBannerTone : 
 public final class io/github/joelkanyi/jenga/component/button/JengaButtonColors {
 	public static final field $stable I
 	public synthetic fun <init> (JJJJJJLkotlin/jvm/internal/DefaultConstructorMarker;)V
-	public final fun component1-0d7_KjU ()J
-	public final fun component2-0d7_KjU ()J
-	public final fun component3-0d7_KjU ()J
-	public final fun component4-0d7_KjU ()J
-	public final fun component5-0d7_KjU ()J
-	public final fun component6-0d7_KjU ()J
 	public final fun copy-tNS2XkQ (JJJJJJ)Lio/github/joelkanyi/jenga/component/button/JengaButtonColors;
 	public static synthetic fun copy-tNS2XkQ$default (Lio/github/joelkanyi/jenga/component/button/JengaButtonColors;JJJJJJILjava/lang/Object;)Lio/github/joelkanyi/jenga/component/button/JengaButtonColors;
 	public fun equals (Ljava/lang/Object;)Z
@@ -168,10 +155,6 @@ public final class io/github/joelkanyi/jenga/component/button/JengaButtonVariant
 public final class io/github/joelkanyi/jenga/component/button/JengaIconButtonColors {
 	public static final field $stable I
 	public synthetic fun <init> (JJJJLkotlin/jvm/internal/DefaultConstructorMarker;)V
-	public final fun component1-0d7_KjU ()J
-	public final fun component2-0d7_KjU ()J
-	public final fun component3-0d7_KjU ()J
-	public final fun component4-0d7_KjU ()J
 	public final fun copy-jRlVdoo (JJJJ)Lio/github/joelkanyi/jenga/component/button/JengaIconButtonColors;
 	public static synthetic fun copy-jRlVdoo$default (Lio/github/joelkanyi/jenga/component/button/JengaIconButtonColors;JJJJILjava/lang/Object;)Lio/github/joelkanyi/jenga/component/button/JengaIconButtonColors;
 	public fun equals (Ljava/lang/Object;)Z
@@ -208,8 +191,6 @@ public final class io/github/joelkanyi/jenga/component/button/JengaIconButtonVar
 public final class io/github/joelkanyi/jenga/component/card/JengaCardColors {
 	public static final field $stable I
 	public synthetic fun <init> (JJLkotlin/jvm/internal/DefaultConstructorMarker;)V
-	public final fun component1-0d7_KjU ()J
-	public final fun component2-0d7_KjU ()J
 	public final fun copy--OWjLjI (JJ)Lio/github/joelkanyi/jenga/component/card/JengaCardColors;
 	public static synthetic fun copy--OWjLjI$default (Lio/github/joelkanyi/jenga/component/card/JengaCardColors;JJILjava/lang/Object;)Lio/github/joelkanyi/jenga/component/card/JengaCardColors;
 	public fun equals (Ljava/lang/Object;)Z
@@ -244,13 +225,6 @@ public final class io/github/joelkanyi/jenga/component/card/JengaCardVariant : j
 public final class io/github/joelkanyi/jenga/component/chip/JengaChipColors {
 	public static final field $stable I
 	public synthetic fun <init> (JJJJJJJLkotlin/jvm/internal/DefaultConstructorMarker;)V
-	public final fun component1-0d7_KjU ()J
-	public final fun component2-0d7_KjU ()J
-	public final fun component3-0d7_KjU ()J
-	public final fun component4-0d7_KjU ()J
-	public final fun component5-0d7_KjU ()J
-	public final fun component6-0d7_KjU ()J
-	public final fun component7-0d7_KjU ()J
 	public final fun copy-4JmcsL4 (JJJJJJJ)Lio/github/joelkanyi/jenga/component/chip/JengaChipColors;
 	public static synthetic fun copy-4JmcsL4$default (Lio/github/joelkanyi/jenga/component/chip/JengaChipColors;JJJJJJJILjava/lang/Object;)Lio/github/joelkanyi/jenga/component/chip/JengaChipColors;
 	public fun equals (Ljava/lang/Object;)Z
@@ -289,14 +263,12 @@ public final class io/github/joelkanyi/jenga/component/divider/JengaDividerKt {
 }
 
 public final class io/github/joelkanyi/jenga/component/expandable/JengaExpandableRowKt {
-	public static final fun JengaExpandableRow (ZLkotlin/jvm/functions/Function0;Landroidx/compose/ui/Modifier;ZLjava/lang/String;Lkotlin/jvm/functions/Function3;Lkotlin/jvm/functions/Function3;Landroidx/compose/runtime/Composer;II)V
+	public static final fun JengaExpandableRow (ZLkotlin/jvm/functions/Function1;Landroidx/compose/ui/Modifier;ZLjava/lang/String;Lkotlin/jvm/functions/Function3;Lkotlin/jvm/functions/Function3;Landroidx/compose/runtime/Composer;II)V
 }
 
 public final class io/github/joelkanyi/jenga/component/fab/JengaFabColors {
 	public static final field $stable I
 	public synthetic fun <init> (JJLkotlin/jvm/internal/DefaultConstructorMarker;)V
-	public final fun component1-0d7_KjU ()J
-	public final fun component2-0d7_KjU ()J
 	public final fun copy--OWjLjI (JJ)Lio/github/joelkanyi/jenga/component/fab/JengaFabColors;
 	public static synthetic fun copy--OWjLjI$default (Lio/github/joelkanyi/jenga/component/fab/JengaFabColors;JJILjava/lang/Object;)Lio/github/joelkanyi/jenga/component/fab/JengaFabColors;
 	public fun equals (Ljava/lang/Object;)Z
@@ -347,8 +319,6 @@ public final class io/github/joelkanyi/jenga/component/feedback/JengaSheetState 
 public final class io/github/joelkanyi/jenga/component/feedback/JengaSnackbarColors {
 	public static final field $stable I
 	public synthetic fun <init> (JJLkotlin/jvm/internal/DefaultConstructorMarker;)V
-	public final fun component1-0d7_KjU ()J
-	public final fun component2-0d7_KjU ()J
 	public final fun copy--OWjLjI (JJ)Lio/github/joelkanyi/jenga/component/feedback/JengaSnackbarColors;
 	public static synthetic fun copy--OWjLjI$default (Lio/github/joelkanyi/jenga/component/feedback/JengaSnackbarColors;JJILjava/lang/Object;)Lio/github/joelkanyi/jenga/component/feedback/JengaSnackbarColors;
 	public fun equals (Ljava/lang/Object;)Z
@@ -510,10 +480,6 @@ public final class io/github/joelkanyi/jenga/component/layout/JengaStacksKt {
 public final class io/github/joelkanyi/jenga/component/list/JengaListItemColors {
 	public static final field $stable I
 	public synthetic fun <init> (JJJJLkotlin/jvm/internal/DefaultConstructorMarker;)V
-	public final fun component1-0d7_KjU ()J
-	public final fun component2-0d7_KjU ()J
-	public final fun component3-0d7_KjU ()J
-	public final fun component4-0d7_KjU ()J
 	public final fun copy-jRlVdoo (JJJJ)Lio/github/joelkanyi/jenga/component/list/JengaListItemColors;
 	public static synthetic fun copy-jRlVdoo$default (Lio/github/joelkanyi/jenga/component/list/JengaListItemColors;JJJJILjava/lang/Object;)Lio/github/joelkanyi/jenga/component/list/JengaListItemColors;
 	public fun equals (Ljava/lang/Object;)Z
@@ -539,10 +505,6 @@ public final class io/github/joelkanyi/jenga/component/list/JengaListItemKt {
 public final class io/github/joelkanyi/jenga/component/media/JengaMediaHeroColors {
 	public static final field $stable I
 	public synthetic fun <init> (Landroidx/compose/ui/graphics/Brush;Landroidx/compose/ui/graphics/Brush;JJLkotlin/jvm/internal/DefaultConstructorMarker;)V
-	public final fun component1 ()Landroidx/compose/ui/graphics/Brush;
-	public final fun component2 ()Landroidx/compose/ui/graphics/Brush;
-	public final fun component3-0d7_KjU ()J
-	public final fun component4-0d7_KjU ()J
 	public final fun copy-0YGnOg8 (Landroidx/compose/ui/graphics/Brush;Landroidx/compose/ui/graphics/Brush;JJ)Lio/github/joelkanyi/jenga/component/media/JengaMediaHeroColors;
 	public static synthetic fun copy-0YGnOg8$default (Lio/github/joelkanyi/jenga/component/media/JengaMediaHeroColors;Landroidx/compose/ui/graphics/Brush;Landroidx/compose/ui/graphics/Brush;JJILjava/lang/Object;)Lio/github/joelkanyi/jenga/component/media/JengaMediaHeroColors;
 	public fun equals (Ljava/lang/Object;)Z
@@ -582,13 +544,6 @@ public final class io/github/joelkanyi/jenga/component/navigation/JengaNavIndica
 public final class io/github/joelkanyi/jenga/component/navigation/JengaNavigationBarColors {
 	public static final field $stable I
 	public synthetic fun <init> (JJJJJJJLkotlin/jvm/internal/DefaultConstructorMarker;)V
-	public final fun component1-0d7_KjU ()J
-	public final fun component2-0d7_KjU ()J
-	public final fun component3-0d7_KjU ()J
-	public final fun component4-0d7_KjU ()J
-	public final fun component5-0d7_KjU ()J
-	public final fun component6-0d7_KjU ()J
-	public final fun component7-0d7_KjU ()J
 	public final fun copy-4JmcsL4 (JJJJJJJ)Lio/github/joelkanyi/jenga/component/navigation/JengaNavigationBarColors;
 	public static synthetic fun copy-4JmcsL4$default (Lio/github/joelkanyi/jenga/component/navigation/JengaNavigationBarColors;JJJJJJJILjava/lang/Object;)Lio/github/joelkanyi/jenga/component/navigation/JengaNavigationBarColors;
 	public fun equals (Ljava/lang/Object;)Z
@@ -634,8 +589,6 @@ public final class io/github/joelkanyi/jenga/component/progress/JengaCircularPro
 public final class io/github/joelkanyi/jenga/component/progress/JengaDotStripColors {
 	public static final field $stable I
 	public synthetic fun <init> (JJLkotlin/jvm/internal/DefaultConstructorMarker;)V
-	public final fun component1-0d7_KjU ()J
-	public final fun component2-0d7_KjU ()J
 	public final fun copy--OWjLjI (JJ)Lio/github/joelkanyi/jenga/component/progress/JengaDotStripColors;
 	public static synthetic fun copy--OWjLjI$default (Lio/github/joelkanyi/jenga/component/progress/JengaDotStripColors;JJILjava/lang/Object;)Lio/github/joelkanyi/jenga/component/progress/JengaDotStripColors;
 	public fun equals (Ljava/lang/Object;)Z
@@ -689,8 +642,6 @@ public final class io/github/joelkanyi/jenga/component/progress/JengaShimmerKt {
 public final class io/github/joelkanyi/jenga/component/reaction/JengaReactionBarColors {
 	public static final field $stable I
 	public synthetic fun <init> (JJLkotlin/jvm/internal/DefaultConstructorMarker;)V
-	public final fun component1-0d7_KjU ()J
-	public final fun component2-0d7_KjU ()J
 	public final fun copy--OWjLjI (JJ)Lio/github/joelkanyi/jenga/component/reaction/JengaReactionBarColors;
 	public static synthetic fun copy--OWjLjI$default (Lio/github/joelkanyi/jenga/component/reaction/JengaReactionBarColors;JJILjava/lang/Object;)Lio/github/joelkanyi/jenga/component/reaction/JengaReactionBarColors;
 	public fun equals (Ljava/lang/Object;)Z
@@ -739,9 +690,6 @@ public final class io/github/joelkanyi/jenga/component/scaffold/ComposableSingle
 public final class io/github/joelkanyi/jenga/component/scaffold/JengaBottomBarColors {
 	public static final field $stable I
 	public synthetic fun <init> (JJJLkotlin/jvm/internal/DefaultConstructorMarker;)V
-	public final fun component1-0d7_KjU ()J
-	public final fun component2-0d7_KjU ()J
-	public final fun component3-0d7_KjU ()J
 	public final fun copy-ysEtTa8 (JJJ)Lio/github/joelkanyi/jenga/component/scaffold/JengaBottomBarColors;
 	public static synthetic fun copy-ysEtTa8$default (Lio/github/joelkanyi/jenga/component/scaffold/JengaBottomBarColors;JJJILjava/lang/Object;)Lio/github/joelkanyi/jenga/component/scaffold/JengaBottomBarColors;
 	public fun equals (Ljava/lang/Object;)Z
@@ -778,9 +726,6 @@ public final class io/github/joelkanyi/jenga/component/scaffold/JengaScaffoldKt 
 public final class io/github/joelkanyi/jenga/component/scaffold/JengaTopAppBarColors {
 	public static final field $stable I
 	public synthetic fun <init> (JJJLkotlin/jvm/internal/DefaultConstructorMarker;)V
-	public final fun component1-0d7_KjU ()J
-	public final fun component2-0d7_KjU ()J
-	public final fun component3-0d7_KjU ()J
 	public final fun copy-ysEtTa8 (JJJ)Lio/github/joelkanyi/jenga/component/scaffold/JengaTopAppBarColors;
 	public static synthetic fun copy-ysEtTa8$default (Lio/github/joelkanyi/jenga/component/scaffold/JengaTopAppBarColors;JJJILjava/lang/Object;)Lio/github/joelkanyi/jenga/component/scaffold/JengaTopAppBarColors;
 	public fun equals (Ljava/lang/Object;)Z
@@ -854,14 +799,6 @@ public final class io/github/joelkanyi/jenga/component/search/JengaSearchFieldKt
 public final class io/github/joelkanyi/jenga/component/selection/JengaCheckboxColors {
 	public static final field $stable I
 	public synthetic fun <init> (JJJJJJJJLkotlin/jvm/internal/DefaultConstructorMarker;)V
-	public final fun component1-0d7_KjU ()J
-	public final fun component2-0d7_KjU ()J
-	public final fun component3-0d7_KjU ()J
-	public final fun component4-0d7_KjU ()J
-	public final fun component5-0d7_KjU ()J
-	public final fun component6-0d7_KjU ()J
-	public final fun component7-0d7_KjU ()J
-	public final fun component8-0d7_KjU ()J
 	public final fun copy-FD3wquc (JJJJJJJJ)Lio/github/joelkanyi/jenga/component/selection/JengaCheckboxColors;
 	public static synthetic fun copy-FD3wquc$default (Lio/github/joelkanyi/jenga/component/selection/JengaCheckboxColors;JJJJJJJJILjava/lang/Object;)Lio/github/joelkanyi/jenga/component/selection/JengaCheckboxColors;
 	public fun equals (Ljava/lang/Object;)Z
@@ -892,11 +829,6 @@ public final class io/github/joelkanyi/jenga/component/selection/JengaCheckboxKt
 public final class io/github/joelkanyi/jenga/component/selection/JengaRadioButtonColors {
 	public static final field $stable I
 	public synthetic fun <init> (JJJJJLkotlin/jvm/internal/DefaultConstructorMarker;)V
-	public final fun component1-0d7_KjU ()J
-	public final fun component2-0d7_KjU ()J
-	public final fun component3-0d7_KjU ()J
-	public final fun component4-0d7_KjU ()J
-	public final fun component5-0d7_KjU ()J
 	public final fun copy-t635Npw (JJJJJ)Lio/github/joelkanyi/jenga/component/selection/JengaRadioButtonColors;
 	public static synthetic fun copy-t635Npw$default (Lio/github/joelkanyi/jenga/component/selection/JengaRadioButtonColors;JJJJJILjava/lang/Object;)Lio/github/joelkanyi/jenga/component/selection/JengaRadioButtonColors;
 	public fun equals (Ljava/lang/Object;)Z
@@ -923,10 +855,6 @@ public final class io/github/joelkanyi/jenga/component/selection/JengaRadioButto
 public final class io/github/joelkanyi/jenga/component/selection/JengaToggleColors {
 	public static final field $stable I
 	public synthetic fun <init> (JJJJLkotlin/jvm/internal/DefaultConstructorMarker;)V
-	public final fun component1-0d7_KjU ()J
-	public final fun component2-0d7_KjU ()J
-	public final fun component3-0d7_KjU ()J
-	public final fun component4-0d7_KjU ()J
 	public final fun copy-jRlVdoo (JJJJ)Lio/github/joelkanyi/jenga/component/selection/JengaToggleColors;
 	public static synthetic fun copy-jRlVdoo$default (Lio/github/joelkanyi/jenga/component/selection/JengaToggleColors;JJJJILjava/lang/Object;)Lio/github/joelkanyi/jenga/component/selection/JengaToggleColors;
 	public fun equals (Ljava/lang/Object;)Z
@@ -971,12 +899,6 @@ public final class io/github/joelkanyi/jenga/component/shelf/JengaShelfDefaults 
 public final class io/github/joelkanyi/jenga/component/slider/JengaSliderColors {
 	public static final field $stable I
 	public synthetic fun <init> (JJJJJJLkotlin/jvm/internal/DefaultConstructorMarker;)V
-	public final fun component1-0d7_KjU ()J
-	public final fun component2-0d7_KjU ()J
-	public final fun component3-0d7_KjU ()J
-	public final fun component4-0d7_KjU ()J
-	public final fun component5-0d7_KjU ()J
-	public final fun component6-0d7_KjU ()J
 	public final fun copy-tNS2XkQ (JJJJJJ)Lio/github/joelkanyi/jenga/component/slider/JengaSliderColors;
 	public static synthetic fun copy-tNS2XkQ$default (Lio/github/joelkanyi/jenga/component/slider/JengaSliderColors;JJJJJJILjava/lang/Object;)Lio/github/joelkanyi/jenga/component/slider/JengaSliderColors;
 	public fun equals (Ljava/lang/Object;)Z
@@ -1005,10 +927,6 @@ public final class io/github/joelkanyi/jenga/component/slider/JengaSliderKt {
 public final class io/github/joelkanyi/jenga/component/stat/JengaStatTileColors {
 	public static final field $stable I
 	public synthetic fun <init> (Landroidx/compose/ui/graphics/Brush;JJJLkotlin/jvm/internal/DefaultConstructorMarker;)V
-	public final fun component1 ()Landroidx/compose/ui/graphics/Brush;
-	public final fun component2-0d7_KjU ()J
-	public final fun component3-0d7_KjU ()J
-	public final fun component4-0d7_KjU ()J
 	public final fun copy-zSO0fhY (Landroidx/compose/ui/graphics/Brush;JJJ)Lio/github/joelkanyi/jenga/component/stat/JengaStatTileColors;
 	public static synthetic fun copy-zSO0fhY$default (Lio/github/joelkanyi/jenga/component/stat/JengaStatTileColors;Landroidx/compose/ui/graphics/Brush;JJJILjava/lang/Object;)Lio/github/joelkanyi/jenga/component/stat/JengaStatTileColors;
 	public fun equals (Ljava/lang/Object;)Z
@@ -1045,8 +963,6 @@ public final class io/github/joelkanyi/jenga/component/stat/JengaStatTone : java
 public final class io/github/joelkanyi/jenga/component/state/JengaStateColors {
 	public static final field $stable I
 	public synthetic fun <init> (JJLkotlin/jvm/internal/DefaultConstructorMarker;)V
-	public final fun component1-0d7_KjU ()J
-	public final fun component2-0d7_KjU ()J
 	public final fun copy--OWjLjI (JJ)Lio/github/joelkanyi/jenga/component/state/JengaStateColors;
 	public static synthetic fun copy--OWjLjI$default (Lio/github/joelkanyi/jenga/component/state/JengaStateColors;JJILjava/lang/Object;)Lio/github/joelkanyi/jenga/component/state/JengaStateColors;
 	public fun equals (Ljava/lang/Object;)Z
@@ -1070,9 +986,6 @@ public final class io/github/joelkanyi/jenga/component/state/JengaStatesKt {
 public final class io/github/joelkanyi/jenga/component/status/JengaStatusPillColors {
 	public static final field $stable I
 	public synthetic fun <init> (JJJLkotlin/jvm/internal/DefaultConstructorMarker;)V
-	public final fun component1-0d7_KjU ()J
-	public final fun component2-0d7_KjU ()J
-	public final fun component3-0d7_KjU ()J
 	public final fun copy-ysEtTa8 (JJJ)Lio/github/joelkanyi/jenga/component/status/JengaStatusPillColors;
 	public static synthetic fun copy-ysEtTa8$default (Lio/github/joelkanyi/jenga/component/status/JengaStatusPillColors;JJJILjava/lang/Object;)Lio/github/joelkanyi/jenga/component/status/JengaStatusPillColors;
 	public fun equals (Ljava/lang/Object;)Z
@@ -1097,12 +1010,6 @@ public final class io/github/joelkanyi/jenga/component/status/JengaStatusPillKt 
 public final class io/github/joelkanyi/jenga/component/stepper/JengaStepperColors {
 	public static final field $stable I
 	public synthetic fun <init> (JJJJJJLkotlin/jvm/internal/DefaultConstructorMarker;)V
-	public final fun component1-0d7_KjU ()J
-	public final fun component2-0d7_KjU ()J
-	public final fun component3-0d7_KjU ()J
-	public final fun component4-0d7_KjU ()J
-	public final fun component5-0d7_KjU ()J
-	public final fun component6-0d7_KjU ()J
 	public final fun copy-tNS2XkQ (JJJJJJ)Lio/github/joelkanyi/jenga/component/stepper/JengaStepperColors;
 	public static synthetic fun copy-tNS2XkQ$default (Lio/github/joelkanyi/jenga/component/stepper/JengaStepperColors;JJJJJJILjava/lang/Object;)Lio/github/joelkanyi/jenga/component/stepper/JengaStepperColors;
 	public fun equals (Ljava/lang/Object;)Z
@@ -1140,8 +1047,6 @@ public final class io/github/joelkanyi/jenga/component/swipe/JengaSwipeDirection
 public final class io/github/joelkanyi/jenga/component/swipe/JengaSwipeToDismissColors {
 	public static final field $stable I
 	public synthetic fun <init> (JJLkotlin/jvm/internal/DefaultConstructorMarker;)V
-	public final fun component1-0d7_KjU ()J
-	public final fun component2-0d7_KjU ()J
 	public final fun copy--OWjLjI (JJ)Lio/github/joelkanyi/jenga/component/swipe/JengaSwipeToDismissColors;
 	public static synthetic fun copy--OWjLjI$default (Lio/github/joelkanyi/jenga/component/swipe/JengaSwipeToDismissColors;JJILjava/lang/Object;)Lio/github/joelkanyi/jenga/component/swipe/JengaSwipeToDismissColors;
 	public fun equals (Ljava/lang/Object;)Z
@@ -1164,10 +1069,6 @@ public final class io/github/joelkanyi/jenga/component/swipe/JengaSwipeToDismiss
 public final class io/github/joelkanyi/jenga/component/tabs/JengaSegmentedControlColors {
 	public static final field $stable I
 	public synthetic fun <init> (JJJJLkotlin/jvm/internal/DefaultConstructorMarker;)V
-	public final fun component1-0d7_KjU ()J
-	public final fun component2-0d7_KjU ()J
-	public final fun component3-0d7_KjU ()J
-	public final fun component4-0d7_KjU ()J
 	public final fun copy-jRlVdoo (JJJJ)Lio/github/joelkanyi/jenga/component/tabs/JengaSegmentedControlColors;
 	public static synthetic fun copy-jRlVdoo$default (Lio/github/joelkanyi/jenga/component/tabs/JengaSegmentedControlColors;JJJJILjava/lang/Object;)Lio/github/joelkanyi/jenga/component/tabs/JengaSegmentedControlColors;
 	public fun equals (Ljava/lang/Object;)Z
@@ -1195,10 +1096,6 @@ public final class io/github/joelkanyi/jenga/component/tabs/JengaSegmentedContro
 public final class io/github/joelkanyi/jenga/component/tabs/JengaTabsColors {
 	public static final field $stable I
 	public synthetic fun <init> (JJJJLkotlin/jvm/internal/DefaultConstructorMarker;)V
-	public final fun component1-0d7_KjU ()J
-	public final fun component2-0d7_KjU ()J
-	public final fun component3-0d7_KjU ()J
-	public final fun component4-0d7_KjU ()J
 	public final fun copy-jRlVdoo (JJJJ)Lio/github/joelkanyi/jenga/component/tabs/JengaTabsColors;
 	public static synthetic fun copy-jRlVdoo$default (Lio/github/joelkanyi/jenga/component/tabs/JengaTabsColors;JJJJILjava/lang/Object;)Lio/github/joelkanyi/jenga/component/tabs/JengaTabsColors;
 	public fun equals (Ljava/lang/Object;)Z
@@ -1248,8 +1145,6 @@ public final class io/github/joelkanyi/jenga/component/textfield/JengaTextFieldS
 public final class io/github/joelkanyi/jenga/component/tooltip/JengaTooltipColors {
 	public static final field $stable I
 	public synthetic fun <init> (JJLkotlin/jvm/internal/DefaultConstructorMarker;)V
-	public final fun component1-0d7_KjU ()J
-	public final fun component2-0d7_KjU ()J
 	public final fun copy--OWjLjI (JJ)Lio/github/joelkanyi/jenga/component/tooltip/JengaTooltipColors;
 	public static synthetic fun copy--OWjLjI$default (Lio/github/joelkanyi/jenga/component/tooltip/JengaTooltipColors;JJILjava/lang/Object;)Lio/github/joelkanyi/jenga/component/tooltip/JengaTooltipColors;
 	public fun equals (Ljava/lang/Object;)Z
@@ -1272,12 +1167,6 @@ public final class io/github/joelkanyi/jenga/component/tooltip/JengaTooltipKt {
 public final class io/github/joelkanyi/jenga/component/verdict/JengaVerdictBarColors {
 	public static final field $stable I
 	public synthetic fun <init> (Landroidx/compose/ui/graphics/Brush;JJJJJLkotlin/jvm/internal/DefaultConstructorMarker;)V
-	public final fun component1 ()Landroidx/compose/ui/graphics/Brush;
-	public final fun component2-0d7_KjU ()J
-	public final fun component3-0d7_KjU ()J
-	public final fun component4-0d7_KjU ()J
-	public final fun component5-0d7_KjU ()J
-	public final fun component6-0d7_KjU ()J
 	public final fun copy-jdqzblg (Landroidx/compose/ui/graphics/Brush;JJJJJ)Lio/github/joelkanyi/jenga/component/verdict/JengaVerdictBarColors;
 	public static synthetic fun copy-jdqzblg$default (Lio/github/joelkanyi/jenga/component/verdict/JengaVerdictBarColors;Landroidx/compose/ui/graphics/Brush;JJJJJILjava/lang/Object;)Lio/github/joelkanyi/jenga/component/verdict/JengaVerdictBarColors;
 	public fun equals (Ljava/lang/Object;)Z
@@ -1299,7 +1188,20 @@ public final class io/github/joelkanyi/jenga/component/verdict/JengaVerdictBarDe
 }
 
 public final class io/github/joelkanyi/jenga/component/verdict/JengaVerdictBarKt {
-	public static final fun JengaVerdictBar (Ljava/lang/String;Landroidx/compose/ui/Modifier;Ljava/lang/String;Lio/github/joelkanyi/jenga/component/verdict/JengaVerdictTone;Ljava/lang/String;Ljava/lang/Float;Ljava/lang/String;Ljava/lang/String;Lio/github/joelkanyi/jenga/component/action/JengaAction;Lio/github/joelkanyi/jenga/component/verdict/JengaVerdictBarColors;Landroidx/compose/runtime/Composer;II)V
+	public static final fun JengaVerdictBar (Ljava/lang/String;Landroidx/compose/ui/Modifier;Ljava/lang/String;Lio/github/joelkanyi/jenga/component/verdict/JengaVerdictTone;Ljava/lang/String;Ljava/lang/Float;Lio/github/joelkanyi/jenga/component/verdict/JengaVerdictSublines;Lio/github/joelkanyi/jenga/component/action/JengaAction;Lio/github/joelkanyi/jenga/component/verdict/JengaVerdictBarColors;Landroidx/compose/runtime/Composer;II)V
+}
+
+public final class io/github/joelkanyi/jenga/component/verdict/JengaVerdictSublines {
+	public static final field $stable I
+	public fun <init> (Ljava/lang/String;Ljava/lang/String;)V
+	public synthetic fun <init> (Ljava/lang/String;Ljava/lang/String;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun copy (Ljava/lang/String;Ljava/lang/String;)Lio/github/joelkanyi/jenga/component/verdict/JengaVerdictSublines;
+	public static synthetic fun copy$default (Lio/github/joelkanyi/jenga/component/verdict/JengaVerdictSublines;Ljava/lang/String;Ljava/lang/String;ILjava/lang/Object;)Lio/github/joelkanyi/jenga/component/verdict/JengaVerdictSublines;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getEnd ()Ljava/lang/String;
+	public final fun getStart ()Ljava/lang/String;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
 }
 
 public final class io/github/joelkanyi/jenga/component/verdict/JengaVerdictTone : java/lang/Enum {
@@ -1315,45 +1217,6 @@ public final class io/github/joelkanyi/jenga/component/verdict/JengaVerdictTone 
 public final class io/github/joelkanyi/jenga/foundation/color/JengaColors {
 	public static final field $stable I
 	public synthetic fun <init> (JJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJZLkotlin/jvm/internal/DefaultConstructorMarker;)V
-	public final fun component1-0d7_KjU ()J
-	public final fun component10-0d7_KjU ()J
-	public final fun component11-0d7_KjU ()J
-	public final fun component12-0d7_KjU ()J
-	public final fun component13-0d7_KjU ()J
-	public final fun component14-0d7_KjU ()J
-	public final fun component15-0d7_KjU ()J
-	public final fun component16-0d7_KjU ()J
-	public final fun component17-0d7_KjU ()J
-	public final fun component18-0d7_KjU ()J
-	public final fun component19-0d7_KjU ()J
-	public final fun component2-0d7_KjU ()J
-	public final fun component20-0d7_KjU ()J
-	public final fun component21-0d7_KjU ()J
-	public final fun component22-0d7_KjU ()J
-	public final fun component23-0d7_KjU ()J
-	public final fun component24-0d7_KjU ()J
-	public final fun component25-0d7_KjU ()J
-	public final fun component26-0d7_KjU ()J
-	public final fun component27-0d7_KjU ()J
-	public final fun component28-0d7_KjU ()J
-	public final fun component29-0d7_KjU ()J
-	public final fun component3-0d7_KjU ()J
-	public final fun component30-0d7_KjU ()J
-	public final fun component31-0d7_KjU ()J
-	public final fun component32-0d7_KjU ()J
-	public final fun component33-0d7_KjU ()J
-	public final fun component34-0d7_KjU ()J
-	public final fun component35-0d7_KjU ()J
-	public final fun component36-0d7_KjU ()J
-	public final fun component37-0d7_KjU ()J
-	public final fun component38-0d7_KjU ()J
-	public final fun component39 ()Z
-	public final fun component4-0d7_KjU ()J
-	public final fun component5-0d7_KjU ()J
-	public final fun component6-0d7_KjU ()J
-	public final fun component7-0d7_KjU ()J
-	public final fun component8-0d7_KjU ()J
-	public final fun component9-0d7_KjU ()J
 	public final fun copy-Ljmi3tk (JJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJZ)Lio/github/joelkanyi/jenga/foundation/color/JengaColors;
 	public static synthetic fun copy-Ljmi3tk$default (Lio/github/joelkanyi/jenga/foundation/color/JengaColors;JJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJZIILjava/lang/Object;)Lio/github/joelkanyi/jenga/foundation/color/JengaColors;
 	public fun equals (Ljava/lang/Object;)Z
@@ -1411,11 +1274,6 @@ public final class io/github/joelkanyi/jenga/foundation/elevation/JengaElevation
 	public static final field $stable I
 	public synthetic fun <init> (FFFFFILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public synthetic fun <init> (FFFFFLkotlin/jvm/internal/DefaultConstructorMarker;)V
-	public final fun component1-D9Ej5fM ()F
-	public final fun component2-D9Ej5fM ()F
-	public final fun component3-D9Ej5fM ()F
-	public final fun component4-D9Ej5fM ()F
-	public final fun component5-D9Ej5fM ()F
 	public final fun copy-RyVG9vg (FFFFF)Lio/github/joelkanyi/jenga/foundation/elevation/JengaElevation;
 	public static synthetic fun copy-RyVG9vg$default (Lio/github/joelkanyi/jenga/foundation/elevation/JengaElevation;FFFFFILjava/lang/Object;)Lio/github/joelkanyi/jenga/foundation/elevation/JengaElevation;
 	public fun equals (Ljava/lang/Object;)Z
@@ -1437,13 +1295,6 @@ public final class io/github/joelkanyi/jenga/foundation/motion/JengaMotion {
 	public fun <init> ()V
 	public fun <init> (IIIILandroidx/compose/animation/core/Easing;Landroidx/compose/animation/core/Easing;Landroidx/compose/animation/core/Easing;)V
 	public synthetic fun <init> (IIIILandroidx/compose/animation/core/Easing;Landroidx/compose/animation/core/Easing;Landroidx/compose/animation/core/Easing;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
-	public final fun component1 ()I
-	public final fun component2 ()I
-	public final fun component3 ()I
-	public final fun component4 ()I
-	public final fun component5 ()Landroidx/compose/animation/core/Easing;
-	public final fun component6 ()Landroidx/compose/animation/core/Easing;
-	public final fun component7 ()Landroidx/compose/animation/core/Easing;
 	public final fun copy (IIIILandroidx/compose/animation/core/Easing;Landroidx/compose/animation/core/Easing;Landroidx/compose/animation/core/Easing;)Lio/github/joelkanyi/jenga/foundation/motion/JengaMotion;
 	public static synthetic fun copy$default (Lio/github/joelkanyi/jenga/foundation/motion/JengaMotion;IIIILandroidx/compose/animation/core/Easing;Landroidx/compose/animation/core/Easing;Landroidx/compose/animation/core/Easing;ILjava/lang/Object;)Lio/github/joelkanyi/jenga/foundation/motion/JengaMotion;
 	public fun equals (Ljava/lang/Object;)Z
@@ -1467,16 +1318,6 @@ public final class io/github/joelkanyi/jenga/foundation/shape/JengaShapes {
 	public fun <init> ()V
 	public fun <init> (Landroidx/compose/foundation/shape/RoundedCornerShape;Landroidx/compose/foundation/shape/RoundedCornerShape;Landroidx/compose/foundation/shape/RoundedCornerShape;Landroidx/compose/foundation/shape/RoundedCornerShape;Landroidx/compose/foundation/shape/RoundedCornerShape;Landroidx/compose/foundation/shape/RoundedCornerShape;Landroidx/compose/foundation/shape/RoundedCornerShape;Landroidx/compose/foundation/shape/RoundedCornerShape;Landroidx/compose/foundation/shape/RoundedCornerShape;Landroidx/compose/foundation/shape/RoundedCornerShape;)V
 	public synthetic fun <init> (Landroidx/compose/foundation/shape/RoundedCornerShape;Landroidx/compose/foundation/shape/RoundedCornerShape;Landroidx/compose/foundation/shape/RoundedCornerShape;Landroidx/compose/foundation/shape/RoundedCornerShape;Landroidx/compose/foundation/shape/RoundedCornerShape;Landroidx/compose/foundation/shape/RoundedCornerShape;Landroidx/compose/foundation/shape/RoundedCornerShape;Landroidx/compose/foundation/shape/RoundedCornerShape;Landroidx/compose/foundation/shape/RoundedCornerShape;Landroidx/compose/foundation/shape/RoundedCornerShape;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
-	public final fun component1 ()Landroidx/compose/foundation/shape/RoundedCornerShape;
-	public final fun component10 ()Landroidx/compose/foundation/shape/RoundedCornerShape;
-	public final fun component2 ()Landroidx/compose/foundation/shape/RoundedCornerShape;
-	public final fun component3 ()Landroidx/compose/foundation/shape/RoundedCornerShape;
-	public final fun component4 ()Landroidx/compose/foundation/shape/RoundedCornerShape;
-	public final fun component5 ()Landroidx/compose/foundation/shape/RoundedCornerShape;
-	public final fun component6 ()Landroidx/compose/foundation/shape/RoundedCornerShape;
-	public final fun component7 ()Landroidx/compose/foundation/shape/RoundedCornerShape;
-	public final fun component8 ()Landroidx/compose/foundation/shape/RoundedCornerShape;
-	public final fun component9 ()Landroidx/compose/foundation/shape/RoundedCornerShape;
 	public final fun copy (Landroidx/compose/foundation/shape/RoundedCornerShape;Landroidx/compose/foundation/shape/RoundedCornerShape;Landroidx/compose/foundation/shape/RoundedCornerShape;Landroidx/compose/foundation/shape/RoundedCornerShape;Landroidx/compose/foundation/shape/RoundedCornerShape;Landroidx/compose/foundation/shape/RoundedCornerShape;Landroidx/compose/foundation/shape/RoundedCornerShape;Landroidx/compose/foundation/shape/RoundedCornerShape;Landroidx/compose/foundation/shape/RoundedCornerShape;Landroidx/compose/foundation/shape/RoundedCornerShape;)Lio/github/joelkanyi/jenga/foundation/shape/JengaShapes;
 	public static synthetic fun copy$default (Lio/github/joelkanyi/jenga/foundation/shape/JengaShapes;Landroidx/compose/foundation/shape/RoundedCornerShape;Landroidx/compose/foundation/shape/RoundedCornerShape;Landroidx/compose/foundation/shape/RoundedCornerShape;Landroidx/compose/foundation/shape/RoundedCornerShape;Landroidx/compose/foundation/shape/RoundedCornerShape;Landroidx/compose/foundation/shape/RoundedCornerShape;Landroidx/compose/foundation/shape/RoundedCornerShape;Landroidx/compose/foundation/shape/RoundedCornerShape;Landroidx/compose/foundation/shape/RoundedCornerShape;Landroidx/compose/foundation/shape/RoundedCornerShape;ILjava/lang/Object;)Lio/github/joelkanyi/jenga/foundation/shape/JengaShapes;
 	public fun equals (Ljava/lang/Object;)Z
@@ -1502,14 +1343,6 @@ public final class io/github/joelkanyi/jenga/foundation/sizing/JengaSizing {
 	public static final field $stable I
 	public synthetic fun <init> (FFFFFFFFILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public synthetic fun <init> (FFFFFFFFLkotlin/jvm/internal/DefaultConstructorMarker;)V
-	public final fun component1-D9Ej5fM ()F
-	public final fun component2-D9Ej5fM ()F
-	public final fun component3-D9Ej5fM ()F
-	public final fun component4-D9Ej5fM ()F
-	public final fun component5-D9Ej5fM ()F
-	public final fun component6-D9Ej5fM ()F
-	public final fun component7-D9Ej5fM ()F
-	public final fun component8-D9Ej5fM ()F
 	public final fun copy-ka4v4c8 (FFFFFFFF)Lio/github/joelkanyi/jenga/foundation/sizing/JengaSizing;
 	public static synthetic fun copy-ka4v4c8$default (Lio/github/joelkanyi/jenga/foundation/sizing/JengaSizing;FFFFFFFFILjava/lang/Object;)Lio/github/joelkanyi/jenga/foundation/sizing/JengaSizing;
 	public fun equals (Ljava/lang/Object;)Z
@@ -1533,16 +1366,6 @@ public final class io/github/joelkanyi/jenga/foundation/spacing/JengaSpacing {
 	public static final field $stable I
 	public synthetic fun <init> (FFFFFFFFFFILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public synthetic fun <init> (FFFFFFFFFFLkotlin/jvm/internal/DefaultConstructorMarker;)V
-	public final fun component1-D9Ej5fM ()F
-	public final fun component10-D9Ej5fM ()F
-	public final fun component2-D9Ej5fM ()F
-	public final fun component3-D9Ej5fM ()F
-	public final fun component4-D9Ej5fM ()F
-	public final fun component5-D9Ej5fM ()F
-	public final fun component6-D9Ej5fM ()F
-	public final fun component7-D9Ej5fM ()F
-	public final fun component8-D9Ej5fM ()F
-	public final fun component9-D9Ej5fM ()F
 	public final fun copy-ETLW93k (FFFFFFFFFF)Lio/github/joelkanyi/jenga/foundation/spacing/JengaSpacing;
 	public static synthetic fun copy-ETLW93k$default (Lio/github/joelkanyi/jenga/foundation/spacing/JengaSpacing;FFFFFFFFFFILjava/lang/Object;)Lio/github/joelkanyi/jenga/foundation/spacing/JengaSpacing;
 	public fun equals (Ljava/lang/Object;)Z
@@ -1571,19 +1394,6 @@ public final class io/github/joelkanyi/jenga/foundation/typography/JengaFontFami
 public final class io/github/joelkanyi/jenga/foundation/typography/JengaTypography {
 	public static final field $stable I
 	public fun <init> (Landroidx/compose/ui/text/TextStyle;Landroidx/compose/ui/text/TextStyle;Landroidx/compose/ui/text/TextStyle;Landroidx/compose/ui/text/TextStyle;Landroidx/compose/ui/text/TextStyle;Landroidx/compose/ui/text/TextStyle;Landroidx/compose/ui/text/TextStyle;Landroidx/compose/ui/text/TextStyle;Landroidx/compose/ui/text/TextStyle;Landroidx/compose/ui/text/TextStyle;Landroidx/compose/ui/text/TextStyle;Landroidx/compose/ui/text/TextStyle;Landroidx/compose/ui/text/TextStyle;)V
-	public final fun component1 ()Landroidx/compose/ui/text/TextStyle;
-	public final fun component10 ()Landroidx/compose/ui/text/TextStyle;
-	public final fun component11 ()Landroidx/compose/ui/text/TextStyle;
-	public final fun component12 ()Landroidx/compose/ui/text/TextStyle;
-	public final fun component13 ()Landroidx/compose/ui/text/TextStyle;
-	public final fun component2 ()Landroidx/compose/ui/text/TextStyle;
-	public final fun component3 ()Landroidx/compose/ui/text/TextStyle;
-	public final fun component4 ()Landroidx/compose/ui/text/TextStyle;
-	public final fun component5 ()Landroidx/compose/ui/text/TextStyle;
-	public final fun component6 ()Landroidx/compose/ui/text/TextStyle;
-	public final fun component7 ()Landroidx/compose/ui/text/TextStyle;
-	public final fun component8 ()Landroidx/compose/ui/text/TextStyle;
-	public final fun component9 ()Landroidx/compose/ui/text/TextStyle;
 	public final fun copy (Landroidx/compose/ui/text/TextStyle;Landroidx/compose/ui/text/TextStyle;Landroidx/compose/ui/text/TextStyle;Landroidx/compose/ui/text/TextStyle;Landroidx/compose/ui/text/TextStyle;Landroidx/compose/ui/text/TextStyle;Landroidx/compose/ui/text/TextStyle;Landroidx/compose/ui/text/TextStyle;Landroidx/compose/ui/text/TextStyle;Landroidx/compose/ui/text/TextStyle;Landroidx/compose/ui/text/TextStyle;Landroidx/compose/ui/text/TextStyle;Landroidx/compose/ui/text/TextStyle;)Lio/github/joelkanyi/jenga/foundation/typography/JengaTypography;
 	public static synthetic fun copy$default (Lio/github/joelkanyi/jenga/foundation/typography/JengaTypography;Landroidx/compose/ui/text/TextStyle;Landroidx/compose/ui/text/TextStyle;Landroidx/compose/ui/text/TextStyle;Landroidx/compose/ui/text/TextStyle;Landroidx/compose/ui/text/TextStyle;Landroidx/compose/ui/text/TextStyle;Landroidx/compose/ui/text/TextStyle;Landroidx/compose/ui/text/TextStyle;Landroidx/compose/ui/text/TextStyle;Landroidx/compose/ui/text/TextStyle;Landroidx/compose/ui/text/TextStyle;Landroidx/compose/ui/text/TextStyle;Landroidx/compose/ui/text/TextStyle;ILjava/lang/Object;)Lio/github/joelkanyi/jenga/foundation/typography/JengaTypography;
 	public fun equals (Ljava/lang/Object;)Z

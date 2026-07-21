@@ -20,11 +20,13 @@ import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import dev.drewhamilton.poko.Poko
 import io.github.joelkanyi.jenga.theme.JengaTheme
 
 /** Resolved colors for a [JengaCheckbox]. Override via [JengaCheckboxDefaults.colors]. */
+@Poko
 @Immutable
-public data class JengaCheckboxColors(
+public class JengaCheckboxColors(
     public val checkedFill: Color,
     public val uncheckedFill: Color,
     public val disabledFill: Color,
@@ -33,7 +35,27 @@ public data class JengaCheckboxColors(
     public val disabledBorder: Color,
     public val checkmark: Color,
     public val disabledCheckmark: Color,
-)
+) {
+    public fun copy(
+        checkedFill: Color = this.checkedFill,
+        uncheckedFill: Color = this.uncheckedFill,
+        disabledFill: Color = this.disabledFill,
+        checkedBorder: Color = this.checkedBorder,
+        uncheckedBorder: Color = this.uncheckedBorder,
+        disabledBorder: Color = this.disabledBorder,
+        checkmark: Color = this.checkmark,
+        disabledCheckmark: Color = this.disabledCheckmark,
+    ): JengaCheckboxColors = JengaCheckboxColors(
+        checkedFill,
+        uncheckedFill,
+        disabledFill,
+        checkedBorder,
+        uncheckedBorder,
+        disabledBorder,
+        checkmark,
+        disabledCheckmark,
+    )
+}
 
 /** Defaults and token mappings for [JengaCheckbox]. */
 public object JengaCheckboxDefaults {

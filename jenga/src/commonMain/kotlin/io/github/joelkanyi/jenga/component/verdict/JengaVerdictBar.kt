@@ -20,6 +20,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.lerp
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import dev.drewhamilton.poko.Poko
 import io.github.joelkanyi.jenga.component.action.JengaAction
 import io.github.joelkanyi.jenga.component.text.JengaText
 import io.github.joelkanyi.jenga.theme.JengaTheme
@@ -28,15 +29,25 @@ import io.github.joelkanyi.jenga.theme.JengaTheme
 public enum class JengaVerdictTone { Positive, Caution, Negative, Brand }
 
 /** Resolved colors for a [JengaVerdictBar]. Override via [JengaVerdictBarDefaults.colors]. */
+@Poko
 @Immutable
-public data class JengaVerdictBarColors(
+public class JengaVerdictBarColors(
     public val fill: Brush,
     public val amount: Color,
     public val accent: Color,
     public val muted: Color,
     public val trackFill: Color,
     public val track: Color,
-)
+) {
+    public fun copy(
+        fill: Brush = this.fill,
+        amount: Color = this.amount,
+        accent: Color = this.accent,
+        muted: Color = this.muted,
+        trackFill: Color = this.trackFill,
+        track: Color = this.track,
+    ): JengaVerdictBarColors = JengaVerdictBarColors(fill, amount, accent, muted, trackFill, track)
+}
 
 /** Defaults and token mappings for [JengaVerdictBar]. */
 public object JengaVerdictBarDefaults {
@@ -78,10 +89,27 @@ public object JengaVerdictBarDefaults {
 }
 
 /**
+ * The two bottom captions of a [JengaVerdictBar]: a [start] line and an optional
+ * [end] line, bundled so the honest pair reads as one footnote.
+ */
+@Poko
+@Immutable
+public class JengaVerdictSublines(
+    public val start: String,
+    public val end: String? = null,
+) {
+    public fun copy(
+        start: String = this.start,
+        end: String? = this.end,
+    ): JengaVerdictSublines = JengaVerdictSublines(start, end)
+}
+
+/**
  * A full-width verdict banner: a tone-colored band with an optional [label], a
- * big [amount] (with optional [amountSuffix]), an optional [progress] bar, and
- * two honest sub-lines. A one-glance "where do I stand" summary (budget, goal,
- * quota). Generic — numbers and copy are the caller's; color follows [tone].
+ * big [amount] (with optional [amountSuffix]), an optional [progress] bar, and an
+ * optional pair of honest [sublines]. A one-glance "where do I stand" summary
+ * (budget, goal, quota). Generic — numbers and copy are the caller's; color
+ * follows [tone].
  *
  * @param amount the headline value (e.g. "KES 1,190").
  * @param modifier the [Modifier] for the banner.
@@ -89,8 +117,7 @@ public object JengaVerdictBarDefaults {
  * @param tone the verdict color.
  * @param label an optional eyebrow above the amount.
  * @param progress an optional 0..1 progress fraction; null hides the bar.
- * @param sublineStart optional bottom-start sub-line (e.g. "KES 710 of 1,900 spent").
- * @param sublineEnd optional bottom-end sub-line (e.g. "8 of 11 priced").
+ * @param sublines the optional bottom start/end captions.
  * @param action optional trailing header action (label plus handler).
  * @param colors the color set; defaults to [JengaVerdictBarDefaults.colors] for [tone].
  */
@@ -102,8 +129,7 @@ public fun JengaVerdictBar(
     tone: JengaVerdictTone = JengaVerdictTone.Positive,
     label: String? = null,
     progress: Float? = null,
-    sublineStart: String? = null,
-    sublineEnd: String? = null,
+    sublines: JengaVerdictSublines? = null,
     action: JengaAction? = null,
     colors: JengaVerdictBarColors = JengaVerdictBarDefaults.colors(tone),
 ) {
@@ -168,17 +194,18 @@ public fun JengaVerdictBar(
                 )
             }
         }
-        if (sublineStart != null || sublineEnd != null) {
+        if (sublines != null) {
+            val end = sublines.end
             Row(modifier = Modifier.fillMaxWidth()) {
                 JengaText(
-                    text = sublineStart.orEmpty(),
+                    text = sublines.start,
                     style = JengaTheme.typography.caption,
                     color = colors.muted,
                     modifier = Modifier.weight(1f),
                     maxLines = 1,
                 )
-                if (sublineEnd != null) {
-                    JengaText(text = sublineEnd, style = JengaTheme.typography.caption, color = colors.muted, maxLines = 1)
+                if (end != null) {
+                    JengaText(text = end, style = JengaTheme.typography.caption, color = colors.muted, maxLines = 1)
                 }
             }
         }

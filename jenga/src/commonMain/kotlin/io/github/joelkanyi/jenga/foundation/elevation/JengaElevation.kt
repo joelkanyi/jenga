@@ -3,6 +3,7 @@ package io.github.joelkanyi.jenga.foundation.elevation
 import androidx.compose.runtime.Immutable
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import dev.drewhamilton.poko.Poko
 
 /**
  * **Elevation token set** — resting shadow depths.
@@ -12,14 +13,23 @@ import androidx.compose.ui.unit.dp
  * `Modifier.shadow(JengaTheme.elevation.md, shape)`. Read via
  * `JengaTheme.elevation`.
  */
+@Poko
 @Immutable
-public data class JengaElevation(
+public class JengaElevation(
     public val none: Dp = 0.dp,
     public val sm: Dp = 1.dp,
     public val md: Dp = 4.dp,
     public val lg: Dp = 8.dp,
     public val xl: Dp = 16.dp,
-)
+) {
+    public fun copy(
+        none: Dp = this.none,
+        sm: Dp = this.sm,
+        md: Dp = this.md,
+        lg: Dp = this.lg,
+        xl: Dp = this.xl,
+    ): JengaElevation = JengaElevation(none, sm, md, lg, xl)
+}
 
 /** The default Jenga elevation ladder. */
 public fun jengaElevation(): JengaElevation = JengaElevation()
