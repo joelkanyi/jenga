@@ -11,7 +11,14 @@ import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.graphics.Color
 import io.github.joelkanyi.jenga.component.icon.JengaIconSet
 import io.github.joelkanyi.jenga.component.icon.rememberJengaIconSet
+import io.github.joelkanyi.jenga.foundation.brand.JengaBrand
+import io.github.joelkanyi.jenga.foundation.brand.darkColors
+import io.github.joelkanyi.jenga.foundation.brand.lightColors
+import io.github.joelkanyi.jenga.foundation.brand.shapes
+import io.github.joelkanyi.jenga.foundation.brand.sizing
+import io.github.joelkanyi.jenga.foundation.brand.spacing
 import io.github.joelkanyi.jenga.foundation.color.JengaColors
+import io.github.joelkanyi.jenga.foundation.color.JengaScheme
 import io.github.joelkanyi.jenga.foundation.color.jengaDarkColors
 import io.github.joelkanyi.jenga.foundation.color.jengaLightColors
 import io.github.joelkanyi.jenga.foundation.elevation.JengaElevation
@@ -164,4 +171,112 @@ public fun JengaTheme(
             content = content,
         )
     }
+}
+
+/**
+ * Provides Jenga themed from a single [brand] — one seed color yields a coherent,
+ * accessible light and dark scheme plus type, shape and density:
+ *
+ * ```
+ * JengaTheme(brand = jengaBrand(seed = Color(0xFF6D28D9))) { App() }
+ * ```
+ *
+ * Everything is derived from the brand and can be overridden one argument at a
+ * time; each override defaults to the brand-derived value.
+ *
+ * @param brand the brand definition; see [JengaBrand] and `jengaBrand`.
+ * @param darkTheme whether to use the dark scheme; follows the system by default.
+ * @param colors overrides the derived scheme (light or dark, per [darkTheme]).
+ * @param typography overrides the derived type scale; null derives it from the
+ *   brand, injecting Jenga's bundled font for any family the brand left unset.
+ * @param spacing the spacing scale; derived from the brand's density.
+ * @param shapes the corner-shape set; derived from the brand's corner style.
+ * @param sizing the sizing set; derived from the brand's density.
+ * @param elevation the elevation ladder.
+ * @param motion the motion tokens.
+ * @param icons the semantic icon set; the brand's, or Jenga's own if unset.
+ * @param content the themed content.
+ */
+@Composable
+public fun JengaTheme(
+    brand: JengaBrand,
+    darkTheme: Boolean = isSystemInDarkTheme(),
+    colors: JengaColors = if (darkTheme) brand.darkColors() else brand.lightColors(),
+    typography: JengaTypography? = null,
+    spacing: JengaSpacing = brand.spacing(),
+    shapes: JengaShapes = brand.shapes(),
+    sizing: JengaSizing = brand.sizing(),
+    elevation: JengaElevation = jengaElevation(),
+    motion: JengaMotion = jengaMotion(),
+    icons: JengaIconSet? = brand.icons,
+    content: @Composable () -> Unit,
+) {
+    // Derive the type scale from the brand, injecting the bundled brand font for
+    // any family the brand left unset (that resolution needs composition).
+    val resolvedTypography = typography ?: run {
+        val default = rememberJengaFontFamily()
+        jengaTypography(
+            displayFontFamily = brand.displayFontFamily ?: default,
+            bodyFontFamily = brand.bodyFontFamily ?: default,
+        )
+    }
+    JengaTheme(
+        darkTheme = darkTheme,
+        colors = colors,
+        typography = resolvedTypography,
+        spacing = spacing,
+        shapes = shapes,
+        sizing = sizing,
+        elevation = elevation,
+        motion = motion,
+        icons = icons,
+        content = content,
+    )
+}
+
+/**
+ * Provides Jenga from a fully hand-authored [scheme] (a light + dark [JengaColors]
+ * pair). The scheme is selected for the current [darkTheme]; other token bundles
+ * keep their defaults or can be overridden.
+ *
+ * ```
+ * JengaTheme(scheme = JengaScheme(light = myLight, dark = myDark)) { App() }
+ * ```
+ *
+ * @param scheme the light + dark color pair.
+ * @param darkTheme whether to use the dark scheme; follows the system by default.
+ * @param typography the type scale; null uses Jenga's default (bundled font).
+ * @param spacing the spacing scale.
+ * @param shapes the corner-shape set.
+ * @param sizing the sizing set.
+ * @param elevation the elevation ladder.
+ * @param motion the motion tokens.
+ * @param icons the semantic icon set; Jenga's own if unset.
+ * @param content the themed content.
+ */
+@Composable
+public fun JengaTheme(
+    scheme: JengaScheme,
+    darkTheme: Boolean = isSystemInDarkTheme(),
+    typography: JengaTypography? = null,
+    spacing: JengaSpacing = jengaSpacing(),
+    shapes: JengaShapes = jengaShapes(),
+    sizing: JengaSizing = jengaSizing(),
+    elevation: JengaElevation = jengaElevation(),
+    motion: JengaMotion = jengaMotion(),
+    icons: JengaIconSet? = null,
+    content: @Composable () -> Unit,
+) {
+    JengaTheme(
+        darkTheme = darkTheme,
+        colors = if (darkTheme) scheme.dark else scheme.light,
+        typography = typography,
+        spacing = spacing,
+        shapes = shapes,
+        sizing = sizing,
+        elevation = elevation,
+        motion = motion,
+        icons = icons,
+        content = content,
+    )
 }
