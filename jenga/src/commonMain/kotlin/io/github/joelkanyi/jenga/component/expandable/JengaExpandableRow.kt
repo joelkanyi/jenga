@@ -29,20 +29,20 @@ import io.github.joelkanyi.jenga.theme.JengaTheme
  *
  * @param expanded whether the [content] is currently shown.
  * @param onExpandedChange called with the requested new state when the header is tapped.
+ * @param header the header content, laid out before the chevron.
  * @param modifier the [Modifier] for the card.
  * @param showChevron whether to append a chevron that rotates when expanded.
  * @param chevronContentDescription accessibility label for the chevron.
- * @param header the header content, laid out before the chevron.
  * @param content the expandable body, shown when [expanded].
  */
 @Composable
 public fun JengaExpandableRow(
     expanded: Boolean,
     onExpandedChange: (Boolean) -> Unit,
+    header: @Composable RowScope.() -> Unit,
     modifier: Modifier = Modifier,
     showChevron: Boolean = true,
     chevronContentDescription: String? = null,
-    header: @Composable RowScope.() -> Unit,
     content: @Composable ColumnScope.() -> Unit,
 ) {
     val chevronRotation by animateFloatAsState(if (expanded) 90f else 0f, label = "chevron")

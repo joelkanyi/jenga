@@ -93,7 +93,7 @@ import io.github.joelkanyi.jenga.theme.JengaTheme
  * browse them all, interact with them, and flip light/dark from the toolbar.
  */
 @Composable
-fun ComponentsGallery() {
+fun ComponentsGallery(modifier: Modifier = Modifier) {
     // Interactive state
     var toggle by remember { mutableStateOf(true) }
     var checkbox by remember { mutableStateOf(true) }
@@ -110,7 +110,7 @@ fun ComponentsGallery() {
     var quantity by remember { mutableIntStateOf(2) }
     var expanded by remember { mutableStateOf(false) }
 
-    JengaStack(space = JengaTheme.spacing.xxl) {
+    JengaStack(modifier = modifier, space = JengaTheme.spacing.xxl) {
         Group("Buttons") {
             JengaInline(space = JengaTheme.spacing.sm) {
                 JengaButton("Primary", {}, variant = JengaButtonVariant.Primary)

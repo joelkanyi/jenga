@@ -334,17 +334,17 @@ public final class io/github/joelkanyi/jenga/component/divider/JengaDividerKt {
 public final class io/github/joelkanyi/jenga/component/expandable/ComposableSingletons$JengaExpandableRowPreviewsKt {
 	public static final field INSTANCE Lio/github/joelkanyi/jenga/component/expandable/ComposableSingletons$JengaExpandableRowPreviewsKt;
 	public fun <init> ()V
+	public final fun getLambda$-1241467011$jenga_release ()Lkotlin/jvm/functions/Function3;
 	public final fun getLambda$-1537102721$jenga_release ()Lkotlin/jvm/functions/Function2;
 	public final fun getLambda$-1692682787$jenga_release ()Lkotlin/jvm/functions/Function2;
-	public final fun getLambda$1202140785$jenga_release ()Lkotlin/jvm/functions/Function3;
 	public final fun getLambda$1431357800$jenga_release ()Lkotlin/jvm/functions/Function3;
 	public final fun getLambda$1697143380$jenga_release ()Lkotlin/jvm/functions/Function2;
 	public final fun getLambda$2029859089$jenga_release ()Lkotlin/jvm/functions/Function3;
-	public final fun getLambda$795639770$jenga_release ()Lkotlin/jvm/functions/Function3;
+	public final fun getLambda$471530196$jenga_release ()Lkotlin/jvm/functions/Function3;
 }
 
 public final class io/github/joelkanyi/jenga/component/expandable/JengaExpandableRowKt {
-	public static final fun JengaExpandableRow (ZLkotlin/jvm/functions/Function1;Landroidx/compose/ui/Modifier;ZLjava/lang/String;Lkotlin/jvm/functions/Function3;Lkotlin/jvm/functions/Function3;Landroidx/compose/runtime/Composer;II)V
+	public static final fun JengaExpandableRow (ZLkotlin/jvm/functions/Function1;Lkotlin/jvm/functions/Function3;Landroidx/compose/ui/Modifier;ZLjava/lang/String;Lkotlin/jvm/functions/Function3;Landroidx/compose/runtime/Composer;II)V
 }
 
 public final class io/github/joelkanyi/jenga/component/fab/ComposableSingletons$JengaFabPreviewsKt {
@@ -1903,7 +1903,6 @@ public final class io/github/joelkanyi/jenga/samples/ComposableSingletons$JengaS
 	public static final field INSTANCE Lio/github/joelkanyi/jenga/samples/ComposableSingletons$JengaSamplesKt;
 	public fun <init> ()V
 	public final fun getLambda$-1143789796$jenga_release ()Lkotlin/jvm/functions/Function3;
-	public final fun getLambda$-1739361293$jenga_release ()Lkotlin/jvm/functions/Function3;
 	public final fun getLambda$-1877431549$jenga_release ()Lkotlin/jvm/functions/Function3;
 	public final fun getLambda$-1954135018$jenga_release ()Lkotlin/jvm/functions/Function2;
 	public final fun getLambda$-1988505284$jenga_release ()Lkotlin/jvm/functions/Function3;
@@ -1915,6 +1914,7 @@ public final class io/github/joelkanyi/jenga/samples/ComposableSingletons$JengaS
 	public final fun getLambda$-983531617$jenga_release ()Lkotlin/jvm/functions/Function3;
 	public final fun getLambda$1081290568$jenga_release ()Lkotlin/jvm/functions/Function2;
 	public final fun getLambda$1557062852$jenga_release ()Lkotlin/jvm/functions/Function3;
+	public final fun getLambda$183897136$jenga_release ()Lkotlin/jvm/functions/Function3;
 	public final fun getLambda$1912113536$jenga_release ()Lkotlin/jvm/functions/Function3;
 	public final fun getLambda$1937005648$jenga_release ()Lkotlin/jvm/functions/Function3;
 	public final fun getLambda$1967077901$jenga_release ()Lkotlin/jvm/functions/Function2;

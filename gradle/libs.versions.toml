@@ -18,6 +18,7 @@ mavenPublish = "0.37.0"
 poko = "0.21.2"
 spotless = "7.0.4"
 ktlint = "1.5.0"
+composeRules = "0.4.23"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -43,6 +44,7 @@ coil-network-ktor3 = { module = "io.coil-kt.coil3:coil-network-ktor3", version.r
 
 # Lint
 compose-lint-checks = { module = "com.slack.lint.compose:compose-lint-checks", version.ref = "composeLints" }
+compose-rules-ktlint = { module = "io.nlopez.compose.rules:ktlint", version.ref = "composeRules" }
 
 # Screenshot testing
 junit = { group = "junit", name = "junit", version.ref = "junit" }

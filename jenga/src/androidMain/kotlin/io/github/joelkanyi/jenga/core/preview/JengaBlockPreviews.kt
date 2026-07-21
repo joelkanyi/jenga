@@ -15,4 +15,7 @@ import androidx.compose.ui.tooling.preview.Preview
 @Preview(name = "Light", showBackground = true)
 @Preview(name = "Dark", showBackground = true, uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Preview(name = "Large font", showBackground = true, fontScale = 1.5f)
+// Branded name kept deliberately; the Preview* prefix the rule wants would rename
+// this internal annotation across every showcase file.
+@Suppress("ktlint:compose:preview-annotation-naming")
 internal annotation class JengaBlockPreviews
