@@ -13,7 +13,7 @@ import io.github.joelkanyi.jenga.component.text.JengaText
 import io.github.joelkanyi.jenga.theme.JengaTheme
 
 /**
- * **Pattern (organism)** — a KPI / stat card: an eyebrow label, a large value,
+ * **Pattern (organism)**, a KPI / stat card: an eyebrow label, a large value,
  * and an optional trend badge. Composed from [JengaCard] + [JengaText] + [JengaBadge].
  *
  * @sample io.github.joelkanyi.jenga.samples.JengaStatCardSample

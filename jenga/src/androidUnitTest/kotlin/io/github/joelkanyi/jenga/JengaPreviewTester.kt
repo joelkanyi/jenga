@@ -11,7 +11,7 @@ import com.github.takahirom.roborazzi.RoborazziOptions
  *
  * Robolectric's native rendering differs by a hair across operating systems
  * (measured: <= 2/255 per channel between macOS dev machines and the Linux CI
- * runner — pure anti-aliasing / alpha-blend rounding, visually identical). With
+ * runner, pure anti-aliasing / alpha-blend rounding, visually identical). With
  * the default pixel-perfect comparison that makes CI fail on goldens recorded on
  * a different OS. A `SimpleImageComparator(maxDistance)` absorbs that sub-pixel
  * noise while still failing on genuine visual changes (which differ by far more),

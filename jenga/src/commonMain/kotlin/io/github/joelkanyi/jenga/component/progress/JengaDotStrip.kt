@@ -59,7 +59,7 @@ public object JengaDotStripDefaults {
 }
 
 /**
- * A compact segmented meter — [filled] of [total] segments, drawn as dots or
+ * A compact segmented meter: [filled] of [total] segments, drawn as dots or
  * bars. A one-glance "how complete is this" indicator (balance groups, days
  * covered, steps done). Generic and token-driven.
  *

@@ -109,7 +109,7 @@ and Compose grouped) and the GitHub Actions themselves.
 ## Consuming the published artifact
 
 ```kotlin
-// settings.gradle.kts of the consumer (e.g. pikapal, ticketfiti-app)
+// settings.gradle.kts of the consumer app
 dependencyResolutionManagement {
     repositories { mavenCentral() }
 }

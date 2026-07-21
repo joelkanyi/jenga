@@ -21,7 +21,7 @@ internal fun JengaBoxPreview() {
             background = JengaTheme.colors.brandSubtle,
             shape = JengaTheme.shapes.card,
         ) {
-            JengaText("JengaBox — padding + background + shape, no Modifier chain", color = JengaTheme.colors.onBrandSubtle)
+            JengaText("JengaBox: padding + background + shape, no Modifier chain", color = JengaTheme.colors.onBrandSubtle)
         }
     }
 }

@@ -16,7 +16,7 @@ import io.github.joelkanyi.jenga.component.text.JengaText
 import io.github.joelkanyi.jenga.theme.JengaTheme
 
 /**
- * **Pattern (organism)** — a ready-made attendee/ticket row composed from jenga
+ * **Pattern (organism)**, a ready-made attendee/ticket row composed from jenga
  * blocks ([JengaCard] + [JengaAvatar] + [JengaText] + [JengaBadge]).
  *
  * Patterns live one layer above blocks (Foundations → Blocks → Patterns): they

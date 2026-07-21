@@ -33,7 +33,7 @@ private fun BannerShowcase() {
             .padding(JengaTheme.spacing.lg),
         verticalArrangement = Arrangement.spacedBy(JengaTheme.spacing.md),
     ) {
-        JengaBanner(message = "Working offline — scans will sync later.", tone = JengaBannerTone.Info)
+        JengaBanner(message = "Working offline; scans will sync later.", tone = JengaBannerTone.Info)
         JengaBanner(message = "All tickets validated.", tone = JengaBannerTone.Success, title = "Done")
         JengaBanner(message = "Low battery on this device.", tone = JengaBannerTone.Warning)
         JengaBanner(message = "Couldn't reach the server.", tone = JengaBannerTone.Error)

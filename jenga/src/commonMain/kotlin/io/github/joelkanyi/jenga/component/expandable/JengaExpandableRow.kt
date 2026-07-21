@@ -21,7 +21,7 @@ import io.github.joelkanyi.jenga.component.icon.JengaIcon
 import io.github.joelkanyi.jenga.theme.JengaTheme
 
 /**
- * An outlined card whose [header] row toggles an expandable [content] body — a
+ * An outlined card whose [header] row toggles an expandable [content] body: a
  * generic accordion (day/agenda cards, FAQ rows, grouped settings). The [header]
  * is laid out in a [RowScope]; the block appends an optional rotating chevron.
  * Domain-neutral and token-driven.

@@ -16,7 +16,7 @@ import androidx.compose.ui.unit.Dp
 import io.github.joelkanyi.jenga.theme.JengaTheme
 
 /**
- * A vertical stack with token-based spacing between children — use instead of a
+ * A vertical stack with token-based spacing between children; use instead of a
  * hand-spaced `Column`. (Braid `Stack` / Polaris `BlockStack` / Chakra `VStack`.)
  *
  * @sample io.github.joelkanyi.jenga.samples.JengaStackSample
@@ -42,7 +42,7 @@ public fun JengaStack(
 }
 
 /**
- * A horizontal row with token-based spacing — use instead of a hand-spaced
+ * A horizontal row with token-based spacing; use instead of a hand-spaced
  * `Row`. (Braid/Polaris `Inline` / Chakra `HStack`.) Does not wrap; see [JengaWrap].
  *
  * @sample io.github.joelkanyi.jenga.samples.JengaInlineSample
@@ -69,7 +69,7 @@ public fun JengaInline(
 
 /**
  * A horizontal layout that wraps onto new lines when it runs out of width, with
- * token spacing in both axes — for chips, tags and similar. (Braid `Inline` with
+ * token spacing in both axes, for chips, tags and similar. (Braid `Inline` with
  * wrap / Chakra `Wrap`.)
  *
  * @sample io.github.joelkanyi.jenga.samples.JengaWrapSample
@@ -96,7 +96,7 @@ public fun JengaWrap(
 
 /**
  * A fixed-size empty gap from a spacing token. Inside a [JengaStack]/[JengaInline]
- * you rarely need this (their `space` handles gaps) — use it for one-off spacing.
+ * you rarely need this (their `space` handles gaps); use it for one-off spacing.
  *
  * @param modifier the [Modifier] for the spacer.
  * @param size the gap size; defaults to `spacing.md`.

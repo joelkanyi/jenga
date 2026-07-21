@@ -5,7 +5,7 @@ import androidx.compose.ui.graphics.Color
 import dev.drewhamilton.poko.Poko
 
 /**
- * **Semantic color layer** — colors named by *role*, not by hue.
+ * **Semantic color layer**: colors named by *role*, not by hue.
  *
  * This is the public color contract of Jenga. Components read these roles
  * (e.g. [brand], [surface], [textPrimary]) and never the raw [JengaPalette].
@@ -17,9 +17,9 @@ import dev.drewhamilton.poko.Poko
  * `JengaTheme(colors = ...)`.
  *
  * Status roles follow a `content` / `container` / `onContainer` triad:
- * - `success` — the vivid accent (dots, icons, borders, emphasis)
- * - `successContainer` — a tinted background for banners/badges
- * - `onSuccessContainer` — readable text/icon color on that container
+ * - `success`: the vivid accent (dots, icons, borders, emphasis)
+ * - `successContainer`: a tinted background for banners/badges
+ * - `onSuccessContainer`: readable text/icon color on that container
  *
  * @property isLight whether this palette targets a light background. Components
  *   may branch on this for effects that can't be expressed as a single token
@@ -28,12 +28,12 @@ import dev.drewhamilton.poko.Poko
 @Poko
 @Immutable
 public class JengaColors(
-    // Brand — primary accent (orange)
+    // Brand: primary accent (orange)
     public val brand: Color,
     public val onBrand: Color,
     public val brandSubtle: Color,
     public val onBrandSubtle: Color,
-    // Ink — secondary dark action (navy)
+    // Ink: secondary dark action (navy)
     public val ink: Color,
     public val onInk: Color,
     // Backgrounds & surfaces
@@ -53,27 +53,27 @@ public class JengaColors(
     public val contentDisabled: Color,
     public val surfaceDisabled: Color,
     public val borderDisabled: Color,
-    // Inverse — high-contrast surfaces (snackbars, tooltips)
+    // Inverse: high-contrast surfaces (snackbars, tooltips)
     public val inverseSurface: Color,
     public val inverseOnSurface: Color,
-    // Status — success
+    // Status: success
     public val success: Color,
     public val successContainer: Color,
     public val onSuccessContainer: Color,
-    // Status — warning
+    // Status: warning
     public val warning: Color,
     public val warningContainer: Color,
     public val onWarningContainer: Color,
-    // Status — error
+    // Status: error
     public val error: Color,
     public val errorContainer: Color,
     public val onErrorContainer: Color,
-    // Status — info
+    // Status: info
     public val info: Color,
     public val infoContainer: Color,
     public val onInfoContainer: Color,
-    // Media overlays — content layered over a camera feed / photo / video, whose
-    // backdrop is unpredictable. These are an *always dark-context* set: identical
+    // Media overlays: content layered over a camera feed / photo / video, whose
+    // backdrop is unpredictable. These are an *always dark-context* set, identical
     // in light and dark so a scanner or image viewer stays legible either way.
     public val overlaySurface: Color,
     public val onOverlay: Color,
@@ -253,7 +253,7 @@ public fun jengaDarkColors(): JengaColors = JengaColors(
 )
 
 /**
- * Multi-brand convenience — returns a copy of this scheme rebranded to [brand].
+ * Multi-brand convenience: returns a copy of this scheme rebranded to [brand].
  * The semantic structure (surfaces, text, lines, status) is untouched; only the
  * brand accent and its subtle/on pairs change.
  *

@@ -6,9 +6,9 @@ import androidx.compose.ui.unit.dp
 import dev.drewhamilton.poko.Poko
 
 /**
- * **Shape token set** — corner radii for Jenga surfaces.
+ * **Shape token set**: corner radii for Jenga surfaces.
  *
- * Exposes both a mechanical scale ([xs]–[xl]) and semantic shapes
+ * Exposes both a mechanical scale ([xs] to [xl]) and semantic shapes
  * ([control], [card], [pill]) that map directly to the frontend's
  * `--radius-control` (10dp), `--radius-card` (16dp) and `--radius-pill` (full).
  * Read via `JengaTheme.shapes`.
@@ -32,7 +32,7 @@ public class JengaShapes(
      * opt in per-surface or theme-wide via `JengaTheme(shapes = …)`.
      */
     public val cardLarge: RoundedCornerShape = RoundedCornerShape(20.dp),
-    /** Fully rounded — pills, chips, avatars, FABs. */
+    /** Fully rounded: pills, chips, avatars, FABs. */
     public val pill: RoundedCornerShape = RoundedCornerShape(percent = 50),
 ) {
     public fun copy(

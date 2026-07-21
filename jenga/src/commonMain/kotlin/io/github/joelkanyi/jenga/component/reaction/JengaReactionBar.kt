@@ -54,7 +54,7 @@ public object JengaReactionBarDefaults {
 /**
  * A per-item feedback row: a positive and a negative round tonal button, then an
  * optional trailing [action] (e.g. an "Add" button). Replaces walls of feedback
- * chips with two clear one-tap affordances. Generic — the icons and the action
+ * chips with two clear one-tap affordances. Generic: the icons and the action
  * are yours; defaults are thumbs up/down.
  *
  * @param onPositive called when the positive button is tapped.

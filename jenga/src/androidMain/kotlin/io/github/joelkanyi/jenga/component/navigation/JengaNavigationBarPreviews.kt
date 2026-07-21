@@ -32,7 +32,7 @@ private fun NavBarShowcase() {
         modifier = Modifier.background(JengaTheme.colors.background),
         verticalArrangement = Arrangement.spacedBy(JengaTheme.spacing.lg),
     ) {
-        // Classic (underline/tint) indicator — the default.
+        // Classic (underline/tint) indicator: the default.
         JengaNavigationBar {
             JengaNavigationBarItem(
                 selected = true,
@@ -53,7 +53,7 @@ private fun NavBarShowcase() {
                 label = "Stats",
             )
         }
-        // Material 3 pill active-indicator — opt-in per item.
+        // Material 3 pill active-indicator: opt-in per item.
         JengaNavigationBar {
             JengaNavigationBarItem(
                 selected = true,

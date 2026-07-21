@@ -4,7 +4,7 @@ import androidx.compose.runtime.Immutable
 import dev.drewhamilton.poko.Poko
 
 /**
- * A light + dark [JengaColors] pair — a complete custom color theme as one object.
+ * A light + dark [JengaColors] pair: a complete custom color theme as one object.
  * Pass it to `JengaTheme(scheme = ...)` and the right scheme is chosen for the
  * current `darkTheme`, so the caller never wires the selection themselves.
  *

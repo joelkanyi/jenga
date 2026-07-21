@@ -6,7 +6,7 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 
 /**
- * Host activity for the Jenga catalog — a browsable gallery of every Jenga
+ * Host activity for the Jenga catalog: a browsable gallery of every Jenga
  * foundation token (and, in later phases, every component) rendered in all
  * states with a light/dark toggle.
  */

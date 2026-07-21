@@ -16,7 +16,7 @@ import io.github.joelkanyi.jenga.theme.JengaTheme
 // ---- Previews (scanned by Roborazzi to generate screenshot tests) ----------
 
 // Previews are `internal` (not `private`) so ComposablePreviewScanner picks them
-// up — by default it skips private previews. They stay out of the public API.
+// up; by default it skips private previews. They stay out of the public API.
 @JengaBlockPreviews
 @Composable
 internal fun JengaButtonPreview() {

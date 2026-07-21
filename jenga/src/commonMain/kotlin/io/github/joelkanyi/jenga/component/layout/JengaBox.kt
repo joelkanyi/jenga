@@ -18,7 +18,7 @@ import androidx.compose.ui.graphics.isSpecified
 import androidx.compose.ui.unit.dp
 
 /**
- * The primitive styled container — a `Box` that bundles the common
+ * The primitive styled container: a `Box` that bundles the common
  * padding / background / shape / border into parameters, so feature code stops
  * writing `Modifier.clip().background().border().padding()` chains. (Polaris /
  * Chakra `Box`.)

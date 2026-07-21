@@ -27,8 +27,8 @@ import io.github.joelkanyi.jenga.foundation.brand.JengaCornerStyle
 import io.github.joelkanyi.jenga.foundation.brand.JengaDensity
 import io.github.joelkanyi.jenga.foundation.brand.jengaBrand
 
-// Proves re-branding end to end: the same components under a custom brand — a
-// purple seed, sharp corners, compact density — so the golden differs visibly
+// Proves re-branding end to end: the same components under a custom brand (a
+// purple seed, sharp corners, compact density), so the golden differs visibly
 // from the default theme in colour, corner radius and spacing.
 @JengaBlockPreviews
 @Composable

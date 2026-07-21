@@ -20,7 +20,7 @@ internal fun JengaStacksPreview() {
                 .padding(JengaTheme.spacing.xl),
             space = JengaTheme.spacing.md,
         ) {
-            JengaText("JengaStack — vertical, token spacing", style = JengaTheme.typography.titleSmall)
+            JengaText("JengaStack: vertical, token spacing", style = JengaTheme.typography.titleSmall)
             JengaInline {
                 JengaText("Inline")
                 JengaText("·")

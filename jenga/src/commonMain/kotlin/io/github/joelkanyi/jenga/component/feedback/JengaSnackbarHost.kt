@@ -23,8 +23,8 @@ public enum class JengaSnackbarResult {
 /**
  * How long a snackbar stays before it auto-dismisses.
  *
- * Unlike Material — which forces an *indefinite* duration the moment an action
- * label is present, so an "Undo" can sit on screen forever — Jenga defaults an
+ * Unlike Material, which forces an *indefinite* duration the moment an action
+ * label is present, so an "Undo" can sit on screen forever, Jenga defaults an
  * action snackbar to [Short] as well. Opt into [Indefinite] explicitly when a
  * message must persist until acted upon (and pair it with a dismiss affordance).
  */

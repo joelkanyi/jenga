@@ -15,7 +15,7 @@ import io.github.joelkanyi.jenga.component.text.JengaText
 import io.github.joelkanyi.jenga.theme.JengaTheme
 
 /**
- * **Pattern (organism)** — a section header: a title with an optional trailing
+ * **Pattern (organism)**, a section header: a title with an optional trailing
  * text action. Composed from [JengaText] + [JengaButton].
  *
  * @sample io.github.joelkanyi.jenga.samples.JengaSectionHeaderSample

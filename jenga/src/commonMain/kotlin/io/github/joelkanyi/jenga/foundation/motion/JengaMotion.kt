@@ -8,7 +8,7 @@ import androidx.compose.runtime.Immutable
 import dev.drewhamilton.poko.Poko
 
 /**
- * **Motion token set** — animation durations and easing curves.
+ * **Motion token set**: animation durations and easing curves.
  *
  * Durations are milliseconds, ported from the frontend's transition timings
  * (`.12s`/`.16s`/`.22s`/`.4s`). [emphasized] is the brand's signature curve

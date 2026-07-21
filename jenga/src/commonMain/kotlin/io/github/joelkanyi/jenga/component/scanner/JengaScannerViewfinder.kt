@@ -37,16 +37,16 @@ import io.github.joelkanyi.jenga.theme.JengaTheme
  * and [JengaScanFeedback].
  */
 public enum class JengaScannerStatus {
-    /** Actively looking for a code — brand accent, scan line animating. */
+    /** Actively looking for a code: brand accent, scan line animating. */
     Scanning,
 
-    /** The last scan was admitted — success accent. */
+    /** The last scan was admitted: success accent. */
     Success,
 
-    /** The last scan needs attention (already used / duplicate) — warning accent. */
+    /** The last scan needs attention (already used / duplicate): warning accent. */
     Warning,
 
-    /** The last scan was rejected — error accent. */
+    /** The last scan was rejected: error accent. */
     Error,
 }
 
@@ -91,7 +91,7 @@ public object JengaScannerViewfinderDefaults {
  * rounded corner brackets, and a sweeping scan line. Lay it directly over a
  * camera preview.
  *
- * The accent color follows [status] — brand while [JengaScannerStatus.Scanning]
+ * The accent color follows [status]: brand while [JengaScannerStatus.Scanning]
  * (the only state that animates the scan line), and the matching status accent
  * otherwise.
  *
@@ -128,7 +128,7 @@ public fun JengaScannerViewfinder(
         val frameTop = (maxHeight - frameSize) / 2
         val frameLeft = (maxWidth - frameSize) / 2
 
-        // Scrim drawn as four rects around the reticle — a robust cut-out that
+        // Scrim drawn as four rects around the reticle, a robust cut-out that
         // doesn't rely on BlendMode.Clear (which needs an offscreen layer).
         Canvas(Modifier.fillMaxSize()) {
             val l = frameLeft.toPx()

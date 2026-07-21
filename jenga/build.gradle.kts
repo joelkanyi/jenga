@@ -137,7 +137,7 @@ compose.resources {
     generateResClass = auto
 }
 
-// Machine-enforced Compose API conventions (param order, modifier rules, naming) —
+// Machine-enforced Compose API conventions (param order, modifier rules, naming):
 // Slack's compose-lints, run on the Android target via `./gradlew :jenga:lint`.
 dependencies {
     lintChecks(libs.compose.lint.checks)
@@ -157,14 +157,14 @@ dokka {
         }
     }
     pluginsConfiguration.html {
-        footerMessage.set("Jenga — a Kotlin Multiplatform + Compose Multiplatform design system")
+        footerMessage.set("Jenga: a Kotlin Multiplatform + Compose Multiplatform design system")
     }
 }
 
 // ---- Maven Central publishing ----------------------------------------------
 // Publishes all targets (Android, Desktop, iOS) plus a sources and javadoc jar to
 // Maven Central via the Central Portal. Credentials and the signing key are read
-// from ~/.gradle/gradle.properties or ORG_GRADLE_PROJECT_* env vars — never from a
+// from ~/.gradle/gradle.properties or ORG_GRADLE_PROJECT_* env vars, never from a
 // committed file. See RELEASING.md.
 mavenPublishing {
     publishToMavenCentral()
@@ -243,11 +243,11 @@ tasks.register("generateJengaTokens") {
             appendLine("import androidx.compose.ui.graphics.Color")
             appendLine()
             appendLine("/**")
-            appendLine(" * GENERATED FILE — DO NOT EDIT BY HAND.")
+            appendLine(" * GENERATED FILE: DO NOT EDIT BY HAND.")
             appendLine(" *")
             appendLine(" * Regenerate with `./gradlew :jenga:generateJengaTokens` after editing")
             appendLine(" * `tokens/primitives.json` (the design-token source of truth). This is the")
-            appendLine(" * **primitive** color layer — raw values with no meaning; the semantic layer")
+            appendLine(" * **primitive** color layer: raw values with no meaning; the semantic layer")
             appendLine(" * [JengaColors] maps these onto roles.")
             appendLine(" */")
             appendLine("internal object JengaPalette {")
@@ -289,7 +289,7 @@ tasks.register("checkJengaTokenUsage") {
             }
         if (offenders.isNotEmpty()) {
             throw GradleException(
-                "Raw Color(0x…) literals in component/pattern code — use JengaTheme.colors tokens:\n" +
+                "Raw Color(0x…) literals in component/pattern code, use JengaTheme.colors tokens:\n" +
                     offenders.joinToString("\n"),
             )
         }

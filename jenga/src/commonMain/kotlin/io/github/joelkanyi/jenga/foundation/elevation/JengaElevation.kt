@@ -6,7 +6,7 @@ import androidx.compose.ui.unit.dp
 import dev.drewhamilton.poko.Poko
 
 /**
- * **Elevation token set** — resting shadow depths.
+ * **Elevation token set**: resting shadow depths.
  *
  * Maps to the frontend's `--shadow-e1/e2/e3` ladder: [sm] for resting cards,
  * [md] for raised/hover, [lg] for overlays, [xl] for modals/sheets. Apply with

@@ -20,7 +20,7 @@ import kotlin.math.pow
 /**
  * Accessibility guardrails: asserts the semantic color pairs meet WCAG 2.1
  * contrast in both light and dark, and that the minimum touch target is 48dp.
- * Pure JVM (no Android) — runs as a fast unit test and gates CI.
+ * Pure JVM (no Android): runs as a fast unit test and gates CI.
  *
  * - Normal text pairs must meet AA 4.5:1.
  * - Saturated brand fills (white-on-orange) are treated as large/UI text and
@@ -70,29 +70,29 @@ class JengaContrastTest {
     }
 
     private fun assertScheme(c: JengaColors) {
-        // Body / normal text — AA 4.5:1
+        // Body / normal text: AA 4.5:1
         atLeast(AA, c.textPrimary, c.background, "textPrimary on background")
         atLeast(AA, c.textPrimary, c.surface, "textPrimary on surface")
         atLeast(AA, c.textSecondary, c.surface, "textSecondary on surface")
         atLeast(AA, c.textMuted, c.surface, "textMuted on surface")
 
-        // Status messaging text on its (possibly translucent) container — AA 4.5:1
+        // Status messaging text on its (possibly translucent) container: AA 4.5:1
         atLeast(AA, c.onSuccessContainer, c.successContainer.over(c.surface), "onSuccessContainer")
         atLeast(AA, c.onWarningContainer, c.warningContainer.over(c.surface), "onWarningContainer")
         atLeast(AA, c.onErrorContainer, c.errorContainer.over(c.surface), "onErrorContainer")
         atLeast(AA, c.onInfoContainer, c.infoContainer.over(c.surface), "onInfoContainer")
         atLeast(AA, c.onBrandSubtle, c.brandSubtle.over(c.surface), "onBrandSubtle")
 
-        // High-contrast inverse surfaces (snackbars/tooltips) — AA 4.5:1
+        // High-contrast inverse surfaces (snackbars/tooltips): AA 4.5:1
         atLeast(AA, c.inverseOnSurface, c.inverseSurface, "inverseOnSurface on inverseSurface")
         atLeast(AA, c.onInk, c.ink, "onInk on ink")
 
         // Media overlay: primary content on the (translucent) overlay surface, in
-        // its worst-case darkest backdrop — AA 4.5:1. (onOverlayMuted is decorative
+        // its worst-case darkest backdrop: AA 4.5:1. (onOverlayMuted is decorative
         // secondary text and intentionally not contrast-gated.)
         atLeast(AA, c.onOverlay, c.overlaySurface.over(JengaPalette.Black), "onOverlay on overlaySurface")
 
-        // Saturated brand fill (e.g. white on orange) — large/UI 3:1
+        // Saturated brand fill (e.g. white on orange): large/UI 3:1
         atLeast(AA_LARGE, c.onBrand, c.brand, "onBrand on brand")
     }
 

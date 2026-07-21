@@ -52,7 +52,7 @@ public object JengaSwipeToDismissDefaults {
 
 /**
  * A row wrapper that reveals an action panel as it is swiped and triggers
- * [onDismiss] once dragged past the threshold — the standard swipe-to-delete
+ * [onDismiss] once dragged past the threshold: the standard swipe-to-delete
  * gesture. Generic and token-driven: by default it shows a destructive error
  * panel with a [icon] glyph at the swiped end, but supply your own [background]
  * slot for a different action.

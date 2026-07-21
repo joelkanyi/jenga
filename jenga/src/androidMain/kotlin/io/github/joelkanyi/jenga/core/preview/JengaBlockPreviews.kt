@@ -4,7 +4,7 @@ import android.content.res.Configuration
 import androidx.compose.ui.tooling.preview.Preview
 
 /**
- * Multipreview for jenga blocks — renders each showcase in light, dark and at a
+ * Multipreview for jenga blocks: renders each showcase in light, dark and at a
  * large font scale, so Roborazzi captures all three from a single annotated
  * function, covering light/dark **and** sizes, not just one.
  *

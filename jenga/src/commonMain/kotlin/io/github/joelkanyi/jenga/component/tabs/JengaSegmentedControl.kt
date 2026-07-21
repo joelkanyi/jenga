@@ -65,7 +65,7 @@ public object JengaSegmentedControlDefaults {
 }
 
 /**
- * A segmented control — a small set of mutually-exclusive options in a pill
+ * A segmented control: a small set of mutually-exclusive options in a pill
  * track, with the selected segment raised.
  *
  * @sample io.github.joelkanyi.jenga.samples.JengaSegmentedControlSample

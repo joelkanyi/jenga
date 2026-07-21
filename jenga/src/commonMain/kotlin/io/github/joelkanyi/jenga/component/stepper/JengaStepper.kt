@@ -72,7 +72,7 @@ public object JengaStepperDefaults {
 }
 
 /**
- * A compact numeric stepper — a pill track with round decrement/increment
+ * A compact numeric stepper: a pill track with round decrement/increment
  * buttons around a centered value. Replaces bare `−`/`+` glyph pairs and gives
  * both buttons real 48dp touch targets and content descriptions.
  *

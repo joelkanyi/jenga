@@ -8,7 +8,7 @@ import io.github.joelkanyi.jenga.theme.JengaTheme
 
 // ---- Catalog screenshot goldens (Roborazzi) --------------------------------
 
-@Preview(name = "Catalog — Light", showBackground = true, heightDp = 3200)
+@Preview(name = "Catalog: Light", showBackground = true, heightDp = 3200)
 @Composable
 internal fun CatalogScreenLightPreview() {
     JengaTheme(darkTheme = false) {
@@ -16,7 +16,7 @@ internal fun CatalogScreenLightPreview() {
     }
 }
 
-@Preview(name = "Catalog — Dark", showBackground = true, heightDp = 3200)
+@Preview(name = "Catalog: Dark", showBackground = true, heightDp = 3200)
 @Composable
 internal fun CatalogScreenDarkPreview() {
     JengaTheme(darkTheme = true) {

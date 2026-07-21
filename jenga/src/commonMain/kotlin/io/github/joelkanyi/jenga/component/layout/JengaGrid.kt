@@ -9,7 +9,7 @@ import io.github.joelkanyi.jenga.theme.JengaTheme
 
 /**
  * A non-scrolling grid that lays children out in [columns] equal-width columns
- * with token gaps — the "stop nesting Rows of Columns" primitive. (Braid `Tiles`
+ * with token gaps, the "stop nesting Rows of Columns" primitive. (Braid `Tiles`
  * / Polaris `InlineGrid` / Chakra `SimpleGrid`.)
  *
  * For large, scrolling data sets prefer a `LazyVerticalGrid`; this is for a

@@ -34,7 +34,7 @@ public object JengaScanFeedbackDefaults {
  * icon that "pop" in, overlaid on a camera preview to confirm the outcome of a
  * scan at a glance.
  *
- * Render it conditionally — it plays its entrance once each time it enters
+ * Render it conditionally; it plays its entrance once each time it enters
  * composition (key the call site on the scan so a new result re-pops), and stays
  * visible until the caller removes it (e.g. on navigation or after a delay).
  *
