@@ -66,15 +66,32 @@ Omit the font entirely to keep the bundled **Outfit** family. Android's download
 
 ### Icons
 
+You are never limited to Jenga's icons. `JengaIcon` — and every component's icon slot —
+takes any `ImageVector`, so draw your own in your UI:
+
+```kotlin
+JengaIcon(MyIcons.Heart, contentDescription = "Favorite")
+```
+
+To load your own vector files on every platform, drop the SVG/XML drawables in your
+app's `composeResources/drawable/` and build them the same way as fonts:
+
+```kotlin
+import org.jetbrains.compose.resources.vectorResource
+
+JengaIcon(vectorResource(Res.drawable.my_heart), contentDescription = "Favorite")
+```
+
 Components draw their own glyphs (a stepper's `+`/`−`, an expandable row's chevron, a
-banner's status icon) from a themeable set. Swap the whole language or single glyphs:
+banner's status icon) from a themeable set. Swap the whole language or single glyphs so
+every component follows your iconography:
 
 ```kotlin
 JengaTheme(icons = rememberJengaIconSet(chevron = MyChevron, trash = MyTrash)) { App() }
 ```
 
-Unset roles fall back to Jenga's own vectors. `JengaIcons` remains the catalogue you
-draw with in your own UI.
+Unset roles fall back to Jenga's own vectors. `JengaIcons` is the bundled catalogue you
+can draw with, but it is optional — any `ImageVector` works.
 
 ## L2 — seed plus a targeted override
 
