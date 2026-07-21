@@ -104,35 +104,69 @@ JengaSpacer(JengaTheme.spacing.lg)
 
 ## Theming and branding
 
-Jenga ships neutral. Two things make it yours: a brand color and a typeface.
+Jenga ships neutral. One brand definition themes everything — a coherent, accessible
+light and dark scheme, plus type, shape and density:
 
 ```kotlin
 import androidx.compose.ui.graphics.Color
-import io.github.joelkanyi.jenga.foundation.color.jengaLightColors
-import io.github.joelkanyi.jenga.foundation.color.jengaDarkColors
-import io.github.joelkanyi.jenga.foundation.color.withBrand
+import io.github.joelkanyi.jenga.foundation.brand.jengaBrand
 
-@Composable
-fun MyBrandTheme(darkTheme: Boolean = isSystemInDarkTheme(), content: @Composable () -> Unit) {
-    val brand = Color(0xFFFF5A1F)
-    JengaTheme(
-        darkTheme = darkTheme,
-        colors = (if (darkTheme) jengaDarkColors() else jengaLightColors()).withBrand(brand),
-        content = content,
-    )
+JengaTheme(brand = jengaBrand(seed = Color(0xFF6D28D9))) {
+    App() // every block is now on-brand, in light and dark
 }
 ```
 
-To swap the typeface (for example a second product with its own font), build a `JengaTypography`
-from your family and pass it in:
+The seed drives the brand color family (contrast holds by construction); neutral
+surfaces and status colors (success / warning / error / info) keep their tuned
+defaults, so meaning never rotates with your hue. Add more brand intent as needed:
 
 ```kotlin
-val myFonts = FontFamily(/* your Font(...) entries */)
-JengaTheme(typography = jengaTypography(fontFamily = myFonts)) { … }
+jengaBrand(
+    seed = Color(0xFF6D28D9),
+    displayFontFamily = rememberPoppins(),  // headings and titles
+    bodyFontFamily = rememberInter(),        // body, labels, captions
+    corner = JengaCornerStyle.Sharp,         // Rounded (default) | Soft | Sharp
+    density = JengaDensity.Compact,          // Comfortable (default) | Compact | Spacious
+    contrast = JengaContrast.High,           // Standard (default) | Medium | High
+)
 ```
 
-By default Jenga resolves its bundled **Outfit** family inside composition
-(`rememberJengaFontFamily()`) and injects it for you.
+### Bring your own font
+
+Jenga doesn't ship third-party fonts; you supply a `FontFamily`. Drop `.ttf` files in
+your app's `composeResources/font/` and build the family (Android, iOS, desktop, wasm):
+
+```kotlin
+@Composable
+fun rememberPoppins() = FontFamily(
+    Font(Res.font.poppins_regular, FontWeight.Normal),
+    Font(Res.font.poppins_semibold, FontWeight.SemiBold),
+    Font(Res.font.poppins_bold, FontWeight.Bold),
+)
+```
+
+Omit the font to keep Jenga's bundled **Outfit** family.
+
+### Full control
+
+Override any single token off the derived theme, or hand-author both schemes as one
+pair — the light/dark selection is handled for you:
+
+```kotlin
+// tweak a few roles off a base
+JengaTheme(colors = jengaLightColors().copy(brand = Color(0xFFFF5A1F))) { App() }
+
+// a complete custom light + dark scheme
+JengaTheme(
+    scheme = JengaScheme(
+        light = jengaLightColors().copy(/* your roles */),
+        dark = jengaDarkColors().copy(/* your roles */),
+    ),
+) { App() }
+```
+
+Swap the icon language too: `JengaTheme(icons = rememberJengaIconSet(chevron = MyChevron))`.
+See [docs/theming.md](docs/theming.md) for the full ladder.
 
 ## Token API
 
