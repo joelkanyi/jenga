@@ -2015,6 +2015,14 @@ public final class io/github/joelkanyi/jenga/samples/ComposableSingletons$JengaS
 	public final fun getLambda$935433820$jenga_release ()Lkotlin/jvm/functions/Function2;
 }
 
+public final class io/github/joelkanyi/jenga/theme/ComposableSingletons$JengaBrandShowcasePreviewsKt {
+	public static final field INSTANCE Lio/github/joelkanyi/jenga/theme/ComposableSingletons$JengaBrandShowcasePreviewsKt;
+	public fun <init> ()V
+	public final fun getLambda$1262252746$jenga_release ()Lkotlin/jvm/functions/Function3;
+	public final fun getLambda$1316070879$jenga_release ()Lkotlin/jvm/functions/Function3;
+	public final fun getLambda$502898600$jenga_release ()Lkotlin/jvm/functions/Function2;
+}
+
 public final class io/github/joelkanyi/jenga/theme/JengaTheme {
 	public static final field $stable I
 	public static final field INSTANCE Lio/github/joelkanyi/jenga/theme/JengaTheme;
