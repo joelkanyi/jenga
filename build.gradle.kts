@@ -42,6 +42,7 @@ spotless {
             "LocalJengaSizing",
             "LocalJengaElevation",
             "LocalJengaMotion",
+            "LocalJengaIcons",
             "LocalJengaContentColor",
         ).joinToString(","),
     )

@@ -4,7 +4,6 @@ import androidx.compose.foundation.clickable
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import io.github.joelkanyi.jenga.component.icon.JengaIcon
-import io.github.joelkanyi.jenga.component.icon.JengaIcons
 import io.github.joelkanyi.jenga.component.textfield.JengaTextField
 import io.github.joelkanyi.jenga.theme.JengaTheme
 
@@ -38,11 +37,11 @@ public fun JengaSearchField(
         enabled = enabled,
         singleLine = true,
         shape = JengaTheme.shapes.pill,
-        leadingIcon = { JengaIcon(JengaIcons.Search, contentDescription = null) },
+        leadingIcon = { JengaIcon(JengaTheme.icons.search, contentDescription = null) },
         trailingIcon = if (value.isNotEmpty()) {
             {
                 JengaIcon(
-                    imageVector = JengaIcons.Close,
+                    imageVector = JengaTheme.icons.close,
                     contentDescription = "Clear search",
                     modifier = Modifier.clickable {
                         if (onClear != null) onClear() else onValueChange("")

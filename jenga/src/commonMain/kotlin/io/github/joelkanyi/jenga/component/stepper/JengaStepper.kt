@@ -23,7 +23,6 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import dev.drewhamilton.poko.Poko
 import io.github.joelkanyi.jenga.component.icon.JengaIcon
-import io.github.joelkanyi.jenga.component.icon.JengaIcons
 import io.github.joelkanyi.jenga.component.text.JengaText
 import io.github.joelkanyi.jenga.theme.JengaTheme
 
@@ -117,7 +116,7 @@ public fun JengaStepper(
         verticalAlignment = Alignment.CenterVertically,
     ) {
         StepperButton(
-            icon = JengaIcons.Remove,
+            icon = JengaTheme.icons.remove,
             contentDescription = decrementContentDescription,
             enabled = canDecrement,
             colors = colors,
@@ -133,7 +132,7 @@ public fun JengaStepper(
             maxLines = 1,
         )
         StepperButton(
-            icon = JengaIcons.Add,
+            icon = JengaTheme.icons.add,
             contentDescription = incrementContentDescription,
             enabled = canIncrement,
             colors = colors,

@@ -16,7 +16,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import dev.drewhamilton.poko.Poko
 import io.github.joelkanyi.jenga.component.icon.JengaIcon
-import io.github.joelkanyi.jenga.component.icon.JengaIcons
 import io.github.joelkanyi.jenga.component.text.JengaText
 import io.github.joelkanyi.jenga.theme.JengaTheme
 import io.github.joelkanyi.jenga.theme.LocalJengaContentColor
@@ -56,10 +55,10 @@ public object JengaBannerDefaults {
     /** Default leading icon per [tone]. */
     @Composable
     public fun icon(tone: JengaBannerTone): ImageVector = when (tone) {
-        JengaBannerTone.Info -> JengaIcons.Info
-        JengaBannerTone.Success -> JengaIcons.Check
-        JengaBannerTone.Warning -> JengaIcons.Info
-        JengaBannerTone.Error -> JengaIcons.Close
+        JengaBannerTone.Info -> JengaTheme.icons.info
+        JengaBannerTone.Success -> JengaTheme.icons.check
+        JengaBannerTone.Warning -> JengaTheme.icons.info
+        JengaBannerTone.Error -> JengaTheme.icons.close
     }
 }
 

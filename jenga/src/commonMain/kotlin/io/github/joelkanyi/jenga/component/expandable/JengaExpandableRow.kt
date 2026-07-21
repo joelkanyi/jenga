@@ -18,7 +18,6 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.unit.dp
 import io.github.joelkanyi.jenga.component.icon.JengaIcon
-import io.github.joelkanyi.jenga.component.icon.JengaIcons
 import io.github.joelkanyi.jenga.theme.JengaTheme
 
 /**
@@ -63,7 +62,7 @@ public fun JengaExpandableRow(
             header()
             if (showChevron) {
                 JengaIcon(
-                    imageVector = JengaIcons.ChevronRight,
+                    imageVector = JengaTheme.icons.chevron,
                     contentDescription = chevronContentDescription,
                     tint = JengaTheme.colors.textFaint,
                     modifier = Modifier.rotate(chevronRotation),
