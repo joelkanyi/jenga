@@ -128,9 +128,9 @@ public fun JengaTextField(
             decorationBox = { innerTextField ->
                 Row(
                     modifier = Modifier
-                        // Soft focus halo that hugs the field — Revolut's "color +
-                        // shadow" ring rendered as a translucent fill (not a second
-                        // hard stroke). 3dp is reserved always so focus doesn't shift layout.
+                        // Soft focus halo that hugs the field: a translucent fill,
+                        // not a second hard stroke. 3dp is reserved always so focus
+                        // doesn't shift layout.
                         .clip(shape)
                         .background(if (focused) c.focusRing else Color.Transparent)
                         .padding(3.dp)

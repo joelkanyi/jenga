@@ -20,8 +20,9 @@ shared `commonMain` codebase.
   share the same components and tokens.
 - **Tokens, not literals.** Every color, size, radius, type style, elevation and motion value
   comes from a named token. No stray `Color(0x…)` or `16.dp` in feature code.
-- **Brandable.** The token system is neutral. Inject your brand color with `withBrand(...)` and
-  your own typeface through the theme, and every block re-themes.
+- **Brandable.** One `jengaBrand(seed = …)` derives a full, accessible light and dark theme —
+  colors, type, shape and density — and every block re-themes. Drop down to per-token control
+  when you need it.
 - **Material 3 stays internal.** It is bridged inside Jenga for ripple, text selection and a few
   primitives, and never appears in the public API.
 - **Quality-gated.** Explicit public API (binary-compatibility-validator), screenshot goldens

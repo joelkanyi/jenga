@@ -125,9 +125,7 @@ public fun JengaMediaHero(
             .clip(shape)
             .then(if (onClick != null) Modifier.clickable(onClick = onClick) else Modifier),
     ) {
-        // Fallback layer (always present, behind any photo).
         if (fallback != null) fallback() else Box(Modifier.fillMaxSize().background(colors.fallback))
-        // Photo, cropped to fill; nothing draws when the URL is blank.
         JengaImage(
             url = imageUrl,
             contentDescription = title,
@@ -136,9 +134,7 @@ public fun JengaMediaHero(
             fit = JengaImageFit.Cover,
             placeholderColor = Color.Transparent,
         )
-        // Scrim so text stays legible over any image.
         Box(Modifier.fillMaxSize().background(colors.scrim))
-        // Top overlays.
         if (badge != null || action != null) {
             Row(
                 modifier = Modifier
@@ -152,7 +148,6 @@ public fun JengaMediaHero(
                 if (action != null) action()
             }
         }
-        // Title + support.
         Column(
             modifier = Modifier
                 .align(Alignment.BottomStart)

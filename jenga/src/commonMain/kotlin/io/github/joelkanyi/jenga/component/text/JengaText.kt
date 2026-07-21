@@ -123,8 +123,8 @@ public fun JengaText(
 
 /**
  * Clamps the effective system font scale of this style to [maxFontScale] by
- * shrinking sp sizes proportionally when the user's scale exceeds the cap
- * (PayPal's `maxScaleFactor`). No-op when [maxFontScale] is null or not exceeded.
+ * shrinking sp sizes proportionally when the user's scale exceeds the cap.
+ * No-op when [maxFontScale] is null or not exceeded.
  */
 @Composable
 private fun TextStyle.cappedTo(maxFontScale: Float?): TextStyle {

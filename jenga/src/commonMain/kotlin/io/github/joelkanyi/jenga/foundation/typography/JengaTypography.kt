@@ -208,8 +208,8 @@ public fun jengaTypography(
 )
 
 /**
- * Recommended per-tier caps on the system font scale, mirroring PayPal's
- * `maxScaleFactor`. Larger type is capped tighter (it scales the layout more);
+ * Recommended per-tier caps on the system font scale. Larger type is capped
+ * tighter (it scales the layout more);
  * body/label allow the full range. Pass these to `JengaText(maxFontScale = …)`.
  */
 public object JengaTypographyDefaults {
