@@ -165,6 +165,17 @@ fun rememberPoppins() = FontFamily(
 
 Omit the font to keep Jenga's bundled **Outfit** family.
 
+### Bring your own icons
+
+You are not limited to Jenga's icons. `JengaIcon` takes any `ImageVector`, so draw your
+own anywhere — load vector files from your app's `composeResources/drawable/` the same
+way as fonts. To re-brand the glyphs Jenga's components draw (chevron, `+`/`−`, status
+icons), pass a custom set:
+
+```kotlin
+JengaTheme(icons = rememberJengaIconSet(chevron = MyChevron, trash = MyTrash)) { App() }
+```
+
 ### Full control
 
 Override any single token off the derived theme, or hand-author both schemes as one
