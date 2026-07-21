@@ -16,8 +16,6 @@ import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.graphics.isSpecified
 import androidx.compose.ui.unit.dp
-import io.github.joelkanyi.jenga.component.text.JengaText
-import io.github.joelkanyi.jenga.theme.JengaTheme
 
 /**
  * The primitive styled container — a `Box` that bundles the common

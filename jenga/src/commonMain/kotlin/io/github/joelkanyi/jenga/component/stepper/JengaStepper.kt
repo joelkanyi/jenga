@@ -1,6 +1,7 @@
 package io.github.joelkanyi.jenga.component.stepper
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
@@ -25,7 +26,6 @@ import io.github.joelkanyi.jenga.component.icon.JengaIcon
 import io.github.joelkanyi.jenga.component.icon.JengaIcons
 import io.github.joelkanyi.jenga.component.text.JengaText
 import io.github.joelkanyi.jenga.theme.JengaTheme
-import androidx.compose.foundation.clickable
 
 /** Resolved colors for a [JengaStepper]. Override via [JengaStepperDefaults.colors]. */
 @Poko

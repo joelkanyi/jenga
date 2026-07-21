@@ -234,6 +234,7 @@ tasks.register("generateJengaTokens") {
     doLast {
         @Suppress("UNCHECKED_CAST")
         val root = groovy.json.JsonSlurper().parse(tokensFile.asFile) as Map<String, Any?>
+
         @Suppress("UNCHECKED_CAST")
         val colors = root["color"] as Map<String, String>
         val out = buildString {

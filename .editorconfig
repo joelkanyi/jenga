@@ -1,0 +1,22 @@
+root = true
+
+[*]
+charset = utf-8
+end_of_line = lf
+indent_size = 4
+indent_style = space
+insert_final_newline = true
+trim_trailing_whitespace = true
+
+[*.{kt,kts}]
+ktlint_code_style = intellij_idea
+max_line_length = off
+# @Composable functions are PascalCase by convention (JengaButton, JengaTheme),
+# which the naming rule would otherwise reject.
+ktlint_standard_function-naming = disabled
+# A block file holds Foo + FooColors + FooDefaults together, so the file name
+# need not match a single top-level declaration.
+ktlint_standard_filename = disabled
+
+[*.{yml,yaml,json,toml}]
+indent_size = 2

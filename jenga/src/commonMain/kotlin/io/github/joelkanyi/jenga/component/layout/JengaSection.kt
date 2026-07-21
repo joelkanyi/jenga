@@ -1,15 +1,12 @@
 package io.github.joelkanyi.jenga.component.layout
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.Dp
-import io.github.joelkanyi.jenga.component.text.JengaText
 import io.github.joelkanyi.jenga.pattern.JengaSectionHeader
 import io.github.joelkanyi.jenga.theme.JengaTheme
 

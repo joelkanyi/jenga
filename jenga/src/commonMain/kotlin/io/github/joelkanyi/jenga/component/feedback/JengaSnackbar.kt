@@ -4,7 +4,6 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -50,11 +49,10 @@ public object JengaSnackbarDefaults {
 
     /** Themed colors (high-contrast inverse surface). */
     @Composable
-    public fun colors(): JengaSnackbarColors =
-        JengaSnackbarColors(
-            container = JengaTheme.colors.inverseSurface,
-            content = JengaTheme.colors.inverseOnSurface,
-        )
+    public fun colors(): JengaSnackbarColors = JengaSnackbarColors(
+        container = JengaTheme.colors.inverseSurface,
+        content = JengaTheme.colors.inverseOnSurface,
+    )
 
     /** Accent dot color for [tone], or `null` for [JengaSnackbarTone.Neutral]. */
     @Composable
