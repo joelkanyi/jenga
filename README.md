@@ -12,6 +12,23 @@ shared `commonMain` codebase.
 [![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](LICENSE)
 ![Platforms](https://img.shields.io/badge/platforms-Android%20%7C%20Desktop%20%7C%20iOS-brightgreen)
 
+```kotlin
+JengaTheme {                                  // light/dark follows the system
+    JengaScaffold(topBar = { JengaTopAppBar(title = "Events") }) { padding ->
+        JengaStack(Modifier.padding(padding)) {
+            JengaText("Tonight", style = JengaTheme.typography.headingMedium)
+            JengaButton("Scan a ticket", onClick = { })
+        }
+    }
+}
+```
+
+Brand it in one line — a full, accessible light and dark theme from one seed:
+
+```kotlin
+JengaTheme(brand = jengaBrand(seed = Color(0xFF6D28D9))) { App() }
+```
+
 ---
 
 ## Why Jenga
