@@ -2,6 +2,10 @@ package io.github.joelkanyi.jenga
 
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.compositeOver
+import io.github.joelkanyi.jenga.foundation.brand.JengaContrast
+import io.github.joelkanyi.jenga.foundation.brand.darkColors
+import io.github.joelkanyi.jenga.foundation.brand.jengaBrand
+import io.github.joelkanyi.jenga.foundation.brand.lightColors
 import io.github.joelkanyi.jenga.foundation.color.JengaColors
 import io.github.joelkanyi.jenga.foundation.color.JengaPalette
 import io.github.joelkanyi.jenga.foundation.color.jengaDarkColors
@@ -32,6 +36,30 @@ class JengaContrastTest {
 
     @Test
     fun darkSchemeMeetsContrast() = assertScheme(jengaDarkColors())
+
+    // Seeds cover the easy brand colors plus adversarial ones a consumer might
+    // pass: a pale near-white yellow, a mid green, a dark blue, near-black and
+    // near-white. The brand family is derived from each; contrast must still hold.
+    private val seeds = listOf(
+        Color(0xFF6D28D9), // purple
+        Color(0xFFF97316), // orange
+        Color(0xFFFFF176), // pale yellow
+        Color(0xFF4CAF50), // mid green
+        Color(0xFF0D47A1), // dark blue
+        Color(0xFF111111), // near black
+        Color(0xFFF5F5F5), // near white
+    )
+
+    @Test
+    fun brandDerivedSchemesMeetContrastForEverySeed() {
+        for (seed in seeds) {
+            for (contrast in JengaContrast.entries) {
+                val brand = jengaBrand(seed = seed, contrast = contrast)
+                assertScheme(brand.lightColors())
+                assertScheme(brand.darkColors())
+            }
+        }
+    }
 
     @Test
     fun minimumTouchTargetIs48dp() {

@@ -1237,6 +1237,62 @@ public final class io/github/joelkanyi/jenga/component/verdict/JengaVerdictTone 
 	public static fun values ()[Lio/github/joelkanyi/jenga/component/verdict/JengaVerdictTone;
 }
 
+public final class io/github/joelkanyi/jenga/foundation/brand/JengaBrand {
+	public static final field $stable I
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getAccent-QN2ZGVo ()Landroidx/compose/ui/graphics/Color;
+	public final fun getBodyFontFamily ()Landroidx/compose/ui/text/font/FontFamily;
+	public final fun getContrast ()Lio/github/joelkanyi/jenga/foundation/brand/JengaContrast;
+	public final fun getCorner ()Lio/github/joelkanyi/jenga/foundation/brand/JengaCornerStyle;
+	public final fun getDensity ()Lio/github/joelkanyi/jenga/foundation/brand/JengaDensity;
+	public final fun getDisplayFontFamily ()Landroidx/compose/ui/text/font/FontFamily;
+	public final fun getIcons ()Lio/github/joelkanyi/jenga/component/icon/JengaIconSet;
+	public final fun getSeed-0d7_KjU ()J
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class io/github/joelkanyi/jenga/foundation/brand/JengaBrandDerivationKt {
+	public static final fun darkColors (Lio/github/joelkanyi/jenga/foundation/brand/JengaBrand;)Lio/github/joelkanyi/jenga/foundation/color/JengaColors;
+	public static final fun lightColors (Lio/github/joelkanyi/jenga/foundation/brand/JengaBrand;)Lio/github/joelkanyi/jenga/foundation/color/JengaColors;
+	public static final fun shapes (Lio/github/joelkanyi/jenga/foundation/brand/JengaBrand;)Lio/github/joelkanyi/jenga/foundation/shape/JengaShapes;
+	public static final fun sizing (Lio/github/joelkanyi/jenga/foundation/brand/JengaBrand;)Lio/github/joelkanyi/jenga/foundation/sizing/JengaSizing;
+	public static final fun spacing (Lio/github/joelkanyi/jenga/foundation/brand/JengaBrand;)Lio/github/joelkanyi/jenga/foundation/spacing/JengaSpacing;
+	public static final fun typography (Lio/github/joelkanyi/jenga/foundation/brand/JengaBrand;)Lio/github/joelkanyi/jenga/foundation/typography/JengaTypography;
+}
+
+public final class io/github/joelkanyi/jenga/foundation/brand/JengaBrandKt {
+	public static final fun jengaBrand-X5IT-vA (JLandroidx/compose/ui/graphics/Color;Lio/github/joelkanyi/jenga/foundation/brand/JengaContrast;Landroidx/compose/ui/text/font/FontFamily;Landroidx/compose/ui/text/font/FontFamily;Landroidx/compose/ui/text/font/FontFamily;Lio/github/joelkanyi/jenga/foundation/brand/JengaCornerStyle;Lio/github/joelkanyi/jenga/foundation/brand/JengaDensity;Lio/github/joelkanyi/jenga/component/icon/JengaIconSet;)Lio/github/joelkanyi/jenga/foundation/brand/JengaBrand;
+	public static synthetic fun jengaBrand-X5IT-vA$default (JLandroidx/compose/ui/graphics/Color;Lio/github/joelkanyi/jenga/foundation/brand/JengaContrast;Landroidx/compose/ui/text/font/FontFamily;Landroidx/compose/ui/text/font/FontFamily;Landroidx/compose/ui/text/font/FontFamily;Lio/github/joelkanyi/jenga/foundation/brand/JengaCornerStyle;Lio/github/joelkanyi/jenga/foundation/brand/JengaDensity;Lio/github/joelkanyi/jenga/component/icon/JengaIconSet;ILjava/lang/Object;)Lio/github/joelkanyi/jenga/foundation/brand/JengaBrand;
+}
+
+public final class io/github/joelkanyi/jenga/foundation/brand/JengaContrast : java/lang/Enum {
+	public static final field High Lio/github/joelkanyi/jenga/foundation/brand/JengaContrast;
+	public static final field Medium Lio/github/joelkanyi/jenga/foundation/brand/JengaContrast;
+	public static final field Standard Lio/github/joelkanyi/jenga/foundation/brand/JengaContrast;
+	public static fun getEntries ()Lkotlin/enums/EnumEntries;
+	public static fun valueOf (Ljava/lang/String;)Lio/github/joelkanyi/jenga/foundation/brand/JengaContrast;
+	public static fun values ()[Lio/github/joelkanyi/jenga/foundation/brand/JengaContrast;
+}
+
+public final class io/github/joelkanyi/jenga/foundation/brand/JengaCornerStyle : java/lang/Enum {
+	public static final field Rounded Lio/github/joelkanyi/jenga/foundation/brand/JengaCornerStyle;
+	public static final field Sharp Lio/github/joelkanyi/jenga/foundation/brand/JengaCornerStyle;
+	public static final field Soft Lio/github/joelkanyi/jenga/foundation/brand/JengaCornerStyle;
+	public static fun getEntries ()Lkotlin/enums/EnumEntries;
+	public static fun valueOf (Ljava/lang/String;)Lio/github/joelkanyi/jenga/foundation/brand/JengaCornerStyle;
+	public static fun values ()[Lio/github/joelkanyi/jenga/foundation/brand/JengaCornerStyle;
+}
+
+public final class io/github/joelkanyi/jenga/foundation/brand/JengaDensity : java/lang/Enum {
+	public static final field Comfortable Lio/github/joelkanyi/jenga/foundation/brand/JengaDensity;
+	public static final field Compact Lio/github/joelkanyi/jenga/foundation/brand/JengaDensity;
+	public static final field Spacious Lio/github/joelkanyi/jenga/foundation/brand/JengaDensity;
+	public static fun getEntries ()Lkotlin/enums/EnumEntries;
+	public static fun valueOf (Ljava/lang/String;)Lio/github/joelkanyi/jenga/foundation/brand/JengaDensity;
+	public static fun values ()[Lio/github/joelkanyi/jenga/foundation/brand/JengaDensity;
+}
+
 public final class io/github/joelkanyi/jenga/foundation/color/JengaColors {
 	public static final field $stable I
 	public synthetic fun <init> (JJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJZLkotlin/jvm/internal/DefaultConstructorMarker;)V
