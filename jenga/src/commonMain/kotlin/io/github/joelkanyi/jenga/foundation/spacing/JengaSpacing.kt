@@ -3,6 +3,7 @@ package io.github.joelkanyi.jenga.foundation.spacing
 import androidx.compose.runtime.Immutable
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import dev.drewhamilton.poko.Poko
 
 /**
  * **Spacing token set** — a 4dp-based scale for padding, gaps and insets.
@@ -25,8 +26,9 @@ import androidx.compose.ui.unit.dp
  * | xxxl   | 48 |
  * | xxxxl  | 64 |
  */
+@Poko
 @Immutable
-public data class JengaSpacing(
+public class JengaSpacing(
     public val none: Dp = 0.dp,
     public val xxs: Dp = 2.dp,
     public val xs: Dp = 4.dp,
@@ -37,7 +39,20 @@ public data class JengaSpacing(
     public val xxl: Dp = 32.dp,
     public val xxxl: Dp = 48.dp,
     public val xxxxl: Dp = 64.dp,
-)
+) {
+    public fun copy(
+        none: Dp = this.none,
+        xxs: Dp = this.xxs,
+        xs: Dp = this.xs,
+        sm: Dp = this.sm,
+        md: Dp = this.md,
+        lg: Dp = this.lg,
+        xl: Dp = this.xl,
+        xxl: Dp = this.xxl,
+        xxxl: Dp = this.xxxl,
+        xxxxl: Dp = this.xxxxl,
+    ): JengaSpacing = JengaSpacing(none, xxs, xs, sm, md, lg, xl, xxl, xxxl, xxxxl)
+}
 
 /** The default Jenga spacing scale. */
 public fun jengaSpacing(): JengaSpacing = JengaSpacing()

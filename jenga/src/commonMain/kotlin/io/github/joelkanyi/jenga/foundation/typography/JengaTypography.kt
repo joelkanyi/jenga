@@ -6,6 +6,7 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.LineHeightStyle
 import androidx.compose.ui.unit.sp
+import dev.drewhamilton.poko.Poko
 
 /**
  * **Typography token set** — the Jenga type scale.
@@ -15,8 +16,9 @@ import androidx.compose.ui.unit.sp
  * gets larger (a deliberate display-type refinement carried over from the web
  * brand). Read via `JengaTheme.typography`; override per-app with [jengaTypography].
  */
+@Poko
 @Immutable
-public data class JengaTypography(
+public class JengaTypography(
     /** Hero / marketing headline. */
     public val display: TextStyle,
     /** Screen title (h1). */
@@ -43,7 +45,37 @@ public data class JengaTypography(
     public val caption: TextStyle,
     /** Button / call-to-action label. */
     public val button: TextStyle,
-)
+) {
+    public fun copy(
+        display: TextStyle = this.display,
+        headingLarge: TextStyle = this.headingLarge,
+        headingMedium: TextStyle = this.headingMedium,
+        headingSmall: TextStyle = this.headingSmall,
+        titleLarge: TextStyle = this.titleLarge,
+        titleMedium: TextStyle = this.titleMedium,
+        titleSmall: TextStyle = this.titleSmall,
+        bodyLarge: TextStyle = this.bodyLarge,
+        bodyMedium: TextStyle = this.bodyMedium,
+        bodySmall: TextStyle = this.bodySmall,
+        label: TextStyle = this.label,
+        caption: TextStyle = this.caption,
+        button: TextStyle = this.button,
+    ): JengaTypography = JengaTypography(
+        display,
+        headingLarge,
+        headingMedium,
+        headingSmall,
+        titleLarge,
+        titleMedium,
+        titleSmall,
+        bodyLarge,
+        bodyMedium,
+        bodySmall,
+        label,
+        caption,
+        button,
+    )
+}
 
 private val LineHeight = LineHeightStyle(
     alignment = LineHeightStyle.Alignment.Center,

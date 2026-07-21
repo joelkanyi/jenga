@@ -18,16 +18,23 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import dev.drewhamilton.poko.Poko
 import io.github.joelkanyi.jenga.component.icon.JengaIcon
 import io.github.joelkanyi.jenga.component.icon.JengaIcons
 import io.github.joelkanyi.jenga.theme.JengaTheme
 
 /** Resolved colors for a [JengaReactionBar]'s buttons. Override via [JengaReactionBarDefaults.colors]. */
+@Poko
 @Immutable
-public data class JengaReactionBarColors(
+public class JengaReactionBarColors(
     public val buttonContainer: Color,
     public val buttonContent: Color,
-)
+) {
+    public fun copy(
+        buttonContainer: Color = this.buttonContainer,
+        buttonContent: Color = this.buttonContent,
+    ): JengaReactionBarColors = JengaReactionBarColors(buttonContainer, buttonContent)
+}
 
 /** Defaults and token mappings for [JengaReactionBar]. */
 public object JengaReactionBarDefaults {

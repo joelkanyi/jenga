@@ -3,6 +3,7 @@ package io.github.joelkanyi.jenga.foundation.shape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.Immutable
 import androidx.compose.ui.unit.dp
+import dev.drewhamilton.poko.Poko
 
 /**
  * **Shape token set** — corner radii for Jenga surfaces.
@@ -12,8 +13,9 @@ import androidx.compose.ui.unit.dp
  * `--radius-control` (10dp), `--radius-card` (16dp) and `--radius-pill` (full).
  * Read via `JengaTheme.shapes`.
  */
+@Poko
 @Immutable
-public data class JengaShapes(
+public class JengaShapes(
     public val none: RoundedCornerShape = RoundedCornerShape(0.dp),
     public val xs: RoundedCornerShape = RoundedCornerShape(4.dp),
     public val sm: RoundedCornerShape = RoundedCornerShape(8.dp),
@@ -32,7 +34,20 @@ public data class JengaShapes(
     public val cardLarge: RoundedCornerShape = RoundedCornerShape(20.dp),
     /** Fully rounded — pills, chips, avatars, FABs. */
     public val pill: RoundedCornerShape = RoundedCornerShape(percent = 50),
-)
+) {
+    public fun copy(
+        none: RoundedCornerShape = this.none,
+        xs: RoundedCornerShape = this.xs,
+        sm: RoundedCornerShape = this.sm,
+        md: RoundedCornerShape = this.md,
+        lg: RoundedCornerShape = this.lg,
+        xl: RoundedCornerShape = this.xl,
+        control: RoundedCornerShape = this.control,
+        card: RoundedCornerShape = this.card,
+        cardLarge: RoundedCornerShape = this.cardLarge,
+        pill: RoundedCornerShape = this.pill,
+    ): JengaShapes = JengaShapes(none, xs, sm, md, lg, xl, control, card, cardLarge, pill)
+}
 
 /** The default Jenga shape set. */
 public fun jengaShapes(): JengaShapes = JengaShapes()

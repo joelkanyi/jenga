@@ -15,17 +15,33 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import dev.drewhamilton.poko.Poko
 import io.github.joelkanyi.jenga.theme.JengaTheme
 
 /** Resolved colors for a [JengaRadioButton]. Override via [JengaRadioButtonDefaults.colors]. */
+@Poko
 @Immutable
-public data class JengaRadioButtonColors(
+public class JengaRadioButtonColors(
     public val selectedRing: Color,
     public val unselectedRing: Color,
     public val disabledRing: Color,
     public val dot: Color,
     public val disabledDot: Color,
-)
+) {
+    public fun copy(
+        selectedRing: Color = this.selectedRing,
+        unselectedRing: Color = this.unselectedRing,
+        disabledRing: Color = this.disabledRing,
+        dot: Color = this.dot,
+        disabledDot: Color = this.disabledDot,
+    ): JengaRadioButtonColors = JengaRadioButtonColors(
+        selectedRing,
+        unselectedRing,
+        disabledRing,
+        dot,
+        disabledDot,
+    )
+}
 
 /** Defaults and token mappings for [JengaRadioButton]. */
 public object JengaRadioButtonDefaults {

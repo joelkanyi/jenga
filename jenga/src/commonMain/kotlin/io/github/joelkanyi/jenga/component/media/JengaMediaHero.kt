@@ -23,6 +23,7 @@ import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.graphics.lerp
 import androidx.compose.ui.text.TextStyle
+import dev.drewhamilton.poko.Poko
 import io.github.joelkanyi.jenga.component.image.JengaImage
 import io.github.joelkanyi.jenga.component.image.JengaImageFit
 import io.github.joelkanyi.jenga.component.text.JengaText
@@ -30,15 +31,23 @@ import io.github.joelkanyi.jenga.theme.JengaTheme
 import io.github.joelkanyi.jenga.theme.LocalJengaContentColor
 
 /** Resolved colors for a [JengaMediaHero]. Override via [JengaMediaHeroDefaults.colors]. */
+@Poko
 @Immutable
-public data class JengaMediaHeroColors(
+public class JengaMediaHeroColors(
     /** The fallback fill shown when there is no image (never a grey box). */
     public val fallback: Brush,
     /** The bottom scrim that keeps title/support legible over any image. */
     public val scrim: Brush,
     public val title: Color,
     public val support: Color,
-)
+) {
+    public fun copy(
+        fallback: Brush = this.fallback,
+        scrim: Brush = this.scrim,
+        title: Color = this.title,
+        support: Color = this.support,
+    ): JengaMediaHeroColors = JengaMediaHeroColors(fallback, scrim, title, support)
+}
 
 /** Defaults and token mappings for [JengaMediaHero]. */
 public object JengaMediaHeroDefaults {

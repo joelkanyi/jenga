@@ -11,17 +11,24 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
+import dev.drewhamilton.poko.Poko
 import io.github.joelkanyi.jenga.component.button.JengaButton
 import io.github.joelkanyi.jenga.component.button.JengaButtonVariant
 import io.github.joelkanyi.jenga.component.text.JengaText
 import io.github.joelkanyi.jenga.theme.JengaTheme
 
 /** Resolved colors for the empty/error state blocks. Override via [JengaStateDefaults.colors]. */
+@Poko
 @Immutable
-public data class JengaStateColors(
+public class JengaStateColors(
     public val title: Color,
     public val description: Color,
-)
+) {
+    public fun copy(
+        title: Color = this.title,
+        description: Color = this.description,
+    ): JengaStateColors = JengaStateColors(title, description)
+}
 
 /** Defaults and token mappings for [JengaEmptyState] / [JengaErrorState]. */
 public object JengaStateDefaults {

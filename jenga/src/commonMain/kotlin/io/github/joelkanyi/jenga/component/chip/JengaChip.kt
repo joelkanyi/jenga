@@ -19,13 +19,15 @@ import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import dev.drewhamilton.poko.Poko
 import io.github.joelkanyi.jenga.component.text.JengaText
 import io.github.joelkanyi.jenga.theme.JengaTheme
 import io.github.joelkanyi.jenga.theme.LocalJengaContentColor
 
 /** Resolved colors for a [JengaChip] across its states. Override via [JengaChipDefaults.colors]. */
+@Poko
 @Immutable
-public data class JengaChipColors(
+public class JengaChipColors(
     public val selectedContainer: Color,
     public val selectedContent: Color,
     public val unselectedContainer: Color,
@@ -33,7 +35,17 @@ public data class JengaChipColors(
     public val unselectedBorder: Color,
     public val disabledContainer: Color,
     public val disabledContent: Color,
-)
+) {
+    public fun copy(
+        selectedContainer: Color = this.selectedContainer,
+        selectedContent: Color = this.selectedContent,
+        unselectedContainer: Color = this.unselectedContainer,
+        unselectedContent: Color = this.unselectedContent,
+        unselectedBorder: Color = this.unselectedBorder,
+        disabledContainer: Color = this.disabledContainer,
+        disabledContent: Color = this.disabledContent,
+    ): JengaChipColors = JengaChipColors(selectedContainer, selectedContent, unselectedContainer, unselectedContent, unselectedBorder, disabledContainer, disabledContent)
+}
 
 /** Defaults and token mappings for [JengaChip]. Override any of these per call. */
 public object JengaChipDefaults {

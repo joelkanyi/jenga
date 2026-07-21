@@ -10,6 +10,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import dev.drewhamilton.poko.Poko
 import io.github.joelkanyi.jenga.component.text.JengaText
 import io.github.joelkanyi.jenga.theme.JengaTheme
 
@@ -17,11 +18,17 @@ import io.github.joelkanyi.jenga.theme.JengaTheme
 public enum class JengaBadgeTone { Neutral, Brand, Success, Warning, Error, Info }
 
 /** Resolved colors for a [JengaBadge]. */
+@Poko
 @Immutable
-public data class JengaBadgeColors(
+public class JengaBadgeColors(
     public val container: Color,
     public val content: Color,
-)
+) {
+    public fun copy(
+        container: Color = this.container,
+        content: Color = this.content,
+    ): JengaBadgeColors = JengaBadgeColors(container, content)
+}
 
 /** Defaults and token mappings for [JengaBadge]. */
 public object JengaBadgeDefaults {

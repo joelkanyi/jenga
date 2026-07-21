@@ -28,6 +28,7 @@ import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import dev.drewhamilton.poko.Poko
 import io.github.joelkanyi.jenga.component.icon.JengaIcon
 import io.github.joelkanyi.jenga.component.icon.JengaIcons
 import io.github.joelkanyi.jenga.component.text.JengaText
@@ -35,8 +36,9 @@ import io.github.joelkanyi.jenga.theme.JengaTheme
 import io.github.joelkanyi.jenga.theme.LocalJengaContentColor
 
 /** Resolved colors for a [JengaNavigationBar]. Override via [JengaNavigationBarDefaults.colors]. */
+@Poko
 @Immutable
-public data class JengaNavigationBarColors(
+public class JengaNavigationBarColors(
     public val container: Color,
     public val divider: Color,
     public val selectedContent: Color,
@@ -46,7 +48,25 @@ public data class JengaNavigationBarColors(
     public val selectedIndicator: Color,
     /** Icon color inside the [JengaNavIndicator.Pill]. */
     public val selectedIndicatorContent: Color,
-)
+) {
+    public fun copy(
+        container: Color = this.container,
+        divider: Color = this.divider,
+        selectedContent: Color = this.selectedContent,
+        unselectedContent: Color = this.unselectedContent,
+        disabledContent: Color = this.disabledContent,
+        selectedIndicator: Color = this.selectedIndicator,
+        selectedIndicatorContent: Color = this.selectedIndicatorContent,
+    ): JengaNavigationBarColors = JengaNavigationBarColors(
+        container,
+        divider,
+        selectedContent,
+        unselectedContent,
+        disabledContent,
+        selectedIndicator,
+        selectedIndicatorContent,
+    )
+}
 
 /**
  * How a [JengaNavigationBarItem] marks the selected state.

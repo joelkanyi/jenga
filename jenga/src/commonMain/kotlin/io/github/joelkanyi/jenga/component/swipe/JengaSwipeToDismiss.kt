@@ -14,6 +14,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
+import dev.drewhamilton.poko.Poko
 import io.github.joelkanyi.jenga.component.icon.JengaIcon
 import io.github.joelkanyi.jenga.component.icon.JengaIcons
 import io.github.joelkanyi.jenga.theme.JengaTheme
@@ -22,13 +23,19 @@ import io.github.joelkanyi.jenga.theme.JengaTheme
 public enum class JengaSwipeDirection { StartToEnd, EndToStart, Both }
 
 /** Resolved colors for a [JengaSwipeToDismiss] reveal panel. */
+@Poko
 @Immutable
-public data class JengaSwipeToDismissColors(
+public class JengaSwipeToDismissColors(
     /** The panel revealed behind the row as it swipes. */
     public val container: Color,
     /** The icon (and any content) on the panel. */
     public val content: Color,
-)
+) {
+    public fun copy(
+        container: Color = this.container,
+        content: Color = this.content,
+    ): JengaSwipeToDismissColors = JengaSwipeToDismissColors(container, content)
+}
 
 /** Defaults and token mappings for [JengaSwipeToDismiss]. */
 public object JengaSwipeToDismissDefaults {

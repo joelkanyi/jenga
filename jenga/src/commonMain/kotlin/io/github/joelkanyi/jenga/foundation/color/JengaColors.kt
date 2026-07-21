@@ -2,6 +2,7 @@ package io.github.joelkanyi.jenga.foundation.color
 
 import androidx.compose.runtime.Immutable
 import androidx.compose.ui.graphics.Color
+import dev.drewhamilton.poko.Poko
 
 /**
  * **Semantic color layer** — colors named by *role*, not by hue.
@@ -24,8 +25,9 @@ import androidx.compose.ui.graphics.Color
  *   may branch on this for effects that can't be expressed as a single token
  *   (e.g. choosing an elevation overlay strategy).
  */
+@Poko
 @Immutable
-public data class JengaColors(
+public class JengaColors(
     // Brand — primary accent (orange)
     public val brand: Color,
     public val onBrand: Color,
@@ -80,7 +82,89 @@ public data class JengaColors(
     public val focusRing: Color,
     public val scrim: Color,
     public val isLight: Boolean,
-)
+) {
+    public fun copy(
+        brand: Color = this.brand,
+        onBrand: Color = this.onBrand,
+        brandSubtle: Color = this.brandSubtle,
+        onBrandSubtle: Color = this.onBrandSubtle,
+        ink: Color = this.ink,
+        onInk: Color = this.onInk,
+        background: Color = this.background,
+        surface: Color = this.surface,
+        surfaceVariant: Color = this.surfaceVariant,
+        surfaceSunk: Color = this.surfaceSunk,
+        textPrimary: Color = this.textPrimary,
+        textSecondary: Color = this.textSecondary,
+        textMuted: Color = this.textMuted,
+        textFaint: Color = this.textFaint,
+        border: Color = this.border,
+        borderStrong: Color = this.borderStrong,
+        contentDisabled: Color = this.contentDisabled,
+        surfaceDisabled: Color = this.surfaceDisabled,
+        borderDisabled: Color = this.borderDisabled,
+        inverseSurface: Color = this.inverseSurface,
+        inverseOnSurface: Color = this.inverseOnSurface,
+        success: Color = this.success,
+        successContainer: Color = this.successContainer,
+        onSuccessContainer: Color = this.onSuccessContainer,
+        warning: Color = this.warning,
+        warningContainer: Color = this.warningContainer,
+        onWarningContainer: Color = this.onWarningContainer,
+        error: Color = this.error,
+        errorContainer: Color = this.errorContainer,
+        onErrorContainer: Color = this.onErrorContainer,
+        info: Color = this.info,
+        infoContainer: Color = this.infoContainer,
+        onInfoContainer: Color = this.onInfoContainer,
+        overlaySurface: Color = this.overlaySurface,
+        onOverlay: Color = this.onOverlay,
+        onOverlayMuted: Color = this.onOverlayMuted,
+        focusRing: Color = this.focusRing,
+        scrim: Color = this.scrim,
+        isLight: Boolean = this.isLight,
+    ): JengaColors = JengaColors(
+        brand,
+        onBrand,
+        brandSubtle,
+        onBrandSubtle,
+        ink,
+        onInk,
+        background,
+        surface,
+        surfaceVariant,
+        surfaceSunk,
+        textPrimary,
+        textSecondary,
+        textMuted,
+        textFaint,
+        border,
+        borderStrong,
+        contentDisabled,
+        surfaceDisabled,
+        borderDisabled,
+        inverseSurface,
+        inverseOnSurface,
+        success,
+        successContainer,
+        onSuccessContainer,
+        warning,
+        warningContainer,
+        onWarningContainer,
+        error,
+        errorContainer,
+        onErrorContainer,
+        info,
+        infoContainer,
+        onInfoContainer,
+        overlaySurface,
+        onOverlay,
+        onOverlayMuted,
+        focusRing,
+        scrim,
+        isLight,
+    )
+}
 
 /** The default Ticketfiti **light** color scheme. */
 public fun jengaLightColors(): JengaColors = JengaColors(

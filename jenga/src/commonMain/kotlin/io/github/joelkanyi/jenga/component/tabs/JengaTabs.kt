@@ -18,17 +18,26 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import dev.drewhamilton.poko.Poko
 import io.github.joelkanyi.jenga.component.text.JengaText
 import io.github.joelkanyi.jenga.theme.JengaTheme
 
 /** Resolved colors for [JengaTabs]. Override via [JengaTabsDefaults.colors]. */
+@Poko
 @Immutable
-public data class JengaTabsColors(
+public class JengaTabsColors(
     public val selectedContent: Color,
     public val unselectedContent: Color,
     public val indicator: Color,
     public val divider: Color,
-)
+) {
+    public fun copy(
+        selectedContent: Color = this.selectedContent,
+        unselectedContent: Color = this.unselectedContent,
+        indicator: Color = this.indicator,
+        divider: Color = this.divider,
+    ): JengaTabsColors = JengaTabsColors(selectedContent, unselectedContent, indicator, divider)
+}
 
 /** Defaults and token mappings for [JengaTabs]. */
 public object JengaTabsDefaults {

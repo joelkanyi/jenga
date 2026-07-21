@@ -26,6 +26,7 @@ import io.github.joelkanyi.jenga.component.stat.JengaStatTone
 import io.github.joelkanyi.jenga.component.stepper.JengaStepper
 import io.github.joelkanyi.jenga.component.swipe.JengaSwipeToDismiss
 import io.github.joelkanyi.jenga.component.verdict.JengaVerdictBar
+import io.github.joelkanyi.jenga.component.verdict.JengaVerdictSublines
 import io.github.joelkanyi.jenga.component.verdict.JengaVerdictTone
 import io.github.joelkanyi.jenga.component.button.JengaButton
 import io.github.joelkanyi.jenga.component.button.JengaButtonVariant
@@ -445,8 +446,7 @@ internal fun JengaVerdictBarSample() {
         tone = JengaVerdictTone.Positive,
         label = "This month",
         progress = 0.62f,
-        sublineStart = "KES 710 of 1,900 spent",
-        sublineEnd = "8 of 11 priced",
+        sublines = JengaVerdictSublines("KES 710 of 1,900 spent", "8 of 11 priced"),
         action = JengaAction("Change") { },
     )
 }
@@ -495,7 +495,7 @@ internal fun JengaExpandableRowSample() {
     var expanded by remember { mutableStateOf(false) }
     JengaExpandableRow(
         expanded = expanded,
-        onToggle = { expanded = !expanded },
+        onExpandedChange = { expanded = it },
         header = { JengaText("Delivery details", modifier = Modifier.weight(1f)) },
     ) {
         JengaText("Ships in 2 to 3 business days. Free returns within 30 days.")

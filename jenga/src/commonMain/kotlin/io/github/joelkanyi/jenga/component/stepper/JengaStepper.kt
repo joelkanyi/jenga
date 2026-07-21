@@ -20,6 +20,7 @@ import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import dev.drewhamilton.poko.Poko
 import io.github.joelkanyi.jenga.component.icon.JengaIcon
 import io.github.joelkanyi.jenga.component.icon.JengaIcons
 import io.github.joelkanyi.jenga.component.text.JengaText
@@ -27,15 +28,25 @@ import io.github.joelkanyi.jenga.theme.JengaTheme
 import androidx.compose.foundation.clickable
 
 /** Resolved colors for a [JengaStepper]. Override via [JengaStepperDefaults.colors]. */
+@Poko
 @Immutable
-public data class JengaStepperColors(
+public class JengaStepperColors(
     public val track: Color,
     public val button: Color,
     public val buttonContent: Color,
     public val value: Color,
     public val disabledButton: Color,
     public val disabledContent: Color,
-)
+) {
+    public fun copy(
+        track: Color = this.track,
+        button: Color = this.button,
+        buttonContent: Color = this.buttonContent,
+        value: Color = this.value,
+        disabledButton: Color = this.disabledButton,
+        disabledContent: Color = this.disabledContent,
+    ): JengaStepperColors = JengaStepperColors(track, button, buttonContent, value, disabledButton, disabledContent)
+}
 
 /** Defaults and token mappings for [JengaStepper]. */
 public object JengaStepperDefaults {
@@ -72,10 +83,10 @@ public object JengaStepperDefaults {
  * @param value the current value.
  * @param onValueChange called with the clamped new value when a button is tapped.
  * @param modifier the [Modifier] for this stepper.
+ * @param enabled whether the whole control is interactive.
  * @param min the inclusive lower bound; the decrement button disables at it.
  * @param max the inclusive upper bound; the increment button disables at it.
  * @param step the increment/decrement amount.
- * @param enabled whether the whole control is interactive.
  * @param decrementContentDescription accessibility label for the `−` button.
  * @param incrementContentDescription accessibility label for the `+` button.
  * @param valueLabel formats the centered value (e.g. to add a unit).

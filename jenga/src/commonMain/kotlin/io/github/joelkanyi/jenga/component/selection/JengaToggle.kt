@@ -23,16 +23,30 @@ import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
+import dev.drewhamilton.poko.Poko
 import io.github.joelkanyi.jenga.theme.JengaTheme
 
 /** Resolved colors for a [JengaToggle]. Override via [JengaToggleDefaults.colors]. */
+@Poko
 @Immutable
-public data class JengaToggleColors(
+public class JengaToggleColors(
     public val checkedTrack: Color,
     public val uncheckedTrack: Color,
     public val disabledTrack: Color,
     public val thumb: Color,
-)
+) {
+    public fun copy(
+        checkedTrack: Color = this.checkedTrack,
+        uncheckedTrack: Color = this.uncheckedTrack,
+        disabledTrack: Color = this.disabledTrack,
+        thumb: Color = this.thumb,
+    ): JengaToggleColors = JengaToggleColors(
+        checkedTrack,
+        uncheckedTrack,
+        disabledTrack,
+        thumb,
+    )
+}
 
 /** Defaults and token mappings for [JengaToggle]. */
 public object JengaToggleDefaults {

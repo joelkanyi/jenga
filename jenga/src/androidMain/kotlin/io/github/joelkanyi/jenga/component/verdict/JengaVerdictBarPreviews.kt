@@ -38,15 +38,14 @@ private fun VerdictShowcase() {
             tone = JengaVerdictTone.Positive,
             label = "This week's budget",
             progress = 0.38f,
-            sublineStart = "KES 710 of 1,900 spent",
-            sublineEnd = "8 of 11 priced",
+            sublines = JengaVerdictSublines("KES 710 of 1,900 spent", "8 of 11 priced"),
             action = JengaAction(label = "Change", onClick = {}),
         )
         JengaVerdictBar(
             amount = "Close to your budget",
             tone = JengaVerdictTone.Caution,
             progress = 0.88f,
-            sublineStart = "KES 1,670 of 1,900 spent",
+            sublines = JengaVerdictSublines("KES 1,670 of 1,900 spent"),
         )
     }
 }

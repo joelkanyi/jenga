@@ -12,15 +12,22 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import dev.drewhamilton.poko.Poko
 import io.github.joelkanyi.jenga.component.text.JengaText
 import io.github.joelkanyi.jenga.theme.JengaTheme
 
 /** Resolved colors for a [JengaTooltip]. Override via [JengaTooltipDefaults.colors]. */
+@Poko
 @Immutable
-public data class JengaTooltipColors(
+public class JengaTooltipColors(
     public val container: Color,
     public val content: Color,
-)
+) {
+    public fun copy(
+        container: Color = this.container,
+        content: Color = this.content,
+    ): JengaTooltipColors = JengaTooltipColors(container, content)
+}
 
 /** Defaults and token mappings for [JengaTooltip]. */
 public object JengaTooltipDefaults {

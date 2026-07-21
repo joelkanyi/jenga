@@ -1,3 +1,5 @@
+@file:OptIn(kotlinx.validation.ExperimentalBCVApi::class)
+
 // Top-level build file for the standalone Jenga design system.
 plugins {
     alias(libs.plugins.android.application) apply false
@@ -9,6 +11,7 @@ plugins {
     alias(libs.plugins.roborazzi) apply false
     alias(libs.plugins.dokka) apply false
     alias(libs.plugins.maven.publish) apply false
+    alias(libs.plugins.poko) apply false
     alias(libs.plugins.binary.compatibility.validator)
 }
 
@@ -17,4 +20,9 @@ plugins {
 // changes; CI runs `apiCheck`.
 apiValidation {
     ignoredProjects += listOf("catalog")
+    // The library ships native (iOS) targets, so validate the KLib ABI too;
+    // JVM `.api` dumps alone do not cover the native public surface.
+    klib {
+        enabled = true
+    }
 }

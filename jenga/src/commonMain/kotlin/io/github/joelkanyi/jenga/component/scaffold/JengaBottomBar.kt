@@ -21,6 +21,7 @@ import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import dev.drewhamilton.poko.Poko
 import io.github.joelkanyi.jenga.component.button.JengaButton
 import io.github.joelkanyi.jenga.component.button.JengaIconButton
 import io.github.joelkanyi.jenga.component.button.JengaIconButtonVariant
@@ -30,12 +31,19 @@ import io.github.joelkanyi.jenga.theme.JengaTheme
 import io.github.joelkanyi.jenga.theme.LocalJengaContentColor
 
 /** Resolved colors for a [JengaBottomBar]. Override via [JengaBottomBarDefaults.colors]. */
+@Poko
 @Immutable
-public data class JengaBottomBarColors(
+public class JengaBottomBarColors(
     public val container: Color,
     public val content: Color,
     public val divider: Color,
-)
+) {
+    public fun copy(
+        container: Color = this.container,
+        content: Color = this.content,
+        divider: Color = this.divider,
+    ): JengaBottomBarColors = JengaBottomBarColors(container, content, divider)
+}
 
 /** Defaults and token mappings for [JengaBottomBar]. */
 public object JengaBottomBarDefaults {

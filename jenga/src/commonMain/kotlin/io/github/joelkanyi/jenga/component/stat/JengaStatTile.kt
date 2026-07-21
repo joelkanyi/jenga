@@ -16,6 +16,7 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.graphics.lerp
+import dev.drewhamilton.poko.Poko
 import io.github.joelkanyi.jenga.component.text.JengaText
 import io.github.joelkanyi.jenga.theme.JengaTheme
 import io.github.joelkanyi.jenga.theme.LocalJengaContentColor
@@ -28,13 +29,26 @@ import io.github.joelkanyi.jenga.theme.LocalJengaContentColor
 public enum class JengaStatTone { Neutral, Brand, Success, Warning, Error, Info }
 
 /** Resolved colors for a [JengaStatTile]. Override via [JengaStatTileDefaults.colors]. */
+@Poko
 @Immutable
-public data class JengaStatTileColors(
+public class JengaStatTileColors(
     public val fill: Brush,
     public val label: Color,
     public val value: Color,
     public val unit: Color,
-)
+) {
+    public fun copy(
+        fill: Brush = this.fill,
+        label: Color = this.label,
+        value: Color = this.value,
+        unit: Color = this.unit,
+    ): JengaStatTileColors = JengaStatTileColors(
+        fill,
+        label,
+        value,
+        unit,
+    )
+}
 
 /** Defaults and token mappings for [JengaStatTile]. */
 public object JengaStatTileDefaults {

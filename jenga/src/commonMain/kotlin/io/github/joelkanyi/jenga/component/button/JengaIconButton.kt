@@ -19,6 +19,7 @@ import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import dev.drewhamilton.poko.Poko
 import io.github.joelkanyi.jenga.component.icon.JengaIcon
 import io.github.joelkanyi.jenga.component.icon.JengaIcons
 import io.github.joelkanyi.jenga.theme.JengaTheme
@@ -42,13 +43,21 @@ public enum class JengaIconButtonVariant {
 }
 
 /** Resolved colors for a [JengaIconButton]. Override via [JengaIconButtonDefaults.colors]. */
+@Poko
 @Immutable
-public data class JengaIconButtonColors(
+public class JengaIconButtonColors(
     public val container: Color,
     public val content: Color,
     public val disabledContainer: Color,
     public val disabledContent: Color,
-)
+) {
+    public fun copy(
+        container: Color = this.container,
+        content: Color = this.content,
+        disabledContainer: Color = this.disabledContainer,
+        disabledContent: Color = this.disabledContent,
+    ): JengaIconButtonColors = JengaIconButtonColors(container, content, disabledContainer, disabledContent)
+}
 
 /** Defaults and token mappings for [JengaIconButton]. */
 public object JengaIconButtonDefaults {
