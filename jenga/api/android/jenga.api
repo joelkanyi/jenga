@@ -1859,8 +1859,8 @@ public final class io/github/joelkanyi/jenga/foundation/typography/JengaTypograp
 }
 
 public final class io/github/joelkanyi/jenga/foundation/typography/JengaTypographyKt {
-	public static final fun jengaTypography (Landroidx/compose/ui/text/font/FontFamily;)Lio/github/joelkanyi/jenga/foundation/typography/JengaTypography;
-	public static synthetic fun jengaTypography$default (Landroidx/compose/ui/text/font/FontFamily;ILjava/lang/Object;)Lio/github/joelkanyi/jenga/foundation/typography/JengaTypography;
+	public static final fun jengaTypography (Landroidx/compose/ui/text/font/FontFamily;Landroidx/compose/ui/text/font/FontFamily;Landroidx/compose/ui/text/font/FontFamily;)Lio/github/joelkanyi/jenga/foundation/typography/JengaTypography;
+	public static synthetic fun jengaTypography$default (Landroidx/compose/ui/text/font/FontFamily;Landroidx/compose/ui/text/font/FontFamily;Landroidx/compose/ui/text/font/FontFamily;ILjava/lang/Object;)Lio/github/joelkanyi/jenga/foundation/typography/JengaTypography;
 }
 
 public final class io/github/joelkanyi/jenga/pattern/ComposableSingletons$JengaSectionHeaderPreviewsKt {

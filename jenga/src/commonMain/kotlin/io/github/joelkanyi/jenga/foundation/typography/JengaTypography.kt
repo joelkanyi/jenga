@@ -85,13 +85,24 @@ private val defaultLineHeightStyle = LineHeightStyle(
 /**
  * Builds the default Jenga type scale.
  *
- * @param fontFamily swap to re-theme typography with a different typeface while
- *   keeping the scale. Defaults to [FontFamily.Default]; `JengaTheme` injects the
- *   Outfit brand family (see [rememberJengaFontFamily]) when none is supplied.
+ * A brand may run two typefaces — one for display roles (display, heading*,
+ * title*) and one for body text (body*, label, caption, button). Pass
+ * [displayFontFamily] and [bodyFontFamily] separately for that; pass a single
+ * [fontFamily] to use one face across the whole scale (it defaults both).
+ *
+ * @param fontFamily one face for the whole scale, and the default for the two
+ *   below. Defaults to [FontFamily.Default]; `JengaTheme` injects the Outfit
+ *   brand family (see [rememberJengaFontFamily]) when none is supplied.
+ * @param displayFontFamily the face for display, heading and title roles.
+ * @param bodyFontFamily the face for body, label, caption and button roles.
  */
-public fun jengaTypography(fontFamily: FontFamily = FontFamily.Default): JengaTypography = JengaTypography(
+public fun jengaTypography(
+    fontFamily: FontFamily = FontFamily.Default,
+    displayFontFamily: FontFamily = fontFamily,
+    bodyFontFamily: FontFamily = fontFamily,
+): JengaTypography = JengaTypography(
     display = TextStyle(
-        fontFamily = fontFamily,
+        fontFamily = displayFontFamily,
         fontWeight = FontWeight.ExtraBold,
         fontSize = 40.sp,
         lineHeight = 44.sp,
@@ -99,7 +110,7 @@ public fun jengaTypography(fontFamily: FontFamily = FontFamily.Default): JengaTy
         lineHeightStyle = defaultLineHeightStyle,
     ),
     headingLarge = TextStyle(
-        fontFamily = fontFamily,
+        fontFamily = displayFontFamily,
         fontWeight = FontWeight.Bold,
         fontSize = 32.sp,
         lineHeight = 38.sp,
@@ -107,7 +118,7 @@ public fun jengaTypography(fontFamily: FontFamily = FontFamily.Default): JengaTy
         lineHeightStyle = defaultLineHeightStyle,
     ),
     headingMedium = TextStyle(
-        fontFamily = fontFamily,
+        fontFamily = displayFontFamily,
         fontWeight = FontWeight.Bold,
         fontSize = 26.sp,
         lineHeight = 32.sp,
@@ -115,7 +126,7 @@ public fun jengaTypography(fontFamily: FontFamily = FontFamily.Default): JengaTy
         lineHeightStyle = defaultLineHeightStyle,
     ),
     headingSmall = TextStyle(
-        fontFamily = fontFamily,
+        fontFamily = displayFontFamily,
         fontWeight = FontWeight.SemiBold,
         fontSize = 22.sp,
         lineHeight = 28.sp,
@@ -123,7 +134,7 @@ public fun jengaTypography(fontFamily: FontFamily = FontFamily.Default): JengaTy
         lineHeightStyle = defaultLineHeightStyle,
     ),
     titleLarge = TextStyle(
-        fontFamily = fontFamily,
+        fontFamily = displayFontFamily,
         fontWeight = FontWeight.SemiBold,
         fontSize = 18.sp,
         lineHeight = 24.sp,
@@ -131,7 +142,7 @@ public fun jengaTypography(fontFamily: FontFamily = FontFamily.Default): JengaTy
         lineHeightStyle = defaultLineHeightStyle,
     ),
     titleMedium = TextStyle(
-        fontFamily = fontFamily,
+        fontFamily = displayFontFamily,
         fontWeight = FontWeight.SemiBold,
         fontSize = 17.sp,
         lineHeight = 24.sp,
@@ -139,7 +150,7 @@ public fun jengaTypography(fontFamily: FontFamily = FontFamily.Default): JengaTy
         lineHeightStyle = defaultLineHeightStyle,
     ),
     titleSmall = TextStyle(
-        fontFamily = fontFamily,
+        fontFamily = displayFontFamily,
         fontWeight = FontWeight.SemiBold,
         fontSize = 16.sp,
         lineHeight = 22.sp,
@@ -147,7 +158,7 @@ public fun jengaTypography(fontFamily: FontFamily = FontFamily.Default): JengaTy
         lineHeightStyle = defaultLineHeightStyle,
     ),
     bodyLarge = TextStyle(
-        fontFamily = fontFamily,
+        fontFamily = bodyFontFamily,
         fontWeight = FontWeight.Normal,
         fontSize = 18.sp,
         lineHeight = 28.sp,
@@ -155,7 +166,7 @@ public fun jengaTypography(fontFamily: FontFamily = FontFamily.Default): JengaTy
         lineHeightStyle = defaultLineHeightStyle,
     ),
     bodyMedium = TextStyle(
-        fontFamily = fontFamily,
+        fontFamily = bodyFontFamily,
         fontWeight = FontWeight.Normal,
         fontSize = 16.sp,
         lineHeight = 26.sp,
@@ -163,7 +174,7 @@ public fun jengaTypography(fontFamily: FontFamily = FontFamily.Default): JengaTy
         lineHeightStyle = defaultLineHeightStyle,
     ),
     bodySmall = TextStyle(
-        fontFamily = fontFamily,
+        fontFamily = bodyFontFamily,
         fontWeight = FontWeight.Normal,
         fontSize = 14.sp,
         lineHeight = 20.sp,
@@ -171,7 +182,7 @@ public fun jengaTypography(fontFamily: FontFamily = FontFamily.Default): JengaTy
         lineHeightStyle = defaultLineHeightStyle,
     ),
     label = TextStyle(
-        fontFamily = fontFamily,
+        fontFamily = bodyFontFamily,
         fontWeight = FontWeight.SemiBold,
         fontSize = 12.sp,
         lineHeight = 16.sp,
@@ -179,7 +190,7 @@ public fun jengaTypography(fontFamily: FontFamily = FontFamily.Default): JengaTy
         lineHeightStyle = defaultLineHeightStyle,
     ),
     caption = TextStyle(
-        fontFamily = fontFamily,
+        fontFamily = bodyFontFamily,
         fontWeight = FontWeight.Normal,
         fontSize = 11.sp,
         lineHeight = 14.sp,
@@ -187,7 +198,7 @@ public fun jengaTypography(fontFamily: FontFamily = FontFamily.Default): JengaTy
         lineHeightStyle = defaultLineHeightStyle,
     ),
     button = TextStyle(
-        fontFamily = fontFamily,
+        fontFamily = bodyFontFamily,
         fontWeight = FontWeight.SemiBold,
         fontSize = 16.sp,
         lineHeight = 20.sp,
