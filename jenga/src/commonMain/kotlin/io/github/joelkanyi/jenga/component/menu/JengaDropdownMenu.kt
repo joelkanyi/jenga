@@ -39,6 +39,8 @@ public fun JengaDropdownMenu(
         expanded = expanded,
         onDismissRequest = onDismissRequest,
         modifier = modifier,
+        shape = JengaTheme.shapes.md,
+        containerColor = JengaTheme.colors.surface,
         content = content,
     )
 }
