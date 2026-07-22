@@ -27,7 +27,7 @@ fun GetStartedSection(modifier: Modifier = Modifier) {
             "Available on Maven Central.",
             """
             dependencies {
-                implementation("io.github.joelkanyi:jenga:0.2.1")
+                implementation("io.github.joelkanyi:jenga:<version>")
             }
             """.trimIndent(),
         )

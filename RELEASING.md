@@ -118,7 +118,7 @@ dependencyResolutionManagement {
 kotlin {
     sourceSets {
         commonMain.dependencies {
-            implementation("io.github.joelkanyi:jenga:0.1.0")
+            implementation("io.github.joelkanyi:jenga:<version>")
         }
     }
 }
