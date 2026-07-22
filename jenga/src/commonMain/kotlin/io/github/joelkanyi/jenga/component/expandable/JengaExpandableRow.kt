@@ -70,7 +70,15 @@ public fun JengaExpandableRow(
             }
         }
         if (expanded) {
-            Column(Modifier.fillMaxWidth()) { content() }
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(
+                        start = JengaTheme.spacing.lg,
+                        end = JengaTheme.spacing.lg,
+                        bottom = JengaTheme.spacing.lg,
+                    ),
+            ) { content() }
         }
     }
 }
