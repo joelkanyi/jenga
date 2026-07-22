@@ -247,7 +247,7 @@ public fun jengaDarkColors(): JengaColors = JengaColors(
     overlaySurface = JengaPalette.Black.copy(alpha = 0.55f),
     onOverlay = JengaPalette.White,
     onOverlayMuted = JengaPalette.White.copy(alpha = 0.72f),
-    focusRing = JengaPalette.Orange400.copy(alpha = 0.30f),
+    focusRing = JengaPalette.Orange400.copy(alpha = 0.18f),
     scrim = JengaPalette.Black.copy(alpha = 0.66f),
     isLight = false,
 )
