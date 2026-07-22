@@ -49,7 +49,7 @@ Kotlin Multiplatform:
 kotlin {
     sourceSets {
         commonMain.dependencies {
-            implementation("io.github.joelkanyi:jenga:0.2.1")
+            implementation("io.github.joelkanyi:jenga:0.3.0")
         }
     }
 }
@@ -59,7 +59,7 @@ Android only (the same coordinate resolves the Android variant automatically):
 
 ```kotlin
 dependencies {
-    implementation("io.github.joelkanyi:jenga:0.2.1")
+    implementation("io.github.joelkanyi:jenga:0.3.0")
 }
 ```
 
