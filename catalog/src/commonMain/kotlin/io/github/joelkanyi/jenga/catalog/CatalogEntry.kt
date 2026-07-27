@@ -49,7 +49,7 @@ class CatalogEntry(
 }
 
 /**
- * A single entry, shadcn-style: the component name with a Preview/Code toggle,
+ * A single entry: the component name with a Preview/Code toggle,
  * then one bordered frame that shows either the live demo (centered, with room to
  * breathe) or its copy-paste code.
  */

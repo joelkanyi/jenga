@@ -166,7 +166,7 @@ public class JengaColors(
     )
 }
 
-/** The default Ticketfiti **light** color scheme. */
+/** The default **light** color scheme. */
 public fun jengaLightColors(): JengaColors = JengaColors(
     brand = JengaPalette.Orange500,
     onBrand = JengaPalette.White,
@@ -209,7 +209,7 @@ public fun jengaLightColors(): JengaColors = JengaColors(
     isLight = true,
 )
 
-/** The default Ticketfiti **dark** color scheme. */
+/** The default **dark** color scheme. */
 public fun jengaDarkColors(): JengaColors = JengaColors(
     brand = JengaPalette.Orange500,
     onBrand = JengaPalette.White,
