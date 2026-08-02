@@ -42,6 +42,7 @@ import io.github.joelkanyi.jenga.component.layout.JengaInline
 import io.github.joelkanyi.jenga.component.layout.JengaSection
 import io.github.joelkanyi.jenga.component.layout.JengaStack
 import io.github.joelkanyi.jenga.component.layout.JengaWrap
+import io.github.joelkanyi.jenga.component.link.JengaLink
 import io.github.joelkanyi.jenga.component.list.JengaListItem
 import io.github.joelkanyi.jenga.component.media.JengaMediaHero
 import io.github.joelkanyi.jenga.component.menu.JengaDropdownMenu
@@ -148,6 +149,11 @@ internal fun JengaCardSample() {
 @Composable
 internal fun JengaBadgeSample() {
     JengaBadge(text = "Valid", tone = JengaBadgeTone.Success)
+}
+
+@Composable
+internal fun JengaLinkSample() {
+    JengaLink(text = "Privacy policy", onClick = {})
 }
 
 @Composable
