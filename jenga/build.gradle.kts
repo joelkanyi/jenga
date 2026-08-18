@@ -1,4 +1,7 @@
-@file:OptIn(com.github.takahirom.roborazzi.ExperimentalRoborazziApi::class)
+@file:OptIn(
+    com.github.takahirom.roborazzi.ExperimentalRoborazziApi::class,
+    org.jetbrains.kotlin.gradle.ExperimentalWasmDsl::class,
+)
 
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
@@ -39,6 +42,12 @@ kotlin {
     // Multiplatform, so it is intentionally omitted.
     iosArm64()
     iosSimulatorArm64()
+
+    // Web target. Kotlin/Wasm is the modern Compose Multiplatform web backend;
+    // browser() wires the wasm runtime + Compose Resources loading for the browser.
+    wasmJs {
+        browser()
+    }
 
     sourceSets {
         commonMain.dependencies {
@@ -162,7 +171,7 @@ dokka {
 }
 
 // ---- Maven Central publishing ----------------------------------------------
-// Publishes all targets (Android, Desktop, iOS) plus a sources and javadoc jar to
+// Publishes all targets (Android, Desktop, iOS, Web) plus a sources and javadoc jar to
 // Maven Central via the Central Portal. Credentials and the signing key are read
 // from ~/.gradle/gradle.properties or ORG_GRADLE_PROJECT_* env vars, never from a
 // committed file. See RELEASING.md.
@@ -180,7 +189,7 @@ mavenPublishing {
         name.set("Jenga")
         description.set(
             "Jenga is a Kotlin Multiplatform + Compose Multiplatform design system: " +
-                "brandable tokens and ready-made blocks for Android, Desktop and iOS.",
+                "brandable tokens and ready-made blocks for Android, Desktop, iOS and Web.",
         )
         inceptionYear.set("2026")
         url.set("https://github.com/joelkanyi/jenga")
