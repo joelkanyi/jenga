@@ -110,7 +110,7 @@ public fun JengaBottomSheet(
         onDismissRequest = onDismissRequest,
         modifier = modifier,
         sheetState = sheetState.m3State,
-        containerColor = JengaTheme.colors.surfaceVariant,
+        containerColor = JengaTheme.colors.surface,
         contentColor = JengaTheme.colors.textPrimary,
         scrimColor = JengaTheme.colors.scrim,
         dragHandle = { JengaDragHandle() },
