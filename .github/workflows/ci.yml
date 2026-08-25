@@ -115,8 +115,14 @@ jobs:
           xcrun simctl install "$UDID" build/ddata/Build/Products/Debug-iphonesimulator/iosApp.app
           xcrun simctl launch "$UDID" io.github.joelkanyi.jenga.catalog
           sleep 8
-          if xcrun simctl spawn "$UDID" launchctl list | grep -q io.github.joelkanyi.jenga.catalog; then
-            echo "iOS sample launched and is running (no crash)."
+          # Capture the process list first, then test it. Piping straight into
+          # `grep -q` makes grep close the pipe on the first match, which kills
+          # `launchctl` with SIGPIPE; under `pipefail` that turns a running app
+          # into a false "crashed on launch". `|| true` keeps `set -e` happy
+          # when there is genuinely no match.
+          STATE=$(xcrun simctl spawn "$UDID" launchctl list | grep io.github.joelkanyi.jenga.catalog || true)
+          if [ -n "$STATE" ]; then
+            echo "iOS sample launched and is running (no crash): $STATE"
           else
             echo "::error::iOS sample crashed on launch."
             exit 1
