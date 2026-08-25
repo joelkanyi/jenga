@@ -666,6 +666,37 @@ public final class io/github/joelkanyi/jenga/component/layout/JengaStacksKt {
 	public static final fun JengaWrap-djqs-MU (Landroidx/compose/ui/Modifier;FFLkotlin/jvm/functions/Function3;Landroidx/compose/runtime/Composer;II)V
 }
 
+public final class io/github/joelkanyi/jenga/component/link/ComposableSingletons$JengaLinkPreviewsKt {
+	public static final field INSTANCE Lio/github/joelkanyi/jenga/component/link/ComposableSingletons$JengaLinkPreviewsKt;
+	public fun <init> ()V
+	public final fun getLambda$-1233403274$jenga_release ()Lkotlin/jvm/functions/Function2;
+	public final fun getLambda$-166326151$jenga_release ()Lkotlin/jvm/functions/Function3;
+	public final fun getLambda$1476763807$jenga_release ()Lkotlin/jvm/functions/Function2;
+	public final fun getLambda$609944522$jenga_release ()Lkotlin/jvm/functions/Function2;
+}
+
+public final class io/github/joelkanyi/jenga/component/link/JengaLinkColors {
+	public static final field $stable I
+	public synthetic fun <init> (JJLkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun copy--OWjLjI (JJ)Lio/github/joelkanyi/jenga/component/link/JengaLinkColors;
+	public static synthetic fun copy--OWjLjI$default (Lio/github/joelkanyi/jenga/component/link/JengaLinkColors;JJILjava/lang/Object;)Lio/github/joelkanyi/jenga/component/link/JengaLinkColors;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getContent-0d7_KjU ()J
+	public final fun getDisabledContent-0d7_KjU ()J
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class io/github/joelkanyi/jenga/component/link/JengaLinkDefaults {
+	public static final field $stable I
+	public static final field INSTANCE Lio/github/joelkanyi/jenga/component/link/JengaLinkDefaults;
+	public final fun colors (Landroidx/compose/runtime/Composer;I)Lio/github/joelkanyi/jenga/component/link/JengaLinkColors;
+}
+
+public final class io/github/joelkanyi/jenga/component/link/JengaLinkKt {
+	public static final fun JengaLink (Ljava/lang/String;Lkotlin/jvm/functions/Function0;Landroidx/compose/ui/Modifier;Landroidx/compose/ui/text/TextStyle;Lio/github/joelkanyi/jenga/component/link/JengaLinkColors;ZZLandroidx/compose/runtime/Composer;II)V
+}
+
 public final class io/github/joelkanyi/jenga/component/list/ComposableSingletons$JengaListItemPreviewsKt {
 	public static final field INSTANCE Lio/github/joelkanyi/jenga/component/list/ComposableSingletons$JengaListItemPreviewsKt;
 	public fun <init> ()V
