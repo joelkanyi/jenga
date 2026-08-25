@@ -59,7 +59,7 @@ internal fun JengaDialogSurface(
         modifier = modifier
             .fillMaxWidth()
             .clip(JengaTheme.shapes.card)
-            .background(JengaTheme.colors.surface)
+            .background(JengaTheme.colors.surfaceVariant)
             .padding(JengaTheme.spacing.xl),
         verticalArrangement = Arrangement.spacedBy(JengaTheme.spacing.md),
     ) {
