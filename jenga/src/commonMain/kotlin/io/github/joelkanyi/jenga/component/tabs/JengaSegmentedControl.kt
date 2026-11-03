@@ -1,6 +1,7 @@
 package io.github.joelkanyi.jenga.component.tabs
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
@@ -34,20 +35,41 @@ public class JengaSegmentedControlColors(
     public val selectedContent: Color,
     public val unselectedContent: Color,
     public val disabledContent: Color = unselectedContent.copy(alpha = 0.38f),
+    public val selectedBorder: Color = Color.Transparent,
 ) {
+    @Deprecated("Kept for binary compatibility", level = DeprecationLevel.HIDDEN)
+    public constructor(
+        track: Color,
+        selectedSegment: Color,
+        selectedContent: Color,
+        unselectedContent: Color,
+        disabledContent: Color = unselectedContent.copy(alpha = 0.38f),
+    ) : this(track, selectedSegment, selectedContent, unselectedContent, disabledContent, selectedBorder = Color.Transparent)
+
     public fun copy(
         track: Color = this.track,
         selectedSegment: Color = this.selectedSegment,
         selectedContent: Color = this.selectedContent,
         unselectedContent: Color = this.unselectedContent,
         disabledContent: Color = this.disabledContent,
+        selectedBorder: Color = this.selectedBorder,
     ): JengaSegmentedControlColors = JengaSegmentedControlColors(
         track,
         selectedSegment,
         selectedContent,
         unselectedContent,
         disabledContent,
+        selectedBorder,
     )
+
+    @Deprecated("Kept for binary compatibility", level = DeprecationLevel.HIDDEN)
+    public fun copy(
+        track: Color = this.track,
+        selectedSegment: Color = this.selectedSegment,
+        selectedContent: Color = this.selectedContent,
+        unselectedContent: Color = this.unselectedContent,
+        disabledContent: Color = this.disabledContent,
+    ): JengaSegmentedControlColors = copy(track, selectedSegment, selectedContent, unselectedContent, disabledContent, this.selectedBorder)
 }
 
 /** Defaults and token mappings for [JengaSegmentedControl]. */
@@ -187,35 +209,52 @@ public fun JengaSegmentedControl(
         verticalAlignment = Alignment.CenterVertically,
     ) {
         segments.forEachIndexed { index, segment ->
-            val selected = index == selectedIndex
-            val enabled = isEnabled(index)
-            Box(
-                modifier = Modifier
-                    .weight(1f)
-                    .then(if (selected) Modifier.shadow(selectedElevation, segmentShape) else Modifier)
-                    .clip(segmentShape)
-                    .background(if (selected) colors.selectedSegment else Color.Transparent)
-                    .selectable(
-                        selected = selected,
-                        enabled = enabled,
-                        role = Role.Tab,
-                        onClick = { onSelect(index) },
-                    )
-                    .defaultMinSize(minHeight = segmentMinHeight)
-                    .padding(horizontal = JengaTheme.spacing.md),
-                contentAlignment = Alignment.Center,
-            ) {
-                JengaText(
-                    text = segment,
-                    style = if (selected) selectedTextStyle else textStyle,
-                    color = when {
-                        !enabled -> colors.disabledContent
-                        selected -> colors.selectedContent
-                        else -> colors.unselectedContent
-                    },
-                    maxLines = 1,
-                )
-            }
+            Segment(
+                label = segment,
+                selected = index == selectedIndex,
+                enabled = isEnabled(index),
+                onClick = { onSelect(index) },
+                look = SegmentLook(segmentShape, segmentMinHeight, selectedElevation, colors),
+                textStyle = if (index == selectedIndex) selectedTextStyle else textStyle,
+                modifier = Modifier.weight(1f),
+            )
         }
     }
 }
+
+private class SegmentLook(val shape: Shape, val minHeight: Dp, val selectedElevation: Dp, val colors: JengaSegmentedControlColors)
+
+@Composable
+private fun Segment(
+    label: String,
+    selected: Boolean,
+    enabled: Boolean,
+    onClick: () -> Unit,
+    look: SegmentLook,
+    textStyle: TextStyle,
+    modifier: Modifier = Modifier,
+) {
+    val colors = look.colors
+    val outline = if (selected && colors.selectedBorder != Color.Transparent) Modifier.border(SelectedBorderWidth, colors.selectedBorder, look.shape) else Modifier
+    Box(
+        modifier = modifier
+            .then(if (selected) Modifier.shadow(look.selectedElevation, look.shape) else Modifier)
+            .clip(look.shape)
+            .background(if (selected) colors.selectedSegment else Color.Transparent)
+            .then(outline)
+            .selectable(selected = selected, enabled = enabled, role = Role.Tab, onClick = onClick)
+            .defaultMinSize(minHeight = look.minHeight)
+            .padding(horizontal = JengaTheme.spacing.md),
+        contentAlignment = Alignment.Center,
+    ) {
+        JengaText(text = label, style = textStyle, color = segmentContentColor(colors, selected, enabled), maxLines = 1)
+    }
+}
+
+private fun segmentContentColor(colors: JengaSegmentedControlColors, selected: Boolean, enabled: Boolean): Color = when {
+    !enabled -> colors.disabledContent
+    selected -> colors.selectedContent
+    else -> colors.unselectedContent
+}
+
+private val SelectedBorderWidth = 2.dp

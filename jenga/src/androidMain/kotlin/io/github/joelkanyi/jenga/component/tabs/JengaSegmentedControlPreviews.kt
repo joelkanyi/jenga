@@ -74,3 +74,17 @@ internal fun JengaSegmentedControlSelectedStylePreview() {
         )
     }
 }
+
+@JengaBlockPreviews
+@Composable
+internal fun JengaSegmentedControlOutlinedPreview() {
+    JengaTheme {
+        JengaSegmentedControl(
+            selectedIndex = 0,
+            segments = listOf("Laser", "Camera"),
+            onSelect = {},
+            modifier = Modifier.background(JengaTheme.colors.background).padding(JengaTheme.spacing.lg),
+            colors = JengaSegmentedControlDefaults.colors().copy(selectedBorder = JengaTheme.colors.brand),
+        )
+    }
+}
