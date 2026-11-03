@@ -1,7 +1,6 @@
 package io.github.joelkanyi.jenga.component.verdict
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -26,6 +25,8 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import dev.drewhamilton.poko.Poko
 import io.github.joelkanyi.jenga.component.action.JengaAction
+import io.github.joelkanyi.jenga.component.link.JengaLink
+import io.github.joelkanyi.jenga.component.link.JengaLinkColors
 import io.github.joelkanyi.jenga.component.text.JengaText
 import io.github.joelkanyi.jenga.theme.JengaTheme
 
@@ -199,72 +200,89 @@ public fun JengaVerdictBar(
         verticalArrangement = Arrangement.spacedBy(JengaTheme.spacing.sm),
     ) {
         if (label != null || action != null) {
-            Row(verticalAlignment = Alignment.CenterVertically) {
-                if (label != null) {
-                    JengaText(
-                        text = label,
-                        style = JengaTheme.typography.bodySmall,
-                        color = colors.accent,
-                        modifier = Modifier.weight(1f),
-                        maxLines = 1,
-                    )
-                } else {
-                    Box(Modifier.weight(1f))
-                }
-                if (action != null) {
-                    JengaText(
-                        text = action.label,
-                        style = JengaTheme.typography.bodySmall,
-                        color = colors.muted,
-                        maxLines = 1,
-                        modifier = Modifier.clickable(onClick = action.onClick),
-                    )
-                }
-            }
+            VerdictHeader(label, action, colors)
         }
-        Row(verticalAlignment = Alignment.Bottom) {
-            JengaText(text = amount, style = amountStyle, color = colors.amount, maxLines = 1)
-            if (amountSuffix != null) {
-                JengaText(
-                    text = " $amountSuffix",
-                    style = amountSuffixStyle,
-                    color = colors.accent,
-                    maxLines = 1,
-                    modifier = Modifier.padding(bottom = JengaTheme.spacing.xs),
-                )
-            }
-        }
+        VerdictAmount(amount, amountSuffix, amountStyle, amountSuffixStyle, colors)
         if (progress != null) {
-            Box(
-                Modifier
-                    .fillMaxWidth()
-                    .height(trackHeight)
-                    .clip(RoundedCornerShape(percent = 50))
-                    .background(colors.track),
-            ) {
-                Box(
-                    Modifier
-                        .fillMaxWidth(progress.coerceIn(0f, 1f))
-                        .height(trackHeight)
-                        .clip(RoundedCornerShape(percent = 50))
-                        .background(if (progress >= 1f) colors.trackComplete else colors.trackFill),
-                )
-            }
+            VerdictProgress(progress, trackHeight, colors)
         }
         if (sublines != null) {
-            val end = sublines.end
-            Row(modifier = Modifier.fillMaxWidth()) {
-                JengaText(
-                    text = sublines.start,
-                    style = JengaTheme.typography.caption,
-                    color = colors.muted,
-                    modifier = Modifier.weight(1f),
-                    maxLines = 1,
-                )
-                if (end != null) {
-                    JengaText(text = end, style = JengaTheme.typography.caption, color = colors.muted, maxLines = 1)
-                }
-            }
+            VerdictSublines(sublines, colors)
+        }
+    }
+}
+
+@Composable
+private fun VerdictHeader(label: String?, action: JengaAction?, colors: JengaVerdictBarColors) {
+    Row(verticalAlignment = Alignment.CenterVertically) {
+        JengaText(
+            text = label.orEmpty(),
+            style = JengaTheme.typography.bodySmall,
+            color = colors.accent,
+            modifier = Modifier.weight(1f),
+            maxLines = 1,
+        )
+        if (action != null) {
+            JengaLink(
+                text = action.label,
+                onClick = action.onClick,
+                style = JengaTheme.typography.bodySmall,
+                colors = JengaLinkColors(content = colors.muted, disabledContent = colors.muted),
+                underline = false,
+            )
+        }
+    }
+}
+
+@Composable
+private fun VerdictAmount(amount: String, suffix: String?, amountStyle: TextStyle, suffixStyle: TextStyle, colors: JengaVerdictBarColors) {
+    Row(verticalAlignment = Alignment.Bottom) {
+        JengaText(text = amount, style = amountStyle, color = colors.amount, maxLines = 1)
+        if (suffix != null) {
+            JengaText(
+                text = " $suffix",
+                style = suffixStyle,
+                color = colors.accent,
+                maxLines = 1,
+                modifier = Modifier.padding(bottom = JengaTheme.spacing.xs),
+            )
+        }
+    }
+}
+
+@Composable
+private fun VerdictProgress(progress: Float, trackHeight: Dp, colors: JengaVerdictBarColors) {
+    val trackShape = RoundedCornerShape(percent = 50)
+    Box(
+        Modifier
+            .fillMaxWidth()
+            .height(trackHeight)
+            .clip(trackShape)
+            .background(colors.track),
+    ) {
+        Box(
+            Modifier
+                .fillMaxWidth(progress.coerceIn(0f, 1f))
+                .height(trackHeight)
+                .clip(trackShape)
+                .background(if (progress >= 1f) colors.trackComplete else colors.trackFill),
+        )
+    }
+}
+
+@Composable
+private fun VerdictSublines(sublines: JengaVerdictSublines, colors: JengaVerdictBarColors) {
+    val end = sublines.end
+    Row(modifier = Modifier.fillMaxWidth()) {
+        JengaText(
+            text = sublines.start,
+            style = JengaTheme.typography.caption,
+            color = colors.muted,
+            modifier = Modifier.weight(1f),
+            maxLines = 1,
+        )
+        if (end != null) {
+            JengaText(text = end, style = JengaTheme.typography.caption, color = colors.muted, maxLines = 1)
         }
     }
 }
