@@ -60,6 +60,19 @@ public class JengaWheelPickerColors(
     ): JengaWheelPickerColors = JengaWheelPickerColors(selectedContainer, selectedContent, content)
 }
 
+/**
+ * Theme-wide style for every wheel, set through
+ * [io.github.joelkanyi.jenga.theme.JengaComponentStyles.wheelPicker]. A `null` value keeps Jenga's
+ * default; colors passed to a single call still win.
+ */
+@Poko
+@Immutable
+public class JengaWheelPickerStyle(
+    public val colors: JengaWheelPickerColors? = null,
+) {
+    public fun copy(colors: JengaWheelPickerColors? = this.colors): JengaWheelPickerStyle = JengaWheelPickerStyle(colors)
+}
+
 /** Defaults and token mappings for [JengaWheelPicker]. */
 public object JengaWheelPickerDefaults {
     /** Number of rows visible at once; odd, so one row sits in the middle. */
@@ -76,9 +89,10 @@ public object JengaWheelPickerDefaults {
     public val textStyle: TextStyle
         @Composable get() = JengaTheme.typography.bodyMedium
 
-    /** Themed colors. */
+    /** Themed colors: the theme's [JengaWheelPickerStyle.colors] when set. */
     @Composable
     public fun colors(): JengaWheelPickerColors {
+        JengaTheme.components.wheelPicker?.colors?.let { return it }
         val c = JengaTheme.colors
         return JengaWheelPickerColors(
             selectedContainer = c.surfaceSunk,

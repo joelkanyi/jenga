@@ -151,7 +151,8 @@ Components with a style: button, icon button, floating action button, link, text
 field, search field, search trigger, list item, selection list item, key value row,
 card, card footer, chip, segmented control, stepper, dialog, snackbar, list sheet,
 dropdown menu, top app bar, tabs, navigation rail item, status pill, info bar,
-avatar, icon tile, thumbnail strip, empty and error states, linear and circular
+avatar, icon tile, thumbnail strip, wheel picker (also the time input and date-of-birth
+wheels), empty and error states, linear and circular
 progress.
 
 ## Reading tokens
