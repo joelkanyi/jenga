@@ -95,3 +95,20 @@ private fun IconShowcase() {
         JengaIcon(JengaIcons.UserCog, contentDescription = null)
     }
 }
+
+@JengaBlockPreviews
+@Composable
+internal fun JengaCameraIconsPreview() {
+    JengaTheme {
+        JengaWrap(
+            modifier = Modifier.background(JengaTheme.colors.background).padding(JengaTheme.spacing.xl),
+            space = JengaTheme.spacing.md,
+        ) {
+            JengaIcon(JengaIcons.Camera, contentDescription = null)
+            JengaIcon(JengaIcons.CameraOff, contentDescription = null)
+            JengaIcon(JengaIcons.Flash, contentDescription = null)
+            JengaIcon(JengaIcons.FlashOff, contentDescription = null)
+            JengaIcon(JengaIcons.FlashAuto, contentDescription = null)
+        }
+    }
+}
