@@ -4,6 +4,13 @@
 
  * New: `JengaTextArea`, a multi-line box for comments and notes: starts `minLines` tall, grows to `maxLines` then scrolls, text starts at the top, optional `maxLength` with a counter under the box.
  * New: `JengaComponentStyles.wheelPicker` (`JengaWheelPickerStyle`) sets the colors of every wheel with default colors: `JengaWheelPicker`, `JengaTimeInput`, `JengaTimePickerDialog` and `JengaDateOfBirthPicker`.
+ * New: `JengaThumbnailStrip` takes `layout`: `JengaThumbnailStripLayout.Row` (one scrolling row, the default) or `Wrap` (fills the width, then continues on the next line).
+ * New: `JengaChip` and `JengaChipStyle` take `iconSpacing`, the gap between the leading icon, the label and the trailing content.
+ * New: `JengaImageShelf` takes `subtitle`, a line under the title.
+ * New: `JengaSegmentedControlColors.selectedBorder` draws an outline around the selected segment; transparent by default.
+ * New: `JengaIcons.CameraOff` and `JengaIcons.FlashAuto`.
+ * Change: in 12-hour mode, scrolling the hour wheel of `JengaTimeInput` past 12 switches AM and PM, so 11 AM scrolled forward to 12 becomes 12 PM.
+ * Fix: the header action of `JengaImageShelf` and the action of `JengaVerdictBar` no longer show a grey box when pressed or hovered.
  * Change: a multi-line `JengaTextField` (`singleLine = false`) now starts its text and placeholder at the top of the box instead of centring them.
 
 ## Version 0.8.4
