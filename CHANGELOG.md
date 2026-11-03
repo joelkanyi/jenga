@@ -1,5 +1,11 @@
 # Change Log
 
+## Unreleased
+
+ * New: `JengaTextArea`, a multi-line box for comments and notes: starts `minLines` tall, grows to `maxLines` then scrolls, text starts at the top, optional `maxLength` with a counter under the box.
+ * New: `JengaComponentStyles.wheelPicker` (`JengaWheelPickerStyle`) sets the colors of every wheel with default colors: `JengaWheelPicker`, `JengaTimeInput`, `JengaTimePickerDialog` and `JengaDateOfBirthPicker`.
+ * Change: a multi-line `JengaTextField` (`singleLine = false`) now starts its text and placeholder at the top of the box instead of centring them.
+
 ## Version 0.8.4
 
 _2026-10-28_
