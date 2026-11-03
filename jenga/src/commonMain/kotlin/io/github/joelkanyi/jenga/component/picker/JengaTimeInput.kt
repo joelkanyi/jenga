@@ -98,6 +98,8 @@ private fun TimeRow(modifier: Modifier = Modifier, content: @Composable RowScope
 internal class TwelveHourClock(val is24Hour: Boolean) {
     val hours: IntRange = if (is24Hour) 0..23 else 1..12
 
+    val wheelHours: List<Int> = if (is24Hour) hours.toList() else listOf(12) + (1..11)
+
     fun shownHour(time: LocalTime): Int {
         if (is24Hour) return time.hour
         val hour = time.hour % 12
@@ -110,6 +112,12 @@ internal class TwelveHourClock(val is24Hour: Boolean) {
         if (is24Hour) return LocalTime(shownHour, time.minute)
         val afternoon = if (isPm(time)) 12 else 0
         return LocalTime(shownHour % 12 + afternoon, time.minute)
+    }
+
+    fun afterHourScroll(time: LocalTime, shownHour: Int, laps: Int): LocalTime {
+        val moved = withHour(time, shownHour)
+        if (is24Hour || laps % 2 == 0) return moved
+        return withPm(moved, pm = !isPm(moved))
     }
 
     fun withPm(time: LocalTime, pm: Boolean): LocalTime {
@@ -131,17 +139,17 @@ private fun TimeWheels(
     minuteStep: Int,
     modifier: Modifier = Modifier,
 ) = TimeRow(modifier) {
-    val hours = clock.hours.toList()
+    val hours = clock.wheelHours
     val minutes = (0 until 60 step minuteStep.coerceIn(1, 30)).toList()
-    TimeWheel(hours, hours.indexOf(clock.shownHour(time)), hourLabel, looping = true) {
-        onTimeChange(clock.withHour(time, hours[it]))
+    TimeWheel(hours, hours.indexOf(clock.shownHour(time)), hourLabel, looping = true) { index, laps ->
+        onTimeChange(clock.afterHourScroll(time, hours[index], laps))
     }
-    TimeWheel(minutes, minutes.indexOfLast { it <= time.minute }, minuteLabel, looping = true) {
-        onTimeChange(LocalTime(time.hour, minutes[it]))
+    TimeWheel(minutes, minutes.indexOfLast { it <= time.minute }, minuteLabel, looping = true) { index, _ ->
+        onTimeChange(LocalTime(time.hour, minutes[index]))
     }
     if (!clock.is24Hour) {
-        TimeWheel(listOf(amLabel, pmLabel), if (clock.isPm(time)) 1 else 0, null, looping = false) {
-            onTimeChange(clock.withPm(time, pm = it == 1))
+        TimeWheel(listOf(amLabel, pmLabel), if (clock.isPm(time)) 1 else 0, null, looping = false) { index, _ ->
+            onTimeChange(clock.withPm(time, pm = index == 1))
         }
     }
 }
@@ -152,14 +160,14 @@ private fun <T> TimeWheel(
     selectedIndex: Int,
     contentDescription: String?,
     looping: Boolean,
-    onSelectedIndexChange: (Int) -> Unit,
+    onSettle: (index: Int, laps: Int) -> Unit,
 ) {
     val colors = JengaWheelPickerDefaults.colors()
     val textStyle = JengaWheelPickerDefaults.textStyle
     WheelPicker(
         items = items,
         selectedIndex = selectedIndex.coerceAtLeast(0),
-        onSelectedIndexChange = onSelectedIndexChange,
+        onSettle = onSettle,
         modifier = Modifier.width(WheelWidth),
         itemLabel = ::twoDigits,
         contentDescription = contentDescription,

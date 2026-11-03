@@ -72,6 +72,7 @@ public class JengaChipColors(
  * @property selectedTextStyle merged onto the chip's text style while selected, so set only what
  *   changes, e.g. `TextStyle(fontWeight = FontWeight.Medium)`.
  * @property colors the color set.
+ * @property iconSpacing the gap between the leading icon, the label and the trailing content.
  */
 @Poko
 @Immutable
@@ -82,7 +83,18 @@ public class JengaChipStyle(
     public val textStyle: TextStyle? = null,
     public val selectedTextStyle: TextStyle? = null,
     public val colors: JengaChipColors? = null,
+    public val iconSpacing: Dp? = null,
 ) {
+    @Deprecated("Kept for binary compatibility", level = DeprecationLevel.HIDDEN)
+    public constructor(
+        shape: Shape? = null,
+        minHeight: Dp? = null,
+        contentPadding: PaddingValues? = null,
+        textStyle: TextStyle? = null,
+        selectedTextStyle: TextStyle? = null,
+        colors: JengaChipColors? = null,
+    ) : this(shape, minHeight, contentPadding, textStyle, selectedTextStyle, colors, iconSpacing = null)
+
     public fun copy(
         shape: Shape? = this.shape,
         minHeight: Dp? = this.minHeight,
@@ -90,7 +102,18 @@ public class JengaChipStyle(
         textStyle: TextStyle? = this.textStyle,
         selectedTextStyle: TextStyle? = this.selectedTextStyle,
         colors: JengaChipColors? = this.colors,
-    ): JengaChipStyle = JengaChipStyle(shape, minHeight, contentPadding, textStyle, selectedTextStyle, colors)
+        iconSpacing: Dp? = this.iconSpacing,
+    ): JengaChipStyle = JengaChipStyle(shape, minHeight, contentPadding, textStyle, selectedTextStyle, colors, iconSpacing)
+
+    @Deprecated("Kept for binary compatibility", level = DeprecationLevel.HIDDEN)
+    public fun copy(
+        shape: Shape? = this.shape,
+        minHeight: Dp? = this.minHeight,
+        contentPadding: PaddingValues? = this.contentPadding,
+        textStyle: TextStyle? = this.textStyle,
+        selectedTextStyle: TextStyle? = this.selectedTextStyle,
+        colors: JengaChipColors? = this.colors,
+    ): JengaChipStyle = copy(shape, minHeight, contentPadding, textStyle, selectedTextStyle, colors, this.iconSpacing)
 }
 
 /**
@@ -114,6 +137,10 @@ public object JengaChipDefaults {
     /** Label text style. */
     public val textStyle: TextStyle
         @Composable get() = JengaTheme.components.chip?.textStyle ?: JengaTheme.typography.bodySmall
+
+    /** Gap between the leading icon, the label and the trailing content. */
+    public val iconSpacing: Dp
+        @Composable get() = JengaTheme.components.chip?.iconSpacing ?: JengaTheme.spacing.xs
 
     /** Themed colors for all chip states. */
     @Composable
@@ -153,6 +180,7 @@ public object JengaChipDefaults {
  * @param minHeight the minimum visual height; defaults to the theme's [JengaChipStyle.minHeight], else
  *   [JengaChipDefaults.MinHeight].
  * @param contentPadding padding inside the chip.
+ * @param iconSpacing the gap between the leading icon, the label and the trailing content.
  */
 @Composable
 public fun JengaChip(
@@ -169,44 +197,19 @@ public fun JengaChip(
     selectedTextStyle: TextStyle = textStyle.merge(JengaTheme.components.chip?.selectedTextStyle),
     minHeight: Dp = JengaTheme.components.chip?.minHeight ?: JengaChipDefaults.MinHeight,
     contentPadding: PaddingValues = JengaChipDefaults.contentPadding,
+    iconSpacing: Dp = JengaChipDefaults.iconSpacing,
 ) {
-    val container = when {
-        !enabled -> colors.disabledContainer
-        selected -> colors.selectedContainer
-        else -> colors.unselectedContainer
-    }
-    val contentColor = when {
-        !enabled -> colors.disabledContent
-        selected -> colors.selectedContent
-        else -> colors.unselectedContent
-    }
-    val borderColor = when {
-        !enabled -> Color.Transparent
-        selected -> colors.selectedBorder
-        else -> colors.unselectedBorder
-    }
-
+    val contentColor = chipContentColor(colors, enabled, selected)
     Row(
         modifier = modifier
             .minimumInteractiveComponentSize()
             .clip(shape)
-            .background(container)
-            .then(
-                if (borderColor != Color.Transparent) {
-                    Modifier.border(1.dp, borderColor, shape)
-                } else {
-                    Modifier
-                },
-            )
-            .selectable(
-                selected = selected,
-                enabled = enabled,
-                role = Role.Tab,
-                onClick = onClick,
-            )
+            .background(chipContainerColor(colors, enabled, selected))
+            .chipBorder(chipBorderColor(colors, enabled, selected), shape)
+            .selectable(selected = selected, enabled = enabled, role = Role.Tab, onClick = onClick)
             .defaultMinSize(minHeight = minHeight)
             .padding(contentPadding),
-        horizontalArrangement = Arrangement.spacedBy(JengaTheme.spacing.xs),
+        horizontalArrangement = Arrangement.spacedBy(iconSpacing),
         verticalAlignment = Alignment.CenterVertically,
     ) {
         CompositionLocalProvider(LocalJengaContentColor provides contentColor) {
@@ -220,4 +223,59 @@ public fun JengaChip(
             trailingContent?.invoke()
         }
     }
+}
+
+private fun chipContainerColor(colors: JengaChipColors, enabled: Boolean, selected: Boolean): Color = when {
+    !enabled -> colors.disabledContainer
+    selected -> colors.selectedContainer
+    else -> colors.unselectedContainer
+}
+
+private fun chipContentColor(colors: JengaChipColors, enabled: Boolean, selected: Boolean): Color = when {
+    !enabled -> colors.disabledContent
+    selected -> colors.selectedContent
+    else -> colors.unselectedContent
+}
+
+private fun chipBorderColor(colors: JengaChipColors, enabled: Boolean, selected: Boolean): Color = when {
+    !enabled -> Color.Transparent
+    selected -> colors.selectedBorder
+    else -> colors.unselectedBorder
+}
+
+private fun Modifier.chipBorder(color: Color, shape: Shape): Modifier = if (color == Color.Transparent) this else border(1.dp, color, shape)
+
+@Deprecated("Kept for binary compatibility", level = DeprecationLevel.HIDDEN)
+@Composable
+public fun JengaChip(
+    label: String,
+    selected: Boolean,
+    onClick: () -> Unit,
+    modifier: Modifier = Modifier,
+    enabled: Boolean = true,
+    leadingIcon: (@Composable () -> Unit)? = null,
+    shape: Shape = JengaChipDefaults.shape,
+    colors: JengaChipColors = JengaChipDefaults.colors(),
+    trailingContent: (@Composable () -> Unit)? = null,
+    textStyle: TextStyle = JengaChipDefaults.textStyle,
+    selectedTextStyle: TextStyle = textStyle.merge(JengaTheme.components.chip?.selectedTextStyle),
+    minHeight: Dp = JengaTheme.components.chip?.minHeight ?: JengaChipDefaults.MinHeight,
+    contentPadding: PaddingValues = JengaChipDefaults.contentPadding,
+) {
+    JengaChip(
+        label = label,
+        selected = selected,
+        onClick = onClick,
+        modifier = modifier,
+        enabled = enabled,
+        leadingIcon = leadingIcon,
+        shape = shape,
+        colors = colors,
+        trailingContent = trailingContent,
+        textStyle = textStyle,
+        selectedTextStyle = selectedTextStyle,
+        minHeight = minHeight,
+        contentPadding = contentPadding,
+        iconSpacing = JengaChipDefaults.iconSpacing,
+    )
 }

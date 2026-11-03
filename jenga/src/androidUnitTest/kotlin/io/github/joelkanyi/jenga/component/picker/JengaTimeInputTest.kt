@@ -50,6 +50,32 @@ class JengaTimeInputTest {
     }
 
     @Test
+    fun scrollingTheHourPastTwelveFlipsAmAndPm() {
+        assertEquals(LocalTime(12, 30), twelveHour.afterHourScroll(LocalTime(11, 30), shownHour = 12, laps = 1))
+        assertEquals(LocalTime(11, 15), twelveHour.afterHourScroll(LocalTime(12, 15), shownHour = 11, laps = -1))
+        assertEquals(LocalTime(1, 0), twelveHour.afterHourScroll(LocalTime(22, 0), shownHour = 1, laps = 1))
+        assertEquals(LocalTime(3, 0), twelveHour.afterHourScroll(LocalTime(10, 0), shownHour = 3, laps = 0))
+        assertEquals(LocalTime(10, 0), twelveHour.afterHourScroll(LocalTime(10, 0), shownHour = 10, laps = 2))
+    }
+
+    @Test
+    fun twentyFourHourWheelNeverFlips() {
+        val clock = TwelveHourClock(is24Hour = true)
+        assertEquals(LocalTime(1, 0), clock.afterHourScroll(LocalTime(23, 0), shownHour = 1, laps = 1))
+    }
+
+    @Test
+    fun hourWheelWrapsBetweenElevenAndTwelve() {
+        assertEquals(listOf(12, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11), twelveHour.wheelHours)
+        val rows = WheelRows(optionCount = 12, looping = true)
+        val elevenRow = rows.firstRow(11)
+        assertEquals(1, rows.lapsBetween(elevenRow, elevenRow + 1))
+        assertEquals(-1, rows.lapsBetween(elevenRow + 1, elevenRow))
+        assertEquals(0, rows.lapsBetween(elevenRow - 5, elevenRow))
+        assertEquals(0, WheelRows(optionCount = 12, looping = false).lapsBetween(0, 11))
+    }
+
+    @Test
     fun twentyFourHourClockUsesTheHourAsIs() {
         val clock = TwelveHourClock(is24Hour = true)
         assertEquals(0, clock.shownHour(LocalTime(0, 0)))

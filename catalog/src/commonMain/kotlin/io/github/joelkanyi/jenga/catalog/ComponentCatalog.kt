@@ -150,6 +150,7 @@ import io.github.joelkanyi.jenga.component.tabs.JengaSegmentedControl
 import io.github.joelkanyi.jenga.component.tabs.JengaTabs
 import io.github.joelkanyi.jenga.component.text.JengaText
 import io.github.joelkanyi.jenga.component.textfield.JengaSelectField
+import io.github.joelkanyi.jenga.component.textfield.JengaTextArea
 import io.github.joelkanyi.jenga.component.textfield.JengaTextField
 import io.github.joelkanyi.jenga.component.textfield.JengaTextFieldStatus
 import io.github.joelkanyi.jenga.component.timeline.JengaTimelineItem
@@ -287,6 +288,31 @@ fun componentEntries(): List<CatalogEntry> = listOf(
     ) {
         var text by remember { mutableStateOf("") }
         JengaTextField(text, { text = it }, label = "Email", placeholder = "you@example.com")
+    },
+    CatalogEntry(
+        name = "Text area",
+        group = "Inputs",
+        description = "A multi-line box for comments and notes. Grows as you type, then scrolls; optional character limit with a counter.",
+        keywords = "textarea comment notes description multiline reason counter limit",
+        code = """
+            var notes by remember { mutableStateOf("") }
+            JengaTextArea(
+                value = notes,
+                onValueChange = { notes = it },
+                label = "Visit notes",
+                placeholder = "What happened on the visit?",
+                maxLength = 200,
+            )
+        """.trimIndent(),
+    ) {
+        var notes by remember { mutableStateOf("") }
+        JengaTextArea(
+            value = notes,
+            onValueChange = { notes = it },
+            label = "Visit notes",
+            placeholder = "What happened on the visit?",
+            maxLength = 200,
+        )
     },
     CatalogEntry(
         name = "OTP field",

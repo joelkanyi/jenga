@@ -94,7 +94,7 @@ Every block has a `*Defaults` object and closed `enum` variants. Browse them all
 |------|--------|
 | Text | `JengaText` |
 | Buttons and links | `JengaButton`, `JengaIconButton`, `JengaFab`, `JengaExtendedFab`, `JengaLink` |
-| Inputs | `JengaTextField`, `JengaSelectField`, `JengaSearchField`, `JengaSearchTrigger`, `JengaSlider`, `JengaStepper`, `JengaDatePicker`, `JengaDatePickerDialog`, `JengaCalendar`, `JengaWheelPicker`, `JengaDateOfBirthPicker`, `JengaTimeInput`, `JengaTimePickerDialog`, `JengaOtpField`, `JengaOtpResend`, `JengaOtpVerification` |
+| Inputs | `JengaTextField`, `JengaTextArea`, `JengaSelectField`, `JengaSearchField`, `JengaSearchTrigger`, `JengaSlider`, `JengaStepper`, `JengaDatePicker`, `JengaDatePickerDialog`, `JengaCalendar`, `JengaWheelPicker`, `JengaDateOfBirthPicker`, `JengaTimeInput`, `JengaTimePickerDialog`, `JengaOtpField`, `JengaOtpResend`, `JengaOtpVerification` |
 | Selection | `JengaToggle`, `JengaCheckbox`, `JengaRadioButton`, `JengaSegmentedControl`, `JengaRadioListItem`, `JengaCheckboxListItem` |
 | Containers | `JengaCard`, `JengaCardFooter`, `JengaListItem`, `JengaKeyValueRow`, `JengaDivider`, `JengaExpandableRow`, `JengaSwipeToDismiss` |
 | Status and tags | `JengaBadge`, `JengaChip`, `JengaStatusPill`, `JengaBanner`, `JengaInfoBar`, `JengaVerdictBar` |

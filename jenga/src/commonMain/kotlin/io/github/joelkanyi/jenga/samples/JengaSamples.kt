@@ -121,6 +121,7 @@ import io.github.joelkanyi.jenga.component.tabs.JengaSegmentedControl
 import io.github.joelkanyi.jenga.component.tabs.JengaTabs
 import io.github.joelkanyi.jenga.component.text.JengaText
 import io.github.joelkanyi.jenga.component.textfield.JengaSelectField
+import io.github.joelkanyi.jenga.component.textfield.JengaTextArea
 import io.github.joelkanyi.jenga.component.textfield.JengaTextField
 import io.github.joelkanyi.jenga.component.timeline.JengaTimelineItem
 import io.github.joelkanyi.jenga.component.timeline.JengaTimelinePosition
@@ -222,6 +223,18 @@ internal fun JengaTextFieldSample() {
         onValueChange = { value = it },
         label = "Ticket code",
         placeholder = "TKT-…",
+    )
+}
+
+@Composable
+internal fun JengaTextAreaSample() {
+    var notes by remember { mutableStateOf("") }
+    JengaTextArea(
+        value = notes,
+        onValueChange = { notes = it },
+        label = "Visit notes",
+        placeholder = "What happened on the visit?",
+        maxLength = 512,
     )
 }
 

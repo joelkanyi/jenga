@@ -60,6 +60,19 @@ public class JengaWheelPickerColors(
     ): JengaWheelPickerColors = JengaWheelPickerColors(selectedContainer, selectedContent, content)
 }
 
+/**
+ * Theme-wide style for every wheel, set through
+ * [io.github.joelkanyi.jenga.theme.JengaComponentStyles.wheelPicker]. A `null` value keeps Jenga's
+ * default; colors passed to a single call still win.
+ */
+@Poko
+@Immutable
+public class JengaWheelPickerStyle(
+    public val colors: JengaWheelPickerColors? = null,
+) {
+    public fun copy(colors: JengaWheelPickerColors? = this.colors): JengaWheelPickerStyle = JengaWheelPickerStyle(colors)
+}
+
 /** Defaults and token mappings for [JengaWheelPicker]. */
 public object JengaWheelPickerDefaults {
     /** Number of rows visible at once; odd, so one row sits in the middle. */
@@ -76,9 +89,10 @@ public object JengaWheelPickerDefaults {
     public val textStyle: TextStyle
         @Composable get() = JengaTheme.typography.bodyMedium
 
-    /** Themed colors. */
+    /** Themed colors: the theme's [JengaWheelPickerStyle.colors] when set. */
     @Composable
     public fun colors(): JengaWheelPickerColors {
+        JengaTheme.components.wheelPicker?.colors?.let { return it }
         val c = JengaTheme.colors
         return JengaWheelPickerColors(
             selectedContainer = c.surfaceSunk,
@@ -134,7 +148,7 @@ public fun <T> JengaWheelPicker(
     WheelPicker(
         items = items,
         selectedIndex = selectedIndex,
-        onSelectedIndexChange = onSelectedIndexChange,
+        onSettle = { index, _ -> onSelectedIndexChange(index) },
         modifier = modifier,
         itemLabel = itemLabel,
         contentDescription = contentDescription,
@@ -162,6 +176,8 @@ internal class WheelRows(private val optionCount: Int, private val looping: Bool
         return row + step
     }
 
+    fun lapsBetween(fromRow: Int, toRow: Int): Int = if (looping && optionCount > 0) toRow / optionCount - fromRow / optionCount else 0
+
     fun firstRow(option: Int): Int = rowNear(option, if (looping) optionCount * (LoopCopies / 2) else 0)
 }
 
@@ -171,7 +187,7 @@ private const val LoopCopies = 1000
 internal fun <T> WheelPicker(
     items: List<T>,
     selectedIndex: Int,
-    onSelectedIndexChange: (Int) -> Unit,
+    onSettle: (index: Int, laps: Int) -> Unit,
     itemLabel: (T) -> String,
     contentDescription: String?,
     visibleItemCount: Int,
@@ -187,7 +203,7 @@ internal fun <T> WheelPicker(
     val listState = rememberLazyListState(initialFirstVisibleItemIndex = rows.firstRow(selectedIndex.coerceIn(0, rows.lastOption)))
     val scope = rememberCoroutineScope()
     val centeredRow by rememberCenteredRow(listState, rows, itemHeight)
-    KeepWheelOnSelection(listState, rows, { centeredRow }, selectedIndex, onSelectedIndexChange)
+    KeepWheelOnSelection(listState, rows, { centeredRow }, selectedIndex, onSettle)
     val selectedLabel = items.getOrNull(rows.optionAt(centeredRow))?.let(itemLabel)
     Box(
         modifier = modifier
@@ -250,25 +266,31 @@ private fun KeepWheelOnSelection(
     rows: WheelRows,
     centeredRow: () -> Int,
     selectedIndex: Int,
-    onSelectedIndexChange: (Int) -> Unit,
+    onSettle: (index: Int, laps: Int) -> Unit,
 ) {
     val currentSelected by rememberUpdatedState(selectedIndex)
-    val currentOnChange by rememberUpdatedState(onSelectedIndexChange)
+    val currentOnSettle by rememberUpdatedState(onSettle)
     val currentCenteredRow by rememberUpdatedState(centeredRow)
     var settleCount by remember { mutableIntStateOf(0) }
+    var lastSettledRow by remember { mutableIntStateOf(listState.firstVisibleItemIndex) }
     LaunchedEffect(listState, rows) {
         snapshotFlow { listState.isScrollInProgress }
             .filter { !it }
             .collect {
-                val settled = rows.optionAt(currentCenteredRow())
-                if (settled != currentSelected) currentOnChange(settled)
+                val row = currentCenteredRow()
+                val laps = rows.lapsBetween(lastSettledRow, row)
+                lastSettledRow = row
+                val settled = rows.optionAt(row)
+                if (settled != currentSelected || laps != 0) currentOnSettle(settled, laps)
                 settleCount++
             }
     }
     LaunchedEffect(selectedIndex, rows, settleCount) {
         val target = selectedIndex.coerceIn(0, rows.lastOption)
         val row = currentCenteredRow()
-        if (!listState.isScrollInProgress && rows.optionAt(row) != target) listState.scrollToItem(rows.rowNear(target, row))
+        if (listState.isScrollInProgress || rows.optionAt(row) == target) return@LaunchedEffect
+        lastSettledRow = rows.rowNear(target, row)
+        listState.scrollToItem(lastSettledRow)
     }
 }
 

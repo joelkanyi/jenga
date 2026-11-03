@@ -21,6 +21,7 @@ import io.github.joelkanyi.jenga.component.list.JengaListItemStyle
 import io.github.joelkanyi.jenga.component.list.JengaSelectionListItemStyle
 import io.github.joelkanyi.jenga.component.menu.JengaDropdownMenuStyle
 import io.github.joelkanyi.jenga.component.navigation.JengaNavigationRailItemStyle
+import io.github.joelkanyi.jenga.component.picker.JengaWheelPickerStyle
 import io.github.joelkanyi.jenga.component.progress.JengaCircularProgressStyle
 import io.github.joelkanyi.jenga.component.progress.JengaProgressStyle
 import io.github.joelkanyi.jenga.component.scaffold.JengaTopAppBarStyle
@@ -83,6 +84,9 @@ import io.github.joelkanyi.jenga.pattern.JengaSectionHeaderStyles
  * @property fab styles every [io.github.joelkanyi.jenga.component.fab.JengaFab].
  * @property navigationRailItem styles every [io.github.joelkanyi.jenga.component.navigation.JengaNavigationRailItem].
  * @property thumbnailStrip styles every [io.github.joelkanyi.jenga.component.shelf.JengaThumbnailStrip].
+ * @property wheelPicker styles every wheel: [io.github.joelkanyi.jenga.component.picker.JengaWheelPicker],
+ *   [io.github.joelkanyi.jenga.component.picker.JengaTimeInput] and
+ *   [io.github.joelkanyi.jenga.component.picker.JengaDateOfBirthPicker].
  */
 @Poko
 @Immutable
@@ -118,7 +122,43 @@ public class JengaComponentStyles(
     public val fab: JengaFabStyle? = null,
     public val navigationRailItem: JengaNavigationRailItemStyle? = null,
     public val thumbnailStrip: JengaThumbnailStripStyle? = null,
+    public val wheelPicker: JengaWheelPickerStyle? = null,
 ) {
+    @Deprecated("Kept for binary compatibility", level = DeprecationLevel.HIDDEN)
+    public constructor(
+        button: JengaButtonStyle? = null,
+        iconButton: JengaIconButtonStyle? = null,
+        textField: JengaTextFieldStyle? = null,
+        searchField: JengaSearchFieldStyle? = null,
+        searchTrigger: JengaSearchFieldStyle? = null,
+        listItem: JengaListItemStyle? = null,
+        card: JengaCardStyle? = null,
+        chip: JengaChipStyle? = null,
+        dialog: JengaDialogStyle? = null,
+        snackbar: JengaSnackbarStyle? = null,
+        sectionHeader: JengaSectionHeaderStyles? = null,
+        progress: JengaProgressStyle? = null,
+        selectionListItem: JengaSelectionListItemStyle? = null,
+        keyValueRow: JengaKeyValueRowStyle? = null,
+        state: JengaStateStyle? = null,
+        iconTile: JengaIconTileStyle? = null,
+        listSheet: JengaListSheetStyle? = null,
+        link: JengaLinkStyle? = null,
+        segmentedControl: JengaSegmentedControlStyle? = null,
+        topAppBar: JengaTopAppBarStyle? = null,
+        statusPill: JengaStatusPillStyle? = null,
+        avatar: JengaAvatarStyle? = null,
+        infoBar: JengaInfoBarStyle? = null,
+        circularProgress: JengaCircularProgressStyle? = null,
+        cardFooter: JengaCardFooterStyle? = null,
+        tabs: JengaTabsStyle? = null,
+        stepper: JengaStepperStyle? = null,
+        dropdownMenu: JengaDropdownMenuStyle? = null,
+        fab: JengaFabStyle? = null,
+        navigationRailItem: JengaNavigationRailItemStyle? = null,
+        thumbnailStrip: JengaThumbnailStripStyle? = null,
+    ) : this(button, iconButton, textField, searchField, searchTrigger, listItem, card, chip, dialog, snackbar, sectionHeader, progress, selectionListItem, keyValueRow, state, iconTile, listSheet, link, segmentedControl, topAppBar, statusPill, avatar, infoBar, circularProgress, cardFooter, tabs, stepper, dropdownMenu, fab, navigationRailItem, thumbnailStrip, wheelPicker = null)
+
     public fun copy(
         button: JengaButtonStyle? = this.button,
         iconButton: JengaIconButtonStyle? = this.iconButton,
@@ -151,6 +191,7 @@ public class JengaComponentStyles(
         fab: JengaFabStyle? = this.fab,
         navigationRailItem: JengaNavigationRailItemStyle? = this.navigationRailItem,
         thumbnailStrip: JengaThumbnailStripStyle? = this.thumbnailStrip,
+        wheelPicker: JengaWheelPickerStyle? = this.wheelPicker,
     ): JengaComponentStyles = JengaComponentStyles(
         button,
         iconButton,
@@ -183,7 +224,43 @@ public class JengaComponentStyles(
         fab,
         navigationRailItem,
         thumbnailStrip,
+        wheelPicker,
     )
+
+    @Deprecated("Kept for binary compatibility", level = DeprecationLevel.HIDDEN)
+    public fun copy(
+        button: JengaButtonStyle? = this.button,
+        iconButton: JengaIconButtonStyle? = this.iconButton,
+        textField: JengaTextFieldStyle? = this.textField,
+        searchField: JengaSearchFieldStyle? = this.searchField,
+        searchTrigger: JengaSearchFieldStyle? = this.searchTrigger,
+        listItem: JengaListItemStyle? = this.listItem,
+        card: JengaCardStyle? = this.card,
+        chip: JengaChipStyle? = this.chip,
+        dialog: JengaDialogStyle? = this.dialog,
+        snackbar: JengaSnackbarStyle? = this.snackbar,
+        sectionHeader: JengaSectionHeaderStyles? = this.sectionHeader,
+        progress: JengaProgressStyle? = this.progress,
+        selectionListItem: JengaSelectionListItemStyle? = this.selectionListItem,
+        keyValueRow: JengaKeyValueRowStyle? = this.keyValueRow,
+        state: JengaStateStyle? = this.state,
+        iconTile: JengaIconTileStyle? = this.iconTile,
+        listSheet: JengaListSheetStyle? = this.listSheet,
+        link: JengaLinkStyle? = this.link,
+        segmentedControl: JengaSegmentedControlStyle? = this.segmentedControl,
+        topAppBar: JengaTopAppBarStyle? = this.topAppBar,
+        statusPill: JengaStatusPillStyle? = this.statusPill,
+        avatar: JengaAvatarStyle? = this.avatar,
+        infoBar: JengaInfoBarStyle? = this.infoBar,
+        circularProgress: JengaCircularProgressStyle? = this.circularProgress,
+        cardFooter: JengaCardFooterStyle? = this.cardFooter,
+        tabs: JengaTabsStyle? = this.tabs,
+        stepper: JengaStepperStyle? = this.stepper,
+        dropdownMenu: JengaDropdownMenuStyle? = this.dropdownMenu,
+        fab: JengaFabStyle? = this.fab,
+        navigationRailItem: JengaNavigationRailItemStyle? = this.navigationRailItem,
+        thumbnailStrip: JengaThumbnailStripStyle? = this.thumbnailStrip,
+    ): JengaComponentStyles = copy(button, iconButton, textField, searchField, searchTrigger, listItem, card, chip, dialog, snackbar, sectionHeader, progress, selectionListItem, keyValueRow, state, iconTile, listSheet, link, segmentedControl, topAppBar, statusPill, avatar, infoBar, circularProgress, cardFooter, tabs, stepper, dropdownMenu, fab, navigationRailItem, thumbnailStrip, wheelPicker = this.wheelPicker)
 }
 
 internal val LocalJengaComponentStyles = staticCompositionLocalOf { JengaComponentStyles() }

@@ -219,7 +219,7 @@ Code scanning: `JengaScannerViewfinder` and `JengaScanFeedback`.
 
 # Package io.github.joelkanyi.jenga.component.textfield
 
-`JengaTextField` and `JengaSelectField`.
+`JengaTextField`, `JengaTextArea` (multi-line comments with an optional character counter) and `JengaSelectField`.
 
 # Package io.github.joelkanyi.jenga.component.timeline
 

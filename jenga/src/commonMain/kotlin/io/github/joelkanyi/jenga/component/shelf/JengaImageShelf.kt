@@ -28,6 +28,8 @@ import androidx.compose.ui.unit.dp
 import io.github.joelkanyi.jenga.component.action.JengaAction
 import io.github.joelkanyi.jenga.component.image.JengaImage
 import io.github.joelkanyi.jenga.component.image.JengaImageFit
+import io.github.joelkanyi.jenga.component.link.JengaLink
+import io.github.joelkanyi.jenga.component.link.JengaLinkColors
 import io.github.joelkanyi.jenga.component.text.JengaText
 import io.github.joelkanyi.jenga.theme.JengaTheme
 
@@ -62,6 +64,7 @@ public object JengaShelfDefaults {
  * @param title the shelf title.
  * @param modifier the [Modifier] for the shelf.
  * @param eyebrow an optional small label above the title (e.g. a promo reason).
+ * @param subtitle an optional line under the title (e.g. "Picked for your last order").
  * @param action optional trailing header action (label plus handler), e.g. "See all".
  * @param gutter horizontal inset applied to the header and the scroll content.
  * @param content the row items, laid out left-to-right in a scrolling row.
@@ -71,6 +74,7 @@ public fun JengaImageShelf(
     title: String,
     modifier: Modifier = Modifier,
     eyebrow: String? = null,
+    subtitle: String? = null,
     action: JengaAction? = null,
     gutter: Dp = JengaShelfDefaults.Gutter,
     content: @Composable () -> Unit,
@@ -79,36 +83,7 @@ public fun JengaImageShelf(
         modifier = modifier.fillMaxWidth(),
         verticalArrangement = Arrangement.spacedBy(JengaTheme.spacing.md),
     ) {
-        Row(
-            modifier = Modifier.fillMaxWidth().padding(horizontal = gutter),
-            verticalAlignment = Alignment.Bottom,
-        ) {
-            Column(Modifier.weight(1f)) {
-                if (eyebrow != null) {
-                    JengaText(
-                        text = eyebrow,
-                        style = JengaTheme.typography.label,
-                        color = JengaTheme.colors.onBrandSubtle,
-                        maxLines = 1,
-                    )
-                }
-                JengaText(
-                    text = title,
-                    style = JengaTheme.typography.headingSmall,
-                    color = JengaTheme.colors.textPrimary,
-                    maxLines = 1,
-                )
-            }
-            if (action != null) {
-                JengaText(
-                    text = action.label,
-                    style = JengaTheme.typography.titleSmall,
-                    color = JengaTheme.colors.brand,
-                    maxLines = 1,
-                    modifier = Modifier.clickable(onClick = action.onClick),
-                )
-            }
-        }
+        ShelfHeader(title, eyebrow, subtitle, action, Modifier.fillMaxWidth().padding(horizontal = gutter))
         Row(
             modifier = Modifier
                 .fillMaxWidth()
@@ -119,6 +94,63 @@ public fun JengaImageShelf(
             content()
         }
     }
+}
+
+@Composable
+private fun ShelfHeader(title: String, eyebrow: String?, subtitle: String?, action: JengaAction?, modifier: Modifier = Modifier) {
+    Row(modifier = modifier, verticalAlignment = Alignment.Bottom) {
+        ShelfTitles(eyebrow, title, subtitle, Modifier.weight(1f))
+        if (action != null) {
+            JengaLink(
+                text = action.label,
+                onClick = action.onClick,
+                style = JengaTheme.typography.titleSmall,
+                colors = JengaLinkColors(content = JengaTheme.colors.brand, disabledContent = JengaTheme.colors.contentDisabled),
+                underline = false,
+            )
+        }
+    }
+}
+
+@Composable
+private fun ShelfTitles(eyebrow: String?, title: String, subtitle: String?, modifier: Modifier = Modifier) {
+    Column(modifier) {
+        if (eyebrow != null) {
+            JengaText(
+                text = eyebrow,
+                style = JengaTheme.typography.label,
+                color = JengaTheme.colors.onBrandSubtle,
+                maxLines = 1,
+            )
+        }
+        JengaText(
+            text = title,
+            style = JengaTheme.typography.headingSmall,
+            color = JengaTheme.colors.textPrimary,
+            maxLines = 1,
+        )
+        if (subtitle != null) {
+            JengaText(
+                text = subtitle,
+                style = JengaTheme.typography.bodySmall,
+                color = JengaTheme.colors.textMuted,
+                maxLines = 1,
+            )
+        }
+    }
+}
+
+@Deprecated("Kept for binary compatibility", level = DeprecationLevel.HIDDEN)
+@Composable
+public fun JengaImageShelf(
+    title: String,
+    modifier: Modifier = Modifier,
+    eyebrow: String? = null,
+    action: JengaAction? = null,
+    gutter: Dp = JengaShelfDefaults.Gutter,
+    content: @Composable () -> Unit,
+) {
+    JengaImageShelf(title = title, modifier = modifier, eyebrow = eyebrow, action = action, gutter = gutter, content = content)
 }
 
 /**

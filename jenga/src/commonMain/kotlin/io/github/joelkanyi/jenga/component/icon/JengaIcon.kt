@@ -20,6 +20,7 @@ import io.github.joelkanyi.jenga.resources.jenga_ic_bell
 import io.github.joelkanyi.jenga.resources.jenga_ic_bulb
 import io.github.joelkanyi.jenga.resources.jenga_ic_calendar
 import io.github.joelkanyi.jenga.resources.jenga_ic_camera
+import io.github.joelkanyi.jenga.resources.jenga_ic_camera_off
 import io.github.joelkanyi.jenga.resources.jenga_ic_chart
 import io.github.joelkanyi.jenga.resources.jenga_ic_check
 import io.github.joelkanyi.jenga.resources.jenga_ic_check_circle
@@ -39,6 +40,7 @@ import io.github.joelkanyi.jenga.resources.jenga_ic_download
 import io.github.joelkanyi.jenga.resources.jenga_ic_eye
 import io.github.joelkanyi.jenga.resources.jenga_ic_eye_off
 import io.github.joelkanyi.jenga.resources.jenga_ic_flash
+import io.github.joelkanyi.jenga.resources.jenga_ic_flash_auto
 import io.github.joelkanyi.jenga.resources.jenga_ic_flash_off
 import io.github.joelkanyi.jenga.resources.jenga_ic_heart
 import io.github.joelkanyi.jenga.resources.jenga_ic_history
@@ -170,6 +172,8 @@ public object JengaIcons {
         @Composable get() = vectorResource(Res.drawable.jenga_ic_flash)
     public val FlashOff: ImageVector
         @Composable get() = vectorResource(Res.drawable.jenga_ic_flash_off)
+    public val FlashAuto: ImageVector
+        @Composable get() = vectorResource(Res.drawable.jenga_ic_flash_auto)
     public val Keyboard: ImageVector
         @Composable get() = vectorResource(Res.drawable.jenga_ic_keyboard)
     public val History: ImageVector
@@ -252,6 +256,8 @@ public object JengaIcons {
         @Composable get() = vectorResource(Res.drawable.jenga_ic_pencil)
     public val Camera: ImageVector
         @Composable get() = vectorResource(Res.drawable.jenga_ic_camera)
+    public val CameraOff: ImageVector
+        @Composable get() = vectorResource(Res.drawable.jenga_ic_camera_off)
     public val ImagePlus: ImageVector
         @Composable get() = vectorResource(Res.drawable.jenga_ic_image_plus)
     public val Images: ImageVector

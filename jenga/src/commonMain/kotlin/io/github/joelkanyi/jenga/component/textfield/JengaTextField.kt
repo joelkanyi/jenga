@@ -238,98 +238,229 @@ public fun JengaTextField(
     contentPadding: PaddingValues = JengaTextFieldDefaults.contentPadding(singleLine),
     focusRingWidth: Dp = JengaTheme.components.textField?.focusRingWidth ?: JengaTextFieldDefaults.FocusRingWidth,
 ) {
-    val c = JengaTheme.colors
-    val interactionSource = remember { MutableInteractionSource() }
-    val focused by interactionSource.collectIsFocusedAsState()
+    JengaTextFieldLayout(
+        value = value,
+        onValueChange = onValueChange,
+        modifier = modifier,
+        label = label,
+        placeholder = placeholder,
+        status = status,
+        supportingText = supportingText,
+        counter = null,
+        enabled = enabled,
+        readOnly = readOnly,
+        lines = if (singleLine) TextFieldLines.Single else TextFieldLines(minLines = 1, maxLines = Int.MAX_VALUE),
+        leadingIcon = leadingIcon,
+        trailingIcon = trailingIcon,
+        visualTransformation = visualTransformation,
+        keyboardOptions = keyboardOptions,
+        keyboardActions = keyboardActions,
+        look = TextFieldLook(shape, colors, textStyle, minHeight, contentPadding, focusRingWidth),
+    )
+}
 
-    val borderColor = when {
-        !enabled -> colors.disabledBorder
-        status == JengaTextFieldStatus.Error -> c.error
-        status == JengaTextFieldStatus.Success -> c.success
-        focused -> colors.focusedBorder
-        else -> colors.border
-    }
-    val borderWidth = if (focused || status != JengaTextFieldStatus.Default) 2.dp else 1.dp
-    val container = when {
-        !enabled -> colors.disabledContainer
-        focused -> colors.focusedContainer
-        else -> colors.container
-    }
-    val contentColor = if (enabled) colors.text else colors.disabledText
+internal class TextFieldLines(val minLines: Int, val maxLines: Int) {
+    val singleLine: Boolean get() = maxLines == 1
 
+    companion object {
+        val Single = TextFieldLines(minLines = 1, maxLines = 1)
+    }
+}
+
+internal class TextFieldLook(
+    val shape: Shape,
+    val colors: JengaTextFieldColors,
+    val textStyle: TextStyle,
+    val minHeight: Dp,
+    val contentPadding: PaddingValues,
+    val focusRingWidth: Dp,
+)
+
+internal class TextFieldCounter(val text: String, val limitReached: Boolean)
+
+@Composable
+internal fun JengaTextFieldLayout(
+    value: String,
+    onValueChange: (String) -> Unit,
+    label: String?,
+    placeholder: String?,
+    status: JengaTextFieldStatus,
+    supportingText: String?,
+    counter: TextFieldCounter?,
+    enabled: Boolean,
+    readOnly: Boolean,
+    lines: TextFieldLines,
+    leadingIcon: (@Composable () -> Unit)?,
+    trailingIcon: (@Composable () -> Unit)?,
+    visualTransformation: VisualTransformation,
+    keyboardOptions: KeyboardOptions,
+    keyboardActions: KeyboardActions,
+    look: TextFieldLook,
+    modifier: Modifier = Modifier,
+) {
     Column(
         modifier = modifier,
         verticalArrangement = Arrangement.spacedBy(JengaTheme.spacing.xs),
     ) {
         if (label != null) {
-            JengaText(
-                text = label,
-                style = JengaTheme.typography.bodySmall,
-                color = c.textSecondary,
-            )
+            JengaText(text = label, style = JengaTheme.typography.bodySmall, color = JengaTheme.colors.textSecondary)
         }
-
-        BasicTextField(
+        FieldInput(
             value = value,
             onValueChange = onValueChange,
-            modifier = Modifier.fillMaxWidth(),
+            placeholder = placeholder,
+            status = status,
             enabled = enabled,
             readOnly = readOnly,
-            textStyle = textStyle.copy(color = contentColor),
-            cursorBrush = SolidColor(c.brand),
-            singleLine = singleLine,
+            lines = lines,
+            leadingIcon = leadingIcon,
+            trailingIcon = trailingIcon,
             visualTransformation = visualTransformation,
             keyboardOptions = keyboardOptions,
             keyboardActions = keyboardActions,
-            interactionSource = interactionSource,
-            decorationBox = { innerTextField ->
-                Row(
-                    modifier = Modifier
-                        // Soft focus halo that hugs the field: a translucent fill,
-                        // not a second hard stroke. 3dp is reserved always so focus
-                        // doesn't shift layout.
-                        .clip(shape)
-                        .background(if (focused) colors.focusRing else Color.Transparent)
-                        .padding(focusRingWidth)
-                        .clip(shape)
-                        .background(container)
-                        .border(borderWidth, borderColor, shape)
-                        .defaultMinSize(minHeight = minHeight)
-                        .padding(contentPadding),
-                    horizontalArrangement = Arrangement.spacedBy(JengaTheme.spacing.sm),
-                    verticalAlignment = Alignment.CenterVertically,
-                ) {
-                    CompositionLocalProvider(LocalJengaContentColor provides colors.icon) {
-                        leadingIcon?.invoke()
-                    }
-                    Box(modifier = Modifier.weight(1f)) {
-                        if (value.isEmpty() && placeholder != null) {
-                            JengaText(
-                                text = placeholder,
-                                style = textStyle,
-                                color = colors.placeholder,
-                                maxLines = 1,
-                            )
-                        }
-                        innerTextField()
-                    }
-                    CompositionLocalProvider(LocalJengaContentColor provides colors.icon) {
-                        trailingIcon?.invoke()
-                    }
-                }
-            },
+            look = look,
         )
+        SupportRow(supportingText = supportingText, status = status, counter = counter)
+    }
+}
 
-        if (supportingText != null) {
-            val supportColor = when (status) {
-                JengaTextFieldStatus.Error -> c.error
-                JengaTextFieldStatus.Success -> c.success
-                JengaTextFieldStatus.Default -> c.textMuted
+@Composable
+private fun FieldInput(
+    value: String,
+    onValueChange: (String) -> Unit,
+    placeholder: String?,
+    status: JengaTextFieldStatus,
+    enabled: Boolean,
+    readOnly: Boolean,
+    lines: TextFieldLines,
+    leadingIcon: (@Composable () -> Unit)?,
+    trailingIcon: (@Composable () -> Unit)?,
+    visualTransformation: VisualTransformation,
+    keyboardOptions: KeyboardOptions,
+    keyboardActions: KeyboardActions,
+    look: TextFieldLook,
+) {
+    val interactionSource = remember { MutableInteractionSource() }
+    BasicTextField(
+        value = value,
+        onValueChange = onValueChange,
+        modifier = Modifier.fillMaxWidth(),
+        enabled = enabled,
+        readOnly = readOnly,
+        textStyle = look.textStyle.copy(color = if (enabled) look.colors.text else look.colors.disabledText),
+        cursorBrush = SolidColor(JengaTheme.colors.brand),
+        singleLine = lines.singleLine,
+        minLines = lines.minLines,
+        maxLines = lines.maxLines,
+        visualTransformation = visualTransformation,
+        keyboardOptions = keyboardOptions,
+        keyboardActions = keyboardActions,
+        interactionSource = interactionSource,
+        decorationBox = { innerTextField ->
+            FieldBox(
+                modifier = Modifier.fieldFrame(look, interactionSource, enabled, status),
+                look = look,
+                singleLine = lines.singleLine,
+                placeholder = placeholder.takeIf { value.isEmpty() },
+                leadingIcon = leadingIcon,
+                trailingIcon = trailingIcon,
+                innerTextField = innerTextField,
+            )
+        },
+    )
+}
+
+@Composable
+private fun FieldBox(
+    look: TextFieldLook,
+    singleLine: Boolean,
+    placeholder: String?,
+    leadingIcon: (@Composable () -> Unit)?,
+    trailingIcon: (@Composable () -> Unit)?,
+    modifier: Modifier = Modifier,
+    innerTextField: @Composable () -> Unit,
+) {
+    Row(
+        modifier = modifier,
+        horizontalArrangement = Arrangement.spacedBy(JengaTheme.spacing.sm),
+        verticalAlignment = if (singleLine) Alignment.CenterVertically else Alignment.Top,
+    ) {
+        FieldIcon(leadingIcon, look.colors.icon)
+        Box(modifier = Modifier.weight(1f)) {
+            if (placeholder != null) {
+                Placeholder(placeholder, look, singleLine)
             }
+            innerTextField()
+        }
+        FieldIcon(trailingIcon, look.colors.icon)
+    }
+}
+
+@Composable
+private fun Modifier.fieldFrame(look: TextFieldLook, interactionSource: MutableInteractionSource, enabled: Boolean, status: JengaTextFieldStatus): Modifier {
+    val focused by interactionSource.collectIsFocusedAsState()
+    val borderWidth = if (focused || status != JengaTextFieldStatus.Default) 2.dp else 1.dp
+    return clip(look.shape)
+        .background(if (focused) look.colors.focusRing else Color.Transparent)
+        .padding(look.focusRingWidth)
+        .clip(look.shape)
+        .background(containerColor(look.colors, focused, enabled))
+        .border(borderWidth, borderColor(look.colors, focused, enabled, status), look.shape)
+        .defaultMinSize(minHeight = look.minHeight)
+        .padding(look.contentPadding)
+}
+
+@Composable
+private fun borderColor(colors: JengaTextFieldColors, focused: Boolean, enabled: Boolean, status: JengaTextFieldStatus): Color = when {
+    !enabled -> colors.disabledBorder
+    focused && status == JengaTextFieldStatus.Default -> colors.focusedBorder
+    else -> statusColor(status) ?: colors.border
+}
+
+private fun containerColor(colors: JengaTextFieldColors, focused: Boolean, enabled: Boolean): Color = when {
+    !enabled -> colors.disabledContainer
+    focused -> colors.focusedContainer
+    else -> colors.container
+}
+
+@Composable
+private fun FieldIcon(icon: (@Composable () -> Unit)?, color: Color) {
+    if (icon == null) return
+    CompositionLocalProvider(LocalJengaContentColor provides color, content = icon)
+}
+
+@Composable
+private fun Placeholder(text: String, look: TextFieldLook, singleLine: Boolean) {
+    JengaText(
+        text = text,
+        style = look.textStyle,
+        color = look.colors.placeholder,
+        maxLines = if (singleLine) 1 else Int.MAX_VALUE,
+    )
+}
+
+@Composable
+private fun statusColor(status: JengaTextFieldStatus): Color? = when (status) {
+    JengaTextFieldStatus.Error -> JengaTheme.colors.error
+    JengaTextFieldStatus.Success -> JengaTheme.colors.success
+    JengaTextFieldStatus.Default -> null
+}
+
+@Composable
+private fun SupportRow(supportingText: String?, status: JengaTextFieldStatus, counter: TextFieldCounter?) {
+    if (supportingText == null && counter == null) return
+    Row(horizontalArrangement = Arrangement.spacedBy(JengaTheme.spacing.sm)) {
+        JengaText(
+            text = supportingText.orEmpty(),
+            style = JengaTheme.typography.caption,
+            color = statusColor(status) ?: JengaTheme.colors.textMuted,
+            modifier = Modifier.weight(1f),
+        )
+        if (counter != null) {
             JengaText(
-                text = supportingText,
+                text = counter.text,
                 style = JengaTheme.typography.caption,
-                color = supportColor,
+                color = if (counter.limitReached) JengaTheme.colors.error else JengaTheme.colors.textMuted,
             )
         }
     }

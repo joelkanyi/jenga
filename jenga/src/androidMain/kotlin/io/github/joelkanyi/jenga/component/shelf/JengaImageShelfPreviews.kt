@@ -35,6 +35,7 @@ private fun ShelfShowcase() {
         JengaImageShelf(
             title = "Picked for tonight",
             eyebrow = "BECAUSE YOU'RE COOKING LIGHT",
+            subtitle = "Three dinners under 45 minutes",
             action = JengaAction(label = "See all", onClick = {}),
         ) {
             JengaShelfCard(

@@ -37,3 +37,19 @@ private fun JengaThumbnailStripShowcase() {
         JengaIcon(JengaIcons.Image, contentDescription = null)
     }
 }
+
+@JengaBlockPreviews
+@Composable
+internal fun JengaThumbnailStripWrapPreview() {
+    JengaTheme {
+        JengaThumbnailStrip(
+            count = 7,
+            modifier = Modifier.background(JengaTheme.colors.background).padding(vertical = JengaTheme.spacing.lg),
+            onAdd = {},
+            addContentDescription = "Add photo",
+            layout = JengaThumbnailStripLayout.Wrap,
+        ) {
+            JengaIcon(JengaIcons.Image, contentDescription = null)
+        }
+    }
+}
