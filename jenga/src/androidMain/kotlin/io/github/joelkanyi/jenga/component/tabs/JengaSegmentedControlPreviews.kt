@@ -84,7 +84,7 @@ internal fun JengaSegmentedControlOutlinedPreview() {
             segments = listOf("Laser", "Camera"),
             onSelect = {},
             modifier = Modifier.background(JengaTheme.colors.background).padding(JengaTheme.spacing.lg),
-            colors = JengaSegmentedControlDefaults.colors().copy(selectedBorder = JengaTheme.colors.brand),
+            colors = JengaSegmentedControlDefaults.colors().copy(selectedBorder = JengaTheme.colors.brand.copy(alpha = 0.5f)),
         )
     }
 }

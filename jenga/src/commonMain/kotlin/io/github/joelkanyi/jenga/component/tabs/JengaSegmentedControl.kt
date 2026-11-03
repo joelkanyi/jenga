@@ -257,4 +257,4 @@ private fun segmentContentColor(colors: JengaSegmentedControlColors, selected: B
     else -> colors.unselectedContent
 }
 
-private val SelectedBorderWidth = 2.dp
+private val SelectedBorderWidth = 0.5.dp
