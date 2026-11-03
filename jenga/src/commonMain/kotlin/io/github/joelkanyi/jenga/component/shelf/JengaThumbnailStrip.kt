@@ -4,7 +4,9 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.runtime.Composable
@@ -110,26 +112,74 @@ public object JengaThumbnailStripDefaults {
     }
 }
 
+/** How a [JengaThumbnailStrip] lays out its tiles. */
+public enum class JengaThumbnailStripLayout {
+    /** One row that scrolls sideways. */
+    Row,
+
+    /** Fills the width, then continues on the next line. */
+    Wrap,
+}
+
 /**
- * A horizontal row of square thumbnails (e.g. photos attached to a record) with
- * an optional dashed "add" tile at the end. Each [thumbnail] slot is clipped to
- * [shape] and sized to [thumbnailSize]; put an image and any tap handling there.
+ * Square thumbnails (e.g. photos attached to a record) with an optional dashed "add" tile at the
+ * end, in one scrolling row or wrapped over several lines (see [layout]). Each [thumbnail] slot is
+ * clipped to [shape] and sized to [thumbnailSize]; put an image and any tap handling there.
  *
  * @sample io.github.joelkanyi.jenga.samples.JengaThumbnailStripSample
  *
  * @param count the number of thumbnails.
- * @param modifier the [Modifier] for the row.
+ * @param modifier the [Modifier] for the strip.
  * @param onAdd called when the add tile is tapped; null hides the tile.
  * @param addContentDescription accessibility label for the add tile.
  * @param addIcon the icon inside the add tile; inherits the add color.
  * @param thumbnailSize the edge length of each thumbnail and the add tile; defaults to the theme's
  *   value, else [JengaThumbnailStripDefaults.ThumbnailSize].
- * @param spacing the gap between tiles.
- * @param contentPadding padding around the row.
+ * @param spacing the gap between tiles, across and between lines.
+ * @param contentPadding padding around the tiles.
  * @param shape the tile shape.
  * @param colors the color set; defaults to [JengaThumbnailStripDefaults.colors].
+ * @param layout one scrolling row, or wrapped lines; see [JengaThumbnailStripLayout].
  * @param thumbnail the content of the thumbnail at an index.
  */
+@Suppress("ktlint:compose:content-slot-reused")
+@Composable
+public fun JengaThumbnailStrip(
+    count: Int,
+    modifier: Modifier = Modifier,
+    onAdd: (() -> Unit)? = null,
+    addContentDescription: String? = null,
+    addIcon: @Composable () -> Unit = { JengaIcon(JengaTheme.icons.add, contentDescription = null) },
+    thumbnailSize: Dp = JengaTheme.components.thumbnailStrip?.thumbnailSize ?: JengaThumbnailStripDefaults.ThumbnailSize,
+    spacing: Dp = JengaThumbnailStripDefaults.spacing,
+    contentPadding: PaddingValues = JengaThumbnailStripDefaults.contentPadding,
+    shape: Shape = JengaThumbnailStripDefaults.shape,
+    colors: JengaThumbnailStripColors = JengaThumbnailStripDefaults.colors(),
+    layout: JengaThumbnailStripLayout = JengaThumbnailStripLayout.Row,
+    thumbnail: @Composable (index: Int) -> Unit,
+) {
+    val tile = TileLook(thumbnailSize, shape, colors)
+    when (layout) {
+        JengaThumbnailStripLayout.Row -> LazyRow(
+            modifier = modifier,
+            contentPadding = contentPadding,
+            horizontalArrangement = Arrangement.spacedBy(spacing),
+        ) {
+            items(count) { index -> ThumbnailTile(tile) { thumbnail(index) } }
+            if (onAdd != null) item { AddTile(onAdd, addContentDescription, addIcon, tile) }
+        }
+        JengaThumbnailStripLayout.Wrap -> FlowRow(
+            modifier = modifier.padding(contentPadding),
+            horizontalArrangement = Arrangement.spacedBy(spacing),
+            verticalArrangement = Arrangement.spacedBy(spacing),
+        ) {
+            repeat(count) { index -> ThumbnailTile(tile) { thumbnail(index) } }
+            if (onAdd != null) AddTile(onAdd, addContentDescription, addIcon, tile)
+        }
+    }
+}
+
+@Deprecated("Kept for binary compatibility", level = DeprecationLevel.HIDDEN)
 @Composable
 public fun JengaThumbnailStrip(
     count: Int,
@@ -144,48 +194,58 @@ public fun JengaThumbnailStrip(
     colors: JengaThumbnailStripColors = JengaThumbnailStripDefaults.colors(),
     thumbnail: @Composable (index: Int) -> Unit,
 ) {
-    LazyRow(
+    JengaThumbnailStrip(
+        count = count,
         modifier = modifier,
+        onAdd = onAdd,
+        addContentDescription = addContentDescription,
+        addIcon = addIcon,
+        thumbnailSize = thumbnailSize,
+        spacing = spacing,
         contentPadding = contentPadding,
-        horizontalArrangement = Arrangement.spacedBy(spacing),
+        shape = shape,
+        colors = colors,
+        layout = JengaThumbnailStripLayout.Row,
+        thumbnail = thumbnail,
+    )
+}
+
+private class TileLook(val size: Dp, val shape: Shape, val colors: JengaThumbnailStripColors)
+
+@Composable
+private fun ThumbnailTile(look: TileLook, content: @Composable () -> Unit) {
+    Box(
+        modifier = Modifier
+            .size(look.size)
+            .clip(look.shape)
+            .background(look.colors.thumbnail),
+        contentAlignment = Alignment.Center,
     ) {
-        items(count) { index ->
-            Box(
-                modifier = Modifier
-                    .size(thumbnailSize)
-                    .clip(shape)
-                    .background(colors.thumbnail),
-                contentAlignment = Alignment.Center,
-            ) {
-                thumbnail(index)
+        content()
+    }
+}
+
+@Composable
+private fun AddTile(onAdd: () -> Unit, contentDescription: String?, icon: @Composable () -> Unit, look: TileLook) {
+    Box(
+        modifier = Modifier
+            .size(look.size)
+            .clip(look.shape)
+            .drawBehind {
+                val stroke = JengaThumbnailStripDefaults.AddBorderWidth.toPx()
+                drawOutline(
+                    outline = look.shape.createOutline(size, layoutDirection, this),
+                    color = look.colors.addBorder,
+                    style = Stroke(
+                        width = stroke * 2,
+                        pathEffect = PathEffect.dashPathEffect(floatArrayOf(4.dp.toPx(), 4.dp.toPx())),
+                    ),
+                )
             }
-        }
-        if (onAdd != null) {
-            item {
-                Box(
-                    modifier = Modifier
-                        .size(thumbnailSize)
-                        .clip(shape)
-                        .drawBehind {
-                            val stroke = JengaThumbnailStripDefaults.AddBorderWidth.toPx()
-                            drawOutline(
-                                outline = shape.createOutline(size, layoutDirection, this),
-                                color = colors.addBorder,
-                                style = Stroke(
-                                    width = stroke * 2,
-                                    pathEffect = PathEffect.dashPathEffect(floatArrayOf(4.dp.toPx(), 4.dp.toPx())),
-                                ),
-                            )
-                        }
-                        .clickable(role = Role.Button, onClick = onAdd)
-                        .semantics { addContentDescription?.let { contentDescription = it } },
-                    contentAlignment = Alignment.Center,
-                ) {
-                    CompositionLocalProvider(LocalJengaContentColor provides colors.addContent) {
-                        addIcon()
-                    }
-                }
-            }
-        }
+            .clickable(role = Role.Button, onClick = onAdd)
+            .semantics { contentDescription?.let { this.contentDescription = it } },
+        contentAlignment = Alignment.Center,
+    ) {
+        CompositionLocalProvider(LocalJengaContentColor provides look.colors.addContent, content = icon)
     }
 }
