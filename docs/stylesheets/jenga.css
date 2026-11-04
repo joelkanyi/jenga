@@ -1,0 +1,28 @@
+:root, [data-md-color-scheme="default"] {
+  --md-primary-fg-color: #FF5A1F;
+  --md-primary-fg-color--light: #FF7340;
+  --md-primary-fg-color--dark: #E04D18;
+  --md-accent-fg-color: #E04D18;
+}
+
+[data-md-color-scheme="slate"] {
+  --md-primary-fg-color: #FF7340;
+  --md-primary-fg-color--light: #FF7340;
+  --md-primary-fg-color--dark: #FF5A1F;
+  --md-accent-fg-color: #FF7340;
+}
+
+.jenga-gallery {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 1rem;
+}
+
+.jenga-gallery figure {
+  margin: 0;
+}
+
+.jenga-gallery img {
+  border: 0.5px solid var(--md-default-fg-color--lightest);
+  border-radius: 8px;
+}
