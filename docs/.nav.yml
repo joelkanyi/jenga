@@ -1,0 +1,7 @@
+nav:
+  - Overview: index.md
+  - Get started: get-started.md
+  - Theming: theming.md
+  - Components: components
+  - Changelog: changelog.md
+  - API reference: api/index.html

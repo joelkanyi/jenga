@@ -1,28 +1,240 @@
-:root, [data-md-color-scheme="default"] {
-  --md-primary-fg-color: #FF5A1F;
+[data-md-color-scheme="default"] {
+  --jenga-brand: #FF5A1F;
+  --jenga-brand-strong: #C24012;
+  --jenga-brand-subtle: #FFF0EA;
+  --jenga-surface: #FFFFFF;
+  --jenga-background: #F5F6F8;
+  --jenga-sunk: #EDEEF1;
+  --jenga-border: #E2E5EA;
+  --jenga-text: #171717;
+  --jenga-text-muted: #525252;
+  --jenga-specimen: #F5F6F8;
+
+  --md-primary-fg-color: var(--jenga-brand);
   --md-primary-fg-color--light: #FF7340;
   --md-primary-fg-color--dark: #E04D18;
+  --md-primary-bg-color: #FFFFFF;
   --md-accent-fg-color: #E04D18;
+  --md-accent-bg-color: #FFFFFF;
+  --md-typeset-a-color: var(--jenga-brand-strong);
+  --md-default-fg-color: var(--jenga-text);
+  --md-default-bg-color: var(--jenga-surface);
+  --md-code-bg-color: var(--jenga-background);
+  --md-code-fg-color: var(--jenga-text);
+  --md-typeset-table-color: var(--jenga-border);
+  --md-footer-bg-color: var(--jenga-background);
+  --md-footer-bg-color--dark: var(--jenga-background);
+  --md-footer-fg-color: var(--jenga-text-muted);
+  --md-footer-fg-color--light: var(--jenga-text-muted);
+  --md-footer-fg-color--lighter: var(--jenga-text-muted);
 }
 
 [data-md-color-scheme="slate"] {
-  --md-primary-fg-color: #FF7340;
+  --jenga-brand: #FF5A1F;
+  --jenga-brand-strong: #FF8A5C;
+  --jenga-brand-subtle: rgba(255, 90, 31, 0.16);
+  --jenga-surface: #080A0D;
+  --jenga-background: #0D1117;
+  --jenga-sunk: #191F28;
+  --jenga-border: #313846;
+  --jenga-text: #F2F2F5;
+  --jenga-text-muted: #9494A8;
+  --jenga-specimen: #080A0D;
+
+  --md-primary-fg-color: var(--jenga-brand);
   --md-primary-fg-color--light: #FF7340;
-  --md-primary-fg-color--dark: #FF5A1F;
+  --md-primary-fg-color--dark: #E04D18;
+  --md-primary-bg-color: #FFFFFF;
   --md-accent-fg-color: #FF7340;
+  --md-accent-bg-color: #FFFFFF;
+  --md-typeset-a-color: var(--jenga-brand-strong);
+  --md-default-fg-color: var(--jenga-text);
+  --md-default-fg-color--light: #C9C9D6;
+  --md-default-fg-color--lighter: #9494A8;
+  --md-default-fg-color--lightest: var(--jenga-border);
+  --md-default-bg-color: var(--jenga-surface);
+  --md-code-bg-color: var(--jenga-sunk);
+  --md-code-fg-color: var(--jenga-text);
+  --md-typeset-table-color: var(--jenga-border);
+  --md-footer-bg-color: var(--jenga-background);
+  --md-footer-bg-color--dark: var(--jenga-background);
+  --md-footer-fg-color: var(--jenga-text-muted);
+  --md-footer-fg-color--light: var(--jenga-text-muted);
+  --md-footer-fg-color--lighter: var(--jenga-text-muted);
 }
 
-.jenga-gallery {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-  gap: 1rem;
+.md-header,
+.md-tabs {
+  color: var(--jenga-text);
+  background-color: var(--jenga-surface);
+  box-shadow: none;
 }
 
-.jenga-gallery figure {
-  margin: 0;
+.md-header {
+  border-bottom: 0.5px solid var(--jenga-border);
 }
 
-.jenga-gallery img {
-  border: 0.5px solid var(--md-default-fg-color--lightest);
+.md-tabs {
+  border-bottom: 0.5px solid var(--jenga-border);
+}
+
+.md-tabs__link {
+  opacity: 1;
+  color: var(--jenga-text-muted);
+}
+
+.md-tabs__item--active .md-tabs__link,
+.md-tabs__link:hover {
+  color: var(--jenga-brand-strong);
+}
+
+.md-search__form {
+  background-color: var(--jenga-background);
+  border: 0.5px solid var(--jenga-border);
   border-radius: 8px;
+}
+
+.md-search__form:hover {
+  background-color: var(--jenga-sunk);
+}
+
+.md-search__input,
+.md-search__input::placeholder,
+.md-search__icon {
+  color: var(--jenga-text-muted);
+}
+
+.md-typeset h1 {
+  color: var(--jenga-text);
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+
+.md-typeset h2,
+.md-typeset h3 {
+  font-weight: 600;
+}
+
+.md-typeset .md-button {
+  border-radius: 10px;
+  border-width: 0.5px;
+  color: var(--jenga-text);
+  border-color: var(--jenga-border);
+}
+
+.md-typeset .md-button--primary {
+  color: #FFFFFF;
+  background-color: var(--jenga-brand);
+  border-color: var(--jenga-brand);
+}
+
+.md-typeset .md-button:hover {
+  color: var(--jenga-text);
+  background-color: var(--jenga-sunk);
+  border-color: var(--jenga-border);
+}
+
+.md-typeset .md-button--primary:hover {
+  color: #FFFFFF;
+  background-color: #E04D18;
+  border-color: #E04D18;
+}
+
+.md-typeset table code {
+  white-space: nowrap;
+}
+
+[data-md-color-scheme="default"] .md-typeset code.shiki span {
+  color: var(--shiki-light);
+}
+
+[data-md-color-scheme="slate"] .md-typeset code.shiki span {
+  color: var(--shiki-dark);
+}
+
+[data-md-color-scheme="slate"] .md-typeset pre > code.shiki {
+  color: #BCBEC4;
+}
+
+.md-typeset pre > code {
+  font-size: 0.8rem;
+  line-height: 1.6;
+  padding: 1.1em 1.4em;
+  border-radius: 10px;
+}
+
+.md-typeset .highlight {
+  border: 0.5px solid var(--jenga-border);
+  border-radius: 10px;
+}
+
+.jenga-cards > p {
+  display: contents;
+}
+
+.jenga-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 1rem;
+  margin: 1rem 0 2rem;
+}
+
+.md-typeset .jenga-card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  padding: 0.6rem;
+  color: var(--jenga-text);
+  border: 0.5px solid var(--jenga-border);
+  border-radius: 12px;
+  transition: border-color 125ms;
+}
+
+.md-typeset .jenga-card:hover {
+  color: var(--jenga-text);
+  border-color: var(--jenga-brand);
+}
+
+.md-typeset .jenga-card img {
+  width: 100%;
+  aspect-ratio: 16 / 10;
+  object-fit: contain;
+  background: var(--jenga-specimen);
+  border-radius: 8px;
+  margin-bottom: 0.4rem;
+}
+
+.md-typeset .jenga-card strong {
+  font-weight: 600;
+  padding: 0 0.2rem;
+}
+
+.md-typeset .jenga-card span {
+  color: var(--jenga-text-muted);
+  font-size: 0.7rem;
+  line-height: 1.4;
+  padding: 0 0.2rem;
+}
+
+.md-typeset .jenga-specimen {
+  margin: 1.5rem 0;
+  padding: 0;
+  overflow: hidden;
+  border: 0.5px solid var(--jenga-border);
+  border-radius: 12px;
+  background: var(--jenga-specimen);
+}
+
+.md-typeset .jenga-specimen p {
+  margin: 0;
+  text-align: center;
+}
+
+.md-typeset .jenga-specimen img {
+  max-width: 100%;
+  vertical-align: top;
+}
+
+.md-grid {
+  max-width: 1440px;
 }

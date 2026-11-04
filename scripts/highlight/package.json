@@ -1,0 +1,8 @@
+{
+  "name": "jenga-docs-highlight",
+  "private": true,
+  "type": "module",
+  "dependencies": {
+    "shiki": "3.23.0"
+  }
+}

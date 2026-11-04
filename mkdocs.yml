@@ -7,16 +7,6 @@ repo_url: "https://github.com/joelkanyi/jenga"
 edit_uri: "tree/main/docs/"
 docs_dir: docs
 
-nav:
-  - 'Overview': index.md
-  - 'Get started': get-started.md
-  - 'Components': components.md
-  - 'Theming': theming.md
-  - 'Accessibility': accessibility.md
-  - 'Platforms': platforms.md
-  - 'Changelog': changelog.md
-  - 'API reference': api/index.html
-
 not_in_nav: |
   design/*
 
@@ -28,7 +18,7 @@ theme:
     code: JetBrains Mono
   features:
     - navigation.sections
-    - navigation.tabs
+    - navigation.indexes
     - navigation.top
     - search.suggest
     - search.highlight
@@ -56,6 +46,7 @@ extra_css:
 
 plugins:
   - search
+  - awesome-nav
   - llmstxt:
       markdown_description: "Jenga is a Kotlin Multiplatform and Compose Multiplatform design system: brandable design tokens and ready-made Jenga* components that render the same on Android, iOS, Desktop and Web."
       full_output: llms-full.txt
@@ -63,10 +54,9 @@ plugins:
         Docs:
           - index.md
           - get-started.md
-          - components.md
           - theming.md
-          - accessibility.md
-          - platforms.md
+        Components:
+          - components/*.md
         Releases:
           - changelog.md
 
@@ -83,7 +73,7 @@ markdown_extensions:
   - pymdownx.details
   - pymdownx.tilde
   - pymdownx.highlight:
-      anchor_linenums: true
+      use_pygments: false
   - pymdownx.inlinehilite
 
 extra:
