@@ -18,12 +18,6 @@ class DocsCoverageTest {
     }
 
     @Test
-    fun everyPublicComponentIsListedOnTheComponentsPage() {
-        val componentsPage = File(repo, "docs/components.md").readText()
-        assertEquals(emptyList<String>(), publicComponents.filterNot { "`$it`" in componentsPage })
-    }
-
-    @Test
     fun everyPublicComponentIsInTheCatalog() {
         val catalog = File(repo, "catalog/src/commonMain")
             .walkTopDown()

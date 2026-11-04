@@ -31,4 +31,6 @@ secrets.properties
 site/
 docs/api/
 docs/changelog.md
-docs/assets/previews/
+docs/components/
+docs/assets/components/
+scripts/highlight/node_modules/
