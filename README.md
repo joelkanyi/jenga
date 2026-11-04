@@ -13,34 +13,49 @@ ready-made `Jenga*` blocks that render the same on Android, iOS, Desktop and the
 ![Platforms](https://img.shields.io/badge/platforms-Android%20%7C%20iOS%20%7C%20Desktop%20%7C%20Web-brightgreen)
 
 ```kotlin
-JengaTheme {                                  // light and dark follow the system
-    JengaScaffold(topBar = { JengaTopAppBar(title = "Events") }) { padding ->
-        JengaStack(Modifier.padding(padding)) {
-            JengaText("Tonight", style = JengaTheme.typography.headingMedium)
-            JengaButton("Scan a ticket", onClick = { })
-        }
-    }
-}
+JengaTheme(
+    content = {
+        // light and dark follow the system
+        JengaScaffold(
+            topBar = {
+                JengaTopAppBar(
+                    title = "Events",
+                )
+            },
+            content = { padding ->
+                JengaStack(
+                    modifier = Modifier.padding(
+                        paddingValues = padding,
+                    ),
+                    content = {
+                        JengaText(
+                            text = "Tonight",
+                            style = JengaTheme.typography.headingMedium,
+                        )
+                        JengaButton(
+                            text = "Scan a ticket",
+                            onClick = { },
+                        )
+                    },
+                )
+            },
+        )
+    },
+)
 ```
 
 Brand it from one seed, and every block re-themes in light and dark:
 
 ```kotlin
-JengaTheme(brand = jengaBrand(seed = Color(0xFF6D28D9))) { App() }
+JengaTheme(
+    brand = jengaBrand(
+        seed = Color(
+            color = 0xFF6D28D9,
+        ),
+    ),
+    content = { App() },
+)
 ```
-
-## Platforms
-
-| Android | iOS | Desktop (JVM) | Web |
-|---------|-----|---------------|-----|
-| `minSdk 23` | `iosArm64`, `iosSimulatorArm64` | yes | `wasmJs` |
-
-The whole public API lives in `commonMain`, so every platform shares the same components and
-tokens. The Intel iOS simulator slice (`iosX64`) is not shipped, because Compose Multiplatform
-no longer publishes it.
-
-`JengaImage` loads images from a URL on Android only (through Coil 3, using your app's image
-loader). On iOS, Desktop and Web it shows its placeholder for now.
 
 ## Install
 
@@ -66,139 +81,15 @@ dependencies {
 }
 ```
 
-## Usage
-
-Wrap your UI once in `JengaTheme`, then read tokens off `JengaTheme.*` and compose `Jenga*`
-blocks below it. You never touch `MaterialTheme`; it is bridged internally and never appears in
-the public API.
-
-```kotlin
-JengaText(color = JengaTheme.colors.textMuted, style = JengaTheme.typography.bodySmall)
-Spacer(Modifier.height(JengaTheme.spacing.lg))
-```
-
-Prefer the layout primitives over hand-nesting `Row`/`Column` with manual spacing:
-
-```kotlin
-JengaStack(space = JengaTheme.spacing.md) {   // vertical, token-spaced
-    JengaInline(space = JengaTheme.spacing.sm) { /* horizontal row */ }
-}
-```
-
-### Blocks
-
-Every block has a `*Defaults` object and closed `enum` variants. Browse them all, live, in the
-[catalog](catalog/).
-
-| Need | Blocks |
-|------|--------|
-| Text | `JengaText` |
-| Buttons and links | `JengaButton`, `JengaIconButton`, `JengaFab`, `JengaExtendedFab`, `JengaLink` |
-| Inputs | `JengaTextField`, `JengaTextArea`, `JengaSelectField`, `JengaSearchField`, `JengaSearchTrigger`, `JengaSlider`, `JengaStepper`, `JengaDatePicker`, `JengaDatePickerDialog`, `JengaCalendar`, `JengaWheelPicker`, `JengaDateOfBirthPicker`, `JengaTimeInput`, `JengaTimePickerDialog`, `JengaOtpField`, `JengaOtpResend`, `JengaOtpVerification` |
-| Selection | `JengaToggle`, `JengaCheckbox`, `JengaRadioButton`, `JengaSegmentedControl`, `JengaRadioListItem`, `JengaCheckboxListItem` |
-| Containers | `JengaCard`, `JengaCardFooter`, `JengaListItem`, `JengaKeyValueRow`, `JengaDivider`, `JengaExpandableRow`, `JengaSwipeToDismiss` |
-| Status and tags | `JengaBadge`, `JengaChip`, `JengaStatusPill`, `JengaBanner`, `JengaInfoBar`, `JengaVerdictBar` |
-| Scaffolding | `JengaScaffold`, `JengaTopAppBar`, `JengaBottomBar`, `JengaNavigationBar` + `JengaNavigationBarItem`, `JengaNavigationRailItem`, `JengaTabs` |
-| Overlays and feedback | `JengaDialog`, `JengaBottomSheet`, `JengaListSheet`, `JengaSideSheet`, `JengaSnackbar` + `JengaSnackbarHost`, `JengaTooltip`, `JengaDropdownMenu` + `JengaDropdownMenuItem` + `JengaDropdownMenuDivider` |
-| Refresh | `JengaPullToRefresh` |
-| Media and identity | `JengaAvatar`, `JengaIcon` + `JengaIcons`, `JengaIconTile`, `JengaImage`, `JengaMediaHero`, `JengaImageShelf` + `JengaShelfCard`, `JengaThumbnailStrip`, `JengaImageViewer` |
-| Charts | `JengaBarChart` |
-| Progress | `JengaLinearProgress`, `JengaLinearProgressIndeterminate`, `JengaLabelledProgress`, `JengaTimelineItem` + `JengaTimelineMarker`, `JengaStepIndicator`, `JengaCircularProgress`, `JengaCircularProgressIndeterminate`, `JengaDotStrip`, shimmer |
-| Scanner and camera | `JengaScannerViewfinder`, `JengaScanFeedback`, `JengaCaptureFrame`, `JengaShutterButton` |
-| Empty and error | `JengaEmptyState`, `JengaErrorState` |
-| Layout | `JengaStack`, `JengaInline`, `JengaWrap`, `JengaGrid`, `JengaBox`, `JengaSpacer`, `JengaSection`, `JengaFormLayout` |
-| Patterns | `JengaSectionHeader`, `JengaTicketRow`, `JengaStatCard`, `JengaStatTile`, `JengaReactionBar` |
-
-### Tokens
-
-Read these off `JengaTheme.*`. Never inline a raw value.
-
-| Token set | Access | Contents |
-|-----------|--------|----------|
-| Colors | `JengaTheme.colors` | `brand`, `surface`, `background`, `textPrimary/Secondary/Muted`, `border`, status roles (`success`/`warning`/`error`/`info` + containers), and more. Light and dark aware. |
-| Typography | `JengaTheme.typography` | `display`, `heading{Large,Medium,Small}`, `title*`, `body*`, `label`, `caption`, `button`, `mono`. |
-| Spacing | `JengaTheme.spacing` | `none, xxs, xs, sm, md, lg, xl, xxl, xxxl`. |
-| Shapes | `JengaTheme.shapes` | corner radii (`sm`, `md`, `lg`, `pill`, and more). |
-| Sizing | `JengaTheme.sizing` | `minTouchTarget`, icon sizes, control heights, field sizes. |
-| Elevation | `JengaTheme.elevation` | the elevation ladder. |
-| Motion | `JengaTheme.motion` | durations and easing. |
-
-## Theming
-
-Jenga ships neutral. One brand definition themes everything: a coherent, accessible light and
-dark scheme, plus type, shape and density.
-
-```kotlin
-JengaTheme(brand = jengaBrand(seed = Color(0xFF6D28D9))) { App() }
-```
-
-The seed drives the brand color family (contrast holds by construction). Neutral surfaces and
-status colors (success, warning, error, info) keep their tuned defaults, so meaning never
-rotates with your hue. Add more brand intent as you need it:
-
-```kotlin
-jengaBrand(
-    seed = Color(0xFF6D28D9),
-    displayFontFamily = rememberPoppins(),   // headings and titles
-    bodyFontFamily = rememberInter(),         // body, labels, captions
-    corner = JengaCornerStyle.Sharp,          // Rounded (default), Soft, Sharp
-    density = JengaDensity.Compact,           // Comfortable (default), Compact, Spacious
-    contrast = JengaContrast.High,            // Standard (default), Medium, High
-)
-```
-
-Fonts and icons are yours. Jenga does not ship third-party fonts; you supply a `FontFamily`
-(load `.ttf` files from your app's `composeResources/font/`, which works on every platform).
-`JengaIcon` takes any `ImageVector`, and you can re-brand the glyphs components draw:
-
-```kotlin
-JengaTheme(icons = rememberJengaIconSet(chevron = MyChevron)) { App() }
-```
-
-Components can be styled once for the whole app. A value passed to a call still wins, and
-anything you leave unset keeps Jenga's default:
-
-```kotlin
-JengaTheme(
-    components = JengaComponentStyles(
-        button = JengaButtonStyle(medium = JengaButtonSizeStyle(shape = RoundedCornerShape(4.dp))),
-        card = JengaCardStyle(shape = RoundedCornerShape(8.dp)),
-    ),
-) { App() }
-```
-
-For full control, override any single token off the derived theme, or hand-author both schemes
-as one `JengaScheme(light, dark)` pair. The full ladder, from zero config to a hand-authored
-scheme, is in [docs/theming.md](docs/theming.md).
-
-## Accessibility
-
-Accessibility is built in and enforced in CI:
-
-- Interactive blocks reserve a 48dp touch target.
-- Color pairs are contrast-tested to WCAG AA (4.5:1 for text, 3:1 for brand fills), including
-  brand-derived schemes across a range of seeds.
-- Inputs show a focus ring, and directional icons mirror for right-to-left layouts.
-- Every block ships verified light, dark, large-font and RTL screenshots.
-
-## See it running
-
-The [catalog](catalog/) is a sample app that renders every token and block on all three
-platforms from one shared UI:
-
-```bash
-./gradlew :catalog:run            # desktop window
-./gradlew :catalog:installDebug   # android device or emulator
-# iOS: open catalog/iosApp/iosApp.xcodeproj in Xcode, pick an Apple-Silicon simulator, Run
-```
-
-See [catalog/README.md](catalog/README.md) for details.
-
 ## Documentation
 
-- Theming, from one seed to a hand-authored scheme: [docs/theming.md](docs/theming.md)
+Everything else lives on the site: **[joelkanyi.github.io/jenga](https://joelkanyi.github.io/jenga/)**
+
+- [Get started](https://joelkanyi.github.io/jenga/get-started/): install, usage, tokens, running the catalog
+- [Components](https://joelkanyi.github.io/jenga/components/): every block, with light and dark screenshots
+- [Theming](https://joelkanyi.github.io/jenga/theming/): from one seed to a hand-authored scheme
+- [API reference](https://joelkanyi.github.io/jenga/api/)
 - Architecture and how to contribute: [jenga/README.md](jenga/README.md)
-- API reference: `./gradlew :jenga:dokkaGenerateHtml`, then open `jenga/build/dokka/html/index.html`
 - Releasing to Maven Central: [RELEASING.md](RELEASING.md)
 
 ## License

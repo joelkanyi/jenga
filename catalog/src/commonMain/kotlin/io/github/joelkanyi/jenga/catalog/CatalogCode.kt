@@ -20,28 +20,51 @@ import io.github.joelkanyi.jenga.theme.JengaTheme
  * rounded clip when the block sits inside another frame.
  */
 @Composable
-fun CatalogCode(code: String, modifier: Modifier = Modifier, framed: Boolean = true) {
+fun CatalogCode(
+    code: String,
+    modifier: Modifier = Modifier,
+    framed: Boolean = true,
+) {
     Column(
         modifier = modifier
             .fillMaxWidth()
-            .then(if (framed) Modifier.clip(JengaTheme.shapes.md) else Modifier)
-            .background(JengaTheme.colors.surfaceSunk)
-            .padding(JengaTheme.spacing.lg),
-        verticalArrangement = Arrangement.spacedBy(JengaTheme.spacing.sm),
-    ) {
-        JengaText(
-            text = "kotlin",
-            style = JengaTheme.typography.caption,
-            color = JengaTheme.colors.textMuted,
-        )
-        JengaText(
-            text = code,
-            style = JengaTheme.typography.bodySmall.copy(fontFamily = FontFamily.Monospace),
-            color = JengaTheme.colors.textSecondary,
-            modifier = Modifier
-                .fillMaxWidth()
-                .horizontalScroll(rememberScrollState()),
-            softWrap = false,
-        )
-    }
+            .then(
+                other = if (framed) {
+                    Modifier.clip(
+                        shape = JengaTheme.shapes.md,
+                    )
+                } else {
+                    Modifier
+                },
+            )
+            .background(
+                color = JengaTheme.colors.surfaceSunk,
+            )
+            .padding(
+                all = JengaTheme.spacing.lg,
+            ),
+        verticalArrangement = Arrangement.spacedBy(
+            space = JengaTheme.spacing.sm,
+        ),
+        content = {
+            JengaText(
+                text = "kotlin",
+                style = JengaTheme.typography.caption,
+                color = JengaTheme.colors.textMuted,
+            )
+            JengaText(
+                text = code,
+                style = JengaTheme.typography.bodySmall.copy(
+                    fontFamily = FontFamily.Monospace,
+                ),
+                color = JengaTheme.colors.textSecondary,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .horizontalScroll(
+                        state = rememberScrollState(),
+                    ),
+                softWrap = false,
+            )
+        },
+    )
 }

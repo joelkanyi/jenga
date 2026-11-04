@@ -42,10 +42,17 @@ import io.github.joelkanyi.jenga.pattern.JengaSectionHeaderStyles
  * ```
  * JengaTheme(
  *     components = JengaComponentStyles(
- *         button = JengaButtonStyle(medium = JengaButtonSizeStyle(minHeight = 50.dp)),
- *         textField = JengaTextFieldStyle(focusRingWidth = 0.dp),
+ *         button = JengaButtonStyle(
+ *             medium = JengaButtonSizeStyle(
+ *                 minHeight = 50.dp,
+ *             ),
+ *         ),
+ *         textField = JengaTextFieldStyle(
+ *             focusRingWidth = 0.dp,
+ *         ),
  *     ),
- * ) { App() }
+ *     content = { App() },
+ * )
  * ```
  *
  * A `null` style, or a `null` value inside one, keeps Jenga's built-in default. An argument passed

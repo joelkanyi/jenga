@@ -27,7 +27,17 @@ public object JengaShimmerDefaults {
  * Paints an animated shimmer gradient over this element: the standard
  * skeleton-loading effect. Apply to a clipped, sized placeholder:
  * ```
- * Box(Modifier.size(120.dp, 16.dp).clip(JengaTheme.shapes.sm).jengaShimmer())
+ * Box(
+ *     modifier = Modifier
+ *         .size(
+ *             width = 120.dp,
+ *             height = 16.dp,
+ *         )
+ *         .clip(
+ *             shape = JengaTheme.shapes.sm,
+ *         )
+ *         .jengaShimmer(),
+ * )
  * ```
  *
  * Implemented as a `Modifier.Node` (the recommended, performant API) that reads

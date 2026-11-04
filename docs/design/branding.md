@@ -33,12 +33,41 @@ Four tiers, each reachable by adding one named argument to the tier below, each
 argument defaulting to the brand-derived value: a continuum, not four doors.
 
 ```kotlin
-JengaTheme { App() }                                             // L0 zero-config
-JengaTheme(brand = jengaBrand(seed = Purple)) { App() }          // L1 one seed
-JengaTheme(brand = jengaBrand(seed = Purple),                    // L2 seed + override
-           shapes = jengaBrand(seed = Purple).shapes()
-               .copy(button = CutCornerShape(8.dp))) { App() }
-JengaTheme(colors = jengaLightColors().copy(brand = Purple)) { } // L3 full manual (exists)
+// L0 zero-config
+JengaTheme(
+    content = { App() },
+)
+
+// L1 one seed
+JengaTheme(
+    brand = jengaBrand(
+        seed = Purple,
+    ),
+    content = { App() },
+)
+
+// L2 seed + override
+JengaTheme(
+    brand = jengaBrand(
+        seed = Purple,
+    ),
+    shapes = jengaBrand(
+        seed = Purple,
+    ).shapes().copy(
+        control = RoundedCornerShape(
+            size = 4.dp,
+        ),
+    ),
+    content = { App() },
+)
+
+// L3 full manual (exists)
+JengaTheme(
+    colors = jengaLightColors().copy(
+        brand = Purple,
+    ),
+    content = { },
+)
 ```
 
 ## 4. Core abstractions
@@ -169,27 +198,50 @@ import org.jetbrains.compose.resources.Font
 
 @Composable
 fun rememberPoppins() = FontFamily(
-    Font(Res.font.poppins_regular,  FontWeight.Normal),
-    Font(Res.font.poppins_medium,   FontWeight.Medium),
-    Font(Res.font.poppins_semibold, FontWeight.SemiBold),
-    Font(Res.font.poppins_bold,     FontWeight.Bold),
+    Font(
+        resource = Res.font.poppins_regular,
+        weight = FontWeight.Normal,
+    ),
+    Font(
+        resource = Res.font.poppins_medium,
+        weight = FontWeight.Medium,
+    ),
+    Font(
+        resource = Res.font.poppins_semibold,
+        weight = FontWeight.SemiBold,
+    ),
+    Font(
+        resource = Res.font.poppins_bold,
+        weight = FontWeight.Bold,
+    ),
 )
 ```
 
 3. Hand it to the brand, one face everywhere, or a display/body pair:
 
 ```kotlin
-JengaTheme(brand = jengaBrand(seed = Color(0xFF6D28D9), fontFamily = rememberPoppins())) {
-    App() // every Jenga component now uses Poppins
-}
+JengaTheme(
+    brand = jengaBrand(
+        seed = Color(
+            color = 0xFF6D28D9,
+        ),
+        fontFamily = rememberPoppins(),
+    ),
+    content = {
+        App() // every Jenga component now uses Poppins
+    },
+)
 
 JengaTheme(
     brand = jengaBrand(
-        seed = Color(0xFF6D28D9),
+        seed = Color(
+            color = 0xFF6D28D9,
+        ),
         displayFontFamily = rememberPoppins(), // headings / titles
-        bodyFontFamily = rememberNunito(),     // body / labels / captions
+        bodyFontFamily = rememberNunito(), // body / labels / captions
     ),
-) { App() }
+    content = { App() },
+)
 ```
 
 Omitting `fontFamily` keeps jenga's bundled Outfit default (zero setup). If an
@@ -284,10 +336,23 @@ Usage:
 
 ```kotlin
 val AcmeColors = JengaScheme(
-    light = jengaLightColors().copy(brand = AcmePurple,   surface = White,  textPrimary = Ink),
-    dark  = jengaDarkColors().copy(brand = AcmePurpleLt, surface = Ink900, textPrimary = Cloud),
+    light = jengaLightColors().copy(
+        brand = AcmePurple,
+        surface = White,
+        textPrimary = Ink,
+    ),
+    dark = jengaDarkColors().copy(
+        brand = AcmePurpleLt,
+        surface = Ink900,
+        textPrimary = Cloud,
+    ),
 )
-JengaTheme(scheme = AcmeColors) { App() }   // selection handled internally
+
+// selection handled internally
+JengaTheme(
+    scheme = AcmeColors,
+    content = { App() },
+)
 ```
 
 Why not a 39-parameter `jengaColors(...)` factory: it reintroduces exactly the

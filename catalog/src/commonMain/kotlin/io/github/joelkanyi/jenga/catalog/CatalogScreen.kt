@@ -27,7 +27,12 @@ import io.github.joelkanyi.jenga.component.tabs.JengaTabsArrangement
 import io.github.joelkanyi.jenga.component.text.JengaText
 import io.github.joelkanyi.jenga.theme.JengaTheme
 
-private val surfaces = listOf("Start", "Brand", "Foundations", "Components")
+private val surfaces = listOf(
+    "Start",
+    "Brand",
+    "Foundations",
+    "Components",
+)
 
 /**
  * The catalog shell, itself built entirely from Jenga. A header with the
@@ -41,64 +46,106 @@ fun CatalogScreen(
     onToggleTheme: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    var surface by remember { mutableIntStateOf(0) }
+    var surface by remember {
+        mutableIntStateOf(
+            value = 0,
+        )
+    }
     Column(
         modifier = modifier
             .fillMaxSize()
-            .background(JengaTheme.colors.background)
-            .windowInsetsPadding(WindowInsets.systemBars),
-    ) {
-        JengaInline(
-            modifier = Modifier.padding(horizontal = JengaTheme.spacing.xl, vertical = JengaTheme.spacing.lg),
-        ) {
-            JengaStack(modifier = Modifier.weight(1f), space = JengaTheme.spacing.xxs) {
-                JengaText("Jenga", style = JengaTheme.typography.display)
-                JengaText(
-                    "Multiplatform design system",
-                    style = JengaTheme.typography.bodySmall,
-                    color = JengaTheme.colors.textMuted,
-                )
-            }
-            JengaButton(
-                text = if (darkTheme) "Dark" else "Light",
-                onClick = onToggleTheme,
-                variant = JengaButtonVariant.Outline,
-                size = JengaButtonSize.Small,
+            .background(
+                color = JengaTheme.colors.background,
             )
-        }
-        JengaTabs(
-            selectedIndex = surface,
-            tabs = surfaces,
-            onSelect = { surface = it },
-            modifier = Modifier.padding(horizontal = JengaTheme.spacing.xl),
-            arrangement = JengaTabsArrangement.Start,
-        )
-        Box(modifier = Modifier.weight(1f)) {
-            when (surface) {
-                0 -> Scrollable { GetStartedSection() }
-                1 -> Scrollable { BrandPlayground() }
-                2 -> Scrollable { FoundationsSection() }
-                else -> ComponentsGallery(Modifier.fillMaxSize())
-            }
-        }
-    }
+            .windowInsetsPadding(
+                insets = WindowInsets.systemBars,
+            ),
+        content = {
+            JengaInline(
+                modifier = Modifier.padding(
+                    horizontal = JengaTheme.spacing.xl,
+                    vertical = JengaTheme.spacing.lg,
+                ),
+                content = {
+                    JengaStack(
+                        modifier = Modifier.weight(
+                            weight = 1f,
+                        ),
+                        space = JengaTheme.spacing.xxs,
+                        content = {
+                            JengaText(
+                                text = "Jenga",
+                                style = JengaTheme.typography.display,
+                            )
+                            JengaText(
+                                text = "Multiplatform design system",
+                                style = JengaTheme.typography.bodySmall,
+                                color = JengaTheme.colors.textMuted,
+                            )
+                        },
+                    )
+                    JengaButton(
+                        text = if (darkTheme) "Dark" else "Light",
+                        onClick = onToggleTheme,
+                        variant = JengaButtonVariant.Outline,
+                        size = JengaButtonSize.Small,
+                    )
+                },
+            )
+            JengaTabs(
+                selectedIndex = surface,
+                tabs = surfaces,
+                onSelect = { surface = it },
+                modifier = Modifier.padding(
+                    horizontal = JengaTheme.spacing.xl,
+                ),
+                arrangement = JengaTabsArrangement.Start,
+            )
+            Box(
+                modifier = Modifier.weight(
+                    weight = 1f,
+                ),
+                content = {
+                    when (surface) {
+                        0 -> Scrollable(
+                            content = { GetStartedSection() },
+                        )
+                        1 -> Scrollable(
+                            content = { BrandPlayground() },
+                        )
+                        2 -> Scrollable(
+                            content = { FoundationsSection() },
+                        )
+                        else -> ComponentsGallery(
+                            modifier = Modifier.fillMaxSize(),
+                        )
+                    }
+                },
+            )
+        },
+    )
 }
 
 @Composable
-private fun Scrollable(content: @Composable () -> Unit) {
+private fun Scrollable(
+    content: @Composable () -> Unit,
+) {
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .verticalScroll(rememberScrollState())
+            .verticalScroll(
+                state = rememberScrollState(),
+            )
             .padding(
-                PaddingValues(
+                paddingValues = PaddingValues(
                     start = JengaTheme.spacing.xl,
                     end = JengaTheme.spacing.xl,
                     top = JengaTheme.spacing.xl,
                     bottom = JengaTheme.spacing.xxxl,
                 ),
             ),
-    ) {
-        content()
-    }
+        content = {
+            content()
+        },
+    )
 }

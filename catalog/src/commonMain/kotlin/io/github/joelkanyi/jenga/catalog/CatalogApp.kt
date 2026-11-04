@@ -14,19 +14,30 @@ import io.github.joelkanyi.jenga.theme.JengaTheme
  */
 @Composable
 fun CatalogApp() {
-    var darkTheme by remember { mutableStateOf(false) }
+    var darkTheme by remember {
+        mutableStateOf(
+            value = false,
+        )
+    }
     val systemDark = isSystemInDarkTheme()
     // Seed from the system once, then let the in-app toggle take over.
-    var initialized by remember { mutableStateOf(false) }
+    var initialized by remember {
+        mutableStateOf(
+            value = false,
+        )
+    }
     if (!initialized) {
         darkTheme = systemDark
         initialized = true
     }
 
-    JengaTheme(darkTheme = darkTheme) {
-        CatalogScreen(
-            darkTheme = darkTheme,
-            onToggleTheme = { darkTheme = !darkTheme },
-        )
-    }
+    JengaTheme(
+        darkTheme = darkTheme,
+        content = {
+            CatalogScreen(
+                darkTheme = darkTheme,
+                onToggleTheme = { darkTheme = !darkTheme },
+            )
+        },
+    )
 }

@@ -46,7 +46,12 @@ public class JengaIconSet(
  * vectors. Override only the glyphs you want to re-brand:
  *
  * ```
- * JengaTheme(icons = rememberJengaIconSet(chevron = MyChevron)) { … }
+ * JengaTheme(
+ *     icons = rememberJengaIconSet(
+ *         chevron = MyChevron,
+ *     ),
+ *     content = { … },
+ * )
  * ```
  */
 @Composable

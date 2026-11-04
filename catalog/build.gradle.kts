@@ -133,3 +133,15 @@ roborazzi {
         testerQualifiedClassName = "io.github.joelkanyi.jenga.catalog.CatalogPreviewTester"
     }
 }
+
+val desktopMainCompilation = kotlin.targets.getByName("desktop").compilations.getByName("main")
+
+tasks.register<JavaExec>("exportDocs") {
+    group = "documentation"
+    description = "Writes the docs component pages and their light/dark specimens from the catalog."
+    dependsOn(desktopMainCompilation.compileTaskProvider)
+    classpath = files(desktopMainCompilation.output.allOutputs, desktopMainCompilation.runtimeDependencyFiles)
+    mainClass.set("io.github.joelkanyi.jenga.catalog.DocsExportKt")
+    args(rootProject.file("docs").absolutePath)
+    systemProperty("java.awt.headless", "true")
+}

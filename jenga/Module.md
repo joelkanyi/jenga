@@ -13,14 +13,34 @@ Wrap your UI once in [io.github.joelkanyi.jenga.theme.JengaTheme], then read tok
 blocks below it:
 
 ```kotlin
-JengaTheme {
-    JengaScaffold(topBar = { JengaTopAppBar(title = "Events") }) { padding ->
-        JengaStack(modifier = Modifier.padding(padding)) {
-            JengaText("Tonight", style = JengaTheme.typography.headingMedium)
-            JengaButton(text = "Scan a ticket", onClick = { })
-        }
-    }
-}
+JengaTheme(
+    content = {
+        JengaScaffold(
+            topBar = {
+                JengaTopAppBar(
+                    title = "Events",
+                )
+            },
+            content = { padding ->
+                JengaStack(
+                    modifier = Modifier.padding(
+                        paddingValues = padding,
+                    ),
+                    content = {
+                        JengaText(
+                            text = "Tonight",
+                            style = JengaTheme.typography.headingMedium,
+                        )
+                        JengaButton(
+                            text = "Scan a ticket",
+                            onClick = { },
+                        )
+                    },
+                )
+            },
+        )
+    },
+)
 ```
 
 The three layers are **tokens → blocks → patterns**: primitive palette to semantic roles to

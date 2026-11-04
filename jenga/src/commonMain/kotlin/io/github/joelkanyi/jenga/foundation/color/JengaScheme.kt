@@ -10,10 +10,17 @@ import dev.drewhamilton.poko.Poko
  *
  * ```
  * val brandColors = JengaScheme(
- *     light = jengaLightColors().copy(brand = BrandPurple),
- *     dark = jengaDarkColors().copy(brand = BrandPurpleLight),
+ *     light = jengaLightColors().copy(
+ *         brand = BrandPurple,
+ *     ),
+ *     dark = jengaDarkColors().copy(
+ *         brand = BrandPurpleLight,
+ *     ),
  * )
- * JengaTheme(scheme = brandColors) { App() }
+ * JengaTheme(
+ *     scheme = brandColors,
+ *     content = { App() },
+ * )
  * ```
  */
 @Poko

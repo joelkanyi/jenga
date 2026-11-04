@@ -8,7 +8,9 @@ need.
 ## L0: zero config
 
 ```kotlin
-JengaTheme { App() }
+JengaTheme(
+    content = { App() },
+)
 ```
 
 Jenga's default tokens (neutral palette, bundled Outfit font, rounded shapes). Good
@@ -17,7 +19,14 @@ for prototypes and internal tools.
 ## L1: one seed
 
 ```kotlin
-JengaTheme(brand = jengaBrand(seed = Color(0xFF6D28D9))) { App() }
+JengaTheme(
+    brand = jengaBrand(
+        seed = Color(
+            color = 0xFF6D28D9,
+        ),
+    ),
+    content = { App() },
+)
 ```
 
 The seed derives the brand color family for both light and dark, accessibly by
@@ -30,14 +39,21 @@ not rotate with your hue.
 
 ```kotlin
 jengaBrand(
-    seed = Color(0xFF6D28D9),
-    accent = Color(0xFF0EA5E9),              // optional; drives the ink action color
-    contrast = JengaContrast.High,           // Standard (default) | Medium | High
-    displayFontFamily = rememberPoppins(),   // display, heading, title roles
-    bodyFontFamily = rememberInter(),        // body, label, caption, button roles
-    corner = JengaCornerStyle.Sharp,         // Rounded (default) | Soft | Sharp
-    density = JengaDensity.Compact,          // Comfortable (default) | Compact | Spacious
-    icons = rememberJengaIconSet(chevron = MyChevron),
+    seed = Color(
+        color = 0xFF6D28D9,
+    ),
+    // optional; drives the ink action color
+    accent = Color(
+        color = 0xFF0EA5E9,
+    ),
+    contrast = JengaContrast.High, // Standard (default) | Medium | High
+    displayFontFamily = rememberPoppins(), // display, heading, title roles
+    bodyFontFamily = rememberInter(), // body, label, caption, button roles
+    corner = JengaCornerStyle.Sharp, // Rounded (default) | Soft | Sharp
+    density = JengaDensity.Compact, // Comfortable (default) | Compact | Spacious
+    icons = rememberJengaIconSet(
+        chevron = MyChevron,
+    ),
 )
 ```
 
@@ -54,10 +70,22 @@ import org.jetbrains.compose.resources.Font
 
 @Composable
 fun rememberPoppins() = FontFamily(
-    Font(Res.font.poppins_regular, FontWeight.Normal),
-    Font(Res.font.poppins_medium, FontWeight.Medium),
-    Font(Res.font.poppins_semibold, FontWeight.SemiBold),
-    Font(Res.font.poppins_bold, FontWeight.Bold),
+    Font(
+        resource = Res.font.poppins_regular,
+        weight = FontWeight.Normal,
+    ),
+    Font(
+        resource = Res.font.poppins_medium,
+        weight = FontWeight.Medium,
+    ),
+    Font(
+        resource = Res.font.poppins_semibold,
+        weight = FontWeight.SemiBold,
+    ),
+    Font(
+        resource = Res.font.poppins_bold,
+        weight = FontWeight.Bold,
+    ),
 )
 ```
 
@@ -70,7 +98,10 @@ You are never limited to Jenga's icons. `JengaIcon` (and every component's icon 
 takes any `ImageVector`, so draw your own in your UI:
 
 ```kotlin
-JengaIcon(MyIcons.Heart, contentDescription = "Favorite")
+JengaIcon(
+    imageVector = MyIcons.Heart,
+    contentDescription = "Favorite",
+)
 ```
 
 To load your own vector files on every platform, drop the SVG/XML drawables in your
@@ -79,7 +110,12 @@ app's `composeResources/drawable/` and build them the same way as fonts:
 ```kotlin
 import org.jetbrains.compose.resources.vectorResource
 
-JengaIcon(vectorResource(Res.drawable.my_heart), contentDescription = "Favorite")
+JengaIcon(
+    imageVector = vectorResource(
+        resource = Res.drawable.my_heart,
+    ),
+    contentDescription = "Favorite",
+)
 ```
 
 Components draw their own glyphs (a stepper's `+`/`−`, an expandable row's chevron, a
@@ -87,7 +123,13 @@ banner's status icon) from a themeable set. Swap the whole language or single gl
 every component follows your iconography:
 
 ```kotlin
-JengaTheme(icons = rememberJengaIconSet(chevron = MyChevron, trash = MyTrash)) { App() }
+JengaTheme(
+    icons = rememberJengaIconSet(
+        chevron = MyChevron,
+        trash = MyTrash,
+    ),
+    content = { App() },
+)
 ```
 
 Unset roles fall back to Jenga's own vectors. `JengaIcons` is the bundled catalogue you
@@ -99,9 +141,22 @@ Every derived token is also an override argument on `JengaTheme(brand = …)`:
 
 ```kotlin
 JengaTheme(
-    brand = jengaBrand(seed = Color(0xFF6D28D9)),
-    shapes = jengaBrand(seed = Color(0xFF6D28D9)).shapes().copy(button = CutCornerShape(8.dp)),
-) { App() }
+    brand = jengaBrand(
+        seed = Color(
+            color = 0xFF6D28D9,
+        ),
+    ),
+    shapes = jengaBrand(
+        seed = Color(
+            color = 0xFF6D28D9,
+        ),
+    ).shapes().copy(
+        control = RoundedCornerShape(
+            size = 4.dp,
+        ),
+    ),
+    content = { App() },
+)
 ```
 
 ## L3: full control
@@ -111,15 +166,27 @@ light/dark selection is handled for you.
 
 ```kotlin
 // tweak a few roles off a base
-JengaTheme(colors = jengaLightColors().copy(brand = Color(0xFFFF5A1F))) { App() }
+JengaTheme(
+    colors = jengaLightColors().copy(
+        brand = Color(
+            color = 0xFFFF5A1F,
+        ),
+    ),
+    content = { App() },
+)
 
 // a complete custom light + dark scheme
 JengaTheme(
     scheme = JengaScheme(
-        light = jengaLightColors().copy(/* your roles */),
-        dark = jengaDarkColors().copy(/* your roles */),
+        light = jengaLightColors().copy(
+            /* your roles */
+        ),
+        dark = jengaDarkColors().copy(
+            /* your roles */
+        ),
     ),
-) { App() }
+    content = { App() },
+)
 ```
 
 `JengaColors` has one role per semantic slot (`brand`, `surface`, `textPrimary`,
@@ -134,14 +201,28 @@ instead of passing the same arguments on every call:
 
 ```kotlin
 JengaTheme(
-    brand = jengaBrand(seed = Color(0xFF6D28D9)),
+    brand = jengaBrand(
+        seed = Color(
+            color = 0xFF6D28D9,
+        ),
+    ),
     components = JengaComponentStyles(
         button = JengaButtonStyle(
-            medium = JengaButtonSizeStyle(shape = RoundedCornerShape(4.dp), minHeight = 44.dp),
+            medium = JengaButtonSizeStyle(
+                shape = RoundedCornerShape(
+                    size = 4.dp,
+                ),
+                minHeight = 44.dp,
+            ),
         ),
-        card = JengaCardStyle(contentPadding = PaddingValues(12.dp)),
+        card = JengaCardStyle(
+            contentPadding = PaddingValues(
+                all = 12.dp,
+            ),
+        ),
     ),
-) { App() }
+    content = { App() },
+)
 ```
 
 The order is always: a value passed to a call wins, then the theme style, then
@@ -160,7 +241,17 @@ progress.
 Inside a theme, read tokens off `JengaTheme.*`, never inline a raw value:
 
 ```kotlin
-JengaText(color = JengaTheme.colors.textPrimary, style = JengaTheme.typography.bodyMedium)
-Spacer(Modifier.height(JengaTheme.spacing.lg))
-JengaIcon(JengaTheme.icons.search, contentDescription = "Search")
+JengaText(
+    color = JengaTheme.colors.textPrimary,
+    style = JengaTheme.typography.bodyMedium,
+)
+Spacer(
+    modifier = Modifier.height(
+        height = JengaTheme.spacing.lg,
+    ),
+)
+JengaIcon(
+    imageVector = JengaTheme.icons.search,
+    contentDescription = "Search",
+)
 ```

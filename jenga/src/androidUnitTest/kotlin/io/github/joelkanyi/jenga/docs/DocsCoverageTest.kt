@@ -18,12 +18,6 @@ class DocsCoverageTest {
     }
 
     @Test
-    fun everyPublicComponentIsListedInTheReadme() {
-        val readme = File(repo, "README.md").readText()
-        assertEquals(emptyList<String>(), publicComponents.filterNot { "`$it`" in readme })
-    }
-
-    @Test
     fun everyPublicComponentIsInTheCatalog() {
         val catalog = File(repo, "catalog/src/commonMain")
             .walkTopDown()

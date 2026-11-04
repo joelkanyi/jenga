@@ -66,8 +66,15 @@ public val LocalJengaContentColor: ProvidableCompositionLocal<Color> =
  *
  * Read tokens from any composable inside [JengaTheme]:
  * ```
- * Text(color = JengaTheme.colors.textPrimary, style = JengaTheme.typography.bodyMedium)
- * Spacer(Modifier.height(JengaTheme.spacing.lg))
+ * Text(
+ *     color = JengaTheme.colors.textPrimary,
+ *     style = JengaTheme.typography.bodyMedium,
+ * )
+ * Spacer(
+ *     modifier = Modifier.height(
+ *         height = JengaTheme.spacing.lg,
+ *     ),
+ * )
  * ```
  */
 public object JengaTheme {
@@ -186,7 +193,14 @@ public fun JengaTheme(
  * accessible light and dark scheme plus type, shape and density:
  *
  * ```
- * JengaTheme(brand = jengaBrand(seed = Color(0xFF6D28D9))) { App() }
+ * JengaTheme(
+ *     brand = jengaBrand(
+ *         seed = Color(
+ *             color = 0xFF6D28D9,
+ *         ),
+ *     ),
+ *     content = { App() },
+ * )
  * ```
  *
  * Everything is derived from the brand and can be overridden one argument at a
@@ -251,7 +265,13 @@ public fun JengaTheme(
  * keep their defaults or can be overridden.
  *
  * ```
- * JengaTheme(scheme = JengaScheme(light = myLight, dark = myDark)) { App() }
+ * JengaTheme(
+ *     scheme = JengaScheme(
+ *         light = myLight,
+ *         dark = myDark,
+ *     ),
+ *     content = { App() },
+ * )
  * ```
  *
  * @param scheme the light + dark color pair.

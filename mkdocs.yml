@@ -1,0 +1,89 @@
+site_name: Jenga
+site_description: "A Kotlin Multiplatform and Compose Multiplatform design system for Android, iOS, Desktop and Web."
+site_author: "Joel Kanyi"
+site_url: "https://joelkanyi.github.io/jenga/"
+repo_name: jenga
+repo_url: "https://github.com/joelkanyi/jenga"
+edit_uri: "tree/main/docs/"
+docs_dir: docs
+
+not_in_nav: |
+  design/*
+
+theme:
+  name: 'material'
+  language: 'en'
+  font:
+    text: Outfit
+    code: JetBrains Mono
+  features:
+    - navigation.sections
+    - navigation.indexes
+    - navigation.top
+    - search.suggest
+    - search.highlight
+    - content.tabs.link
+    - content.code.annotation
+    - content.code.copy
+  palette:
+    - scheme: default
+      media: "(prefers-color-scheme: light)"
+      primary: custom
+      accent: custom
+      toggle:
+        icon: material/brightness-7
+        name: Switch to dark mode
+    - scheme: slate
+      media: "(prefers-color-scheme: dark)"
+      primary: custom
+      accent: custom
+      toggle:
+        icon: material/brightness-4
+        name: Switch to light mode
+
+extra_css:
+  - stylesheets/jenga.css
+
+plugins:
+  - search
+  - awesome-nav
+  - llmstxt:
+      markdown_description: "Jenga is a Kotlin Multiplatform and Compose Multiplatform design system: brandable design tokens and ready-made Jenga* components that render the same on Android, iOS, Desktop and Web."
+      full_output: llms-full.txt
+      sections:
+        Docs:
+          - index.md
+          - get-started.md
+          - theming.md
+        Components:
+          - components/*.md
+        Releases:
+          - changelog.md
+
+markdown_extensions:
+  - admonition
+  - attr_list
+  - md_in_html
+  - footnotes
+  - tables
+  - pymdownx.betterem
+  - pymdownx.superfences
+  - pymdownx.tabbed:
+      alternate_style: true
+  - pymdownx.details
+  - pymdownx.tilde
+  - pymdownx.highlight:
+      use_pygments: false
+  - pymdownx.inlinehilite
+
+extra:
+  social:
+    - icon: fontawesome/brands/github-alt
+      link: https://github.com/joelkanyi
+    - icon: fontawesome/brands/x-twitter
+      link: https://twitter.com/_joelkanyi
+    - icon: fontawesome/brands/linkedin
+      link: https://www.linkedin.com/in/joel-kanyi-037270174/
+
+copyright: |
+  &copy; 2026 <a href="https://github.com/joelkanyi" target="_blank" rel="noopener">Joel Kanyi</a>

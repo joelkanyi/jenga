@@ -91,7 +91,10 @@ public fun rememberJengaSheetState(skipPartiallyExpanded: Boolean = true): Jenga
  * sheet should be shown:
  * ```
  * if (showSheet) {
- *     JengaBottomSheet(onDismissRequest = { showSheet = false }) { /* content */ }
+ *     JengaBottomSheet(
+ *         onDismissRequest = { showSheet = false },
+ *         content = { /* content */ },
+ *     )
  * }
  * ```
  *

@@ -11,56 +11,84 @@ import io.github.joelkanyi.jenga.theme.JengaTheme
  * turn it on (defaults, or a brand derived from one seed).
  */
 @Composable
-fun GetStartedSection(modifier: Modifier = Modifier) {
-    JengaStack(modifier = modifier, space = JengaTheme.spacing.xxl) {
-        JengaStack(space = JengaTheme.spacing.sm) {
-            JengaText("Build once, rebrand from one seed", style = JengaTheme.typography.headingMedium)
-            JengaText(
-                "Jenga is a Compose Multiplatform design system. Every component reads from theme tokens, so a single brand seed derives a coherent, accessible light and dark theme across the whole set.",
-                style = JengaTheme.typography.bodyLarge,
-                color = JengaTheme.colors.textSecondary,
+fun GetStartedSection(
+    modifier: Modifier = Modifier,
+) {
+    JengaStack(
+        modifier = modifier,
+        space = JengaTheme.spacing.xxl,
+        content = {
+            JengaStack(
+                space = JengaTheme.spacing.sm,
+                content = {
+                    JengaText(
+                        text = "Build once, rebrand from one seed",
+                        style = JengaTheme.typography.headingMedium,
+                    )
+                    JengaText(
+                        text = "Jenga is a Compose Multiplatform design system. Every component reads from theme tokens, so a single brand seed derives a coherent, accessible light and dark theme across the whole set.",
+                        style = JengaTheme.typography.bodyLarge,
+                        color = JengaTheme.colors.textSecondary,
+                    )
+                },
             )
-        }
 
-        Doc(
-            "1. Add the dependency",
-            "Available on Maven Central.",
-            """
+            Doc(
+                title = "1. Add the dependency",
+                description = "Available on Maven Central.",
+                code = """
             dependencies {
                 implementation("io.github.joelkanyi:jenga:<version>")
             }
-            """.trimIndent(),
-        )
+                """.trimIndent(),
+            )
 
-        Doc(
-            "2. Wrap your app",
-            "JengaTheme provides the tokens every component reads from.",
-            """
+            Doc(
+                title = "2. Wrap your app",
+                description = "JengaTheme provides the tokens every component reads from.",
+                code = """
             JengaTheme {
                 JengaButton("Get started", onClick = {})
             }
-            """.trimIndent(),
-        )
+                """.trimIndent(),
+            )
 
-        Doc(
-            "3. Make it yours",
-            "Pass a brand to re-theme everything from one seed. See the Brand tab to try it live.",
-            """
+            Doc(
+                title = "3. Make it yours",
+                description = "Pass a brand to re-theme everything from one seed. See the Brand tab to try it live.",
+                code = """
             val brand = jengaBrand(seed = Color(0xFF6C5CE7))
 
             JengaTheme(brand = brand) {
                 App()
             }
-            """.trimIndent(),
-        )
-    }
+                """.trimIndent(),
+            )
+        },
+    )
 }
 
 @Composable
-private fun Doc(title: String, description: String, code: String) {
-    JengaStack(space = JengaTheme.spacing.md) {
-        JengaText(title, style = JengaTheme.typography.titleLarge)
-        JengaText(description, style = JengaTheme.typography.bodyMedium, color = JengaTheme.colors.textMuted)
-        CatalogCode(code)
-    }
+private fun Doc(
+    title: String,
+    description: String,
+    code: String,
+) {
+    JengaStack(
+        space = JengaTheme.spacing.md,
+        content = {
+            JengaText(
+                text = title,
+                style = JengaTheme.typography.titleLarge,
+            )
+            JengaText(
+                text = description,
+                style = JengaTheme.typography.bodyMedium,
+                color = JengaTheme.colors.textMuted,
+            )
+            CatalogCode(
+                code = code,
+            )
+        },
+    )
 }
