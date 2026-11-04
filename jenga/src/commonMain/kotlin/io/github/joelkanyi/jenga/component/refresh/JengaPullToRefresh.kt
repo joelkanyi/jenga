@@ -31,9 +31,16 @@ public object JengaPullToRefreshDefaults {
  * `verticalScroll`) for the gesture to be reachable.
  *
  * ```
- * JengaPullToRefresh(isRefreshing = state.isRefreshing, onRefresh = { onEvent(Refresh) }) {
- *     LazyColumn(Modifier.fillMaxSize()) { /* items */ }
- * }
+ * JengaPullToRefresh(
+ *     isRefreshing = state.isRefreshing,
+ *     onRefresh = { onEvent(Refresh) },
+ *     content = {
+ *         LazyColumn(
+ *             modifier = Modifier.fillMaxSize(),
+ *             content = { /* items */ },
+ *         )
+ *     },
+ * )
  * ```
  *
  * @sample io.github.joelkanyi.jenga.samples.JengaPullToRefreshSample

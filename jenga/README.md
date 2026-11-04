@@ -17,23 +17,49 @@ Central (stable public API, screenshot-tested, lint-enforced).
 Wrap your UI once in `JengaTheme`, then use tokens and blocks:
 
 ```kotlin
-JengaTheme {                       // light/dark follows the system by default
-    JengaScaffold(
-        topBar = { JengaTopAppBar(title = "Events") },
-    ) { padding ->
-        JengaStack(modifier = Modifier.padding(padding)) {
-            JengaText("Tonight", style = JengaTheme.typography.headingMedium)
-            JengaButton(text = "Scan a ticket", onClick = { /* … */ })
-        }
-    }
-}
+JengaTheme(
+    content = {
+        // light/dark follows the system by default
+        JengaScaffold(
+            topBar = {
+                JengaTopAppBar(
+                    title = "Events",
+                )
+            },
+            content = { padding ->
+                JengaStack(
+                    modifier = Modifier.padding(
+                        paddingValues = padding,
+                    ),
+                    content = {
+                        JengaText(
+                            text = "Tonight",
+                            style = JengaTheme.typography.headingMedium,
+                        )
+                        JengaButton(
+                            text = "Scan a ticket",
+                            onClick = { /* … */ },
+                        )
+                    },
+                )
+            },
+        )
+    },
+)
 ```
 
 Read tokens anywhere below the theme:
 
 ```kotlin
-JengaText(color = JengaTheme.colors.textMuted, style = JengaTheme.typography.bodySmall)
-Spacer(Modifier.height(JengaTheme.spacing.lg))
+JengaText(
+    color = JengaTheme.colors.textMuted,
+    style = JengaTheme.typography.bodySmall,
+)
+Spacer(
+    modifier = Modifier.height(
+        height = JengaTheme.spacing.lg,
+    ),
+)
 ```
 
 You never touch `MaterialTheme`; the public API is entirely `JengaTheme.*` / `Jenga*`.
@@ -85,7 +111,14 @@ Every token is overridable via `JengaTheme(...)` params, and `JengaColors` is a 
 derives a coherent light and dark theme.
 
 ```kotlin
-JengaTheme(brand = jengaBrand(seed = Color(0xFF6D28D9))) { … }
+JengaTheme(
+    brand = jengaBrand(
+        seed = Color(
+            color = 0xFF6D28D9,
+        ),
+    ),
+    content = { … },
+)
 ```
 
 For a single-scheme tweak, `jengaLightColors().withBrand(Color(0xFF6D28D9))` is a lower-level

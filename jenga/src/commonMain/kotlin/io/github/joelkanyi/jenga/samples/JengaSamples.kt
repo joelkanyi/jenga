@@ -148,76 +148,129 @@ import kotlin.time.Duration.Companion.minutes
 
 @Composable
 internal fun JengaTextSample() {
-    JengaText(text = "Scan a ticket to begin")
+    JengaText(
+        text = "Scan a ticket to begin",
+    )
 }
 
 @Composable
 internal fun JengaButtonSample() {
-    JengaButton(text = "Check in", onClick = { }, variant = JengaButtonVariant.Primary)
+    JengaButton(
+        text = "Check in",
+        onClick = { },
+        variant = JengaButtonVariant.Primary,
+    )
 }
 
 @Composable
 internal fun JengaIconButtonSample() {
-    JengaIconButton(onClick = { }, variant = JengaIconButtonVariant.Standard) {
-        JengaIcon(JengaIcons.Search, contentDescription = "Search")
-    }
+    JengaIconButton(
+        onClick = { },
+        variant = JengaIconButtonVariant.Standard,
+        content = {
+            JengaIcon(
+                imageVector = JengaIcons.Search,
+                contentDescription = "Search",
+            )
+        },
+    )
 }
 
 @Composable
 internal fun JengaPullToRefreshSample() {
-    JengaPullToRefresh(isRefreshing = false, onRefresh = { }) {
-        JengaText("Pull down to refresh")
-    }
+    JengaPullToRefresh(
+        isRefreshing = false,
+        onRefresh = { },
+        content = {
+            JengaText(
+                text = "Pull down to refresh",
+            )
+        },
+    )
 }
 
 @Composable
 internal fun JengaBottomBarSample() {
-    JengaBottomBar {
-        JengaButton(text = "Manual entry", onClick = { })
-    }
+    JengaBottomBar(
+        content = {
+            JengaButton(
+                text = "Manual entry",
+                onClick = { },
+            )
+        },
+    )
 }
 
 @Composable
 internal fun JengaStatusPillSample() {
-    JengaStatusPill(label = "Synced", tone = JengaBadgeTone.Success)
+    JengaStatusPill(
+        label = "Synced",
+        tone = JengaBadgeTone.Success,
+    )
 }
 
 @Composable
 internal fun JengaScannerViewfinderSample() {
-    JengaScannerViewfinder(status = JengaScannerStatus.Scanning)
+    JengaScannerViewfinder(
+        status = JengaScannerStatus.Scanning,
+    )
 }
 
 @Composable
 internal fun JengaScanFeedbackSample() {
-    JengaScanFeedback(status = JengaScannerStatus.Success)
+    JengaScanFeedback(
+        status = JengaScannerStatus.Success,
+    )
 }
 
 @Composable
 internal fun JengaCardSample() {
-    JengaCard {
-        JengaText(text = "Gate A · Main entrance")
-    }
+    JengaCard(
+        content = {
+            JengaText(
+                text = "Gate A · Main entrance",
+            )
+        },
+    )
 }
 
 @Composable
 internal fun JengaBadgeSample() {
-    JengaBadge(text = "Valid", tone = JengaBadgeTone.Success)
+    JengaBadge(
+        text = "Valid",
+        tone = JengaBadgeTone.Success,
+    )
 }
 
 @Composable
 internal fun JengaLinkSample() {
-    JengaLink(text = "Privacy policy", onClick = {})
+    JengaLink(
+        text = "Privacy policy",
+        onClick = {},
+    )
 }
 
 @Composable
 internal fun JengaChipSample() {
-    var selected by remember { mutableStateOf(false) }
-    JengaChip(label = "Music", selected = selected, onClick = { selected = !selected })
+    var selected by remember {
+        mutableStateOf(
+            value = false,
+        )
+    }
+    JengaChip(
+        label = "Music",
+        selected = selected,
+        onClick = { selected = !selected },
+    )
 }
 
 @Composable
 internal fun JengaTextFieldSample() {
-    var value by remember { mutableStateOf("") }
+    var value by remember {
+        mutableStateOf(
+            value = "",
+        )
+    }
     JengaTextField(
         value = value,
         onValueChange = { value = it },
@@ -228,7 +281,11 @@ internal fun JengaTextFieldSample() {
 
 @Composable
 internal fun JengaTextAreaSample() {
-    var notes by remember { mutableStateOf("") }
+    var notes by remember {
+        mutableStateOf(
+            value = "",
+        )
+    }
     JengaTextArea(
         value = notes,
         onValueChange = { notes = it },
@@ -240,19 +297,35 @@ internal fun JengaTextAreaSample() {
 
 @Composable
 internal fun JengaToggleSample() {
-    var on by remember { mutableStateOf(true) }
-    JengaToggle(checked = on, onCheckedChange = { on = it })
+    var on by remember {
+        mutableStateOf(
+            value = true,
+        )
+    }
+    JengaToggle(
+        checked = on,
+        onCheckedChange = { on = it },
+    )
 }
 
 @Composable
 internal fun JengaCheckboxSample() {
-    var checked by remember { mutableStateOf(false) }
-    JengaCheckbox(checked = checked, onCheckedChange = { checked = it })
+    var checked by remember {
+        mutableStateOf(
+            value = false,
+        )
+    }
+    JengaCheckbox(
+        checked = checked,
+        onCheckedChange = { checked = it },
+    )
 }
 
 @Composable
 internal fun JengaAvatarSample() {
-    JengaAvatar(name = "Ada Lovelace")
+    JengaAvatar(
+        name = "Ada Lovelace",
+    )
 }
 
 @Composable
@@ -267,17 +340,29 @@ internal fun JengaSnackbarSample() {
 
 @Composable
 internal fun JengaDialogSample() {
-    var open by remember { mutableStateOf(true) }
+    var open by remember {
+        mutableStateOf(
+            value = true,
+        )
+    }
     if (open) {
         JengaDialog(
             onDismissRequest = { open = false },
             title = "Reset device?",
             text = "This clears the cached gate session.",
             confirmButton = {
-                JengaButton(text = "Reset", onClick = { open = false }, variant = JengaButtonVariant.Danger)
+                JengaButton(
+                    text = "Reset",
+                    onClick = { open = false },
+                    variant = JengaButtonVariant.Danger,
+                )
             },
             dismissButton = {
-                JengaButton(text = "Cancel", onClick = { open = false }, variant = JengaButtonVariant.Ghost)
+                JengaButton(
+                    text = "Cancel",
+                    onClick = { open = false },
+                    variant = JengaButtonVariant.Ghost,
+                )
             },
         )
     }
@@ -285,46 +370,95 @@ internal fun JengaDialogSample() {
 
 @Composable
 internal fun JengaBottomSheetSample() {
-    var open by remember { mutableStateOf(true) }
+    var open by remember {
+        mutableStateOf(
+            value = true,
+        )
+    }
     if (open) {
-        JengaBottomSheet(onDismissRequest = { open = false }) {
-            JengaText(text = "Select a gate")
-        }
+        JengaBottomSheet(
+            onDismissRequest = { open = false },
+            content = {
+                JengaText(
+                    text = "Select a gate",
+                )
+            },
+        )
     }
 }
 
 @Composable
 internal fun JengaListSheetSample() {
-    var open by remember { mutableStateOf(true) }
-    var selected by remember { mutableStateOf("Gate A") }
+    var open by remember {
+        mutableStateOf(
+            value = true,
+        )
+    }
+    var selected by remember {
+        mutableStateOf(
+            value = "Gate A",
+        )
+    }
     if (open) {
         JengaListSheet(
             onDismissRequest = { open = false },
             title = "Select a gate",
             subtitle = "Choose which gate you're scanning at.",
-            footer = { JengaButton(text = "Done", onClick = { open = false }, modifier = Modifier.weight(1f)) },
-        ) {
-            items(listOf("Gate A", "Gate B")) { gate ->
-                JengaRadioListItem(headline = gate, selected = gate == selected, onClick = { selected = gate })
-            }
-        }
+            footer = {
+                JengaButton(
+                    text = "Done",
+                    onClick = { open = false },
+                    modifier = Modifier.weight(
+                        weight = 1f,
+                    ),
+                )
+            },
+            content = {
+                items(
+                    items = listOf(
+                        "Gate A",
+                        "Gate B",
+                    ),
+                ) { gate ->
+                    JengaRadioListItem(
+                        headline = gate,
+                        selected = gate == selected,
+                        onClick = { selected = gate },
+                    )
+                }
+            },
+        )
     }
 }
 
 @Composable
 internal fun JengaTopAppBarSample() {
-    JengaTopAppBar(title = "Events")
+    JengaTopAppBar(
+        title = "Events",
+    )
 }
 
 @Composable
 internal fun JengaScaffoldSample() {
     JengaScaffold(
-        topBar = { JengaTopAppBar(title = "Events") },
-    ) { padding ->
-        Column(modifier = Modifier.padding(padding)) {
-            JengaText(text = "Content")
-        }
-    }
+        topBar = {
+            JengaTopAppBar(
+                title = "Events",
+            )
+        },
+        content = { padding ->
+            Column(
+                modifier = Modifier.padding(
+                    paddingValues = padding,
+                ),
+                content = {
+                    JengaText(
+                        text = "Content",
+                    )
+                },
+            )
+        },
+    )
 }
 
 @Composable
@@ -348,7 +482,9 @@ internal fun JengaErrorStateSample() {
 
 @Composable
 internal fun JengaLinearProgressSample() {
-    JengaLinearProgress(progress = 0.6f)
+    JengaLinearProgress(
+        progress = 0.6f,
+    )
 }
 
 @Composable
@@ -363,12 +499,19 @@ internal fun JengaTicketRowSample() {
 
 @Composable
 internal fun JengaIconSample() {
-    JengaIcon(JengaIcons.Check, contentDescription = "Valid")
+    JengaIcon(
+        imageVector = JengaIcons.Check,
+        contentDescription = "Valid",
+    )
 }
 
 @Composable
 internal fun JengaIconTileSample() {
-    JengaIconTile(JengaIcons.Wrench, contentDescription = null, tone = JengaBadgeTone.Brand)
+    JengaIconTile(
+        icon = JengaIcons.Wrench,
+        contentDescription = null,
+        tone = JengaBadgeTone.Brand,
+    )
 }
 
 @Composable
@@ -381,72 +524,146 @@ internal fun JengaListItemSample() {
     JengaListItem(
         headline = "Gate A",
         supporting = "Main entrance",
-        trailingContent = { JengaIcon(JengaIcons.ChevronRight, contentDescription = null) },
+        trailingContent = {
+            JengaIcon(
+                imageVector = JengaIcons.ChevronRight,
+                contentDescription = null,
+            )
+        },
         onClick = { },
     )
 }
 
 @Composable
 internal fun JengaKeyValueRowSample() {
-    Column {
-        JengaKeyValueRow(label = "Serial number", value = "SN-0042-7781", valueStyle = JengaTheme.typography.mono)
-        JengaDivider()
-        JengaKeyValueRow(label = "Total", value = "KES 12,450", emphasis = JengaKeyValueEmphasis.Total)
-    }
+    Column(
+        content = {
+            JengaKeyValueRow(
+                label = "Serial number",
+                value = "SN-0042-7781",
+                valueStyle = JengaTheme.typography.mono,
+            )
+            JengaDivider()
+            JengaKeyValueRow(
+                label = "Total",
+                value = "KES 12,450",
+                emphasis = JengaKeyValueEmphasis.Total,
+            )
+        },
+    )
 }
 
 @Composable
 internal fun JengaNavigationBarSample() {
-    JengaNavigationBar {
-        JengaNavigationBarItem(
-            selected = true,
-            onClick = { },
-            icon = { JengaIcon(JengaIcons.Search, contentDescription = null) },
-            label = "Events",
-        )
-        JengaNavigationBarItem(
-            selected = false,
-            onClick = { },
-            icon = { JengaIcon(JengaIcons.Check, contentDescription = null) },
-            label = "Scan",
-        )
-    }
+    JengaNavigationBar(
+        content = {
+            JengaNavigationBarItem(
+                selected = true,
+                onClick = { },
+                icon = {
+                    JengaIcon(
+                        imageVector = JengaIcons.Search,
+                        contentDescription = null,
+                    )
+                },
+                label = "Events",
+            )
+            JengaNavigationBarItem(
+                selected = false,
+                onClick = { },
+                icon = {
+                    JengaIcon(
+                        imageVector = JengaIcons.Check,
+                        contentDescription = null,
+                    )
+                },
+                label = "Scan",
+            )
+        },
+    )
 }
 
 @Composable
 internal fun JengaTabsSample() {
-    JengaTabs(selectedIndex = 0, tabs = listOf("Upcoming", "Past"), onSelect = { })
+    JengaTabs(
+        selectedIndex = 0,
+        tabs = listOf(
+            "Upcoming",
+            "Past",
+        ),
+        onSelect = { },
+    )
 }
 
 @Composable
 internal fun JengaSegmentedControlSample() {
-    JengaSegmentedControl(selectedIndex = 0, segments = listOf("Day", "Week"), onSelect = { })
+    JengaSegmentedControl(
+        selectedIndex = 0,
+        segments = listOf(
+            "Day",
+            "Week",
+        ),
+        onSelect = { },
+    )
 }
 
 @Composable
 internal fun JengaRadioButtonSample() {
-    var selected by remember { mutableStateOf(true) }
-    JengaRadioButton(selected = selected, onClick = { selected = !selected })
+    var selected by remember {
+        mutableStateOf(
+            value = true,
+        )
+    }
+    JengaRadioButton(
+        selected = selected,
+        onClick = { selected = !selected },
+    )
 }
 
 @Composable
 internal fun JengaRadioListItemSample() {
-    var selected by remember { mutableIntStateOf(0) }
-    Column {
-        JengaRadioListItem(headline = "Repair", selected = selected == 0, onClick = { selected = 0 })
-        JengaRadioListItem(headline = "Replace", selected = selected == 1, onClick = { selected = 1 })
+    var selected by remember {
+        mutableIntStateOf(
+            value = 0,
+        )
     }
+    Column(
+        content = {
+            JengaRadioListItem(
+                headline = "Repair",
+                selected = selected == 0,
+                onClick = { selected = 0 },
+            )
+            JengaRadioListItem(
+                headline = "Replace",
+                selected = selected == 1,
+                onClick = { selected = 1 },
+            )
+        },
+    )
 }
 
 @Composable
 internal fun JengaCheckboxListItemSample() {
-    var checked by remember { mutableStateOf(true) }
-    JengaCheckboxListItem(headline = "Battery", checked = checked, onCheckedChange = { checked = it })
+    var checked by remember {
+        mutableStateOf(
+            value = true,
+        )
+    }
+    JengaCheckboxListItem(
+        headline = "Battery",
+        checked = checked,
+        onCheckedChange = { checked = it },
+    )
 }
 
 @Composable
 internal fun JengaSearchFieldSample() {
-    var query by remember { mutableStateOf("") }
+    var query by remember {
+        mutableStateOf(
+            value = "",
+        )
+    }
     JengaSearchField(
         value = query,
         onValueChange = { query = it },
@@ -460,124 +677,249 @@ internal fun JengaSearchTriggerSample() {
     JengaSearchTrigger(
         placeholder = "Search tickets",
         onClick = {},
-        trailingContent = { JengaIcon(JengaIcons.QrCode, contentDescription = "Scan") },
+        trailingContent = {
+            JengaIcon(
+                imageVector = JengaIcons.QrCode,
+                contentDescription = "Scan",
+            )
+        },
     )
 }
 
 @Composable
 internal fun JengaSelectFieldSample() {
-    var open by remember { mutableStateOf(false) }
-    var fault by remember { mutableStateOf<String?>(null) }
-    JengaSelectField(value = fault, onClick = { open = true }, label = "Fault", placeholder = "Choose a fault")
+    var open by remember {
+        mutableStateOf(
+            value = false,
+        )
+    }
+    var fault by remember {
+        mutableStateOf<String?>(
+            value = null,
+        )
+    }
+    JengaSelectField(
+        value = fault,
+        onClick = { open = true },
+        label = "Fault",
+        placeholder = "Choose a fault",
+    )
     if (open) {
-        JengaListSheet(onDismissRequest = { open = false }, title = "Fault") {
-            items(listOf("Battery not charging", "Panel damaged")) { option ->
-                JengaRadioListItem(
-                    headline = option,
-                    selected = option == fault,
-                    onClick = {
-                        fault = option
-                        open = false
-                    },
-                )
-            }
-        }
+        JengaListSheet(
+            onDismissRequest = { open = false },
+            title = "Fault",
+            content = {
+                items(
+                    items = listOf(
+                        "Battery not charging",
+                        "Panel damaged",
+                    ),
+                ) { option ->
+                    JengaRadioListItem(
+                        headline = option,
+                        selected = option == fault,
+                        onClick = {
+                            fault = option
+                            open = false
+                        },
+                    )
+                }
+            },
+        )
     }
 }
 
 @Composable
 internal fun JengaSliderSample() {
-    var value by remember { androidx.compose.runtime.mutableFloatStateOf(0.5f) }
-    JengaSlider(value = value, onValueChange = { value = it })
+    var value by remember {
+        androidx.compose.runtime.mutableFloatStateOf(
+            value = 0.5f,
+        )
+    }
+    JengaSlider(
+        value = value,
+        onValueChange = { value = it },
+    )
 }
 
 @Composable
 internal fun JengaFabSample() {
-    JengaFab(onClick = { }) { JengaIcon(JengaIcons.Add, contentDescription = "Add") }
+    JengaFab(
+        onClick = { },
+        content = {
+            JengaIcon(
+                imageVector = JengaIcons.Add,
+                contentDescription = "Add",
+            )
+        },
+    )
 }
 
 @Composable
 internal fun JengaBannerSample() {
-    JengaBanner(message = "Working offline, scans will sync later.", tone = JengaBannerTone.Info)
+    JengaBanner(
+        message = "Working offline, scans will sync later.",
+        tone = JengaBannerTone.Info,
+    )
 }
 
 @Composable
 internal fun JengaDropdownMenuSample() {
-    var expanded by remember { mutableStateOf(false) }
-    JengaDropdownMenu(expanded = expanded, onDismissRequest = { expanded = false }) {
-        JengaDropdownMenuItem(text = "Re-enter", onClick = { expanded = false })
-        JengaDropdownMenuItem(text = "View history", onClick = { expanded = false })
+    var expanded by remember {
+        mutableStateOf(
+            value = false,
+        )
     }
+    JengaDropdownMenu(
+        expanded = expanded,
+        onDismissRequest = { expanded = false },
+        content = {
+            JengaDropdownMenuItem(
+                text = "Re-enter",
+                onClick = { expanded = false },
+            )
+            JengaDropdownMenuItem(
+                text = "View history",
+                onClick = { expanded = false },
+            )
+        },
+    )
 }
 
 @Composable
 internal fun JengaTooltipSample() {
-    JengaTooltip(text = "Re-admit this attendee")
+    JengaTooltip(
+        text = "Re-admit this attendee",
+    )
 }
 
 @Composable
 internal fun JengaStatCardSample() {
-    JengaStatCard(label = "Checked in", value = "1,284", trendLabel = "+12%", trendTone = JengaBadgeTone.Success)
+    JengaStatCard(
+        label = "Checked in",
+        value = "1,284",
+        trendLabel = "+12%",
+        trendTone = JengaBadgeTone.Success,
+    )
 }
 
 @Composable
 internal fun JengaSectionHeaderSample() {
-    JengaSectionHeader(title = "Recent scans", actionLabel = "See all", onActionClick = { })
+    JengaSectionHeader(
+        title = "Recent scans",
+        actionLabel = "See all",
+        onActionClick = { },
+    )
 }
 
 @Composable
 internal fun JengaStackSample() {
-    JengaStack {
-        JengaText("One")
-        JengaText("Two")
-        JengaText("Three")
-    }
+    JengaStack(
+        content = {
+            JengaText(
+                text = "One",
+            )
+            JengaText(
+                text = "Two",
+            )
+            JengaText(
+                text = "Three",
+            )
+        },
+    )
 }
 
 @Composable
 internal fun JengaInlineSample() {
-    JengaInline {
-        JengaText("A")
-        JengaText("B")
-        JengaText("C")
-    }
+    JengaInline(
+        content = {
+            JengaText(
+                text = "A",
+            )
+            JengaText(
+                text = "B",
+            )
+            JengaText(
+                text = "C",
+            )
+        },
+    )
 }
 
 @Composable
 internal fun JengaWrapSample() {
-    JengaWrap {
-        repeat(5) { JengaBadge(text = "tag${it + 1}") }
-    }
+    JengaWrap(
+        content = {
+            repeat(
+                times = 5,
+            ) {
+                JengaBadge(
+                    text = "tag${it + 1}",
+                )
+            }
+        },
+    )
 }
 
 @Composable
 internal fun JengaBoxSample() {
-    JengaBox(padding = PaddingValues(16.dp), background = JengaTheme.colors.brandSubtle) {
-        JengaText("Boxed", color = JengaTheme.colors.onBrandSubtle)
-    }
+    JengaBox(
+        padding = PaddingValues(
+            all = 16.dp,
+        ),
+        background = JengaTheme.colors.brandSubtle,
+        content = {
+            JengaText(
+                text = "Boxed",
+                color = JengaTheme.colors.onBrandSubtle,
+            )
+        },
+    )
 }
 
 @Composable
 internal fun JengaGridSample() {
-    JengaGrid(columns = 2) {
-        JengaText("1")
-        JengaText("2")
-        JengaText("3")
-        JengaText("4")
-    }
+    JengaGrid(
+        columns = 2,
+        content = {
+            JengaText(
+                text = "1",
+            )
+            JengaText(
+                text = "2",
+            )
+            JengaText(
+                text = "3",
+            )
+            JengaText(
+                text = "4",
+            )
+        },
+    )
 }
 
 @Composable
 internal fun JengaSectionSample() {
-    JengaSection(title = "Recent scans", actionLabel = "See all", onActionClick = { }) {
-        JengaText("Row one")
-        JengaText("Row two")
-    }
+    JengaSection(
+        title = "Recent scans",
+        actionLabel = "See all",
+        onActionClick = { },
+        content = {
+            JengaText(
+                text = "Row one",
+            )
+            JengaText(
+                text = "Row two",
+            )
+        },
+    )
 }
 
 @Composable
 internal fun JengaCircularProgressSample() {
-    JengaCircularProgress(progress = 0.6f)
+    JengaCircularProgress(
+        progress = 0.6f,
+    )
 }
 
 @Composable
@@ -588,7 +930,9 @@ internal fun JengaSnackbarHostSample() {
     // still auto-dismisses instead of sitting there indefinitely:
     //   hostState.showSnackbar("Removed", actionLabel = "Undo",
     //       duration = JengaSnackbarDuration.Long)
-    JengaSnackbarHost(hostState)
+    JengaSnackbarHost(
+        hostState = hostState,
+    )
 }
 
 @Composable
@@ -599,38 +943,78 @@ internal fun JengaVerdictBarSample() {
         tone = JengaVerdictTone.Positive,
         label = "This month",
         progress = 0.62f,
-        sublines = JengaVerdictSublines("KES 710 of 1,900 spent", "8 of 11 priced"),
-        action = JengaAction("Change") { },
+        sublines = JengaVerdictSublines(
+            start = "KES 710 of 1,900 spent",
+            end = "8 of 11 priced",
+        ),
+        action = JengaAction(
+            label = "Change",
+            onClick = { },
+        ),
     )
 }
 
 @Composable
 internal fun JengaStatTileSample() {
-    JengaStatTile(label = "Revenue", value = "1,284", unit = "KES", tone = JengaStatTone.Success)
+    JengaStatTile(
+        label = "Revenue",
+        value = "1,284",
+        unit = "KES",
+        tone = JengaStatTone.Success,
+    )
 }
 
 @Composable
 internal fun JengaStepperSample() {
-    var count by remember { mutableIntStateOf(2) }
-    JengaStepper(value = count, onValueChange = { count = it }, min = 1, max = 9)
+    var count by remember {
+        mutableIntStateOf(
+            value = 2,
+        )
+    }
+    JengaStepper(
+        value = count,
+        onValueChange = { count = it },
+        min = 1,
+        max = 9,
+    )
 }
 
 @Composable
 internal fun JengaDotStripSample() {
-    JengaDotStrip(filled = 3, total = 5, contentDescription = "3 of 5 steps done")
+    JengaDotStrip(
+        filled = 3,
+        total = 5,
+        contentDescription = "3 of 5 steps done",
+    )
 }
 
 @Composable
 internal fun JengaMediaHeroSample() {
-    JengaMediaHero(title = "Night Market", support = "Fri · 7pm · Riverside")
+    JengaMediaHero(
+        title = "Night Market",
+        support = "Fri · 7pm · Riverside",
+    )
 }
 
 @Composable
 internal fun JengaImageShelfSample() {
-    JengaImageShelf(title = "Picked for tonight", action = JengaAction("See all") { }) {
-        JengaShelfCard(title = "Grilled veg bowl", meta = "25 min · ~540 kcal")
-        JengaShelfCard(title = "Miso ramen", meta = "30 min · ~610 kcal")
-    }
+    JengaImageShelf(
+        title = "Picked for tonight",
+        action = JengaAction(
+            label = "See all",
+            onClick = { },
+        ),
+        content = {
+            JengaShelfCard(
+                title = "Grilled veg bowl",
+                meta = "25 min · ~540 kcal",
+            )
+            JengaShelfCard(
+                title = "Miso ramen",
+                meta = "30 min · ~610 kcal",
+            )
+        },
+    )
 }
 
 @Composable
@@ -645,122 +1029,265 @@ internal fun JengaReactionBarSample() {
 
 @Composable
 internal fun JengaExpandableRowSample() {
-    var expanded by remember { mutableStateOf(false) }
+    var expanded by remember {
+        mutableStateOf(
+            value = false,
+        )
+    }
     JengaExpandableRow(
         expanded = expanded,
         onExpandedChange = { expanded = it },
-        header = { JengaText("Delivery details", modifier = Modifier.weight(1f)) },
-    ) {
-        JengaText("Ships in 2 to 3 business days. Free returns within 30 days.")
-    }
+        header = {
+            JengaText(
+                text = "Delivery details",
+                modifier = Modifier.weight(
+                    weight = 1f,
+                ),
+            )
+        },
+        content = {
+            JengaText(
+                text = "Ships in 2 to 3 business days. Free returns within 30 days.",
+            )
+        },
+    )
 }
 
 @Composable
 internal fun JengaSwipeToDismissSample() {
-    JengaSwipeToDismiss(onDismiss = { }) {
-        JengaListItem(headline = "Swipe me away", supporting = "End to start to dismiss")
-    }
+    JengaSwipeToDismiss(
+        onDismiss = { },
+        content = {
+            JengaListItem(
+                headline = "Swipe me away",
+                supporting = "End to start to dismiss",
+            )
+        },
+    )
 }
 
 @Composable
 internal fun JengaLabelledProgressSample() {
-    JengaLabelledProgress(progress = 0.6f, label = AnnotatedString("Repair · step 3 of 5"), valueLabel = "60%")
+    JengaLabelledProgress(
+        progress = 0.6f,
+        label = AnnotatedString(
+            text = "Repair · step 3 of 5",
+        ),
+        valueLabel = "60%",
+    )
 }
 
 @Composable
 internal fun JengaInfoBarSample() {
-    JengaInfoBar(text = "View only", leadingIcon = { JengaIcon(JengaIcons.Lock, contentDescription = null) })
+    JengaInfoBar(
+        text = "View only",
+        leadingIcon = {
+            JengaIcon(
+                imageVector = JengaIcons.Lock,
+                contentDescription = null,
+            )
+        },
+    )
 }
 
 @Composable
 internal fun JengaCardFooterSample() {
-    JengaCard(contentPadding = PaddingValues()) {
-        JengaText("Battery replacement", modifier = Modifier.padding(JengaTheme.spacing.lg))
-        JengaCardFooter(text = "Waiting for parts since Monday")
-    }
+    JengaCard(
+        contentPadding = PaddingValues(),
+        content = {
+            JengaText(
+                text = "Battery replacement",
+                modifier = Modifier.padding(
+                    all = JengaTheme.spacing.lg,
+                ),
+            )
+            JengaCardFooter(
+                text = "Waiting for parts since Monday",
+            )
+        },
+    )
 }
 
 @Composable
 internal fun JengaNavigationRailItemSample() {
-    var selected by remember { mutableIntStateOf(0) }
-    Column {
-        JengaNavigationRailItem(
-            label = "Tickets",
-            selected = selected == 0,
-            onClick = { selected = 0 },
-            icon = { JengaIcon(JengaIcons.Ticket, contentDescription = null) },
-        )
-        JengaNavigationRailItem(
-            label = "Work orders",
-            selected = selected == 1,
-            onClick = { selected = 1 },
-            icon = { JengaIcon(JengaIcons.Wrench, contentDescription = null) },
-            showDot = true,
+    var selected by remember {
+        mutableIntStateOf(
+            value = 0,
         )
     }
+    Column(
+        content = {
+            JengaNavigationRailItem(
+                label = "Tickets",
+                selected = selected == 0,
+                onClick = { selected = 0 },
+                icon = {
+                    JengaIcon(
+                        imageVector = JengaIcons.Ticket,
+                        contentDescription = null,
+                    )
+                },
+            )
+            JengaNavigationRailItem(
+                label = "Work orders",
+                selected = selected == 1,
+                onClick = { selected = 1 },
+                icon = {
+                    JengaIcon(
+                        imageVector = JengaIcons.Wrench,
+                        contentDescription = null,
+                    )
+                },
+                showDot = true,
+            )
+        },
+    )
 }
 
 @Composable
 internal fun JengaThumbnailStripSample() {
-    val photos = listOf("https://example.com/1.jpg", "https://example.com/2.jpg")
-    JengaThumbnailStrip(count = photos.size, onAdd = {}, addContentDescription = "Add photo") { index ->
-        JengaImage(url = photos[index], contentDescription = null)
-    }
+    val photos = listOf(
+        "https://example.com/1.jpg",
+        "https://example.com/2.jpg",
+    )
+    JengaThumbnailStrip(
+        count = photos.size,
+        onAdd = {},
+        addContentDescription = "Add photo",
+        thumbnail = { index ->
+            JengaImage(
+                url = photos[index],
+                contentDescription = null,
+            )
+        },
+    )
 }
 
 @Composable
 internal fun JengaTimelineSample() {
-    Column {
-        JengaTimelineItem(JengaTimelineState.Done, "Lead created", JengaTimelinePosition.First, subtitle = "12 Mar")
-        JengaTimelineItem(JengaTimelineState.Current, "Quotation", JengaTimelinePosition.Middle)
-        JengaTimelineItem(JengaTimelineState.ToDo, "Installation", JengaTimelinePosition.Last)
-    }
+    Column(
+        content = {
+            JengaTimelineItem(
+                state = JengaTimelineState.Done,
+                title = "Lead created",
+                position = JengaTimelinePosition.First,
+                subtitle = "12 Mar",
+            )
+            JengaTimelineItem(
+                state = JengaTimelineState.Current,
+                title = "Quotation",
+                position = JengaTimelinePosition.Middle,
+            )
+            JengaTimelineItem(
+                state = JengaTimelineState.ToDo,
+                title = "Installation",
+                position = JengaTimelinePosition.Last,
+            )
+        },
+    )
 }
 
 @Composable
 internal fun JengaFormLayoutSample() {
-    var name by remember { mutableStateOf("") }
+    var name by remember {
+        mutableStateOf(
+            value = "",
+        )
+    }
     JengaFormLayout(
         bottomBar = {
-            JengaButton(text = "Save", onClick = {}, modifier = Modifier.fillMaxWidth().padding(JengaTheme.spacing.lg))
+            JengaButton(
+                text = "Save",
+                onClick = {},
+                modifier = Modifier.fillMaxWidth().padding(
+                    all = JengaTheme.spacing.lg,
+                ),
+            )
         },
-    ) {
-        item { JengaTextField(value = name, onValueChange = { name = it }, label = "Customer name") }
-    }
+        content = {
+            item {
+                JengaTextField(
+                    value = name,
+                    onValueChange = { name = it },
+                    label = "Customer name",
+                )
+            }
+        },
+    )
 }
 
 @Composable
 internal fun JengaSideSheetSample() {
-    var open by remember { mutableStateOf(true) }
+    var open by remember {
+        mutableStateOf(
+            value = true,
+        )
+    }
     if (open) {
         JengaSideSheet(
             onDismissRequest = { open = false },
             title = "Filters",
-            footer = { JengaButton(text = "Apply", onClick = { open = false }, modifier = Modifier.weight(1f)) },
-        ) {
-            item { JengaCheckboxListItem(headline = "Open only", checked = true, onCheckedChange = {}) }
-        }
+            footer = {
+                JengaButton(
+                    text = "Apply",
+                    onClick = { open = false },
+                    modifier = Modifier.weight(
+                        weight = 1f,
+                    ),
+                )
+            },
+            content = {
+                item {
+                    JengaCheckboxListItem(
+                        headline = "Open only",
+                        checked = true,
+                        onCheckedChange = {},
+                    )
+                }
+            },
+        )
     }
 }
 
 @Composable
 internal fun JengaImageViewerSample() {
-    var open by remember { mutableStateOf(true) }
+    var open by remember {
+        mutableStateOf(
+            value = true,
+        )
+    }
     if (open) {
-        JengaImageViewer(onDismissRequest = { open = false }, title = "photo.jpg", closeContentDescription = "Close") {
-            JengaImage(url = "https://example.com/photo.jpg", contentDescription = null, fit = JengaImageFit.Contain)
-        }
+        JengaImageViewer(
+            onDismissRequest = { open = false },
+            title = "photo.jpg",
+            closeContentDescription = "Close",
+            content = {
+                JengaImage(
+                    url = "https://example.com/photo.jpg",
+                    contentDescription = null,
+                    fit = JengaImageFit.Contain,
+                )
+            },
+        )
     }
 }
 
 @Composable
 internal fun JengaDatePickerSample() {
-    var date by remember { mutableStateOf<LocalDate?>(null) }
+    var date by remember {
+        mutableStateOf<LocalDate?>(
+            value = null,
+        )
+    }
     JengaDatePicker(
         selectedDate = date,
         onSelectedDateChange = { date = it },
         monthTitle = { "${it.month.name} ${it.year}" },
-        dayOfWeekLabel = { it.name.take(2) },
+        dayOfWeekLabel = {
+            it.name.take(
+                n = 2,
+            )
+        },
         previousMonthContentDescription = "Previous month",
         nextMonthContentDescription = "Next month",
     )
@@ -768,7 +1295,11 @@ internal fun JengaDatePickerSample() {
 
 @Composable
 internal fun JengaDatePickerDialogSample() {
-    var open by remember { mutableStateOf(true) }
+    var open by remember {
+        mutableStateOf(
+            value = true,
+        )
+    }
     if (open) {
         JengaDatePickerDialog(
             onDismissRequest = { open = false },
@@ -776,7 +1307,11 @@ internal fun JengaDatePickerDialogSample() {
             confirmLabel = "OK",
             dismissLabel = "Cancel",
             monthTitle = { "${it.month.name} ${it.year}" },
-            dayOfWeekLabel = { it.name.take(2) },
+            dayOfWeekLabel = {
+                it.name.take(
+                    n = 2,
+                )
+            },
             previousMonthContentDescription = "Previous month",
             nextMonthContentDescription = "Next month",
         )
@@ -785,47 +1320,105 @@ internal fun JengaDatePickerDialogSample() {
 
 @Composable
 internal fun JengaCalendarRangeSample() {
-    val month = YearMonth(2026, Month.MARCH)
-    val state = rememberJengaCalendarState(startMonth = month, endMonth = month)
-    var start by remember { mutableStateOf<LocalDate?>(null) }
-    var end by remember { mutableStateOf<LocalDate?>(null) }
-    JengaCalendar(state = state) { day ->
-        val from = start
-        val to = end
-        val inRange = from != null && to != null && day.date in from..to
-        JengaCalendarDefaults.Day(
-            day = day,
-            selected = inRange || day.date == from,
-            enabled = true,
-            isToday = false,
-            onClick = {
-                if (from == null || to != null || day.date < from) {
-                    start = day.date
-                    end = null
-                } else {
-                    end = day.date
-                }
-            },
+    val month = YearMonth(
+        year = 2026,
+        month = Month.MARCH,
+    )
+    val state = rememberJengaCalendarState(
+        startMonth = month,
+        endMonth = month,
+    )
+    var start by remember {
+        mutableStateOf<LocalDate?>(
+            value = null,
         )
     }
+    var end by remember {
+        mutableStateOf<LocalDate?>(
+            value = null,
+        )
+    }
+    JengaCalendar(
+        state = state,
+        dayContent = { day ->
+            val from = start
+            val to = end
+            val inRange = from != null && to != null && day.date in from..to
+            JengaCalendarDefaults.Day(
+                day = day,
+                selected = inRange || day.date == from,
+                enabled = true,
+                isToday = false,
+                onClick = {
+                    if (from == null || to != null || day.date < from) {
+                        start = day.date
+                        end = null
+                    } else {
+                        end = day.date
+                    }
+                },
+            )
+        },
+    )
 }
 
 @Composable
 internal fun JengaWheelPickerSample() {
-    var index by remember { mutableIntStateOf(0) }
-    JengaWheelPicker(items = listOf("Morning", "Afternoon", "Evening"), selectedIndex = index, onSelectedIndexChange = { index = it })
+    var index by remember {
+        mutableIntStateOf(
+            value = 0,
+        )
+    }
+    JengaWheelPicker(
+        items = listOf(
+            "Morning",
+            "Afternoon",
+            "Evening",
+        ),
+        selectedIndex = index,
+        onSelectedIndexChange = { index = it },
+    )
 }
 
 @Composable
 internal fun JengaDateOfBirthPickerSample() {
-    var birthday by remember { mutableStateOf(LocalDate(1990, 3, 14)) }
-    JengaDateOfBirthPicker(value = birthday, onValueChange = { birthday = it }, monthLabel = { it.name })
+    var birthday by remember {
+        mutableStateOf(
+            value = LocalDate(
+                year = 1990,
+                month = 3,
+                day = 14,
+            ),
+        )
+    }
+    JengaDateOfBirthPicker(
+        value = birthday,
+        onValueChange = { birthday = it },
+        monthLabel = { it.name },
+    )
 }
 
 @Composable
 internal fun JengaBarChartSample() {
-    var selected by remember { mutableStateOf<Int?>(null) }
-    val months = listOf(JengaBarChartEntry("May", 8200f), JengaBarChartEntry("Jun", 12400f), JengaBarChartEntry("Jul", 9100f))
+    var selected by remember {
+        mutableStateOf<Int?>(
+            value = null,
+        )
+    }
+    val months = listOf(
+        JengaBarChartEntry(
+            label = "May",
+            value = 8200f,
+        ),
+        JengaBarChartEntry(
+            label = "Jun",
+            value = 12400f,
+        ),
+        JengaBarChartEntry(
+            label = "Jul",
+            value = 9100f,
+        ),
+    )
     JengaBarChart(
         entries = months,
         barContentDescription = { "${it.label}, ${it.value}" },
@@ -836,7 +1429,11 @@ internal fun JengaBarChartSample() {
 
 @Composable
 internal fun JengaOtpFieldSample() {
-    var code by remember { mutableStateOf("") }
+    var code by remember {
+        mutableStateOf(
+            value = "",
+        )
+    }
     JengaOtpField(
         value = code,
         onValueChange = { code = it },
@@ -848,30 +1445,50 @@ internal fun JengaOtpFieldSample() {
 
 @Composable
 internal fun JengaOtpResendSample() {
-    val countdown = rememberJengaCountdown(duration = 5.minutes)
+    val countdown = rememberJengaCountdown(
+        duration = 5.minutes,
+    )
+    val remainingText = JengaOtpResendDefaults.formatRemaining(
+        remaining = countdown.remaining,
+    )
     JengaOtpResend(
         remaining = countdown.remaining,
         onResend = { countdown.restart() },
-        countdownText = "Resend code in ${JengaOtpResendDefaults.formatRemaining(countdown.remaining)}",
+        countdownText = "Resend code in $remainingText",
         resendText = "Resend code",
     )
 }
 
 @Composable
 internal fun JengaOtpVerificationSample() {
-    var code by remember { mutableStateOf("") }
-    val countdown = rememberJengaCountdown(duration = 5.minutes)
+    var code by remember {
+        mutableStateOf(
+            value = "",
+        )
+    }
+    val countdown = rememberJengaCountdown(
+        duration = 5.minutes,
+    )
     JengaOtpVerification(
         title = "Enter the code",
-        description = AnnotatedString("We sent a 6-digit code to +254 712 345 678"),
+        description = AnnotatedString(
+            text = "We sent a 6-digit code to +254 712 345 678",
+        ),
         field = {
-            JengaOtpField(value = code, onValueChange = { code = it }, contentDescription = "Verification code")
+            JengaOtpField(
+                value = code,
+                onValueChange = { code = it },
+                contentDescription = "Verification code",
+            )
         },
         resend = {
+            val remainingText = JengaOtpResendDefaults.formatRemaining(
+                remaining = countdown.remaining,
+            )
             JengaOtpResend(
                 remaining = countdown.remaining,
                 onResend = { countdown.restart() },
-                countdownText = "Resend code in ${JengaOtpResendDefaults.formatRemaining(countdown.remaining)}",
+                countdownText = "Resend code in $remainingText",
                 resendText = "Resend code",
             )
         },
@@ -881,9 +1498,18 @@ internal fun JengaOtpVerificationSample() {
 @Composable
 internal fun JengaStepIndicatorSample() {
     val steps = listOf(
-        JengaStep("Details", JengaStepState.Done),
-        JengaStep("Choices", JengaStepState.Current),
-        JengaStep("Review", JengaStepState.Pending),
+        JengaStep(
+            label = "Details",
+            state = JengaStepState.Done,
+        ),
+        JengaStep(
+            label = "Choices",
+            state = JengaStepState.Current,
+        ),
+        JengaStep(
+            label = "Review",
+            state = JengaStepState.Pending,
+        ),
     )
     JengaStepIndicator(
         steps = steps,
@@ -893,7 +1519,14 @@ internal fun JengaStepIndicatorSample() {
 
 @Composable
 internal fun JengaTimeInputSample() {
-    var time by remember { mutableStateOf(LocalTime(9, 30)) }
+    var time by remember {
+        mutableStateOf(
+            value = LocalTime(
+                hour = 9,
+                minute = 30,
+            ),
+        )
+    }
     JengaTimeInput(
         time = time,
         onTimeChange = { time = it },
@@ -906,7 +1539,11 @@ internal fun JengaTimeInputSample() {
 
 @Composable
 internal fun JengaTimePickerDialogSample() {
-    var open by remember { mutableStateOf(true) }
+    var open by remember {
+        mutableStateOf(
+            value = true,
+        )
+    }
     if (open) {
         JengaTimePickerDialog(
             onDismissRequest = { open = false },
@@ -914,7 +1551,10 @@ internal fun JengaTimePickerDialogSample() {
             title = "Delivery time",
             confirmLabel = "OK",
             dismissLabel = "Cancel",
-            initialTime = LocalTime(14, 0),
+            initialTime = LocalTime(
+                hour = 14,
+                minute = 0,
+            ),
             hourLabel = "Hour",
             minuteLabel = "Minute",
             amLabel = "AM",
@@ -926,7 +1566,9 @@ internal fun JengaTimePickerDialogSample() {
 @Composable
 internal fun JengaCaptureFrameSample() {
     JengaCaptureFrame(
-        shape = JengaCaptureShape.Rectangle(aspectRatio = 1.586f),
+        shape = JengaCaptureShape.Rectangle(
+            aspectRatio = 1.586f,
+        ),
         modifier = Modifier.fillMaxSize(),
         ready = false,
         holdProgress = 0.4f,
@@ -935,21 +1577,36 @@ internal fun JengaCaptureFrameSample() {
 
 @Composable
 internal fun JengaShutterButtonSample() {
-    JengaShutterButton(onClick = {}, contentDescription = "Take photo")
+    JengaShutterButton(
+        onClick = {},
+        contentDescription = "Take photo",
+    )
 }
 
 @Composable
 internal fun JengaImageViewerPagesSample() {
-    val urls = listOf("https://example.com/1.jpg", "https://example.com/2.jpg")
-    var open by remember { mutableStateOf(true) }
+    val urls = listOf(
+        "https://example.com/1.jpg",
+        "https://example.com/2.jpg",
+    )
+    var open by remember {
+        mutableStateOf(
+            value = true,
+        )
+    }
     if (open) {
         JengaImageViewer(
             pageCount = urls.size,
             onDismissRequest = { open = false },
             title = { page -> "Photo ${page + 1} of ${urls.size}" },
             closeContentDescription = "Close",
-        ) { page ->
-            JengaImage(url = urls[page], contentDescription = null, fit = JengaImageFit.Contain)
-        }
+            pageContent = { page ->
+                JengaImage(
+                    url = urls[page],
+                    contentDescription = null,
+                    fit = JengaImageFit.Contain,
+                )
+            },
+        )
     }
 }

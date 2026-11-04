@@ -258,7 +258,14 @@ public fun jengaDarkColors(): JengaColors = JengaColors(
  * brand accent and its subtle/on pairs change.
  *
  * ```
- * JengaTheme(colors = jengaLightColors().withBrand(Color(0xFF6D28D9))) { … }
+ * JengaTheme(
+ *     colors = jengaLightColors().withBrand(
+ *         brand = Color(
+ *             color = 0xFF6D28D9,
+ *         ),
+ *     ),
+ *     content = { … },
+ * )
  * ```
  */
 public fun JengaColors.withBrand(
