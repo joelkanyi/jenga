@@ -44,16 +44,30 @@ blocks below it. You never touch `MaterialTheme`; it is bridged internally and n
 the public API.
 
 ```kotlin
-JengaText(color = JengaTheme.colors.textMuted, style = JengaTheme.typography.bodySmall)
-Spacer(Modifier.height(JengaTheme.spacing.lg))
+JengaText(
+    color = JengaTheme.colors.textMuted,
+    style = JengaTheme.typography.bodySmall,
+)
+Spacer(
+    modifier = Modifier.height(
+        height = JengaTheme.spacing.lg,
+    ),
+)
 ```
 
 Prefer the layout primitives over hand-nesting `Row`/`Column` with manual spacing:
 
 ```kotlin
-JengaStack(space = JengaTheme.spacing.md) {   // vertical, token-spaced
-    JengaInline(space = JengaTheme.spacing.sm) { /* horizontal row */ }
-}
+JengaStack(
+    space = JengaTheme.spacing.md,
+    content = {
+        // vertical, token-spaced
+        JengaInline(
+            space = JengaTheme.spacing.sm,
+            content = { /* horizontal row */ },
+        )
+    },
+)
 ```
 
 ## Tokens

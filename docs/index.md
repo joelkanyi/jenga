@@ -19,20 +19,47 @@ ready-made `Jenga*` components that render the same on Android, iOS, Desktop and
 
 ```kotlin
 // Light and dark follow the system.
-JengaTheme {
-    JengaScaffold(topBar = { JengaTopAppBar(title = "Events") }) { padding ->
-        JengaStack(Modifier.padding(padding)) {
-            JengaText("Tonight", style = JengaTheme.typography.headingMedium)
-            JengaButton("Scan a ticket", onClick = { })
-        }
-    }
-}
+JengaTheme(
+    content = {
+        JengaScaffold(
+            topBar = {
+                JengaTopAppBar(
+                    title = "Events",
+                )
+            },
+            content = { padding ->
+                JengaStack(
+                    modifier = Modifier.padding(
+                        paddingValues = padding,
+                    ),
+                    content = {
+                        JengaText(
+                            text = "Tonight",
+                            style = JengaTheme.typography.headingMedium,
+                        )
+                        JengaButton(
+                            text = "Scan a ticket",
+                            onClick = { },
+                        )
+                    },
+                )
+            },
+        )
+    },
+)
 ```
 
 Brand it from one seed, and every component re-themes in light and dark:
 
 ```kotlin
-JengaTheme(brand = jengaBrand(seed = Color(0xFF6D28D9))) { App() }
+JengaTheme(
+    brand = jengaBrand(
+        seed = Color(
+            color = 0xFF6D28D9,
+        ),
+    ),
+    content = { App() },
+)
 ```
 
 ## Accessibility
