@@ -9,9 +9,13 @@ import androidx.compose.ui.window.rememberWindowState
 fun main() = application {
     Window(
         onCloseRequest = ::exitApplication,
-        state = rememberWindowState(width = 480.dp, height = 900.dp),
+        state = rememberWindowState(
+            width = 480.dp,
+            height = 900.dp,
+        ),
         title = "Jenga Catalog",
-    ) {
-        CatalogApp()
-    }
+        content = {
+            CatalogApp()
+        },
+    )
 }

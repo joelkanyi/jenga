@@ -20,141 +20,377 @@ import org.jetbrains.skia.Image
 import java.io.File
 import java.nio.ByteBuffer
 
-fun main(args: Array<String>) {
-    val docs = File(args.first())
-    val pages = File(docs, "components").apply { deleteRecursively(); mkdirs() }
-    val images = File(docs, "assets/components").apply { deleteRecursively(); mkdirs() }
+fun main(
+    args: Array<String>,
+) {
+    val docs = File(
+        args.first(),
+    )
+    val pages = File(
+        docs,
+        "components",
+    ).apply {
+        deleteRecursively()
+        mkdirs()
+    }
+    val images = File(
+        docs,
+        "assets/components",
+    ).apply {
+        deleteRecursively()
+        mkdirs()
+    }
     val entries = componentEntries()
     for (entry in entries) {
-        val light = renderSpecimen(entry, darkTheme = false)
-        File(images, "${entry.slug}-light.png").writeBytes(light)
-        File(images, "${entry.slug}-dark.png").writeBytes(renderSpecimen(entry, darkTheme = true))
-        val displayWidth = pngWidth(light) / Scale.toInt()
-        File(pages, "${entry.slug}.md").writeText(componentPage(entry, displayWidth, apiPath(File(docs, "api"), entry)))
+        val light = renderSpecimen(
+            entry = entry,
+            darkTheme = false,
+        )
+        File(
+            images,
+            "${entry.slug}-light.png",
+        ).writeBytes(
+            array = light,
+        )
+        File(
+            images,
+            "${entry.slug}-dark.png",
+        ).writeBytes(
+            array = renderSpecimen(
+                entry = entry,
+                darkTheme = true,
+            ),
+        )
+        val displayWidth = pngWidth(
+            png = light,
+        ) / Scale.toInt()
+        File(
+            pages,
+            "${entry.slug}.md",
+        ).writeText(
+            text = componentPage(
+                entry = entry,
+                displayWidth = displayWidth,
+                apiPath = apiPath(
+                    apiDir = File(
+                        docs,
+                        "api",
+                    ),
+                    entry = entry,
+                ),
+            ),
+        )
     }
-    File(pages, "index.md").writeText(indexPage(entries))
-    File(pages, ".nav.yml").writeText(navFile(entries))
+    File(
+        pages,
+        "index.md",
+    ).writeText(
+        text = indexPage(
+            entries = entries,
+        ),
+    )
+    File(
+        pages,
+        ".nav.yml",
+    ).writeText(
+        text = navFile(
+            entries = entries,
+        ),
+    )
 }
 
 private val CatalogEntry.slug: String
-    get() = name.lowercase().replace(Regex("[^a-z0-9]+"), "-").trim('-')
+    get() = name.lowercase().replace(
+        regex = Regex(
+            pattern = "[^a-z0-9]+",
+        ),
+        replacement = "-",
+    ).trim(
+        '-',
+    )
 
 private val CatalogEntry.componentName: String?
-    get() = Regex("""\b(Jenga[A-Z][A-Za-z]*)\s*[({]""").find(code)?.groupValues?.get(1)
+    get() = Regex(
+        pattern = """\b(Jenga[A-Z][A-Za-z]*)\s*[({]""",
+    ).find(
+        input = code,
+    )?.groupValues?.get(
+        index = 1,
+    )
 
 @OptIn(ExperimentalComposeUiApi::class)
-private fun renderSpecimen(entry: CatalogEntry, darkTheme: Boolean): ByteArray {
+private fun renderSpecimen(
+    entry: CatalogEntry,
+    darkTheme: Boolean,
+): ByteArray {
     var contentHeight = MaxHeightPx
-    val scene = ImageComposeScene(width = WidthPx, height = MaxHeightPx, density = Density(Scale)) {
-        Specimen(darkTheme = darkTheme, onHeight = { contentHeight = it }) { entry.demo() }
-    }
-    scene.render(0)
-    val image = scene.render(SettleNanos)
+    val scene = ImageComposeScene(
+        width = WidthPx,
+        height = MaxHeightPx,
+        density = Density(
+            density = Scale,
+        ),
+        content = {
+            Specimen(
+                darkTheme = darkTheme,
+                onHeight = { contentHeight = it },
+                content = { entry.demo() },
+            )
+        },
+    )
+    scene.render(
+        nanoTime = 0,
+    )
+    val image = scene.render(
+        nanoTime = SettleNanos,
+    )
     scene.close()
-    return image.trimToContent(minOf(contentHeight, MaxHeightPx)).encode()
+    return image.trimToContent(
+        height = minOf(
+            contentHeight,
+            MaxHeightPx,
+        ),
+    ).encode()
 }
 
 @Composable
-private fun Specimen(darkTheme: Boolean, onHeight: (Int) -> Unit, content: @Composable () -> Unit) {
-    JengaTheme(darkTheme = darkTheme) {
-        Box(
-            modifier = Modifier
-                .width(FrameWidth)
-                .onSizeChanged { onHeight(it.height) }
-                .background(JengaTheme.colors.background)
-                .padding(FramePadding),
-            contentAlignment = Alignment.Center,
-        ) {
-            content()
-        }
-    }
+private fun Specimen(
+    darkTheme: Boolean,
+    onHeight: (Int) -> Unit,
+    content: @Composable () -> Unit,
+) {
+    JengaTheme(
+        darkTheme = darkTheme,
+        content = {
+            Box(
+                modifier = Modifier
+                    .width(
+                        width = FrameWidth,
+                    )
+                    .onSizeChanged {
+                        onHeight(
+                            it.height,
+                        )
+                    }
+                    .background(
+                        color = JengaTheme.colors.background,
+                    )
+                    .padding(
+                        all = FramePadding,
+                    ),
+                contentAlignment = Alignment.Center,
+                content = {
+                    content()
+                },
+            )
+        },
+    )
 }
 
-private fun Image.trimToContent(height: Int): Image {
-    val full = Bitmap.makeFromImage(this)
-    val background = full.getColor(0, 0)
+private fun Image.trimToContent(
+    height: Int,
+): Image {
+    val full = Bitmap.makeFromImage(
+        image = this,
+    )
+    val background = full.getColor(
+        x = 0,
+        y = 0,
+    )
     var left = width
     var top = height
     var right = 0
     var bottom = 0
     for (y in 0 until height) {
         for (x in 0 until width) {
-            if (full.getColor(x, y) == background) continue
-            left = minOf(left, x)
-            top = minOf(top, y)
-            right = maxOf(right, x)
-            bottom = maxOf(bottom, y)
+            if (full.getColor(
+                    x = x,
+                    y = y,
+                ) == background
+            ) {
+                continue
+            }
+            left = minOf(
+                left,
+                x,
+            )
+            top = minOf(
+                top,
+                y,
+            )
+            right = maxOf(
+                right,
+                x,
+            )
+            bottom = maxOf(
+                bottom,
+                y,
+            )
         }
     }
     if (right < left) return this
     val bounds = IRect.makeLTRB(
-        maxOf(0, left - TrimMarginPx),
-        maxOf(0, top - TrimMarginPx),
-        minOf(width, right + TrimMarginPx),
-        minOf(height, bottom + TrimMarginPx),
+        l = maxOf(
+            0,
+            left - TrimMarginPx,
+        ),
+        t = maxOf(
+            0,
+            top - TrimMarginPx,
+        ),
+        r = minOf(
+            width,
+            right + TrimMarginPx,
+        ),
+        b = minOf(
+            height,
+            bottom + TrimMarginPx,
+        ),
     )
     val cropped = Bitmap()
-    full.extractSubset(cropped, bounds)
-    return Image.makeFromBitmap(cropped)
+    full.extractSubset(
+        dst = cropped,
+        subset = bounds,
+    )
+    return Image.makeFromBitmap(
+        bitmap = cropped,
+    )
 }
 
-private fun Image.encode(): ByteArray = requireNotNull(encodeToData(EncodedImageFormat.PNG)).bytes
+private fun Image.encode(): ByteArray = requireNotNull(
+    value = encodeToData(
+        format = EncodedImageFormat.PNG,
+    ),
+).bytes
 
-private fun pngWidth(png: ByteArray): Int = ByteBuffer.wrap(png, PngWidthOffset, 4).int
+private fun pngWidth(
+    png: ByteArray,
+): Int = ByteBuffer.wrap(
+    png,
+    PngWidthOffset,
+    4,
+).int
 
-private fun apiPath(apiDir: File, entry: CatalogEntry): String? {
+private fun apiPath(
+    apiDir: File,
+    entry: CatalogEntry,
+): String? {
     val name = entry.componentName ?: return null
-    val folder = "-" + name.replace(Regex("([A-Z])")) { "-" + it.value.lowercase() }.removePrefix("-")
+    val folder = "-" + name.replace(
+        regex = Regex(
+            pattern = "([A-Z])",
+        ),
+        transform = { "-" + it.value.lowercase() },
+    ).removePrefix(
+        prefix = "-",
+    )
     val page = apiDir.walkTopDown().firstOrNull { it.isDirectory && it.name == folder } ?: return null
-    return "../" + page.relativeTo(apiDir.parentFile).invariantSeparatorsPath + "/index.html"
+    return "../" + page.relativeTo(
+        base = apiDir.parentFile,
+    ).invariantSeparatorsPath + "/index.html"
 }
 
-private fun componentPage(entry: CatalogEntry, displayWidth: Int, apiPath: String?): String = buildString {
-    appendLine("# ${entry.name}")
+private fun componentPage(
+    entry: CatalogEntry,
+    displayWidth: Int,
+    apiPath: String?,
+): String = buildString {
+    appendLine(
+        value = "# ${entry.name}",
+    )
     appendLine()
-    appendLine(entry.description)
+    appendLine(
+        value = entry.description,
+    )
     appendLine()
-    appendLine("<figure class=\"jenga-specimen\" markdown>")
-    appendLine("![${entry.name}](../assets/components/${entry.slug}-light.png#only-light){ width=\"$displayWidth\" }")
-    appendLine("![${entry.name}](../assets/components/${entry.slug}-dark.png#only-dark){ width=\"$displayWidth\" }")
-    appendLine("</figure>")
+    appendLine(
+        value = "<figure class=\"jenga-specimen\" markdown>",
+    )
+    appendLine(
+        value = "![${entry.name}](../assets/components/${entry.slug}-light.png#only-light){ width=\"$displayWidth\" }",
+    )
+    appendLine(
+        value = "![${entry.name}](../assets/components/${entry.slug}-dark.png#only-dark){ width=\"$displayWidth\" }",
+    )
+    appendLine(
+        value = "</figure>",
+    )
     appendLine()
-    appendLine("```kotlin")
-    appendLine(entry.code.trim())
-    appendLine("```")
+    appendLine(
+        value = "```kotlin",
+    )
+    appendLine(
+        value = entry.code.trim(),
+    )
+    appendLine(
+        value = "```",
+    )
     if (apiPath != null) {
         appendLine()
-        appendLine("[API reference for `${entry.componentName}`]($apiPath)")
+        appendLine(
+            value = "[API reference for `${entry.componentName}`]($apiPath)",
+        )
     }
 }
 
-private fun indexPage(entries: List<CatalogEntry>): String = buildString {
-    appendLine("# Components")
+private fun indexPage(
+    entries: List<CatalogEntry>,
+): String = buildString {
+    appendLine(
+        value = "# Components",
+    )
     appendLine()
-    appendLine("Every Jenga component, with its code. Light and dark follow the site's theme.")
+    appendLine(
+        value = "Every Jenga component, with its code. Light and dark follow the site's theme.",
+    )
     for ((group, members) in entries.groupBy { it.group }) {
         appendLine()
-        appendLine("## $group")
+        appendLine(
+            value = "## $group",
+        )
         appendLine()
-        appendLine("<div class=\"jenga-cards\" markdown>")
+        appendLine(
+            value = "<div class=\"jenga-cards\" markdown>",
+        )
         appendLine()
-        members.forEach { appendLine(card(it)) }
+        members.forEach {
+            appendLine(
+                value = card(
+                    entry = it,
+                ),
+            )
+        }
         appendLine()
-        appendLine("</div>")
+        appendLine(
+            value = "</div>",
+        )
     }
 }
 
-private fun card(entry: CatalogEntry): String =
-    "[![${entry.name}](../assets/components/${entry.slug}-light.png#only-light){ loading=lazy }" +
-        "![${entry.name}](../assets/components/${entry.slug}-dark.png#only-dark){ loading=lazy }" +
-        "<strong>${entry.name}</strong><span>${entry.description}</span>](${entry.slug}.md){ .jenga-card }"
+private fun card(
+    entry: CatalogEntry,
+): String = "[![${entry.name}](../assets/components/${entry.slug}-light.png#only-light){ loading=lazy }" +
+    "![${entry.name}](../assets/components/${entry.slug}-dark.png#only-dark){ loading=lazy }" +
+    "<strong>${entry.name}</strong><span>${entry.description}</span>](${entry.slug}.md){ .jenga-card }"
 
-private fun navFile(entries: List<CatalogEntry>): String = buildString {
-    appendLine("nav:")
-    appendLine("  - index.md")
+private fun navFile(
+    entries: List<CatalogEntry>,
+): String = buildString {
+    appendLine(
+        value = "nav:",
+    )
+    appendLine(
+        value = "  - index.md",
+    )
     for ((group, members) in entries.groupBy { it.group }) {
-        appendLine("  - $group:")
-        members.forEach { appendLine("      - ${it.slug}.md") }
+        appendLine(
+            value = "  - $group:",
+        )
+        members.forEach {
+            appendLine(
+                value = "      - ${it.slug}.md",
+            )
+        }
     }
 }
 

@@ -21,10 +21,20 @@ import io.github.joelkanyi.jenga.theme.JengaTheme
  * keywords; matches are shown grouped, each as a live preview beside its code.
  */
 @Composable
-fun ComponentsGallery(modifier: Modifier = Modifier) {
+fun ComponentsGallery(
+    modifier: Modifier = Modifier,
+) {
     val entries = remember { componentEntries() }
-    var query by remember { mutableStateOf("") }
-    val groups = entries.filter { it.matches(query) }.groupBy { it.group }
+    var query by remember {
+        mutableStateOf(
+            value = "",
+        )
+    }
+    val groups = entries.filter {
+        it.matches(
+            query = query,
+        )
+    }.groupBy { it.group }
 
     LazyColumn(
         modifier = modifier.fillMaxSize(),
@@ -34,36 +44,48 @@ fun ComponentsGallery(modifier: Modifier = Modifier) {
             top = JengaTheme.spacing.xl,
             bottom = JengaTheme.spacing.xxxl,
         ),
-        verticalArrangement = Arrangement.spacedBy(JengaTheme.spacing.xxl),
-    ) {
-        item {
-            JengaSearchField(
-                value = query,
-                onValueChange = { query = it },
-                placeholder = "Search components",
-                clearContentDescription = "Clear search",
-                modifier = Modifier.fillMaxWidth(),
-            )
-        }
-        if (groups.isEmpty()) {
+        verticalArrangement = Arrangement.spacedBy(
+            space = JengaTheme.spacing.xxl,
+        ),
+        content = {
             item {
-                JengaText(
-                    "No components match \"$query\".",
-                    color = JengaTheme.colors.textMuted,
+                JengaSearchField(
+                    value = query,
+                    onValueChange = { query = it },
+                    placeholder = "Search components",
+                    clearContentDescription = "Clear search",
+                    modifier = Modifier.fillMaxWidth(),
                 )
             }
-        }
-        groups.forEach { (group, items) ->
-            item(key = group) {
-                JengaStack(space = JengaTheme.spacing.xl) {
+            if (groups.isEmpty()) {
+                item {
                     JengaText(
-                        text = group.uppercase(),
-                        style = JengaTheme.typography.label,
+                        text = "No components match \"$query\".",
                         color = JengaTheme.colors.textMuted,
                     )
-                    items.forEach { CatalogEntryCard(it) }
                 }
             }
-        }
-    }
+            groups.forEach { (group, items) ->
+                item(
+                    key = group,
+                ) {
+                    JengaStack(
+                        space = JengaTheme.spacing.xl,
+                        content = {
+                            JengaText(
+                                text = group.uppercase(),
+                                style = JengaTheme.typography.label,
+                                color = JengaTheme.colors.textMuted,
+                            )
+                            items.forEach {
+                                CatalogEntryCard(
+                                    entry = it,
+                                )
+                            }
+                        },
+                    )
+                }
+            }
+        },
+    )
 }
