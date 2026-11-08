@@ -19,7 +19,7 @@ mavenPublish = "0.37.0"
 poko = "0.21.2"
 spotless = "7.0.4"
 ktlint = "1.5.0"
-composeRules = "0.4.23"
+composeRules = "0.6.8"
 
 [libraries]
 compose-ui-backhandler = { module = "org.jetbrains.compose.ui:ui-backhandler", version.ref = "composeMultiplatform" }
