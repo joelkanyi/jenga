@@ -4452,7 +4452,9 @@ fun componentEntries(): List<CatalogEntry> = listOf(
                             onClick = {
                                 askDiscard = false
                                 discard = true
-                                scope.launch { sheetState.hide() }
+                                scope.launch { sheetState.hide() }.invokeOnCompletion {
+                                    if (!sheetState.isVisible) open = false
+                                }
                             },
                         )
                     },
