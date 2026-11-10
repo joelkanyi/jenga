@@ -3,6 +3,7 @@ package io.github.joelkanyi.jenga.catalog
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.ImageComposeScene
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.onSizeChanged
 import androidx.compose.ui.unit.Density
 import io.github.joelkanyi.jenga.theme.JengaTheme
@@ -12,6 +13,7 @@ import org.jetbrains.skia.IRect
 import org.jetbrains.skia.Image
 import java.io.File
 import java.nio.ByteBuffer
+import kotlin.math.roundToInt
 
 fun main(
     args: Array<String>,
@@ -54,8 +56,13 @@ fun main(
                 darkTheme = true,
             ),
         )
-        val displayWidth = pngWidth(
+        val displayWidth = pngInt(
             png = light,
+            offset = PngWidthOffset,
+        ) / Scale.toInt()
+        val displayHeight = pngInt(
+            png = light,
+            offset = PngHeightOffset,
         ) / Scale.toInt()
         File(
             pages,
@@ -64,6 +71,7 @@ fun main(
             text = componentPage(
                 entry = entry,
                 displayWidth = displayWidth,
+                displayHeight = displayHeight,
                 apiPath = apiPath(
                     apiDir = File(
                         docs,
@@ -101,15 +109,121 @@ private val CatalogEntry.componentName: String?
         index = 1,
     )
 
-@OptIn(ExperimentalComposeUiApi::class)
+private class Render(
+    val image: Image,
+    val contentHeight: Int,
+)
+
 private fun renderSpecimen(
     entry: CatalogEntry,
     darkTheme: Boolean,
 ): ByteArray {
-    var contentHeight = MaxHeightPx
+    val image = when (entry.stage) {
+        CatalogStage.Inline -> {
+            val full = render(
+                entry = entry,
+                darkTheme = darkTheme,
+                heightPx = MaxHeightPx,
+            )
+            full.image.trimToContent(
+                height = minOf(
+                    full.contentHeight,
+                    MaxHeightPx,
+                ),
+            )
+        }
+        CatalogStage.Overlay -> render(
+            entry = entry,
+            darkTheme = darkTheme,
+            heightPx = overlayHeightPx(
+                entry = entry,
+                darkTheme = darkTheme,
+            ),
+        ).image
+    }
+    return image.encode()
+}
+
+private fun overlayHeightPx(
+    entry: CatalogEntry,
+    darkTheme: Boolean,
+): Int {
+    val fullArea = solidArea(
+        entry = entry,
+        darkTheme = darkTheme,
+        heightPx = SearchLimitPx,
+    )
+    val shorterArea = solidArea(
+        entry = entry,
+        darkTheme = darkTheme,
+        heightPx = SearchLimitPx - StepPx,
+    )
+    if (fullArea > shorterArea * (1 + AreaTolerance)) return CompactHeightPx
+    var low = StepPx
+    var high = SearchLimitPx
+    while (high - low > StepPx) {
+        val middle = (low + high) / 2
+        val area = solidArea(
+            entry = entry,
+            darkTheme = darkTheme,
+            heightPx = middle,
+        )
+        if (area >= fullArea * (1 - AreaTolerance)) {
+            high = middle
+        } else {
+            low = middle
+        }
+    }
+    return high
+}
+
+private fun solidArea(
+    entry: CatalogEntry,
+    darkTheme: Boolean,
+    heightPx: Int,
+): Int {
+    val first = Bitmap.makeFromImage(
+        image = render(
+            entry = entry,
+            darkTheme = darkTheme,
+            heightPx = heightPx,
+            background = Color.Red,
+        ).image,
+    )
+    val second = Bitmap.makeFromImage(
+        image = render(
+            entry = entry,
+            darkTheme = darkTheme,
+            heightPx = heightPx,
+            background = Color.Blue,
+        ).image,
+    )
+    return (0 until heightPx).sumOf { y ->
+        (0 until first.width).count { x ->
+            first.getColor(
+                x = x,
+                y = y,
+            ) == second.getColor(
+                x = x,
+                y = y,
+            )
+        }
+    }
+}
+
+@OptIn(ExperimentalComposeUiApi::class)
+private fun render(
+    entry: CatalogEntry,
+    darkTheme: Boolean,
+    heightPx: Int,
+    background: Color? = null,
+): Render {
+    var contentHeight = heightPx
     val scene = ImageComposeScene(
-        width = WidthPx,
-        height = MaxHeightPx,
+        width = stageWidthPx(
+            stage = entry.stage,
+        ),
+        height = heightPx,
         density = Density(
             density = Scale,
         ),
@@ -118,28 +232,37 @@ private fun renderSpecimen(
                 darkTheme = darkTheme,
                 content = {
                     SpecimenFrame(
+                        stage = entry.stage,
                         modifier = Modifier.onSizeChanged {
                             contentHeight = it.height
                         },
-                        content = { entry.demo() },
+                        background = background ?: JengaTheme.colors.background,
+                        content = { entry.demo(true) },
                     )
                 },
             )
         },
     )
-    scene.render(
+    var image = scene.render(
         nanoTime = 0,
     )
-    val image = scene.render(
-        nanoTime = SettleNanos,
-    )
+    for (frame in 1..SettleFrames) {
+        image = scene.render(
+            nanoTime = frame * FrameNanos,
+        )
+    }
     scene.close()
-    return image.trimToContent(
-        height = minOf(
-            contentHeight,
-            MaxHeightPx,
-        ),
-    ).encode()
+    return Render(
+        image = image,
+        contentHeight = contentHeight,
+    )
+}
+
+private fun stageWidthPx(
+    stage: CatalogStage,
+): Int = when (stage) {
+    CatalogStage.Inline -> WidthPx
+    CatalogStage.Overlay -> (OverlayStageWidth.value * Scale).roundToInt()
 }
 
 private fun Image.trimToContent(
@@ -218,11 +341,12 @@ private fun Image.encode(): ByteArray = requireNotNull(
     ),
 ).bytes
 
-private fun pngWidth(
+private fun pngInt(
     png: ByteArray,
+    offset: Int,
 ): Int = ByteBuffer.wrap(
     png,
-    PngWidthOffset,
+    offset,
     4,
 ).int
 
@@ -248,6 +372,7 @@ private fun apiPath(
 private fun componentPage(
     entry: CatalogEntry,
     displayWidth: Int,
+    displayHeight: Int,
     apiPath: String?,
 ): String = buildString {
     appendLine(
@@ -259,7 +384,8 @@ private fun componentPage(
     )
     appendLine()
     appendLine(
-        value = "<figure class=\"jenga-specimen jenga-live\" data-component=\"${entry.slug}\" markdown>",
+        value = "<figure class=\"jenga-specimen jenga-live\" data-component=\"${entry.slug}\" " +
+            "data-stage=\"${entry.stage.name.lowercase()}\" data-height=\"$displayHeight\" markdown>",
     )
     appendLine(
         value = "![${entry.name}](../assets/components/${entry.slug}-light.png#only-light){ width=\"$displayWidth\" }",
@@ -354,4 +480,10 @@ private const val WidthPx = 800
 private const val MaxHeightPx = 2400
 private const val TrimMarginPx = 48
 private const val PngWidthOffset = 16
-private const val SettleNanos = 1_000_000_000L
+private const val PngHeightOffset = 20
+private const val SettleFrames = 20
+private const val StepPx = 48
+private const val SearchLimitPx = 1800
+private const val CompactHeightPx = 960
+private const val AreaTolerance = 0.001
+private const val FrameNanos = 100_000_000L

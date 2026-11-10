@@ -24,6 +24,11 @@ import io.github.joelkanyi.jenga.component.layout.JengaStack
 import io.github.joelkanyi.jenga.component.text.JengaText
 import io.github.joelkanyi.jenga.theme.JengaTheme
 
+enum class CatalogStage {
+    Inline,
+    Overlay,
+}
+
 /**
  * One catalog entry: a named component paired with the code that produces it.
  * [demo] renders the live component; [code] is the copy-paste call that matches it.
@@ -37,7 +42,8 @@ class CatalogEntry(
     val description: String,
     val code: String,
     val keywords: String = "",
-    val demo: @Composable () -> Unit,
+    val stage: CatalogStage = CatalogStage.Inline,
+    val demo: @Composable (startOpen: Boolean) -> Unit,
 ) {
     val slug: String
         get() = name.lowercase().replace(
@@ -145,7 +151,7 @@ fun CatalogEntryCard(
                                 ),
                             contentAlignment = Alignment.Center,
                             content = {
-                                entry.demo()
+                                entry.demo(false)
                             },
                         )
                     }

@@ -54,6 +54,7 @@ fun LivePreview(
                         contentAlignment = Alignment.TopCenter,
                         content = {
                             SpecimenFrame(
+                                stage = entry?.stage ?: CatalogStage.Inline,
                                 content = {
                                     if (entry == null) {
                                         JengaEmptyState(
@@ -61,7 +62,7 @@ fun LivePreview(
                                             description = "There is no live preview called \"$slug\".",
                                         )
                                     } else {
-                                        entry.demo()
+                                        entry.demo(true)
                                     }
                                 },
                             )

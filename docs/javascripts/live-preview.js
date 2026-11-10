@@ -102,7 +102,8 @@ function mount(figure, loading, controller) {
     }
     const match = /^jenga-height:(\d+)$/.exec(String(event.data));
     if (match) {
-      frame.style.height = match[1] + "px";
+      const measured = figure.dataset.stage === "overlay" ? figure.dataset.height : match[1];
+      frame.style.height = measured + "px";
       figure.classList.add("jenga-live--running");
       loading.remove();
     }

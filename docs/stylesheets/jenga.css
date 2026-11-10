@@ -309,6 +309,12 @@
   display: none;
 }
 
+.md-typeset .jenga-live[data-stage="overlay"] .jenga-live__frame {
+  width: 560px;
+  max-width: 100%;
+  margin: 0 auto;
+}
+
 .md-grid {
   max-width: 1440px;
 }

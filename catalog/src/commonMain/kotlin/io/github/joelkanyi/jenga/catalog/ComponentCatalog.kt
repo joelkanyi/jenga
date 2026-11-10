@@ -790,6 +790,7 @@ fun componentEntries(): List<CatalogEntry> = listOf(
         group = "Inputs",
         description = "Shows a chosen value and opens a picker when tapped.",
         keywords = "select dropdown picker choose option",
+        stage = CatalogStage.Overlay,
         code = """
             var open by remember {
                 mutableStateOf(
@@ -831,10 +832,10 @@ fun componentEntries(): List<CatalogEntry> = listOf(
                 )
             }
         """.trimIndent(),
-        demo = {
+        demo = { startOpen ->
             var open by remember {
                 mutableStateOf(
-                    value = false,
+                    value = startOpen,
                 )
             }
             var fault by remember {
@@ -1611,6 +1612,7 @@ fun componentEntries(): List<CatalogEntry> = listOf(
         group = "Feedback",
         description = "A modal that interrupts for a decision.",
         keywords = "alert modal confirm",
+        stage = CatalogStage.Overlay,
         code = """
             var open by remember {
                 mutableStateOf(
@@ -1644,10 +1646,10 @@ fun componentEntries(): List<CatalogEntry> = listOf(
                 )
             }
         """.trimIndent(),
-        demo = {
+        demo = { startOpen ->
             var open by remember {
                 mutableStateOf(
-                    value = false,
+                    value = startOpen,
                 )
             }
             JengaButton(
@@ -1683,6 +1685,7 @@ fun componentEntries(): List<CatalogEntry> = listOf(
         group = "Feedback",
         description = "A panel that slides up from the bottom edge.",
         keywords = "sheet modal drawer",
+        stage = CatalogStage.Overlay,
         code = """
             var open by remember {
                 mutableStateOf(
@@ -1713,10 +1716,10 @@ fun componentEntries(): List<CatalogEntry> = listOf(
                 )
             }
         """.trimIndent(),
-        demo = {
+        demo = { startOpen ->
             var open by remember {
                 mutableStateOf(
-                    value = false,
+                    value = startOpen,
                 )
             }
             JengaButton(
@@ -1753,6 +1756,7 @@ fun componentEntries(): List<CatalogEntry> = listOf(
         group = "Feedback",
         description = "A bottom sheet with a title, a lazy list body and a pinned footer, for pickers and short forms.",
         keywords = "sheet modal picker select footer",
+        stage = CatalogStage.Overlay,
         code = """
             var open by remember {
                 mutableStateOf(
@@ -1815,10 +1819,10 @@ fun componentEntries(): List<CatalogEntry> = listOf(
                 )
             }
         """.trimIndent(),
-        demo = {
+        demo = { startOpen ->
             var open by remember {
                 mutableStateOf(
-                    value = false,
+                    value = startOpen,
                 )
             }
             var selected by remember {
@@ -1882,6 +1886,7 @@ fun componentEntries(): List<CatalogEntry> = listOf(
         group = "Feedback",
         description = "A list of actions anchored to a trigger.",
         keywords = "menu popup overflow",
+        stage = CatalogStage.Overlay,
         code = """
             var open by remember {
                 mutableStateOf(
@@ -1918,10 +1923,10 @@ fun componentEntries(): List<CatalogEntry> = listOf(
                 },
             )
         """.trimIndent(),
-        demo = {
+        demo = { startOpen ->
             var open by remember {
                 mutableStateOf(
-                    value = false,
+                    value = startOpen,
                 )
             }
             Box(
@@ -3568,6 +3573,7 @@ fun componentEntries(): List<CatalogEntry> = listOf(
         group = "Feedback",
         description = "A sheet that slides in from the end edge, for wide layouts.",
         keywords = "sheet side drawer landscape tablet",
+        stage = CatalogStage.Overlay,
         code = """
             var open by remember {
                 mutableStateOf(
@@ -3604,10 +3610,10 @@ fun componentEntries(): List<CatalogEntry> = listOf(
                 )
             }
         """.trimIndent(),
-        demo = {
+        demo = { startOpen ->
             var open by remember {
                 mutableStateOf(
-                    value = false,
+                    value = startOpen,
                 )
             }
             JengaButton(
@@ -3646,6 +3652,7 @@ fun componentEntries(): List<CatalogEntry> = listOf(
         group = "Media",
         description = "A full-screen viewer with zoom, for photos.",
         keywords = "photo image zoom fullscreen viewer",
+        stage = CatalogStage.Overlay,
         code = """
             var open by remember {
                 mutableStateOf(
@@ -3671,10 +3678,10 @@ fun componentEntries(): List<CatalogEntry> = listOf(
                 )
             }
         """.trimIndent(),
-        demo = {
+        demo = { startOpen ->
             var open by remember {
                 mutableStateOf(
-                    value = false,
+                    value = startOpen,
                 )
             }
             JengaButton(
@@ -3702,6 +3709,7 @@ fun componentEntries(): List<CatalogEntry> = listOf(
         group = "Media",
         description = "Swipe between several images, each zoomed on its own.",
         keywords = "viewer gallery pager swipe photos pages zoom",
+        stage = CatalogStage.Overlay,
         code = """
             JengaImageViewer(
                 pageCount = 3,
@@ -3718,10 +3726,10 @@ fun componentEntries(): List<CatalogEntry> = listOf(
                 },
             )
         """.trimIndent(),
-        demo = {
+        demo = { startOpen ->
             var open by remember {
                 mutableStateOf(
-                    value = false,
+                    value = startOpen,
                 )
             }
             JengaButton(
@@ -3816,6 +3824,7 @@ fun componentEntries(): List<CatalogEntry> = listOf(
         group = "Inputs",
         description = "A date picker in a dialog; here limited to adults' birth dates, with a year grid behind the title.",
         keywords = "date calendar dialog modal range birth year",
+        stage = CatalogStage.Overlay,
         code = """
             var open by remember {
                 mutableStateOf(
@@ -3861,10 +3870,10 @@ fun componentEntries(): List<CatalogEntry> = listOf(
                 )
             }
         """.trimIndent(),
-        demo = {
+        demo = { startOpen ->
             var open by remember {
                 mutableStateOf(
-                    value = false,
+                    value = startOpen,
                 )
             }
             JengaButton(
@@ -4114,6 +4123,7 @@ fun componentEntries(): List<CatalogEntry> = listOf(
         group = "Feedback",
         description = "A sheet that refuses a drag, scrim tap or Back until the user confirms.",
         keywords = "sheet confirm dismiss discard unsaved signature",
+        stage = CatalogStage.Overlay,
         code = """
             var askDiscard by remember {
                 mutableStateOf(
@@ -4138,10 +4148,10 @@ fun componentEntries(): List<CatalogEntry> = listOf(
                 },
             )
         """.trimIndent(),
-        demo = {
+        demo = { startOpen ->
             var open by remember {
                 mutableStateOf(
-                    value = false,
+                    value = startOpen,
                 )
             }
             var askDiscard by remember {
@@ -4456,6 +4466,7 @@ fun componentEntries(): List<CatalogEntry> = listOf(
         group = "Inputs",
         description = "A time input in a dialog with confirm and dismiss.",
         keywords = "time dialog modal clock",
+        stage = CatalogStage.Overlay,
         code = """
             JengaTimePickerDialog(
                 onDismissRequest = { open = false },
@@ -4473,10 +4484,10 @@ fun componentEntries(): List<CatalogEntry> = listOf(
                 pmLabel = "PM",
             )
         """.trimIndent(),
-        demo = {
+        demo = { startOpen ->
             var open by remember {
                 mutableStateOf(
-                    value = false,
+                    value = startOpen,
                 )
             }
             JengaButton(
