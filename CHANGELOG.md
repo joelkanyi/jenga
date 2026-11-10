@@ -1,5 +1,9 @@
 # Change Log
 
+## Unreleased
+
+ * New: `JengaReactionBar` takes `selected` (`JengaReaction.Positive`, `Negative` or null) and shows the chosen button in `JengaReactionBarColors.selectedContainer` and `selectedContent`; screen readers announce it as selected.
+
 ## Version 0.8.5
 
 _2026-11-03_

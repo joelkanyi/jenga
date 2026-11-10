@@ -1,11 +1,11 @@
 package io.github.joelkanyi.jenga.component.reaction
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.selection.selectable
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.minimumInteractiveComponentSize
 import androidx.compose.runtime.Composable
@@ -22,17 +22,43 @@ import dev.drewhamilton.poko.Poko
 import io.github.joelkanyi.jenga.component.icon.JengaIcon
 import io.github.joelkanyi.jenga.theme.JengaTheme
 
-/** Resolved colors for a [JengaReactionBar]'s buttons. Override via [JengaReactionBarDefaults.colors]. */
+/** The reaction a [JengaReactionBar] shows as chosen. */
+public enum class JengaReaction {
+    Positive,
+    Negative,
+}
+
+/**
+ * Resolved colors for a [JengaReactionBar]'s buttons. Override via [JengaReactionBarDefaults.colors].
+ * The selected colors default to the unselected ones, so a hand-built set shows no selection until
+ * they are given.
+ */
 @Poko
 @Immutable
 public class JengaReactionBarColors(
     public val buttonContainer: Color,
     public val buttonContent: Color,
+    public val selectedContainer: Color = buttonContainer,
+    public val selectedContent: Color = buttonContent,
 ) {
+    @Deprecated("Kept for binary compatibility", level = DeprecationLevel.HIDDEN)
+    public constructor(
+        buttonContainer: Color,
+        buttonContent: Color,
+    ) : this(buttonContainer, buttonContent, selectedContainer = buttonContainer, selectedContent = buttonContent)
+
     public fun copy(
         buttonContainer: Color = this.buttonContainer,
         buttonContent: Color = this.buttonContent,
-    ): JengaReactionBarColors = JengaReactionBarColors(buttonContainer, buttonContent)
+        selectedContainer: Color = this.selectedContainer,
+        selectedContent: Color = this.selectedContent,
+    ): JengaReactionBarColors = JengaReactionBarColors(buttonContainer, buttonContent, selectedContainer, selectedContent)
+
+    @Deprecated("Kept for binary compatibility", level = DeprecationLevel.HIDDEN)
+    public fun copy(
+        buttonContainer: Color = this.buttonContainer,
+        buttonContent: Color = this.buttonContent,
+    ): JengaReactionBarColors = copy(buttonContainer, buttonContent, this.selectedContainer, this.selectedContent)
 }
 
 /** Defaults and token mappings for [JengaReactionBar]. */
@@ -47,6 +73,8 @@ public object JengaReactionBarDefaults {
         return JengaReactionBarColors(
             buttonContainer = c.surfaceVariant,
             buttonContent = c.textSecondary,
+            selectedContainer = c.brandSubtle,
+            selectedContent = c.brand,
         )
     }
 }
@@ -60,6 +88,8 @@ public object JengaReactionBarDefaults {
  * @param onPositive called when the positive button is tapped.
  * @param onNegative called when the negative button is tapped.
  * @param modifier the [Modifier] for the row.
+ * @param selected the reaction shown as chosen, or null for none. The bar does not change it
+ *   itself: set it from [onPositive] and [onNegative].
  * @param positiveContentDescription accessibility label for the positive button.
  * @param negativeContentDescription accessibility label for the negative button.
  * @param positiveIcon the positive button icon.
@@ -72,6 +102,7 @@ public fun JengaReactionBar(
     onPositive: () -> Unit,
     onNegative: () -> Unit,
     modifier: Modifier = Modifier,
+    selected: JengaReaction? = null,
     positiveContentDescription: String? = null,
     negativeContentDescription: String? = null,
     positiveIcon: ImageVector = JengaTheme.icons.thumbsUp,
@@ -84,8 +115,8 @@ public fun JengaReactionBar(
         horizontalArrangement = Arrangement.spacedBy(JengaTheme.spacing.sm),
         verticalAlignment = Alignment.CenterVertically,
     ) {
-        RoundButton(positiveIcon, positiveContentDescription, colors, onPositive)
-        RoundButton(negativeIcon, negativeContentDescription, colors, onNegative)
+        RoundButton(positiveIcon, positiveContentDescription, selected == JengaReaction.Positive, colors, onPositive)
+        RoundButton(negativeIcon, negativeContentDescription, selected == JengaReaction.Negative, colors, onNegative)
         if (action != null) {
             Box(Modifier.weight(1f))
             action()
@@ -97,19 +128,49 @@ public fun JengaReactionBar(
 private fun RoundButton(
     icon: ImageVector,
     contentDescription: String?,
+    selected: Boolean,
     colors: JengaReactionBarColors,
     onClick: () -> Unit,
 ) {
     val shape = RoundedCornerShape(percent = 50)
+    val container = if (selected) colors.selectedContainer else colors.buttonContainer
+    val content = if (selected) colors.selectedContent else colors.buttonContent
     Box(
         modifier = Modifier
             .minimumInteractiveComponentSize()
             .size(JengaReactionBarDefaults.ButtonSize)
             .clip(shape)
-            .background(colors.buttonContainer)
-            .clickable(role = Role.Button, onClick = onClick),
+            .background(container)
+            .selectable(selected = selected, role = Role.Button, onClick = onClick),
         contentAlignment = Alignment.Center,
     ) {
-        JengaIcon(imageVector = icon, contentDescription = contentDescription, tint = colors.buttonContent)
+        JengaIcon(imageVector = icon, contentDescription = contentDescription, tint = content)
     }
+}
+
+@Deprecated("Kept for binary compatibility", level = DeprecationLevel.HIDDEN)
+@Composable
+public fun JengaReactionBar(
+    onPositive: () -> Unit,
+    onNegative: () -> Unit,
+    modifier: Modifier = Modifier,
+    positiveContentDescription: String? = null,
+    negativeContentDescription: String? = null,
+    positiveIcon: ImageVector = JengaTheme.icons.thumbsUp,
+    negativeIcon: ImageVector = JengaTheme.icons.thumbsDown,
+    colors: JengaReactionBarColors = JengaReactionBarDefaults.colors(),
+    action: (@Composable () -> Unit)? = null,
+) {
+    JengaReactionBar(
+        onPositive = onPositive,
+        onNegative = onNegative,
+        modifier = modifier,
+        selected = null,
+        positiveContentDescription = positiveContentDescription,
+        negativeContentDescription = negativeContentDescription,
+        positiveIcon = positiveIcon,
+        negativeIcon = negativeIcon,
+        colors = colors,
+        action = action,
+    )
 }

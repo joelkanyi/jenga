@@ -120,6 +120,7 @@ import io.github.joelkanyi.jenga.component.progress.JengaLinearProgress
 import io.github.joelkanyi.jenga.component.progress.JengaLinearProgressIndeterminate
 import io.github.joelkanyi.jenga.component.progress.JengaProgressTone
 import io.github.joelkanyi.jenga.component.progress.jengaShimmer
+import io.github.joelkanyi.jenga.component.reaction.JengaReaction
 import io.github.joelkanyi.jenga.component.reaction.JengaReactionBar
 import io.github.joelkanyi.jenga.component.refresh.JengaPullToRefresh
 import io.github.joelkanyi.jenga.component.scaffold.JengaBottomBar
@@ -3229,23 +3230,55 @@ fun componentEntries(): List<CatalogEntry> = listOf(
         description = "Positive and negative feedback actions.",
         keywords = "thumbs helpful feedback",
         code = """
+            var reaction by remember {
+                mutableStateOf<JengaReaction?>(
+                    value = null,
+                )
+            }
             JengaReactionBar(
-                onPositive = {},
-                onNegative = {},
+                onPositive = {
+                    reaction = if (reaction == JengaReaction.Positive) {
+                        null
+                    } else {
+                        JengaReaction.Positive
+                    }
+                },
+                onNegative = {
+                    reaction = if (reaction == JengaReaction.Negative) {
+                        null
+                    } else {
+                        JengaReaction.Negative
+                    }
+                },
+                selected = reaction,
                 positiveContentDescription = "Helpful",
                 negativeContentDescription = "Not helpful",
             )
         """.trimIndent(),
         demo = {
-            ActionFeedback(
-                content = { confirm ->
-                    JengaReactionBar(
-                        onPositive = { confirm("Marked helpful") },
-                        onNegative = { confirm("Marked not helpful") },
-                        positiveContentDescription = "Helpful",
-                        negativeContentDescription = "Not helpful",
-                    )
+            var reaction by remember {
+                mutableStateOf<JengaReaction?>(
+                    value = null,
+                )
+            }
+            JengaReactionBar(
+                onPositive = {
+                    reaction = if (reaction == JengaReaction.Positive) {
+                        null
+                    } else {
+                        JengaReaction.Positive
+                    }
                 },
+                onNegative = {
+                    reaction = if (reaction == JengaReaction.Negative) {
+                        null
+                    } else {
+                        JengaReaction.Negative
+                    }
+                },
+                selected = reaction,
+                positiveContentDescription = "Helpful",
+                negativeContentDescription = "Not helpful",
             )
         },
     ),
@@ -4452,7 +4485,9 @@ fun componentEntries(): List<CatalogEntry> = listOf(
                             onClick = {
                                 askDiscard = false
                                 discard = true
-                                scope.launch { sheetState.hide() }
+                                scope.launch { sheetState.hide() }.invokeOnCompletion {
+                                    if (!sheetState.isVisible) open = false
+                                }
                             },
                         )
                     },
