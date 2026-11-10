@@ -8,6 +8,11 @@ function browserSupported() {
     WebAssembly.validate(exceptionsProbe);
 }
 
+function savesData() {
+  const connection = navigator.connection;
+  return Boolean(connection && (connection.saveData || /2g/.test(connection.effectiveType)));
+}
+
 function currentTheme() {
   return document.body.getAttribute("data-md-color-scheme") === "slate" ? "dark" : "light";
 }
@@ -45,15 +50,6 @@ async function prefetch(signal, onProgress) {
       onProgress(Math.min(1, loaded / manifest.bytes));
     });
   }));
-}
-
-function showUnsupported(figure, button) {
-  button.remove();
-  figure.appendChild(element(
-    "p",
-    "jenga-live__notice",
-    "The live preview needs Chrome or Edge 119+, Firefox 120+ or Safari 18.2+.",
-  ));
 }
 
 function start(figure, button) {
@@ -123,14 +119,35 @@ function mount(figure, loading, controller) {
   }).observe(document.body, { attributes: true, attributeFilter: ["data-md-color-scheme"] });
 }
 
-document.querySelectorAll(".jenga-live").forEach(function (figure) {
+function setUp(figure) {
   const button = element("button", "jenga-live__start", "Try it live");
-  figure.appendChild(button);
   button.addEventListener("click", function () {
-    if (browserSupported()) {
-      start(figure, button);
-    } else {
-      showUnsupported(figure, button);
-    }
+    start(figure, button);
   });
-});
+  if (!browserSupported()) {
+    figure.appendChild(element(
+      "p",
+      "jenga-live__notice",
+      "The live preview needs Chrome or Edge 119+, Firefox 120+ or Safari 18.2+.",
+    ));
+    return;
+  }
+  figure.appendChild(button);
+  if (!savesData()) {
+    start(figure, button);
+  }
+}
+
+function prefetchForComponentsSection() {
+  const inSection = location.pathname.includes("/components/");
+  if (inSection && browserSupported() && !savesData()) {
+    prefetch(new AbortController().signal, function () {});
+  }
+}
+
+const figures = document.querySelectorAll(".jenga-live");
+if (figures.length > 0) {
+  figures.forEach(setUp);
+} else {
+  window.addEventListener("load", prefetchForComponentsSection);
+}
