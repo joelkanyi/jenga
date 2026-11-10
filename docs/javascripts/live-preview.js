@@ -62,9 +62,11 @@ function start(figure, button) {
   bar.appendChild(fill);
   loading.append(bar, status, cancel);
   button.replaceWith(loading);
+  figure.classList.add("jenga-live--loading");
 
   function reset(message) {
     controller.abort();
+    figure.classList.remove("jenga-live--loading");
     loading.replaceWith(button);
     button.textContent = message || "Try it live";
   }
@@ -104,7 +106,7 @@ function mount(figure, loading, controller) {
     if (match) {
       const measured = figure.dataset.stage === "overlay" ? figure.dataset.height : match[1];
       frame.style.height = measured + "px";
-      figure.classList.add("jenga-live--running");
+      figure.classList.replace("jenga-live--loading", "jenga-live--running");
       loading.remove();
     }
   }

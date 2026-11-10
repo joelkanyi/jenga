@@ -301,6 +301,21 @@
   border: 0;
 }
 
+.md-typeset .jenga-live {
+  position: relative;
+}
+
+.md-typeset .jenga-live--loading > p {
+  visibility: hidden;
+}
+
+.md-typeset .jenga-live--loading .jenga-live__loading {
+  position: absolute;
+  inset: 0;
+  margin: 0;
+}
+
+.md-typeset .jenga-live--loading,
 .md-typeset .jenga-live--running {
   width: 100%;
 }
