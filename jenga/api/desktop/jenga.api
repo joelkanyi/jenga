@@ -1956,14 +1956,28 @@ public final class io/github/joelkanyi/jenga/component/progress/JengaShimmerKt {
 	public static final fun jengaShimmer (Landroidx/compose/ui/Modifier;)Landroidx/compose/ui/Modifier;
 }
 
+public final class io/github/joelkanyi/jenga/component/reaction/JengaReaction : java/lang/Enum {
+	public static final field Negative Lio/github/joelkanyi/jenga/component/reaction/JengaReaction;
+	public static final field Positive Lio/github/joelkanyi/jenga/component/reaction/JengaReaction;
+	public static fun getEntries ()Lkotlin/enums/EnumEntries;
+	public static fun valueOf (Ljava/lang/String;)Lio/github/joelkanyi/jenga/component/reaction/JengaReaction;
+	public static fun values ()[Lio/github/joelkanyi/jenga/component/reaction/JengaReaction;
+}
+
 public final class io/github/joelkanyi/jenga/component/reaction/JengaReactionBarColors {
 	public static final field $stable I
+	public synthetic fun <init> (JJJJILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public synthetic fun <init> (JJJJLkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public synthetic fun <init> (JJLkotlin/jvm/internal/DefaultConstructorMarker;)V
-	public final fun copy--OWjLjI (JJ)Lio/github/joelkanyi/jenga/component/reaction/JengaReactionBarColors;
+	public final synthetic fun copy--OWjLjI (JJ)Lio/github/joelkanyi/jenga/component/reaction/JengaReactionBarColors;
 	public static synthetic fun copy--OWjLjI$default (Lio/github/joelkanyi/jenga/component/reaction/JengaReactionBarColors;JJILjava/lang/Object;)Lio/github/joelkanyi/jenga/component/reaction/JengaReactionBarColors;
+	public final fun copy-jRlVdoo (JJJJ)Lio/github/joelkanyi/jenga/component/reaction/JengaReactionBarColors;
+	public static synthetic fun copy-jRlVdoo$default (Lio/github/joelkanyi/jenga/component/reaction/JengaReactionBarColors;JJJJILjava/lang/Object;)Lio/github/joelkanyi/jenga/component/reaction/JengaReactionBarColors;
 	public fun equals (Ljava/lang/Object;)Z
 	public final fun getButtonContainer-0d7_KjU ()J
 	public final fun getButtonContent-0d7_KjU ()J
+	public final fun getSelectedContainer-0d7_KjU ()J
+	public final fun getSelectedContent-0d7_KjU ()J
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
 }
@@ -1976,7 +1990,8 @@ public final class io/github/joelkanyi/jenga/component/reaction/JengaReactionBar
 }
 
 public final class io/github/joelkanyi/jenga/component/reaction/JengaReactionBarKt {
-	public static final fun JengaReactionBar (Lkotlin/jvm/functions/Function0;Lkotlin/jvm/functions/Function0;Landroidx/compose/ui/Modifier;Ljava/lang/String;Ljava/lang/String;Landroidx/compose/ui/graphics/vector/ImageVector;Landroidx/compose/ui/graphics/vector/ImageVector;Lio/github/joelkanyi/jenga/component/reaction/JengaReactionBarColors;Lkotlin/jvm/functions/Function2;Landroidx/compose/runtime/Composer;II)V
+	public static final fun JengaReactionBar (Lkotlin/jvm/functions/Function0;Lkotlin/jvm/functions/Function0;Landroidx/compose/ui/Modifier;Lio/github/joelkanyi/jenga/component/reaction/JengaReaction;Ljava/lang/String;Ljava/lang/String;Landroidx/compose/ui/graphics/vector/ImageVector;Landroidx/compose/ui/graphics/vector/ImageVector;Lio/github/joelkanyi/jenga/component/reaction/JengaReactionBarColors;Lkotlin/jvm/functions/Function2;Landroidx/compose/runtime/Composer;II)V
+	public static final synthetic fun JengaReactionBar (Lkotlin/jvm/functions/Function0;Lkotlin/jvm/functions/Function0;Landroidx/compose/ui/Modifier;Ljava/lang/String;Ljava/lang/String;Landroidx/compose/ui/graphics/vector/ImageVector;Landroidx/compose/ui/graphics/vector/ImageVector;Lio/github/joelkanyi/jenga/component/reaction/JengaReactionBarColors;Lkotlin/jvm/functions/Function2;Landroidx/compose/runtime/Composer;II)V
 }
 
 public final class io/github/joelkanyi/jenga/component/refresh/JengaPullToRefreshDefaults {

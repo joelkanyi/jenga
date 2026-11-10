@@ -2,6 +2,7 @@ package io.github.joelkanyi.jenga.component.reaction
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
@@ -34,6 +35,7 @@ private fun ReactionBarShowcase() {
         modifier = Modifier
             .background(JengaTheme.colors.background)
             .padding(JengaTheme.spacing.lg),
+        verticalArrangement = Arrangement.spacedBy(JengaTheme.spacing.md),
     ) {
         JengaCard(variant = JengaCardVariant.Outlined) {
             JengaReactionBar(
@@ -52,6 +54,15 @@ private fun ReactionBarShowcase() {
                             .padding(horizontal = JengaTheme.spacing.lg, vertical = JengaTheme.spacing.sm),
                     )
                 },
+            )
+        }
+        JengaCard(variant = JengaCardVariant.Outlined) {
+            JengaReactionBar(
+                onPositive = {},
+                onNegative = {},
+                selected = JengaReaction.Positive,
+                positiveContentDescription = "More like this",
+                negativeContentDescription = "Not this",
             )
         }
     }

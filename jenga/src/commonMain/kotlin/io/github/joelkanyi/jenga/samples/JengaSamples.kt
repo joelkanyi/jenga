@@ -90,6 +90,7 @@ import io.github.joelkanyi.jenga.component.progress.JengaCircularProgress
 import io.github.joelkanyi.jenga.component.progress.JengaDotStrip
 import io.github.joelkanyi.jenga.component.progress.JengaLabelledProgress
 import io.github.joelkanyi.jenga.component.progress.JengaLinearProgress
+import io.github.joelkanyi.jenga.component.reaction.JengaReaction
 import io.github.joelkanyi.jenga.component.reaction.JengaReactionBar
 import io.github.joelkanyi.jenga.component.refresh.JengaPullToRefresh
 import io.github.joelkanyi.jenga.component.scaffold.JengaBottomBar
@@ -1019,9 +1020,27 @@ internal fun JengaImageShelfSample() {
 
 @Composable
 internal fun JengaReactionBarSample() {
+    var reaction by remember {
+        mutableStateOf<JengaReaction?>(
+            value = null,
+        )
+    }
     JengaReactionBar(
-        onPositive = { },
-        onNegative = { },
+        onPositive = {
+            reaction = if (reaction == JengaReaction.Positive) {
+                null
+            } else {
+                JengaReaction.Positive
+            }
+        },
+        onNegative = {
+            reaction = if (reaction == JengaReaction.Negative) {
+                null
+            } else {
+                JengaReaction.Negative
+            }
+        },
+        selected = reaction,
         positiveContentDescription = "Helpful",
         negativeContentDescription = "Not helpful",
     )
