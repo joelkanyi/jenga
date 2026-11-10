@@ -235,6 +235,80 @@
   vertical-align: top;
 }
 
+.md-typeset .jenga-live__start,
+.md-typeset .jenga-live__cancel {
+  font: inherit;
+  font-size: 0.7rem;
+  font-weight: 500;
+  color: var(--jenga-text);
+  background: var(--jenga-surface);
+  border: 0.5px solid var(--jenga-border);
+  border-radius: 999px;
+  padding: 0.3rem 0.9rem;
+  cursor: pointer;
+}
+
+.md-typeset .jenga-live__start:hover,
+.md-typeset .jenga-live__cancel:hover {
+  border-color: var(--jenga-text-muted);
+}
+
+.md-typeset .jenga-live__start {
+  display: block;
+  margin: 0 auto 1rem;
+}
+
+.md-typeset .jenga-live__loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  margin: 0 1rem 1rem;
+}
+
+.md-typeset .jenga-live__bar {
+  flex: 0 1 12rem;
+  height: 4px;
+  border-radius: 2px;
+  background: var(--jenga-sunk);
+  overflow: hidden;
+}
+
+.md-typeset .jenga-live__fill {
+  width: 0;
+  height: 100%;
+  background: var(--jenga-text-muted);
+  transition: width 0.2s;
+}
+
+.md-typeset .jenga-live__status {
+  min-width: 10rem;
+  font-size: 0.7rem;
+  color: var(--jenga-text-muted);
+  font-variant-numeric: tabular-nums;
+}
+
+.md-typeset .jenga-live__notice {
+  padding: 0 1rem 1rem;
+  font-size: 0.7rem;
+  color: var(--jenga-text-muted);
+}
+
+.md-typeset .jenga-live__frame {
+  display: block;
+  width: 100%;
+  height: 0;
+  border: 0;
+}
+
+.md-typeset .jenga-live--running {
+  width: 100%;
+}
+
+.md-typeset .jenga-live--running > p {
+  display: none;
+}
+
 .md-grid {
   max-width: 1440px;
 }
