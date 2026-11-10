@@ -21,6 +21,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
@@ -173,6 +174,7 @@ import kotlinx.datetime.LocalDate
 import kotlinx.datetime.LocalTime
 import kotlinx.datetime.Month
 import kotlinx.datetime.YearMonth
+import kotlin.math.roundToInt
 import kotlin.time.Duration.Companion.minutes
 import kotlin.time.Duration.Companion.seconds
 
@@ -215,6 +217,21 @@ fun componentEntries(): List<CatalogEntry> = listOf(
             )
         """.trimIndent(),
         demo = {
+            var busy by remember {
+                mutableStateOf<String?>(
+                    value = null,
+                )
+            }
+            LaunchedEffect(
+                busy,
+            ) {
+                if (busy != null) {
+                    delay(
+                        timeMillis = 1_500,
+                    )
+                    busy = null
+                }
+            }
             JengaStack(
                 space = JengaTheme.spacing.sm,
                 content = {
@@ -223,17 +240,20 @@ fun componentEntries(): List<CatalogEntry> = listOf(
                         content = {
                             JengaButton(
                                 text = "Primary",
-                                onClick = {},
+                                onClick = { busy = "Primary" },
+                                loading = busy == "Primary",
                                 variant = JengaButtonVariant.Primary,
                             )
                             JengaButton(
                                 text = "Ink",
-                                onClick = {},
+                                onClick = { busy = "Ink" },
+                                loading = busy == "Ink",
                                 variant = JengaButtonVariant.Ink,
                             )
                             JengaButton(
                                 text = "Ghost",
-                                onClick = {},
+                                onClick = { busy = "Ghost" },
+                                loading = busy == "Ghost",
                                 variant = JengaButtonVariant.Ghost,
                             )
                         },
@@ -243,12 +263,14 @@ fun componentEntries(): List<CatalogEntry> = listOf(
                         content = {
                             JengaButton(
                                 text = "Outline",
-                                onClick = {},
+                                onClick = { busy = "Outline" },
+                                loading = busy == "Outline",
                                 variant = JengaButtonVariant.Outline,
                             )
                             JengaButton(
                                 text = "Brand outline",
-                                onClick = {},
+                                onClick = { busy = "Brand outline" },
+                                loading = busy == "Brand outline",
                                 variant = JengaButtonVariant.BrandOutline,
                             )
                         },
@@ -258,7 +280,8 @@ fun componentEntries(): List<CatalogEntry> = listOf(
                         content = {
                             JengaButton(
                                 text = "Danger",
-                                onClick = {},
+                                onClick = { busy = "Danger" },
+                                loading = busy == "Danger",
                                 variant = JengaButtonVariant.Danger,
                             )
                             JengaButton(
@@ -291,50 +314,59 @@ fun componentEntries(): List<CatalogEntry> = listOf(
             )
         """.trimIndent(),
         demo = {
-            JengaInline(
-                content = {
-                    JengaIconButton(
-                        onClick = {},
-                        variant = JengaIconButtonVariant.Standard,
-                        content = {
-                            JengaIcon(
-                                imageVector = JengaIcons.Search,
-                                contentDescription = "Search",
-                            )
-                        },
-                    )
-                    JengaIconButton(
-                        onClick = {},
-                        variant = JengaIconButtonVariant.Filled,
-                        content = {
-                            JengaIcon(
-                                imageVector = JengaIcons.Add,
-                                contentDescription = "Add",
-                            )
-                        },
-                    )
-                    JengaIconButton(
-                        onClick = {},
-                        variant = JengaIconButtonVariant.Tonal,
-                        content = {
-                            JengaIcon(
-                                imageVector = JengaIcons.Info,
-                                contentDescription = "Info",
-                            )
-                        },
-                    )
-                    Box(
-                        modifier = Modifier.background(
-                            color = Color.Black,
-                        ),
+            var torchOn by remember {
+                mutableStateOf(
+                    value = true,
+                )
+            }
+            ActionFeedback(
+                content = { confirm ->
+                    JengaInline(
                         content = {
                             JengaIconButton(
-                                onClick = {},
-                                variant = JengaIconButtonVariant.Overlay,
+                                onClick = { confirm("Opening search") },
+                                variant = JengaIconButtonVariant.Standard,
                                 content = {
                                     JengaIcon(
-                                        imageVector = JengaIcons.Flash,
-                                        contentDescription = "Torch",
+                                        imageVector = JengaIcons.Search,
+                                        contentDescription = "Search",
+                                    )
+                                },
+                            )
+                            JengaIconButton(
+                                onClick = { confirm("Added") },
+                                variant = JengaIconButtonVariant.Filled,
+                                content = {
+                                    JengaIcon(
+                                        imageVector = JengaIcons.Add,
+                                        contentDescription = "Add",
+                                    )
+                                },
+                            )
+                            JengaIconButton(
+                                onClick = { confirm("Showing info") },
+                                variant = JengaIconButtonVariant.Tonal,
+                                content = {
+                                    JengaIcon(
+                                        imageVector = JengaIcons.Info,
+                                        contentDescription = "Info",
+                                    )
+                                },
+                            )
+                            Box(
+                                modifier = Modifier.background(
+                                    color = Color.Black,
+                                ),
+                                content = {
+                                    JengaIconButton(
+                                        onClick = { torchOn = !torchOn },
+                                        variant = JengaIconButtonVariant.Overlay,
+                                        content = {
+                                            JengaIcon(
+                                                imageVector = if (torchOn) JengaIcons.Flash else JengaIcons.FlashOff,
+                                                contentDescription = if (torchOn) "Turn torch off" else "Turn torch on",
+                                            )
+                                        },
                                     )
                                 },
                             )
@@ -361,12 +393,16 @@ fun componentEntries(): List<CatalogEntry> = listOf(
             )
         """.trimIndent(),
         demo = {
-            JengaFab(
-                onClick = {},
-                content = {
-                    JengaIcon(
-                        imageVector = JengaIcons.Add,
-                        contentDescription = "Add",
+            ActionFeedback(
+                content = { confirm ->
+                    JengaFab(
+                        onClick = { confirm("New item") },
+                        content = {
+                            JengaIcon(
+                                imageVector = JengaIcons.Add,
+                                contentDescription = "Add",
+                            )
+                        },
                     )
                 },
             )
@@ -390,13 +426,17 @@ fun componentEntries(): List<CatalogEntry> = listOf(
             )
         """.trimIndent(),
         demo = {
-            JengaExtendedFab(
-                label = "New ticket",
-                onClick = {},
-                icon = {
-                    JengaIcon(
-                        imageVector = JengaIcons.Add,
-                        contentDescription = null,
+            ActionFeedback(
+                content = { confirm ->
+                    JengaExtendedFab(
+                        label = "New ticket",
+                        onClick = { confirm("New ticket") },
+                        icon = {
+                            JengaIcon(
+                                imageVector = JengaIcons.Add,
+                                contentDescription = null,
+                            )
+                        },
                     )
                 },
             )
@@ -429,27 +469,31 @@ fun componentEntries(): List<CatalogEntry> = listOf(
             )
         """.trimIndent(),
         demo = {
-            JengaStack(
-                space = JengaTheme.spacing.sm,
-                content = {
-                    JengaLink(
-                        text = "Forgot password?",
-                        onClick = {},
-                    )
-                    JengaLink(
-                        text = "Call support",
-                        onClick = {},
-                        leadingIcon = {
-                            JengaIcon(
-                                imageVector = JengaIcons.Phone,
-                                contentDescription = null,
+            ActionFeedback(
+                content = { confirm ->
+                    JengaStack(
+                        space = JengaTheme.spacing.sm,
+                        content = {
+                            JengaLink(
+                                text = "Forgot password?",
+                                onClick = { confirm("Opening password reset") },
+                            )
+                            JengaLink(
+                                text = "Call support",
+                                onClick = { confirm("Calling support") },
+                                leadingIcon = {
+                                    JengaIcon(
+                                        imageVector = JengaIcons.Phone,
+                                        contentDescription = null,
+                                    )
+                                },
+                            )
+                            JengaLink(
+                                text = "Unavailable",
+                                onClick = {},
+                                enabled = false,
                             )
                         },
-                    )
-                    JengaLink(
-                        text = "Unavailable",
-                        onClick = {},
-                        enabled = false,
                     )
                 },
             )
@@ -736,22 +780,26 @@ fun componentEntries(): List<CatalogEntry> = listOf(
             )
         """.trimIndent(),
         demo = {
-            var query by remember {
-                mutableStateOf(
-                    value = "",
-                )
-            }
-            JengaSearchField(
-                value = query,
-                onValueChange = { query = it },
-                placeholder = "Search",
-                clearContentDescription = "Clear search",
-                keyboardOptions = KeyboardOptions(
-                    imeAction = ImeAction.Search,
-                ),
-                keyboardActions = KeyboardActions(
-                    onSearch = {},
-                ),
+            ActionFeedback(
+                content = { confirm ->
+                    var query by remember {
+                        mutableStateOf(
+                            value = "",
+                        )
+                    }
+                    JengaSearchField(
+                        value = query,
+                        onValueChange = { query = it },
+                        placeholder = "Search",
+                        clearContentDescription = "Clear search",
+                        keyboardOptions = KeyboardOptions(
+                            imeAction = ImeAction.Search,
+                        ),
+                        keyboardActions = KeyboardActions(
+                            onSearch = { confirm("Searching for \"$query\"") },
+                        ),
+                    )
+                },
             )
         },
     ),
@@ -773,13 +821,17 @@ fun componentEntries(): List<CatalogEntry> = listOf(
             )
         """.trimIndent(),
         demo = {
-            JengaSearchTrigger(
-                placeholder = "Search tickets",
-                onClick = {},
-                trailingContent = {
-                    JengaIcon(
-                        imageVector = JengaIcons.QrCode,
-                        contentDescription = "Scan",
+            ActionFeedback(
+                content = { confirm ->
+                    JengaSearchTrigger(
+                        placeholder = "Search tickets",
+                        onClick = { confirm("Opening search") },
+                        trailingContent = {
+                            JengaIcon(
+                                imageVector = JengaIcons.QrCode,
+                                contentDescription = "Scan",
+                            )
+                        },
                     )
                 },
             )
@@ -790,6 +842,7 @@ fun componentEntries(): List<CatalogEntry> = listOf(
         group = "Inputs",
         description = "Shows a chosen value and opens a picker when tapped.",
         keywords = "select dropdown picker choose option",
+        stage = CatalogStage.Overlay,
         code = """
             var open by remember {
                 mutableStateOf(
@@ -831,10 +884,10 @@ fun componentEntries(): List<CatalogEntry> = listOf(
                 )
             }
         """.trimIndent(),
-        demo = {
+        demo = { startOpen ->
             var open by remember {
                 mutableStateOf(
-                    value = false,
+                    value = startOpen,
                 )
             }
             var fault by remember {
@@ -1118,6 +1171,11 @@ fun componentEntries(): List<CatalogEntry> = listOf(
                     value = true,
                 )
             }
+            var alsoSelected by remember {
+                mutableStateOf(
+                    value = false,
+                )
+            }
             JengaInline(
                 content = {
                     JengaChip(
@@ -1127,8 +1185,8 @@ fun componentEntries(): List<CatalogEntry> = listOf(
                     )
                     JengaChip(
                         label = "Off",
-                        selected = false,
-                        onClick = {},
+                        selected = alsoSelected,
+                        onClick = { alsoSelected = !alsoSelected },
                     )
                 },
             )
@@ -1306,62 +1364,66 @@ fun componentEntries(): List<CatalogEntry> = listOf(
             )
         """.trimIndent(),
         demo = {
-            JengaStack(
-                space = JengaTheme.spacing.none,
-                content = {
-                    JengaListItem(
-                        headline = "Gate A",
-                        supporting = "Main entrance",
-                        leadingContent = {
-                            JengaIcon(
-                                imageVector = JengaIcons.Check,
-                                contentDescription = null,
-                                tint = JengaTheme.colors.success,
+            ActionFeedback(
+                content = { confirm ->
+                    JengaStack(
+                        space = JengaTheme.spacing.none,
+                        content = {
+                            JengaListItem(
+                                headline = "Gate A",
+                                supporting = "Main entrance",
+                                leadingContent = {
+                                    JengaIcon(
+                                        imageVector = JengaIcons.Check,
+                                        contentDescription = null,
+                                        tint = JengaTheme.colors.success,
+                                    )
+                                },
+                                trailingContent = {
+                                    JengaIcon(
+                                        imageVector = JengaIcons.ChevronRight,
+                                        contentDescription = null,
+                                    )
+                                },
+                                onClick = { confirm("Opening Gate A") },
+                            )
+                            JengaListItem(
+                                headline = "Gate B",
+                                supporting = "North wing",
+                                supportingContent = {
+                                    JengaBadge(
+                                        text = "Busy",
+                                        tone = JengaBadgeTone.Warning,
+                                    )
+                                },
+                                onClick = { confirm("Opening Gate B") },
+                            )
+                            JengaListItem(
+                                headline = "Gate C",
+                                supporting = "Closed",
+                                onClick = { confirm("Opening Gate D") },
+                                enabled = false,
+                            )
+                            JengaListItem(
+                                headline = buildAnnotatedString {
+                                    append(
+                                        text = "Gate D ",
+                                    )
+                                    withStyle(
+                                        style = SpanStyle(
+                                            color = JengaTheme.colors.textMuted,
+                                        ),
+                                    ) {
+                                        append(
+                                            text = "· 12 waiting",
+                                        )
+                                    }
+                                },
+                                supporting = "East wing, opens at noon",
+                                headlineStyle = JengaTheme.typography.titleSmall,
+                                onClick = {},
                             )
                         },
-                        trailingContent = {
-                            JengaIcon(
-                                imageVector = JengaIcons.ChevronRight,
-                                contentDescription = null,
-                            )
-                        },
-                        onClick = {},
-                    )
-                    JengaListItem(
-                        headline = "Gate B",
-                        supporting = "North wing",
-                        supportingContent = {
-                            JengaBadge(
-                                text = "Busy",
-                                tone = JengaBadgeTone.Warning,
-                            )
-                        },
-                        onClick = {},
-                    )
-                    JengaListItem(
-                        headline = "Gate C",
-                        supporting = "Closed",
-                        onClick = {},
-                        enabled = false,
-                    )
-                    JengaListItem(
-                        headline = buildAnnotatedString {
-                            append(
-                                text = "Gate D ",
-                            )
-                            withStyle(
-                                style = SpanStyle(
-                                    color = JengaTheme.colors.textMuted,
-                                ),
-                            ) {
-                                append(
-                                    text = "· 12 waiting",
-                                )
-                            }
-                        },
-                        supporting = "East wing, opens at noon",
-                        headlineStyle = JengaTheme.typography.titleSmall,
-                        onClick = {},
                     )
                 },
             )
@@ -1429,18 +1491,22 @@ fun componentEntries(): List<CatalogEntry> = listOf(
             )
         """.trimIndent(),
         demo = {
-            JengaEmptyState(
-                title = "No tickets yet",
-                description = "Tickets you scan will show up here.",
-                icon = {
-                    JengaIcon(
-                        imageVector = JengaIcons.Ticket,
-                        contentDescription = null,
+            ActionFeedback(
+                content = { confirm ->
+                    JengaEmptyState(
+                        title = "No tickets yet",
+                        description = "Tickets you scan will show up here.",
+                        icon = {
+                            JengaIcon(
+                                imageVector = JengaIcons.Ticket,
+                                contentDescription = null,
+                            )
+                        },
+                        actionLabel = "Scan a ticket",
+                        onAction = { confirm("Opening scanner") },
+                        actionSize = JengaButtonSize.Small,
                     )
                 },
-                actionLabel = "Scan a ticket",
-                onAction = {},
-                actionSize = JengaButtonSize.Small,
             )
         },
     ),
@@ -1464,17 +1530,21 @@ fun componentEntries(): List<CatalogEntry> = listOf(
             )
         """.trimIndent(),
         demo = {
-            JengaErrorState(
-                title = "Couldn't load tickets",
-                description = "Check your connection and try again.",
-                icon = {
-                    JengaIcon(
-                        imageVector = JengaIcons.CloudOff,
-                        contentDescription = null,
+            ActionFeedback(
+                content = { confirm ->
+                    JengaErrorState(
+                        title = "Couldn't load tickets",
+                        description = "Check your connection and try again.",
+                        icon = {
+                            JengaIcon(
+                                imageVector = JengaIcons.CloudOff,
+                                contentDescription = null,
+                            )
+                        },
+                        actionLabel = "Retry",
+                        onAction = { confirm("Retrying") },
                     )
                 },
-                actionLabel = "Retry",
-                onAction = {},
             )
         },
     ),
@@ -1582,12 +1652,24 @@ fun componentEntries(): List<CatalogEntry> = listOf(
             )
         """.trimIndent(),
         demo = {
-            JengaSnackbar(
-                message = "Saved offline",
-                tone = JengaSnackbarTone.Neutral,
-                actionLabel = "Undo",
-                onAction = {},
-            )
+            var visible by remember {
+                mutableStateOf(
+                    value = true,
+                )
+            }
+            if (visible) {
+                JengaSnackbar(
+                    message = "Saved offline",
+                    tone = JengaSnackbarTone.Neutral,
+                    actionLabel = "Undo",
+                    onAction = { visible = false },
+                )
+            } else {
+                JengaLink(
+                    text = "Show the snackbar again",
+                    onClick = { visible = true },
+                )
+            }
         },
     ),
     CatalogEntry(
@@ -1611,6 +1693,7 @@ fun componentEntries(): List<CatalogEntry> = listOf(
         group = "Feedback",
         description = "A modal that interrupts for a decision.",
         keywords = "alert modal confirm",
+        stage = CatalogStage.Overlay,
         code = """
             var open by remember {
                 mutableStateOf(
@@ -1644,10 +1727,10 @@ fun componentEntries(): List<CatalogEntry> = listOf(
                 )
             }
         """.trimIndent(),
-        demo = {
+        demo = { startOpen ->
             var open by remember {
                 mutableStateOf(
-                    value = false,
+                    value = startOpen,
                 )
             }
             JengaButton(
@@ -1683,6 +1766,7 @@ fun componentEntries(): List<CatalogEntry> = listOf(
         group = "Feedback",
         description = "A panel that slides up from the bottom edge.",
         keywords = "sheet modal drawer",
+        stage = CatalogStage.Overlay,
         code = """
             var open by remember {
                 mutableStateOf(
@@ -1713,10 +1797,10 @@ fun componentEntries(): List<CatalogEntry> = listOf(
                 )
             }
         """.trimIndent(),
-        demo = {
+        demo = { startOpen ->
             var open by remember {
                 mutableStateOf(
-                    value = false,
+                    value = startOpen,
                 )
             }
             JengaButton(
@@ -1753,6 +1837,7 @@ fun componentEntries(): List<CatalogEntry> = listOf(
         group = "Feedback",
         description = "A bottom sheet with a title, a lazy list body and a pinned footer, for pickers and short forms.",
         keywords = "sheet modal picker select footer",
+        stage = CatalogStage.Overlay,
         code = """
             var open by remember {
                 mutableStateOf(
@@ -1815,10 +1900,10 @@ fun componentEntries(): List<CatalogEntry> = listOf(
                 )
             }
         """.trimIndent(),
-        demo = {
+        demo = { startOpen ->
             var open by remember {
                 mutableStateOf(
-                    value = false,
+                    value = startOpen,
                 )
             }
             var selected by remember {
@@ -1882,6 +1967,7 @@ fun componentEntries(): List<CatalogEntry> = listOf(
         group = "Feedback",
         description = "A list of actions anchored to a trigger.",
         keywords = "menu popup overflow",
+        stage = CatalogStage.Overlay,
         code = """
             var open by remember {
                 mutableStateOf(
@@ -1918,10 +2004,10 @@ fun componentEntries(): List<CatalogEntry> = listOf(
                 },
             )
         """.trimIndent(),
-        demo = {
+        demo = { startOpen ->
             var open by remember {
                 mutableStateOf(
-                    value = false,
+                    value = startOpen,
                 )
             }
             Box(
@@ -2027,27 +2113,31 @@ fun componentEntries(): List<CatalogEntry> = listOf(
             )
         """.trimIndent(),
         demo = {
-            JengaTopAppBar(
-                title = "Events",
-                subtitle = "Tonight",
-                navigationIcon = {
-                    JengaIconButton(
-                        onClick = {},
-                        content = {
-                            JengaIcon(
-                                imageVector = JengaIcons.ArrowBack,
-                                contentDescription = "Back",
+            ActionFeedback(
+                content = { confirm ->
+                    JengaTopAppBar(
+                        title = "Events",
+                        subtitle = "Tonight",
+                        navigationIcon = {
+                            JengaIconButton(
+                                onClick = { confirm("Going back") },
+                                content = {
+                                    JengaIcon(
+                                        imageVector = JengaIcons.ArrowBack,
+                                        contentDescription = "Back",
+                                    )
+                                },
                             )
                         },
-                    )
-                },
-                actions = {
-                    JengaIconButton(
-                        onClick = {},
-                        content = {
-                            JengaIcon(
-                                imageVector = JengaIcons.Search,
-                                contentDescription = "Search",
+                        actions = {
+                            JengaIconButton(
+                                onClick = { confirm("Opening search") },
+                                content = {
+                                    JengaIcon(
+                                        imageVector = JengaIcons.Search,
+                                        contentDescription = "Search",
+                                    )
+                                },
                             )
                         },
                     )
@@ -2061,11 +2151,16 @@ fun componentEntries(): List<CatalogEntry> = listOf(
         description = "Top-level destinations along the bottom edge.",
         keywords = "bottom nav destinations",
         code = """
+            var selected by remember {
+                mutableIntStateOf(
+                    value = 0,
+                )
+            }
             JengaNavigationBar(
                 content = {
                     JengaNavigationBarItem(
-                        selected = true,
-                        onClick = {},
+                        selected = selected == 0,
+                        onClick = { selected = 0 },
                         icon = {
                             JengaIcon(
                                 imageVector = JengaIcons.Search,
@@ -2075,8 +2170,8 @@ fun componentEntries(): List<CatalogEntry> = listOf(
                         label = "Events",
                     )
                     JengaNavigationBarItem(
-                        selected = false,
-                        onClick = {},
+                        selected = selected == 1,
+                        onClick = { selected = 1 },
                         icon = {
                             JengaIcon(
                                 imageVector = JengaIcons.Check,
@@ -2089,11 +2184,16 @@ fun componentEntries(): List<CatalogEntry> = listOf(
             )
         """.trimIndent(),
         demo = {
+            var selected by remember {
+                mutableIntStateOf(
+                    value = 0,
+                )
+            }
             JengaNavigationBar(
                 content = {
                     JengaNavigationBarItem(
-                        selected = true,
-                        onClick = {},
+                        selected = selected == 0,
+                        onClick = { selected = 0 },
                         icon = {
                             JengaIcon(
                                 imageVector = JengaIcons.Search,
@@ -2103,8 +2203,8 @@ fun componentEntries(): List<CatalogEntry> = listOf(
                         label = "Events",
                     )
                     JengaNavigationBarItem(
-                        selected = false,
-                        onClick = {},
+                        selected = selected == 1,
+                        onClick = { selected = 1 },
                         icon = {
                             JengaIcon(
                                 imageVector = JengaIcons.Check,
@@ -2114,8 +2214,8 @@ fun componentEntries(): List<CatalogEntry> = listOf(
                         label = "Scan",
                     )
                     JengaNavigationBarItem(
-                        selected = false,
-                        onClick = {},
+                        selected = selected == 2,
+                        onClick = { selected = 2 },
                         icon = {
                             JengaIcon(
                                 imageVector = JengaIcons.Info,
@@ -2157,32 +2257,36 @@ fun componentEntries(): List<CatalogEntry> = listOf(
             )
         """.trimIndent(),
         demo = {
-            JengaBottomBar(
-                content = {
-                    JengaIconButton(
-                        onClick = {},
-                        variant = JengaIconButtonVariant.Standard,
+            ActionFeedback(
+                content = { confirm ->
+                    JengaBottomBar(
                         content = {
-                            JengaIcon(
-                                imageVector = JengaIcons.Search,
-                                contentDescription = "Search",
+                            JengaIconButton(
+                                onClick = { confirm("Opening search") },
+                                variant = JengaIconButtonVariant.Standard,
+                                content = {
+                                    JengaIcon(
+                                        imageVector = JengaIcons.Search,
+                                        contentDescription = "Search",
+                                    )
+                                },
                             )
-                        },
-                    )
-                    JengaButton(
-                        text = "Manual entry",
-                        onClick = {},
-                        modifier = Modifier.weight(
-                            weight = 1f,
-                        ),
-                    )
-                    JengaIconButton(
-                        onClick = {},
-                        variant = JengaIconButtonVariant.Standard,
-                        content = {
-                            JengaIcon(
-                                imageVector = JengaIcons.History,
-                                contentDescription = "History",
+                            JengaButton(
+                                text = "Manual entry",
+                                onClick = { confirm("Opening manual entry") },
+                                modifier = Modifier.weight(
+                                    weight = 1f,
+                                ),
+                            )
+                            JengaIconButton(
+                                onClick = { confirm("Opening history") },
+                                variant = JengaIconButtonVariant.Standard,
+                                content = {
+                                    JengaIcon(
+                                        imageVector = JengaIcons.History,
+                                        contentDescription = "History",
+                                    )
+                                },
                             )
                         },
                     )
@@ -2392,11 +2496,16 @@ fun componentEntries(): List<CatalogEntry> = listOf(
             JengaCircularProgressIndeterminate()
         """.trimIndent(),
         demo = {
+            var value by remember {
+                mutableFloatStateOf(
+                    value = 0.6f,
+                )
+            }
             JengaStack(
                 space = JengaTheme.spacing.md,
                 content = {
                     JengaLinearProgress(
-                        progress = 0.6f,
+                        progress = value,
                     )
                     JengaLinearProgress(
                         progress = 0.2f,
@@ -2406,10 +2515,14 @@ fun componentEntries(): List<CatalogEntry> = listOf(
                     JengaInline(
                         content = {
                             JengaCircularProgress(
-                                progress = 0.7f,
+                                progress = value,
                             )
                             JengaCircularProgressIndeterminate()
                         },
+                    )
+                    JengaSlider(
+                        value = value,
+                        onValueChange = { value = it },
                     )
                 },
             )
@@ -2589,6 +2702,13 @@ fun componentEntries(): List<CatalogEntry> = listOf(
         description = "A row that wraps onto new lines when it runs out of width.",
         keywords = "flow wrap tags chips lines",
         code = """
+            var picked by remember {
+                mutableStateOf(
+                    value = setOf(
+                        "Solar",
+                    ),
+                )
+            }
             JengaWrap(
                 content = {
                     listOf(
@@ -2598,17 +2718,24 @@ fun componentEntries(): List<CatalogEntry> = listOf(
                         "Lighting",
                         "Radio",
                         "Fan",
-                    ).forEach {
+                    ).forEach { label ->
                         JengaChip(
-                            label = it,
-                            selected = false,
-                            onClick = {},
+                            label = label,
+                            selected = label in picked,
+                            onClick = { picked = if (label in picked) picked - label else picked + label },
                         )
                     }
                 },
             )
         """.trimIndent(),
         demo = {
+            var picked by remember {
+                mutableStateOf(
+                    value = setOf(
+                        "Solar",
+                    ),
+                )
+            }
             JengaWrap(
                 content = {
                     listOf(
@@ -2618,11 +2745,11 @@ fun componentEntries(): List<CatalogEntry> = listOf(
                         "Lighting",
                         "Radio",
                         "Fan",
-                    ).forEach {
+                    ).forEach { label ->
                         JengaChip(
-                            label = it,
-                            selected = false,
-                            onClick = {},
+                            label = label,
+                            selected = label in picked,
+                            onClick = { picked = if (label in picked) picked - label else picked + label },
                         )
                     }
                 },
@@ -2652,18 +2779,22 @@ fun componentEntries(): List<CatalogEntry> = listOf(
             )
         """.trimIndent(),
         demo = {
-            JengaSection(
-                title = "Account",
-                actionLabel = "Edit",
-                onActionClick = {},
-                content = {
-                    JengaKeyValueRow(
-                        label = "Name",
-                        value = "Ada Lovelace",
-                    )
-                    JengaKeyValueRow(
-                        label = "Plan",
-                        value = "Monthly",
+            ActionFeedback(
+                content = { confirm ->
+                    JengaSection(
+                        title = "Account",
+                        actionLabel = "Edit",
+                        onActionClick = { confirm("Editing account") },
+                        content = {
+                            JengaKeyValueRow(
+                                label = "Name",
+                                value = "Ada Lovelace",
+                            )
+                            JengaKeyValueRow(
+                                label = "Plan",
+                                value = "Monthly",
+                            )
+                        },
                     )
                 },
             )
@@ -2710,36 +2841,40 @@ fun componentEntries(): List<CatalogEntry> = listOf(
             )
         """.trimIndent(),
         demo = {
-            JengaScaffold(
-                modifier = Modifier.fillMaxWidth().height(
-                    height = 240.dp,
-                ),
-                topBar = {
-                    JengaTopAppBar(
-                        title = "Inbox",
-                    )
-                },
-                bottomBar = {
-                    JengaBottomBar(
-                        content = {
-                            JengaButton(
-                                text = "Compose",
-                                onClick = {},
-                                modifier = Modifier.weight(
-                                    weight = 1f,
+            ActionFeedback(
+                content = { confirm ->
+                    JengaScaffold(
+                        modifier = Modifier.fillMaxWidth().height(
+                            height = 240.dp,
+                        ),
+                        topBar = {
+                            JengaTopAppBar(
+                                title = "Inbox",
+                            )
+                        },
+                        bottomBar = {
+                            JengaBottomBar(
+                                content = {
+                                    JengaButton(
+                                        text = "Compose",
+                                        onClick = { confirm("New message") },
+                                        modifier = Modifier.weight(
+                                            weight = 1f,
+                                        ),
+                                    )
+                                },
+                            )
+                        },
+                        content = { padding ->
+                            JengaText(
+                                text = "Screen content",
+                                modifier = Modifier.padding(
+                                    paddingValues = padding,
+                                ).padding(
+                                    all = JengaTheme.spacing.lg,
                                 ),
                             )
                         },
-                    )
-                },
-                content = { padding ->
-                    JengaText(
-                        text = "Screen content",
-                        modifier = Modifier.padding(
-                            paddingValues = padding,
-                        ).padding(
-                            all = JengaTheme.spacing.lg,
-                        ),
                     )
                 },
             )
@@ -2759,11 +2894,15 @@ fun componentEntries(): List<CatalogEntry> = listOf(
             )
         """.trimIndent(),
         demo = {
-            JengaSectionHeader(
-                title = "Recent scans",
-                subtitle = "Last 24 hours",
-                actionLabel = "See all",
-                onActionClick = {},
+            ActionFeedback(
+                content = { confirm ->
+                    JengaSectionHeader(
+                        title = "Recent scans",
+                        subtitle = "Last 24 hours",
+                        actionLabel = "See all",
+                        onActionClick = { confirm("Showing all scans") },
+                    )
+                },
             )
         },
     ),
@@ -2891,20 +3030,24 @@ fun componentEntries(): List<CatalogEntry> = listOf(
             )
         """.trimIndent(),
         demo = {
-            JengaVerdictBar(
-                amount = "KES 1,190",
-                amountSuffix = "left",
-                tone = JengaVerdictTone.Positive,
-                label = "This month",
-                progress = 0.62f,
-                sublines = JengaVerdictSublines(
-                    start = "KES 710 of 1,900 spent",
-                    end = "8 of 11 priced",
-                ),
-                action = JengaAction(
-                    label = "Change",
-                    onClick = {},
-                ),
+            ActionFeedback(
+                content = { confirm ->
+                    JengaVerdictBar(
+                        amount = "KES 1,190",
+                        amountSuffix = "left",
+                        tone = JengaVerdictTone.Positive,
+                        label = "This month",
+                        progress = 0.62f,
+                        sublines = JengaVerdictSublines(
+                            start = "KES 710 of 1,900 spent",
+                            end = "8 of 11 priced",
+                        ),
+                        action = JengaAction(
+                            label = "Change",
+                            onClick = { confirm("Changing the budget") },
+                        ),
+                    )
+                },
             )
         },
     ),
@@ -2984,10 +3127,27 @@ fun componentEntries(): List<CatalogEntry> = listOf(
             )
         """.trimIndent(),
         demo = {
-            JengaDotStrip(
-                filled = 3,
-                total = 5,
-                contentDescription = "3 of 5 done",
+            var filled by remember {
+                mutableIntStateOf(
+                    value = 3,
+                )
+            }
+            JengaStack(
+                space = JengaTheme.spacing.md,
+                horizontalAlignment = Alignment.CenterHorizontally,
+                content = {
+                    JengaDotStrip(
+                        filled = filled,
+                        total = 5,
+                        contentDescription = "$filled of 5 done",
+                    )
+                    JengaStepper(
+                        value = filled,
+                        onValueChange = { filled = it },
+                        min = 0,
+                        max = 5,
+                    )
+                },
             )
         },
     ),
@@ -3077,11 +3237,15 @@ fun componentEntries(): List<CatalogEntry> = listOf(
             )
         """.trimIndent(),
         demo = {
-            JengaReactionBar(
-                onPositive = {},
-                onNegative = {},
-                positiveContentDescription = "Helpful",
-                negativeContentDescription = "Not helpful",
+            ActionFeedback(
+                content = { confirm ->
+                    JengaReactionBar(
+                        onPositive = { confirm("Marked helpful") },
+                        onNegative = { confirm("Marked not helpful") },
+                        positiveContentDescription = "Helpful",
+                        negativeContentDescription = "Not helpful",
+                    )
+                },
             )
         },
     ),
@@ -3102,15 +3266,27 @@ fun componentEntries(): List<CatalogEntry> = listOf(
             )
         """.trimIndent(),
         demo = {
-            JengaSwipeToDismiss(
-                onDismiss = {},
-                content = {
-                    JengaListItem(
-                        headline = "Swipe me away",
-                        supporting = "End to start to dismiss",
-                    )
-                },
-            )
+            var visible by remember {
+                mutableStateOf(
+                    value = true,
+                )
+            }
+            if (visible) {
+                JengaSwipeToDismiss(
+                    onDismiss = { visible = false },
+                    content = {
+                        JengaListItem(
+                            headline = "Swipe me away",
+                            supporting = "End to start to dismiss",
+                        )
+                    },
+                )
+            } else {
+                JengaLink(
+                    text = "Restore the row",
+                    onClick = { visible = true },
+                )
+            }
         },
     ),
     CatalogEntry(
@@ -3138,24 +3314,28 @@ fun componentEntries(): List<CatalogEntry> = listOf(
             )
         """.trimIndent(),
         demo = {
-            JengaImageShelf(
-                title = "Picked for tonight",
-                action = JengaAction(
-                    label = "See all",
-                    onClick = {},
-                ),
-                content = {
-                    JengaShelfCard(
-                        title = "Grilled veg bowl",
-                        meta = "25 min · ~540 kcal",
-                    )
-                    JengaShelfCard(
-                        title = "Miso ramen",
-                        meta = "30 min · ~610 kcal",
-                    )
-                    JengaShelfCard(
-                        title = "Poke bowl",
-                        meta = "15 min · ~480 kcal",
+            ActionFeedback(
+                content = { confirm ->
+                    JengaImageShelf(
+                        title = "Picked for tonight",
+                        action = JengaAction(
+                            label = "See all",
+                            onClick = { confirm("Showing all meals") },
+                        ),
+                        content = {
+                            JengaShelfCard(
+                                title = "Grilled veg bowl",
+                                meta = "25 min · ~540 kcal",
+                            )
+                            JengaShelfCard(
+                                title = "Miso ramen",
+                                meta = "30 min · ~610 kcal",
+                            )
+                            JengaShelfCard(
+                                title = "Poke bowl",
+                                meta = "15 min · ~480 kcal",
+                            )
+                        },
                     )
                 },
             )
@@ -3260,12 +3440,26 @@ fun componentEntries(): List<CatalogEntry> = listOf(
             )
         """.trimIndent(),
         demo = {
-            JengaLabelledProgress(
-                progress = 0.6f,
-                label = AnnotatedString(
-                    text = "Repair · step 3 of 5",
-                ),
-                valueLabel = "60%",
+            var value by remember {
+                mutableFloatStateOf(
+                    value = 0.6f,
+                )
+            }
+            JengaStack(
+                space = JengaTheme.spacing.md,
+                content = {
+                    JengaLabelledProgress(
+                        progress = value,
+                        label = AnnotatedString(
+                            text = "Repair · step 3 of 5",
+                        ),
+                        valueLabel = "${(value * 100).roundToInt()}%",
+                    )
+                    JengaSlider(
+                        value = value,
+                        onValueChange = { value = it },
+                    )
+                },
             )
         },
     ),
@@ -3432,9 +3626,14 @@ fun componentEntries(): List<CatalogEntry> = listOf(
             )
         """.trimIndent(),
         demo = {
+            var photos by remember {
+                mutableIntStateOf(
+                    value = 3,
+                )
+            }
             JengaThumbnailStrip(
-                count = 3,
-                onAdd = {},
+                count = photos,
+                onAdd = { photos += 1 },
                 addContentDescription = "Add photo",
                 thumbnail = {
                     JengaIcon(
@@ -3474,24 +3673,55 @@ fun componentEntries(): List<CatalogEntry> = listOf(
             )
         """.trimIndent(),
         demo = {
+            var current by remember {
+                mutableIntStateOf(
+                    value = 1,
+                )
+            }
+            val stages = listOf(
+                "Lead created",
+                "Quotation",
+                "Installation",
+            )
             JengaStack(
-                space = JengaTheme.spacing.none,
+                space = JengaTheme.spacing.md,
                 content = {
-                    JengaTimelineItem(
-                        state = JengaTimelineState.Done,
-                        title = "Lead created",
-                        position = JengaTimelinePosition.First,
-                        subtitle = "12 Mar",
+                    JengaStack(
+                        space = JengaTheme.spacing.none,
+                        content = {
+                            stages.forEachIndexed { index, stage ->
+                                JengaTimelineItem(
+                                    state = when {
+                                        index < current -> JengaTimelineState.Done
+                                        index == current -> JengaTimelineState.Current
+                                        else -> JengaTimelineState.ToDo
+                                    },
+                                    title = stage,
+                                    position = JengaTimelinePosition.of(
+                                        index = index,
+                                        count = stages.size,
+                                    ),
+                                    subtitle = if (index == 0) "12 Mar" else null,
+                                )
+                            }
+                        },
                     )
-                    JengaTimelineItem(
-                        state = JengaTimelineState.Current,
-                        title = "Quotation",
-                        position = JengaTimelinePosition.Middle,
-                    )
-                    JengaTimelineItem(
-                        state = JengaTimelineState.ToDo,
-                        title = "Installation",
-                        position = JengaTimelinePosition.Last,
+                    JengaInline(
+                        content = {
+                            JengaButton(
+                                text = "Back",
+                                onClick = { current -= 1 },
+                                variant = JengaButtonVariant.Outline,
+                                size = JengaButtonSize.Small,
+                                enabled = current > 0,
+                            )
+                            JengaButton(
+                                text = "Next",
+                                onClick = { current += 1 },
+                                size = JengaButtonSize.Small,
+                                enabled = current < stages.size,
+                            )
+                        },
                     )
                 },
             )
@@ -3533,32 +3763,36 @@ fun componentEntries(): List<CatalogEntry> = listOf(
             )
         """.trimIndent(),
         demo = {
-            var name by remember {
-                mutableStateOf(
-                    value = "",
-                )
-            }
-            JengaFormLayout(
-                modifier = Modifier.height(
-                    height = 240.dp,
-                ),
-                bottomBar = {
-                    JengaButton(
-                        text = "Save",
-                        onClick = {},
-                        modifier = Modifier.fillMaxWidth().padding(
-                            all = JengaTheme.spacing.lg,
-                        ),
-                    )
-                },
-                content = {
-                    item {
-                        JengaTextField(
-                            value = name,
-                            onValueChange = { name = it },
-                            label = "Customer name",
+            ActionFeedback(
+                content = { confirm ->
+                    var name by remember {
+                        mutableStateOf(
+                            value = "",
                         )
                     }
+                    JengaFormLayout(
+                        modifier = Modifier.height(
+                            height = 240.dp,
+                        ),
+                        bottomBar = {
+                            JengaButton(
+                                text = "Save",
+                                onClick = { confirm("Saved") },
+                                modifier = Modifier.fillMaxWidth().padding(
+                                    all = JengaTheme.spacing.lg,
+                                ),
+                            )
+                        },
+                        content = {
+                            item {
+                                JengaTextField(
+                                    value = name,
+                                    onValueChange = { name = it },
+                                    label = "Customer name",
+                                )
+                            }
+                        },
+                    )
                 },
             )
         },
@@ -3568,6 +3802,7 @@ fun componentEntries(): List<CatalogEntry> = listOf(
         group = "Feedback",
         description = "A sheet that slides in from the end edge, for wide layouts.",
         keywords = "sheet side drawer landscape tablet",
+        stage = CatalogStage.Overlay,
         code = """
             var open by remember {
                 mutableStateOf(
@@ -3604,10 +3839,15 @@ fun componentEntries(): List<CatalogEntry> = listOf(
                 )
             }
         """.trimIndent(),
-        demo = {
+        demo = { startOpen ->
+            var openOnly by remember {
+                mutableStateOf(
+                    value = true,
+                )
+            }
             var open by remember {
                 mutableStateOf(
-                    value = false,
+                    value = startOpen,
                 )
             }
             JengaButton(
@@ -3632,8 +3872,8 @@ fun componentEntries(): List<CatalogEntry> = listOf(
                         item {
                             JengaCheckboxListItem(
                                 headline = "Open only",
-                                checked = true,
-                                onCheckedChange = {},
+                                checked = openOnly,
+                                onCheckedChange = { openOnly = it },
                             )
                         }
                     },
@@ -3646,6 +3886,7 @@ fun componentEntries(): List<CatalogEntry> = listOf(
         group = "Media",
         description = "A full-screen viewer with zoom, for photos.",
         keywords = "photo image zoom fullscreen viewer",
+        stage = CatalogStage.Overlay,
         code = """
             var open by remember {
                 mutableStateOf(
@@ -3671,10 +3912,10 @@ fun componentEntries(): List<CatalogEntry> = listOf(
                 )
             }
         """.trimIndent(),
-        demo = {
+        demo = { startOpen ->
             var open by remember {
                 mutableStateOf(
-                    value = false,
+                    value = startOpen,
                 )
             }
             JengaButton(
@@ -3702,6 +3943,7 @@ fun componentEntries(): List<CatalogEntry> = listOf(
         group = "Media",
         description = "Swipe between several images, each zoomed on its own.",
         keywords = "viewer gallery pager swipe photos pages zoom",
+        stage = CatalogStage.Overlay,
         code = """
             JengaImageViewer(
                 pageCount = 3,
@@ -3718,10 +3960,10 @@ fun componentEntries(): List<CatalogEntry> = listOf(
                 },
             )
         """.trimIndent(),
-        demo = {
+        demo = { startOpen ->
             var open by remember {
                 mutableStateOf(
-                    value = false,
+                    value = startOpen,
                 )
             }
             JengaButton(
@@ -3816,6 +4058,7 @@ fun componentEntries(): List<CatalogEntry> = listOf(
         group = "Inputs",
         description = "A date picker in a dialog; here limited to adults' birth dates, with a year grid behind the title.",
         keywords = "date calendar dialog modal range birth year",
+        stage = CatalogStage.Overlay,
         code = """
             var open by remember {
                 mutableStateOf(
@@ -3861,10 +4104,10 @@ fun componentEntries(): List<CatalogEntry> = listOf(
                 )
             }
         """.trimIndent(),
-        demo = {
+        demo = { startOpen ->
             var open by remember {
                 mutableStateOf(
-                    value = false,
+                    value = startOpen,
                 )
             }
             JengaButton(
@@ -3929,15 +4172,20 @@ fun componentEntries(): List<CatalogEntry> = listOf(
                 dayContent = { day ->
                     JengaCalendarDefaults.Day(
                         day = day,
-                        selected = false,
+                        selected = day.date == picked,
                         enabled = true,
                         isToday = false,
-                        onClick = {},
+                        onClick = { picked = day.date },
                     )
                 },
             )
         """.trimIndent(),
         demo = {
+            var picked by remember {
+                mutableStateOf<LocalDate?>(
+                    value = null,
+                )
+            }
             val state = rememberJengaCalendarState(
                 startMonth = YearMonth(
                     year = 2026,
@@ -3953,10 +4201,10 @@ fun componentEntries(): List<CatalogEntry> = listOf(
                 dayContent = { day ->
                     JengaCalendarDefaults.Day(
                         day = day,
-                        selected = false,
+                        selected = day.date == picked,
                         enabled = true,
                         isToday = false,
-                        onClick = {},
+                        onClick = { picked = day.date },
                     )
                 },
             )
@@ -4114,6 +4362,7 @@ fun componentEntries(): List<CatalogEntry> = listOf(
         group = "Feedback",
         description = "A sheet that refuses a drag, scrim tap or Back until the user confirms.",
         keywords = "sheet confirm dismiss discard unsaved signature",
+        stage = CatalogStage.Overlay,
         code = """
             var askDiscard by remember {
                 mutableStateOf(
@@ -4138,10 +4387,10 @@ fun componentEntries(): List<CatalogEntry> = listOf(
                 },
             )
         """.trimIndent(),
-        demo = {
+        demo = { startOpen ->
             var open by remember {
                 mutableStateOf(
-                    value = false,
+                    value = startOpen,
                 )
             }
             var askDiscard by remember {
@@ -4366,23 +4615,29 @@ fun componentEntries(): List<CatalogEntry> = listOf(
             )
         """.trimIndent(),
         demo = {
+            var current by remember {
+                mutableIntStateOf(
+                    value = 1,
+                )
+            }
             val steps = listOf(
+                "Details",
+                "Choices",
+                "Review",
+            ).mapIndexed { index, label ->
                 JengaStep(
-                    label = "Details",
-                    state = JengaStepState.Done,
-                ),
-                JengaStep(
-                    label = "Choices",
-                    state = JengaStepState.Current,
-                ),
-                JengaStep(
-                    label = "Review",
-                    state = JengaStepState.Pending,
-                ),
-            )
+                    label = label,
+                    state = when {
+                        index < current -> JengaStepState.Done
+                        index == current -> JengaStepState.Current
+                        else -> JengaStepState.Pending
+                    },
+                )
+            }
             JengaStepIndicator(
                 steps = steps,
                 stepContentDescription = { index, step -> "Step ${index + 1} of 3, ${step.label}" },
+                onStepClick = { current = it },
             )
         },
     ),
@@ -4456,6 +4711,7 @@ fun componentEntries(): List<CatalogEntry> = listOf(
         group = "Inputs",
         description = "A time input in a dialog with confirm and dismiss.",
         keywords = "time dialog modal clock",
+        stage = CatalogStage.Overlay,
         code = """
             JengaTimePickerDialog(
                 onDismissRequest = { open = false },
@@ -4473,10 +4729,10 @@ fun componentEntries(): List<CatalogEntry> = listOf(
                 pmLabel = "PM",
             )
         """.trimIndent(),
-        demo = {
+        demo = { startOpen ->
             var open by remember {
                 mutableStateOf(
-                    value = false,
+                    value = startOpen,
                 )
             }
             JengaButton(
@@ -4580,16 +4836,20 @@ fun componentEntries(): List<CatalogEntry> = listOf(
             )
         """.trimIndent(),
         demo = {
-            Box(
-                modifier = Modifier.background(
-                    color = Color.Black,
-                ).padding(
-                    all = JengaTheme.spacing.md,
-                ),
-                content = {
-                    JengaShutterButton(
-                        onClick = {},
-                        contentDescription = "Take photo",
+            ActionFeedback(
+                content = { confirm ->
+                    Box(
+                        modifier = Modifier.background(
+                            color = Color.Black,
+                        ).padding(
+                            all = JengaTheme.spacing.md,
+                        ),
+                        content = {
+                            JengaShutterButton(
+                                onClick = { confirm("Photo taken") },
+                                contentDescription = "Take photo",
+                            )
+                        },
                     )
                 },
             )
@@ -4622,21 +4882,25 @@ fun componentEntries(): List<CatalogEntry> = listOf(
             )
         """.trimIndent(),
         demo = {
-            JengaTheme(
-                colors = JengaTheme.colors,
-                components = JengaComponentStyles(
-                    button = JengaButtonStyle(
-                        medium = JengaButtonSizeStyle(
-                            shape = RoundedCornerShape(
-                                size = 4.dp,
+            ActionFeedback(
+                content = { confirm ->
+                    JengaTheme(
+                        colors = JengaTheme.colors,
+                        components = JengaComponentStyles(
+                            button = JengaButtonStyle(
+                                medium = JengaButtonSizeStyle(
+                                    shape = RoundedCornerShape(
+                                        size = 4.dp,
+                                    ),
+                                ),
                             ),
                         ),
-                    ),
-                ),
-                content = {
-                    JengaButton(
-                        text = "Square corners",
-                        onClick = {},
+                        content = {
+                            JengaButton(
+                                text = "Square corners",
+                                onClick = { confirm("Pressed") },
+                            )
+                        },
                     )
                 },
             )

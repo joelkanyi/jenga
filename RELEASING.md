@@ -76,6 +76,9 @@ Then, to release:
    `publishAndReleaseToMavenCentral` and then creates the GitHub release with that version's
    `CHANGELOG.md` section as its notes.
 3. After it succeeds, bump `version` to the next `-SNAPSHOT` on `main`.
+4. Run `./scripts/build_docs.sh` and write the "Live preview first load" byte count it reports
+   into `scripts/preview-size-baseline.txt`. The docs build fails when the live preview grows
+   more than 10% over that number.
 
 You can also run the workflow manually from the Actions tab (`workflow_dispatch`), with a
 `dry_run` option that publishes to Maven Local only.

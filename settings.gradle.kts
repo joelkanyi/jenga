@@ -40,6 +40,13 @@ dependencyResolutionManagement {
             metadataSources { artifact() }
             content { includeModule("com.yarnpkg", "yarn") }
         }
+        ivy {
+            name = "Binaryen Distributions"
+            setUrl("https://github.com/WebAssembly/binaryen/releases/download")
+            patternLayout { artifact("version_[revision]/[artifact]-version_[revision]-[classifier].[ext]") }
+            metadataSources { artifact() }
+            content { includeModule("com.github.webassembly", "binaryen") }
+        }
     }
 }
 
