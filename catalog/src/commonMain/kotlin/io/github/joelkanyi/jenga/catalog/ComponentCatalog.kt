@@ -2704,7 +2704,9 @@ fun componentEntries(): List<CatalogEntry> = listOf(
         code = """
             var picked by remember {
                 mutableStateOf(
-                    value = setOf("Solar"),
+                    value = setOf(
+                        "Solar",
+                    ),
                 )
             }
             JengaWrap(
@@ -2729,7 +2731,9 @@ fun componentEntries(): List<CatalogEntry> = listOf(
         demo = {
             var picked by remember {
                 mutableStateOf(
-                    value = setOf("Solar"),
+                    value = setOf(
+                        "Solar",
+                    ),
                 )
             }
             JengaWrap(
