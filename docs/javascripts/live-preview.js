@@ -1,4 +1,5 @@
 const previewBase = new URL("../preview/", import.meta.url);
+const quietStartMs = 1000;
 const gcProbe = new Uint8Array([0, 97, 115, 109, 1, 0, 0, 0, 1, 5, 1, 95, 1, 120, 0]);
 const exceptionsProbe = new Uint8Array([0, 97, 115, 109, 1, 0, 0, 0, 1, 4, 1, 96, 0, 0, 3, 2, 1, 0, 10, 8, 1, 6, 0, 6, 64, 25, 11, 11]);
 
@@ -52,7 +53,7 @@ async function prefetch(signal, onProgress) {
   }));
 }
 
-function start(figure, button) {
+function start(figure, button, revealLoaderAfterMs) {
   const controller = new AbortController();
   const bar = element("div", "jenga-live__bar");
   const fill = element("div", "jenga-live__fill");
@@ -61,6 +62,10 @@ function start(figure, button) {
   const loading = element("div", "jenga-live__loading");
   bar.appendChild(fill);
   loading.append(bar, status, cancel);
+  loading.style.visibility = "hidden";
+  setTimeout(function () {
+    loading.style.visibility = "";
+  }, revealLoaderAfterMs);
   button.replaceWith(loading);
   figure.classList.add("jenga-live--loading");
 
@@ -125,7 +130,7 @@ function mount(figure, loading, controller) {
 function setUp(figure) {
   const button = element("button", "jenga-live__start", "Try it live");
   button.addEventListener("click", function () {
-    start(figure, button);
+    start(figure, button, 0);
   });
   if (!browserSupported()) {
     figure.appendChild(element(
@@ -137,7 +142,7 @@ function setUp(figure) {
   }
   figure.appendChild(button);
   if (!savesData()) {
-    start(figure, button);
+    start(figure, button, quietStartMs);
   }
 }
 
