@@ -24,6 +24,12 @@ kotlin {
         }
     }
 
+    wasmJs {
+        outputModuleName.set("jenga-preview")
+        browser()
+        binaries.executable()
+    }
+
     listOf(iosArm64(), iosSimulatorArm64()).forEach { iosTarget ->
         iosTarget.binaries.framework {
             baseName = "CatalogApp"

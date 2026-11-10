@@ -1,17 +1,10 @@
 package io.github.joelkanyi.jenga.catalog
 
-import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.ImageComposeScene
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.onSizeChanged
 import androidx.compose.ui.unit.Density
-import androidx.compose.ui.unit.dp
 import io.github.joelkanyi.jenga.theme.JengaTheme
 import org.jetbrains.skia.Bitmap
 import org.jetbrains.skia.EncodedImageFormat
@@ -99,16 +92,6 @@ fun main(
     )
 }
 
-private val CatalogEntry.slug: String
-    get() = name.lowercase().replace(
-        regex = Regex(
-            pattern = "[^a-z0-9]+",
-        ),
-        replacement = "-",
-    ).trim(
-        '-',
-    )
-
 private val CatalogEntry.componentName: String?
     get() = Regex(
         pattern = """\b(Jenga[A-Z][A-Za-z]*)\s*[({]""",
@@ -131,10 +114,16 @@ private fun renderSpecimen(
             density = Scale,
         ),
         content = {
-            Specimen(
+            JengaTheme(
                 darkTheme = darkTheme,
-                onHeight = { contentHeight = it },
-                content = { entry.demo() },
+                content = {
+                    SpecimenFrame(
+                        modifier = Modifier.onSizeChanged {
+                            contentHeight = it.height
+                        },
+                        content = { entry.demo() },
+                    )
+                },
             )
         },
     )
@@ -151,40 +140,6 @@ private fun renderSpecimen(
             MaxHeightPx,
         ),
     ).encode()
-}
-
-@Composable
-private fun Specimen(
-    darkTheme: Boolean,
-    onHeight: (Int) -> Unit,
-    content: @Composable () -> Unit,
-) {
-    JengaTheme(
-        darkTheme = darkTheme,
-        content = {
-            Box(
-                modifier = Modifier
-                    .width(
-                        width = FrameWidth,
-                    )
-                    .onSizeChanged {
-                        onHeight(
-                            it.height,
-                        )
-                    }
-                    .background(
-                        color = JengaTheme.colors.background,
-                    )
-                    .padding(
-                        all = FramePadding,
-                    ),
-                contentAlignment = Alignment.Center,
-                content = {
-                    content()
-                },
-            )
-        },
-    )
 }
 
 private fun Image.trimToContent(
@@ -304,7 +259,7 @@ private fun componentPage(
     )
     appendLine()
     appendLine(
-        value = "<figure class=\"jenga-specimen\" markdown>",
+        value = "<figure class=\"jenga-specimen jenga-live\" data-component=\"${entry.slug}\" markdown>",
     )
     appendLine(
         value = "![${entry.name}](../assets/components/${entry.slug}-light.png#only-light){ width=\"$displayWidth\" }",
@@ -395,8 +350,6 @@ private fun navFile(
 }
 
 private const val Scale = 2f
-private val FrameWidth = 400.dp
-private val FramePadding = 32.dp
 private const val WidthPx = 800
 private const val MaxHeightPx = 2400
 private const val TrimMarginPx = 48

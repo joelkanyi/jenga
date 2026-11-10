@@ -39,6 +39,16 @@ class CatalogEntry(
     val keywords: String = "",
     val demo: @Composable () -> Unit,
 ) {
+    val slug: String
+        get() = name.lowercase().replace(
+            regex = Regex(
+                pattern = "[^a-z0-9]+",
+            ),
+            replacement = "-",
+        ).trim(
+            '-',
+        )
+
     fun matches(
         query: String,
     ): Boolean {
