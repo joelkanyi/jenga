@@ -97,6 +97,7 @@ import io.github.joelkanyi.jenga.component.list.JengaKeyValueRow
 import io.github.joelkanyi.jenga.component.list.JengaListItem
 import io.github.joelkanyi.jenga.component.list.JengaRadioListItem
 import io.github.joelkanyi.jenga.component.media.JengaImageViewer
+import io.github.joelkanyi.jenga.component.media.JengaImageViewerCloseButtonPosition
 import io.github.joelkanyi.jenga.component.media.JengaMediaHero
 import io.github.joelkanyi.jenga.component.menu.JengaDropdownMenu
 import io.github.joelkanyi.jenga.component.menu.JengaDropdownMenuDivider
@@ -4122,6 +4123,87 @@ fun componentEntries(): List<CatalogEntry> = listOf(
                     onDismissRequest = { open = false },
                     title = "photo.jpg",
                     closeContentDescription = "Close",
+                    content = {
+                        JengaIcon(
+                            imageVector = JengaIcons.Image,
+                            contentDescription = null,
+                        )
+                    },
+                )
+            }
+        },
+    ),
+    CatalogEntry(
+        name = "Image viewer with the close at the end",
+        group = "Media",
+        description = "The title leads; actions and the close button sit at the end.",
+        keywords = "photo image viewer close end trailing position",
+        stage = CatalogStage.Overlay,
+        code = """
+            var open by remember {
+                mutableStateOf(
+                    value = false,
+                )
+            }
+            JengaButton(
+                text = "Close at the end",
+                onClick = { open = true },
+                variant = JengaButtonVariant.Outline,
+            )
+            if (open) {
+                JengaImageViewer(
+                    onDismissRequest = { open = false },
+                    title = "National ID, front",
+                    closeContentDescription = "Close",
+                    actions = {
+                        JengaIconButton(
+                            onClick = {},
+                            variant = JengaIconButtonVariant.Overlay,
+                        ) {
+                            JengaIcon(
+                                imageVector = JengaIcons.Camera,
+                                contentDescription = "Retake",
+                            )
+                        }
+                    },
+                    closeButtonPosition = JengaImageViewerCloseButtonPosition.End,
+                    content = {
+                        JengaIcon(
+                            imageVector = JengaIcons.Image,
+                            contentDescription = null,
+                        )
+                    },
+                )
+            }
+        """.trimIndent(),
+        demo = { startOpen ->
+            var open by remember {
+                mutableStateOf(
+                    value = startOpen,
+                )
+            }
+            JengaButton(
+                text = "Close at the end",
+                onClick = { open = true },
+                variant = JengaButtonVariant.Outline,
+            )
+            if (open) {
+                JengaImageViewer(
+                    onDismissRequest = { open = false },
+                    title = "National ID, front",
+                    closeContentDescription = "Close",
+                    actions = {
+                        JengaIconButton(
+                            onClick = {},
+                            variant = JengaIconButtonVariant.Overlay,
+                        ) {
+                            JengaIcon(
+                                imageVector = JengaIcons.Camera,
+                                contentDescription = "Retake",
+                            )
+                        }
+                    },
+                    closeButtonPosition = JengaImageViewerCloseButtonPosition.End,
                     content = {
                         JengaIcon(
                             imageVector = JengaIcons.Image,

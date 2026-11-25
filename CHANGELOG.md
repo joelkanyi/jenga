@@ -5,6 +5,7 @@
  * New: `JengaCheckbox` and `JengaCheckboxListItem` have overloads that take `state` (`ToggleableState.Off`, `On` or `Indeterminate`) and `onClick`, for a "Select all" box. The mixed state (`Indeterminate`) draws the checked box with a dash in `JengaCheckboxColors.checkmark`, and screen readers announce it as partially checked; the caller picks the next state in `onClick`.
  * New: `JengaAvatar` takes `colors` (`JengaAvatarColors`: `container` and `content`). `JengaAvatarDefaults.colors()` is the theme's avatar colors, else the brand tint as before; `JengaAvatarDefaults.neutralColors()` is a grey avatar; and `JengaAvatarStyle.colors` on `JengaComponentStyles.avatar` sets the colors of every avatar once. The content-slot overload also takes `colors`, defaulting to `JengaAvatarDefaults.contentSlotColors()`.
  * New: `JengaDatePickerDialog` takes `title`, an optional line above the month (e.g. "Payment date") in the same style and spacing as `JengaTimePickerDialog`'s title.
+ * New: `JengaImageViewer` (both the single image and the pages overloads) takes `closeButtonPosition`: `JengaImageViewerCloseButtonPosition.Start` (close, title, actions; the default) or `End` (title, actions, close, with the title starting at the leading edge at the start padding of a top bar title).
 
 ## Version 0.8.6
 

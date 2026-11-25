@@ -73,6 +73,7 @@ import io.github.joelkanyi.jenga.component.list.JengaKeyValueRow
 import io.github.joelkanyi.jenga.component.list.JengaListItem
 import io.github.joelkanyi.jenga.component.list.JengaRadioListItem
 import io.github.joelkanyi.jenga.component.media.JengaImageViewer
+import io.github.joelkanyi.jenga.component.media.JengaImageViewerCloseButtonPosition
 import io.github.joelkanyi.jenga.component.media.JengaMediaHero
 import io.github.joelkanyi.jenga.component.menu.JengaDropdownMenu
 import io.github.joelkanyi.jenga.component.menu.JengaDropdownMenuItem
@@ -1355,6 +1356,41 @@ internal fun JengaImageViewerSample() {
             onDismissRequest = { open = false },
             title = "photo.jpg",
             closeContentDescription = "Close",
+            content = {
+                JengaImage(
+                    url = "https://example.com/photo.jpg",
+                    contentDescription = null,
+                    fit = JengaImageFit.Contain,
+                )
+            },
+        )
+    }
+}
+
+@Composable
+internal fun JengaImageViewerCloseAtEndSample() {
+    var open by remember {
+        mutableStateOf(
+            value = true,
+        )
+    }
+    if (open) {
+        JengaImageViewer(
+            onDismissRequest = { open = false },
+            title = "National ID, front",
+            closeContentDescription = "Close",
+            actions = {
+                JengaIconButton(
+                    onClick = { },
+                    variant = JengaIconButtonVariant.Overlay,
+                ) {
+                    JengaIcon(
+                        imageVector = JengaIcons.Camera,
+                        contentDescription = "Retake",
+                    )
+                }
+            },
+            closeButtonPosition = JengaImageViewerCloseButtonPosition.End,
             content = {
                 JengaImage(
                     url = "https://example.com/photo.jpg",

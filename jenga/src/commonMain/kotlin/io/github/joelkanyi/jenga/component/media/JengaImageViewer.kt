@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.calculateStartPadding
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -33,14 +34,17 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.layout.onSizeChanged
+import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.IntSize
+import androidx.compose.ui.unit.dp
 import dev.drewhamilton.poko.Poko
 import io.github.joelkanyi.jenga.component.button.JengaIconButton
 import io.github.joelkanyi.jenga.component.button.JengaIconButtonVariant
 import io.github.joelkanyi.jenga.component.feedback.JengaFullWindowPopup
 import io.github.joelkanyi.jenga.component.icon.JengaIcon
+import io.github.joelkanyi.jenga.component.scaffold.JengaTopAppBarDefaults
 import io.github.joelkanyi.jenga.component.text.JengaText
 import io.github.joelkanyi.jenga.theme.JengaTheme
 import io.github.joelkanyi.jenga.theme.LocalJengaContentColor
@@ -57,6 +61,22 @@ public class JengaImageViewerColors(
         container: Color = this.container,
         content: Color = this.content,
     ): JengaImageViewerColors = JengaImageViewerColors(container, content)
+}
+
+/**
+ * Where a [JengaImageViewer] puts its close button in the top row.
+ *
+ * @sample io.github.joelkanyi.jenga.samples.JengaImageViewerCloseAtEndSample
+ */
+public enum class JengaImageViewerCloseButtonPosition {
+    /** At the start of the row: close, title, actions. */
+    Start,
+
+    /**
+     * At the end of the row: title, actions, close. The title starts at the leading edge with
+     * the start padding of a top app bar title.
+     */
+    End,
 }
 
 /** Defaults and token mappings for [JengaImageViewer]. */
@@ -83,7 +103,9 @@ public object JengaImageViewerDefaults {
  * A full-screen image viewer on a dark backdrop: a top row with a close button,
  * a [title] and trailing [actions] (e.g. download, share), above the image in
  * [content]. The image can be pinch-zoomed and panned, and a double tap toggles
- * zoom. Pressing back or the close button calls [onDismissRequest].
+ * zoom. Pressing back or the close button calls [onDismissRequest]. The close
+ * button is at the start of the row, or after the actions with
+ * [JengaImageViewerCloseButtonPosition.End].
  *
  * Control visibility by conditional composition.
  *
@@ -97,6 +119,8 @@ public object JengaImageViewerDefaults {
  * @param titleStyle the [title] text style.
  * @param maxScale the largest zoom factor; at least 1.
  * @param colors the color set; defaults to [JengaImageViewerDefaults.colors].
+ * @param closeButtonPosition where the close button sits in the top row: at the start (the
+ *   default) or at the end, after the [actions]; see [JengaImageViewerCloseButtonPosition].
  * @param content the image (e.g. a `JengaImage` that fills the space).
  */
 @Composable
@@ -109,6 +133,7 @@ public fun JengaImageViewer(
     titleStyle: TextStyle = JengaImageViewerDefaults.titleStyle,
     maxScale: Float = JengaImageViewerDefaults.MaxScale,
     colors: JengaImageViewerColors = JengaImageViewerDefaults.colors(),
+    closeButtonPosition: JengaImageViewerCloseButtonPosition = JengaImageViewerCloseButtonPosition.Start,
     content: @Composable () -> Unit,
 ) {
     require(maxScale >= 1f) { "maxScale must be at least 1" }
@@ -122,6 +147,7 @@ public fun JengaImageViewer(
             titleStyle = titleStyle,
             maxScale = maxScale,
             colors = colors,
+            closeButtonPosition = closeButtonPosition,
             content = content,
         )
     }
@@ -137,6 +163,7 @@ internal fun JengaImageViewerContent(
     titleStyle: TextStyle = JengaImageViewerDefaults.titleStyle,
     maxScale: Float = JengaImageViewerDefaults.MaxScale,
     colors: JengaImageViewerColors = JengaImageViewerDefaults.colors(),
+    closeButtonPosition: JengaImageViewerCloseButtonPosition = JengaImageViewerCloseButtonPosition.Start,
     content: @Composable () -> Unit,
 ) {
     Column(
@@ -145,7 +172,7 @@ internal fun JengaImageViewerContent(
             .background(colors.container)
             .windowInsetsPadding(WindowInsets.safeDrawing),
     ) {
-        ViewerTopBar(onClose, title, closeContentDescription, titleStyle, colors, actions)
+        ViewerTopBar(onClose, title, closeContentDescription, titleStyle, colors, closeButtonPosition, actions)
         ZoomableBox(maxScale = maxScale, modifier = Modifier.weight(1f).fillMaxWidth(), content = content)
     }
 }
@@ -172,6 +199,8 @@ internal fun JengaImageViewerContent(
  * @param titleStyle the title text style.
  * @param maxScale the largest zoom factor; at least 1.
  * @param colors the color set; defaults to [JengaImageViewerDefaults.colors].
+ * @param closeButtonPosition where the close button sits in the top row: at the start (the
+ *   default) or at the end, after the [actions]; see [JengaImageViewerCloseButtonPosition].
  * @param pageContent the image for a page.
  */
 @Composable
@@ -187,6 +216,7 @@ public fun JengaImageViewer(
     titleStyle: TextStyle = JengaImageViewerDefaults.titleStyle,
     maxScale: Float = JengaImageViewerDefaults.MaxScale,
     colors: JengaImageViewerColors = JengaImageViewerDefaults.colors(),
+    closeButtonPosition: JengaImageViewerCloseButtonPosition = JengaImageViewerCloseButtonPosition.Start,
     pageContent: @Composable (page: Int) -> Unit,
 ) {
     require(maxScale >= 1f) { "maxScale must be at least 1" }
@@ -200,7 +230,9 @@ public fun JengaImageViewer(
                 .background(colors.container)
                 .windowInsetsPadding(WindowInsets.safeDrawing),
         ) {
-            ViewerTopBar(onDismissRequest, title(page), closeContentDescription, titleStyle, colors) { actions(page) }
+            ViewerTopBar(onDismissRequest, title(page), closeContentDescription, titleStyle, colors, closeButtonPosition) {
+                actions(page)
+            }
             HorizontalPager(state = pagerState, modifier = Modifier.weight(1f).fillMaxWidth()) { shown ->
                 ZoomableBox(maxScale = maxScale, modifier = Modifier.fillMaxSize()) { pageContent(shown) }
             }
@@ -216,28 +248,43 @@ private fun ViewerTopBar(
     closeContentDescription: String,
     titleStyle: TextStyle,
     colors: JengaImageViewerColors,
+    closeButtonPosition: JengaImageViewerCloseButtonPosition,
     actions: @Composable RowScope.() -> Unit,
 ) {
+    val closeAtEnd = closeButtonPosition == JengaImageViewerCloseButtonPosition.End
+    val rowPadding = JengaTheme.spacing.xs
+    // With the close at the end the title is the leading item, so it starts where a top app bar
+    // title does; the row's own padding is already part of that distance.
+    val titleStartPadding = if (closeAtEnd) {
+        val topBarStart = JengaTopAppBarDefaults.contentPadding.calculateStartPadding(LocalLayoutDirection.current)
+        (topBarStart - rowPadding).coerceAtLeast(0.dp)
+    } else {
+        0.dp
+    }
+    val closeButton: @Composable () -> Unit = {
+        JengaIconButton(onClick = onClose, variant = JengaIconButtonVariant.Overlay) {
+            JengaIcon(JengaTheme.icons.close, contentDescription = closeContentDescription)
+        }
+    }
     CompositionLocalProvider(LocalJengaContentColor provides colors.content) {
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(horizontal = JengaTheme.spacing.xs),
+                .padding(horizontal = rowPadding),
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.spacedBy(JengaTheme.spacing.xs),
         ) {
-            JengaIconButton(onClick = onClose, variant = JengaIconButtonVariant.Overlay) {
-                JengaIcon(JengaTheme.icons.close, contentDescription = closeContentDescription)
-            }
+            if (!closeAtEnd) closeButton()
             JengaText(
                 text = title,
                 style = titleStyle,
                 color = colors.content,
                 maxLines = 1,
                 overflow = TextOverflow.Ellipsis,
-                modifier = Modifier.weight(1f),
+                modifier = Modifier.weight(1f).padding(start = titleStartPadding),
             )
             actions()
+            if (closeAtEnd) closeButton()
         }
     }
 }
@@ -282,4 +329,64 @@ internal class ZoomState(private val maxScale: Float) {
         scale = if (scale > 1f) 1f else JengaImageViewerDefaults.DoubleTapScale.coerceAtMost(maxScale)
         offset = Offset.Zero
     }
+}
+
+@Deprecated("Kept for binary compatibility", level = DeprecationLevel.HIDDEN)
+@Composable
+public fun JengaImageViewer(
+    onDismissRequest: () -> Unit,
+    title: String,
+    closeContentDescription: String,
+    modifier: Modifier = Modifier,
+    actions: @Composable RowScope.() -> Unit = {},
+    titleStyle: TextStyle = JengaImageViewerDefaults.titleStyle,
+    maxScale: Float = JengaImageViewerDefaults.MaxScale,
+    colors: JengaImageViewerColors = JengaImageViewerDefaults.colors(),
+    content: @Composable () -> Unit,
+) {
+    JengaImageViewer(
+        onDismissRequest = onDismissRequest,
+        title = title,
+        closeContentDescription = closeContentDescription,
+        modifier = modifier,
+        actions = actions,
+        titleStyle = titleStyle,
+        maxScale = maxScale,
+        colors = colors,
+        closeButtonPosition = JengaImageViewerCloseButtonPosition.Start,
+        content = content,
+    )
+}
+
+@Deprecated("Kept for binary compatibility", level = DeprecationLevel.HIDDEN)
+@Composable
+public fun JengaImageViewer(
+    pageCount: Int,
+    onDismissRequest: () -> Unit,
+    title: (page: Int) -> String,
+    closeContentDescription: String,
+    modifier: Modifier = Modifier,
+    initialPage: Int = 0,
+    actions: @Composable RowScope.(page: Int) -> Unit = {},
+    bottomBar: @Composable (page: Int, goToPage: (Int) -> Unit) -> Unit = { _, _ -> },
+    titleStyle: TextStyle = JengaImageViewerDefaults.titleStyle,
+    maxScale: Float = JengaImageViewerDefaults.MaxScale,
+    colors: JengaImageViewerColors = JengaImageViewerDefaults.colors(),
+    pageContent: @Composable (page: Int) -> Unit,
+) {
+    JengaImageViewer(
+        pageCount = pageCount,
+        onDismissRequest = onDismissRequest,
+        title = title,
+        closeContentDescription = closeContentDescription,
+        modifier = modifier,
+        initialPage = initialPage,
+        actions = actions,
+        bottomBar = bottomBar,
+        titleStyle = titleStyle,
+        maxScale = maxScale,
+        colors = colors,
+        closeButtonPosition = JengaImageViewerCloseButtonPosition.Start,
+        pageContent = pageContent,
+    )
 }
