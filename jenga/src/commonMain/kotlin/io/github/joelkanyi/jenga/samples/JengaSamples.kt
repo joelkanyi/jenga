@@ -211,6 +211,25 @@ internal fun JengaBottomBarSample() {
 }
 
 @Composable
+internal fun JengaBottomBarActionsSample() {
+    JengaBottomBar(
+        primaryAction = {
+            JengaButton(
+                text = "Sajili mauzo na utume ujumbe",
+                onClick = { },
+            )
+        },
+        secondaryAction = {
+            JengaButton(
+                text = "Hifadhi kama rasimu kwa sasa",
+                onClick = { },
+                variant = JengaButtonVariant.Neutral,
+            )
+        },
+    )
+}
+
+@Composable
 internal fun JengaStatusPillSample() {
     JengaStatusPill(
         label = "Synced",

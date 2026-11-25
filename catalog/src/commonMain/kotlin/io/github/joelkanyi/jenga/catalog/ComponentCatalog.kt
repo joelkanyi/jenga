@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -2575,6 +2576,96 @@ fun componentEntries(): List<CatalogEntry> = listOf(
                                     JengaIcon(
                                         imageVector = JengaIcons.History,
                                         contentDescription = "History",
+                                    )
+                                },
+                            )
+                        },
+                    )
+                },
+            )
+        },
+    ),
+    CatalogEntry(
+        name = "Bottom bar actions",
+        group = "Navigation",
+        description = "Two actions side by side when both labels fit on one line, otherwise stacked with the primary on top. Shown at most 360dp wide, so the long labels stack.",
+        keywords = "action bar footer adaptive stack primary secondary",
+        code = """
+            JengaStack(
+                modifier = Modifier.widthIn(
+                    max = 360.dp,
+                ),
+                space = JengaTheme.spacing.md,
+                content = {
+                    JengaBottomBar(
+                        primaryAction = {
+                            JengaButton(
+                                text = "Save",
+                                onClick = {},
+                            )
+                        },
+                        secondaryAction = {
+                            JengaButton(
+                                text = "Cancel",
+                                onClick = {},
+                                variant = JengaButtonVariant.Neutral,
+                            )
+                        },
+                    )
+                    JengaBottomBar(
+                        primaryAction = {
+                            JengaButton(
+                                text = "Sajili mauzo na utume ujumbe",
+                                onClick = {},
+                            )
+                        },
+                        secondaryAction = {
+                            JengaButton(
+                                text = "Hifadhi kama rasimu kwa sasa",
+                                onClick = {},
+                                variant = JengaButtonVariant.Neutral,
+                            )
+                        },
+                    )
+                },
+            )
+        """.trimIndent(),
+        demo = {
+            ActionFeedback(
+                content = { confirm ->
+                    JengaStack(
+                        modifier = Modifier.widthIn(
+                            max = 360.dp,
+                        ),
+                        space = JengaTheme.spacing.md,
+                        content = {
+                            JengaBottomBar(
+                                primaryAction = {
+                                    JengaButton(
+                                        text = "Save",
+                                        onClick = { confirm("Saved") },
+                                    )
+                                },
+                                secondaryAction = {
+                                    JengaButton(
+                                        text = "Cancel",
+                                        onClick = { confirm("Cancelled") },
+                                        variant = JengaButtonVariant.Neutral,
+                                    )
+                                },
+                            )
+                            JengaBottomBar(
+                                primaryAction = {
+                                    JengaButton(
+                                        text = "Sajili mauzo na utume ujumbe",
+                                        onClick = { confirm("Mauzo yamesajiliwa") },
+                                    )
+                                },
+                                secondaryAction = {
+                                    JengaButton(
+                                        text = "Hifadhi kama rasimu kwa sasa",
+                                        onClick = { confirm("Rasimu imehifadhiwa") },
+                                        variant = JengaButtonVariant.Neutral,
                                     )
                                 },
                             )

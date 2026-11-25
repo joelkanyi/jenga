@@ -2125,6 +2125,7 @@ public final class io/github/joelkanyi/jenga/component/scaffold/JengaBottomBarDe
 
 public final class io/github/joelkanyi/jenga/component/scaffold/JengaBottomBarKt {
 	public static final fun JengaBottomBar (Landroidx/compose/ui/Modifier;Lio/github/joelkanyi/jenga/component/scaffold/JengaBottomBarColors;Lkotlin/jvm/functions/Function3;Landroidx/compose/runtime/Composer;II)V
+	public static final fun JengaBottomBar (Lkotlin/jvm/functions/Function2;Landroidx/compose/ui/Modifier;Lkotlin/jvm/functions/Function2;Lio/github/joelkanyi/jenga/component/scaffold/JengaBottomBarColors;Landroidx/compose/runtime/Composer;II)V
 }
 
 public final class io/github/joelkanyi/jenga/component/scaffold/JengaScaffoldDefaults {
@@ -3418,6 +3419,7 @@ public final class io/github/joelkanyi/jenga/samples/ComposableSingletons$JengaS
 	public final fun getLambda$-270386691$jenga ()Lkotlin/jvm/functions/Function3;
 	public final fun getLambda$-526265762$jenga ()Lkotlin/jvm/functions/Function2;
 	public final fun getLambda$-53955776$jenga ()Lkotlin/jvm/functions/Function3;
+	public final fun getLambda$-541749141$jenga ()Lkotlin/jvm/functions/Function2;
 	public final fun getLambda$-626117203$jenga ()Lkotlin/jvm/functions/Function2;
 	public final fun getLambda$-67187725$jenga ()Lkotlin/jvm/functions/Function3;
 	public final fun getLambda$-714408400$jenga ()Lkotlin/jvm/functions/Function2;
@@ -3431,6 +3433,7 @@ public final class io/github/joelkanyi/jenga/samples/ComposableSingletons$JengaS
 	public final fun getLambda$1557062852$jenga ()Lkotlin/jvm/functions/Function3;
 	public final fun getLambda$1718255370$jenga ()Lkotlin/jvm/functions/Function2;
 	public final fun getLambda$183897136$jenga ()Lkotlin/jvm/functions/Function3;
+	public final fun getLambda$1910742441$jenga ()Lkotlin/jvm/functions/Function2;
 	public final fun getLambda$1912113536$jenga ()Lkotlin/jvm/functions/Function3;
 	public final fun getLambda$1937005648$jenga ()Lkotlin/jvm/functions/Function3;
 	public final fun getLambda$205903528$jenga ()Lkotlin/jvm/functions/Function2;

@@ -2691,10 +2691,16 @@ public final class io/github/joelkanyi/jenga/component/scaffold/ComposableSingle
 	public static final field INSTANCE Lio/github/joelkanyi/jenga/component/scaffold/ComposableSingletons$JengaBottomBarPreviewsKt;
 	public fun <init> ()V
 	public final fun getLambda$-1543422247$jenga_release ()Lkotlin/jvm/functions/Function2;
+	public final fun getLambda$-1850890162$jenga_release ()Lkotlin/jvm/functions/Function2;
+	public final fun getLambda$-1879830743$jenga_release ()Lkotlin/jvm/functions/Function2;
+	public final fun getLambda$-1879899725$jenga_release ()Lkotlin/jvm/functions/Function2;
+	public final fun getLambda$-283478208$jenga_release ()Lkotlin/jvm/functions/Function2;
+	public final fun getLambda$-455374535$jenga_release ()Lkotlin/jvm/functions/Function2;
 	public final fun getLambda$1005499811$jenga_release ()Lkotlin/jvm/functions/Function2;
 	public final fun getLambda$1331281998$jenga_release ()Lkotlin/jvm/functions/Function2;
 	public final fun getLambda$287452474$jenga_release ()Lkotlin/jvm/functions/Function2;
 	public final fun getLambda$476418854$jenga_release ()Lkotlin/jvm/functions/Function2;
+	public final fun getLambda$890703272$jenga_release ()Lkotlin/jvm/functions/Function2;
 	public final fun getLambda$933528640$jenga_release ()Lkotlin/jvm/functions/Function3;
 }
 
@@ -2747,6 +2753,7 @@ public final class io/github/joelkanyi/jenga/component/scaffold/JengaBottomBarDe
 
 public final class io/github/joelkanyi/jenga/component/scaffold/JengaBottomBarKt {
 	public static final fun JengaBottomBar (Landroidx/compose/ui/Modifier;Lio/github/joelkanyi/jenga/component/scaffold/JengaBottomBarColors;Lkotlin/jvm/functions/Function3;Landroidx/compose/runtime/Composer;II)V
+	public static final fun JengaBottomBar (Lkotlin/jvm/functions/Function2;Landroidx/compose/ui/Modifier;Lkotlin/jvm/functions/Function2;Lio/github/joelkanyi/jenga/component/scaffold/JengaBottomBarColors;Landroidx/compose/runtime/Composer;II)V
 }
 
 public final class io/github/joelkanyi/jenga/component/scaffold/JengaScaffoldDefaults {
@@ -4293,6 +4300,7 @@ public final class io/github/joelkanyi/jenga/samples/ComposableSingletons$JengaS
 	public final fun getLambda$-270386691$jenga_release ()Lkotlin/jvm/functions/Function3;
 	public final fun getLambda$-526265762$jenga_release ()Lkotlin/jvm/functions/Function2;
 	public final fun getLambda$-53955776$jenga_release ()Lkotlin/jvm/functions/Function3;
+	public final fun getLambda$-541749141$jenga_release ()Lkotlin/jvm/functions/Function2;
 	public final fun getLambda$-626117203$jenga_release ()Lkotlin/jvm/functions/Function2;
 	public final fun getLambda$-67187725$jenga_release ()Lkotlin/jvm/functions/Function3;
 	public final fun getLambda$-714408400$jenga_release ()Lkotlin/jvm/functions/Function2;
@@ -4306,6 +4314,7 @@ public final class io/github/joelkanyi/jenga/samples/ComposableSingletons$JengaS
 	public final fun getLambda$1557062852$jenga_release ()Lkotlin/jvm/functions/Function3;
 	public final fun getLambda$1718255370$jenga_release ()Lkotlin/jvm/functions/Function2;
 	public final fun getLambda$183897136$jenga_release ()Lkotlin/jvm/functions/Function3;
+	public final fun getLambda$1910742441$jenga_release ()Lkotlin/jvm/functions/Function2;
 	public final fun getLambda$1912113536$jenga_release ()Lkotlin/jvm/functions/Function3;
 	public final fun getLambda$1937005648$jenga_release ()Lkotlin/jvm/functions/Function3;
 	public final fun getLambda$205903528$jenga_release ()Lkotlin/jvm/functions/Function2;
