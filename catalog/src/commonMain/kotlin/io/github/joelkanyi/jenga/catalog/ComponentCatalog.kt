@@ -162,6 +162,7 @@ import io.github.joelkanyi.jenga.component.state.JengaStateLayout
 import io.github.joelkanyi.jenga.component.status.JengaStatusPill
 import io.github.joelkanyi.jenga.component.stepindicator.JengaStep
 import io.github.joelkanyi.jenga.component.stepindicator.JengaStepIndicator
+import io.github.joelkanyi.jenga.component.stepindicator.JengaStepIndicatorArrangement
 import io.github.joelkanyi.jenga.component.stepindicator.JengaStepIndicatorVariant
 import io.github.joelkanyi.jenga.component.stepindicator.JengaStepState
 import io.github.joelkanyi.jenga.component.stepper.JengaStepper
@@ -5666,8 +5667,8 @@ fun componentEntries(): List<CatalogEntry> = listOf(
     CatalogEntry(
         name = "Step indicator",
         group = "Navigation",
-        description = "A row of steps for a multi-step flow: done, current, pending or locked, with a dot or the step number, with or without labels.",
-        keywords = "steps stepper progress wizard flow checkout numbered number compact",
+        description = "A row of steps for a multi-step flow: done, current, pending or locked, with a dot or the step number, with or without labels, centered or edge to edge.",
+        keywords = "steps stepper progress wizard flow checkout numbered number compact edge arrangement",
         code = """
             val steps =
                 listOf(
@@ -5708,6 +5709,13 @@ fun componentEntries(): List<CatalogEntry> = listOf(
                 text = "Step 2 of 3 · Choices",
                 style = JengaTheme.typography.caption,
                 color = JengaTheme.colors.textMuted,
+            )
+            JengaStepIndicator(
+                steps = steps,
+                stepContentDescription = { index, step ->
+                    "Step ${'$'}{index + 1} of 3, ${'$'}{step.label}"
+                },
+                arrangement = JengaStepIndicatorArrangement.EdgeToEdge,
             )
         """.trimIndent(),
         demo = {
@@ -5759,6 +5767,12 @@ fun componentEntries(): List<CatalogEntry> = listOf(
                                 color = JengaTheme.colors.textMuted,
                             )
                         },
+                    )
+                    JengaStepIndicator(
+                        steps = steps,
+                        stepContentDescription = { index, step -> "Step ${index + 1} of 3, ${step.label}" },
+                        arrangement = JengaStepIndicatorArrangement.EdgeToEdge,
+                        onStepClick = { current = it },
                     )
                 },
             )

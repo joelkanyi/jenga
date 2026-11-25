@@ -1,11 +1,18 @@
 package io.github.joelkanyi.jenga.component.stepindicator
 
+import androidx.compose.foundation.horizontalScroll
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.semantics.SemanticsActions
 import androidx.compose.ui.semantics.SemanticsProperties
@@ -15,11 +22,14 @@ import androidx.compose.ui.test.assertCountEquals
 import androidx.compose.ui.test.assertHeightIsEqualTo
 import androidx.compose.ui.test.assertIsNotSelected
 import androidx.compose.ui.test.assertIsSelected
+import androidx.compose.ui.test.assertWidthIsEqualTo
 import androidx.compose.ui.test.getUnclippedBoundsInRoot
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onNodeWithContentDescription
 import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.performClick
+import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.height
 import io.github.joelkanyi.jenga.theme.JengaTheme
@@ -174,9 +184,23 @@ class JengaStepIndicatorTest {
 
     @Test
     fun compactRowIsShorterThanTheLabelledRow() {
-        showTagged(JengaStepIndicatorVariant.Labelled)
-        val labelled = compose.onNodeWithTag("indicator").getUnclippedBoundsInRoot().height
-        assertTrue("labelled row $labelled keeps room for labels", labelled > JengaStepIndicatorDefaults.NodeSize + 3.dp * 2)
+        compose.setContent {
+            JengaTheme {
+                Column {
+                    for (variant in listOf(JengaStepIndicatorVariant.Labelled, JengaStepIndicatorVariant.Compact)) {
+                        JengaStepIndicator(
+                            steps = steps,
+                            stepContentDescription = { _, step -> step.label },
+                            modifier = Modifier.testTag(variant.name),
+                            variant = variant,
+                        )
+                    }
+                }
+            }
+        }
+        val labelled = compose.onNodeWithTag("Labelled").getUnclippedBoundsInRoot().height
+        val compact = compose.onNodeWithTag("Compact").getUnclippedBoundsInRoot().height
+        assertTrue("compact $compact, labelled $labelled", compact < labelled)
     }
 
     @Test
@@ -261,6 +285,254 @@ class JengaStepIndicatorTest {
         assertEquals(colors, colors.copy())
         assertEquals(Color.Blue, colors.copy(currentHalo = Color.Blue).currentHalo)
         assertEquals(Color.Blue, colors.copy(currentHalo = Color.Blue).copy(active = Color.Green).currentHalo)
+    }
+
+    // Narrower than the 320dp test screen, so the row is not cut.
+    private val rowWidth = 300.dp
+    private var rowLabels by mutableStateOf(emptyList<String>())
+    private var rowCurrent by mutableIntStateOf(0)
+
+    private fun showRow(
+        labels: List<String>,
+        variant: JengaStepIndicatorVariant = JengaStepIndicatorVariant.Labelled,
+        arrangement: JengaStepIndicatorArrangement = JengaStepIndicatorArrangement.EdgeToEdge,
+        current: Int = 0,
+        rtl: Boolean = false,
+        onStepClick: ((Int) -> Unit)? = null,
+    ) {
+        rowLabels = labels
+        rowCurrent = current
+        compose.setContent {
+            JengaTheme {
+                CompositionLocalProvider(LocalLayoutDirection provides if (rtl) LayoutDirection.Rtl else LayoutDirection.Ltr) {
+                    Box(modifier = Modifier.width(rowWidth)) {
+                        JengaStepIndicator(
+                            steps = rowLabels.mapIndexed { index, label ->
+                                JengaStep(label, if (index == rowCurrent) JengaStepState.Current else JengaStepState.Pending)
+                            },
+                            stepContentDescription = { index, _ -> "Step ${index + 1}" },
+                            modifier = Modifier.testTag("indicator"),
+                            variant = variant,
+                            arrangement = arrangement,
+                            onStepClick = onStepClick,
+                        )
+                    }
+                }
+            }
+        }
+    }
+
+    private fun assertEdgeToEdgeStepsAreSelectableAndTappable(variant: JengaStepIndicatorVariant) {
+        val taps = mutableListOf<Int>()
+        showRow(labels = longLabels.take(4), variant = variant, current = 1, onStepClick = { taps += it })
+        compose.onNodeWithContentDescription("Step 1").assertIsNotSelected()
+        compose.onNodeWithContentDescription("Step 2").assertIsSelected()
+        compose.onNodeWithContentDescription("Step 4").assertIsNotSelected()
+        compose.onNodeWithContentDescription("Step 4").performClick()
+        compose.onNodeWithContentDescription("Step 1").performClick()
+        compose.onNodeWithContentDescription("Step 3").performClick()
+        assertEquals(listOf(3, 0, 2), taps)
+    }
+
+    @Test
+    fun edgeToEdgeLabelledStepsExposeSelectionAndReportTaps() {
+        assertEdgeToEdgeStepsAreSelectableAndTappable(JengaStepIndicatorVariant.Labelled)
+    }
+
+    @Test
+    fun edgeToEdgeCompactStepsExposeSelectionAndReportTaps() {
+        assertEdgeToEdgeStepsAreSelectableAndTappable(JengaStepIndicatorVariant.Compact)
+    }
+
+    @Test
+    fun edgeToEdgeStepsAreNotTappableWithoutOnStepClick() {
+        showRow(labels = longLabels.take(4))
+        for (step in 1..4) {
+            compose.onNodeWithContentDescription("Step $step").assert(SemanticsMatcher.keyNotDefined(SemanticsActions.OnClick))
+        }
+    }
+
+    @Test
+    fun edgeToEdgeStepsDoNotExposeTheirNumbersOrLabelsAsText() {
+        showRow(labels = longLabels.take(4), variant = JengaStepIndicatorVariant.Numbered)
+        compose.onAllNodes(hasAnyText, useUnmergedTree = true).assertCountEquals(0)
+    }
+
+    @Test
+    fun edgeToEdgeTakesTheLeastWidthInsideAHorizontalScroll() {
+        compose.setContent {
+            JengaTheme {
+                Box(modifier = Modifier.horizontalScroll(rememberScrollState())) {
+                    JengaStepIndicator(
+                        steps = List(4) { JengaStep("Step", JengaStepState.Pending) },
+                        stepContentDescription = { index, _ -> "Step ${index + 1}" },
+                        modifier = Modifier.testTag("indicator"),
+                        variant = JengaStepIndicatorVariant.Compact,
+                        arrangement = JengaStepIndicatorArrangement.EdgeToEdge,
+                    )
+                }
+            }
+        }
+        // Four nodes with the shortest line, 12dp, between each pair.
+        val least = JengaStepIndicatorDefaults.NodeSize * 4 + 12.dp * 3
+        compose.onNodeWithTag("indicator").assertWidthIsEqualTo(least)
+        val bounds = stepBounds(4)
+        assertDp(0.dp, bounds.first().left)
+        assertDp(least, bounds.last().right)
+    }
+
+    @Test
+    fun edgeToEdgeLaysOutSixStepsInARowTooNarrowForThem() {
+        var variant by mutableStateOf(JengaStepIndicatorVariant.Compact)
+        compose.setContent {
+            JengaTheme {
+                Box(modifier = Modifier.width(100.dp)) {
+                    JengaStepIndicator(
+                        steps = longLabels.map { JengaStep(it, JengaStepState.Pending) },
+                        stepContentDescription = { index, _ -> "Step ${index + 1}" },
+                        variant = variant,
+                        arrangement = JengaStepIndicatorArrangement.EdgeToEdge,
+                    )
+                }
+            }
+        }
+        for (shown in listOf(JengaStepIndicatorVariant.Compact, JengaStepIndicatorVariant.Labelled)) {
+            variant = shown
+            compose.waitForIdle()
+            val bounds = stepBounds(6)
+            assertDp(0.dp, bounds.first().left)
+            assertDp(100.dp, bounds.last().right)
+            // The nodes overlap but still run in order from the start edge.
+            bounds.zipWithNext { left, right -> assertTrue("$shown: $left then $right", left.left <= right.left) }
+        }
+    }
+
+    private fun stepBounds(count: Int) = (1..count).map { compose.onNodeWithContentDescription("Step $it").getUnclippedBoundsInRoot() }
+
+    private fun assertDp(expected: Dp, actual: Dp) = assertEquals(expected.value, actual.value, 1f)
+
+    private val longLabels = listOf("Taarifa za mteja", "Bidhaa na mpango", "Nyaraka", "Makubaliano", "Malipo ya awali", "Uthibitisho")
+
+    @Test
+    fun edgeToEdgePutsTheFirstNodeAtTheStartEdgeAndTheLastAtTheEndEdge() {
+        // A compact step is exactly its node, so these are the nodes' own edges.
+        showRow(labels = longLabels.take(4), variant = JengaStepIndicatorVariant.Compact)
+        val bounds = stepBounds(4)
+        assertDp(0.dp, bounds.first().left)
+        assertDp(JengaStepIndicatorDefaults.NodeSize, bounds.first().right)
+        assertDp(rowWidth - JengaStepIndicatorDefaults.NodeSize, bounds.last().left)
+        assertDp(rowWidth, bounds.last().right)
+        // The nodes between are evenly spaced.
+        val pitch = (rowWidth - JengaStepIndicatorDefaults.NodeSize) / 3
+        assertDp(pitch, bounds[1].left)
+        assertDp(pitch * 2, bounds[2].left)
+    }
+
+    @Test
+    fun edgeToEdgeIsMirroredInRtl() {
+        showRow(labels = longLabels.take(4), variant = JengaStepIndicatorVariant.Compact, rtl = true)
+        val bounds = stepBounds(4)
+        assertDp(rowWidth, bounds.first().right)
+        assertDp(rowWidth - JengaStepIndicatorDefaults.NodeSize, bounds.first().left)
+        assertDp(0.dp, bounds.last().left)
+        assertDp((rowWidth - JengaStepIndicatorDefaults.NodeSize) / 3 * 2, bounds[1].left)
+    }
+
+    @Test
+    fun edgeToEdgeLabelledStepsReachBothEdges() {
+        showRow(labels = longLabels.take(4))
+        val bounds = stepBounds(4)
+        assertDp(0.dp, bounds.first().left)
+        assertDp(rowWidth, bounds.last().right)
+    }
+
+    @Test
+    fun edgeToEdgeLabelledStepsReachBothEdgesInRtl() {
+        showRow(labels = longLabels.take(4), rtl = true)
+        val bounds = stepBounds(4)
+        assertDp(rowWidth, bounds.first().right)
+        assertDp(0.dp, bounds.last().left)
+    }
+
+    @Test
+    fun edgeToEdgeStepsWithLongLabelsNeverOverlap() {
+        showRow(labels = longLabels)
+        for (count in listOf(2, 3, 4, 6)) {
+            rowLabels = longLabels.take(count)
+            compose.waitForIdle()
+            val bounds = stepBounds(count)
+            bounds.zipWithNext { left, right ->
+                assertTrue("$count steps: $left overlaps $right", left.right <= right.left)
+            }
+        }
+    }
+
+    @Test
+    fun edgeToEdgeLaysOutOneStepAtTheStartEdge() {
+        showRow(labels = longLabels.take(1))
+        val only = stepBounds(1).single()
+        assertDp(0.dp, only.left)
+        assertDp(rowWidth, only.right)
+    }
+
+    @Test
+    fun edgeToEdgeLaysOutTwoStepsAtTheEdges() {
+        showRow(labels = longLabels.take(2), variant = JengaStepIndicatorVariant.Compact)
+        val bounds = stepBounds(2)
+        assertDp(0.dp, bounds.first().left)
+        assertDp(rowWidth, bounds.last().right)
+    }
+
+    @Test
+    fun edgeToEdgeLaysOutNoSteps() {
+        showRow(labels = emptyList())
+        compose.onNodeWithTag("indicator").assertHeightIsEqualTo(0.dp)
+    }
+
+    @Test
+    fun centeredStepsKeepTheirEqualColumns() {
+        showRow(labels = longLabels.take(4), arrangement = JengaStepIndicatorArrangement.Centered)
+        val bounds = stepBounds(4)
+        bounds.forEach { assertDp(JengaStepIndicatorDefaults.ColumnWidth, it.right - it.left) }
+        assertDp(0.dp, bounds.first().left)
+        assertDp(rowWidth, bounds.last().right)
+    }
+
+    @Test
+    fun edgeToEdgeCompactKeepsTheHaloSpaceAboveAndBelowAnEdgeNode() {
+        showRow(labels = longLabels.take(4), variant = JengaStepIndicatorVariant.Compact)
+        for (current in listOf(0, 3)) {
+            rowCurrent = current
+            compose.waitForIdle()
+            compose.onNodeWithTag("indicator").assertHeightIsEqualTo(JengaStepIndicatorDefaults.NodeSize + 3.dp * 2)
+            val step = compose.onNodeWithContentDescription("Step ${current + 1}").getUnclippedBoundsInRoot()
+            assertDp(3.dp, step.top)
+            assertDp(3.dp + JengaStepIndicatorDefaults.NodeSize, step.bottom)
+        }
+    }
+
+    @Test
+    fun edgeToEdgeLabelWidthLeavesAGapBetweenNeighbours() {
+        // 4 steps: pitch 100, so a centered label may be 96 wide but an edge label only lets it be 73.
+        assertEquals(73, edgeToEdgeLabelWidth(rowWidth = 328, stepCount = 4, nodeSize = 28, gap = 4))
+        // 9 steps: pitch 37.5.
+        assertEquals(31, edgeToEdgeLabelWidth(rowWidth = 328, stepCount = 9, nodeSize = 28, gap = 4))
+        // Two labels share the row; one takes all of it.
+        assertEquals(162, edgeToEdgeLabelWidth(rowWidth = 328, stepCount = 2, nodeSize = 28, gap = 4))
+        assertEquals(328, edgeToEdgeLabelWidth(rowWidth = 328, stepCount = 1, nodeSize = 28, gap = 4))
+        // Never narrower than the node, however tight the row.
+        assertEquals(28, edgeToEdgeLabelWidth(rowWidth = 120, stepCount = 9, nodeSize = 28, gap = 4))
+    }
+
+    @Test
+    fun edgeToEdgeLabelWidthKeepsEdgeAndCenteredLabelsApart() {
+        for (count in 3..9) {
+            val width = edgeToEdgeLabelWidth(rowWidth = 328, stepCount = count, nodeSize = 28, gap = 4)
+            val pitch = (328 - 28f) / (count - 1)
+            val secondLabelLeft = 14 + pitch - width / 2f
+            assertTrue("$count steps: first label meets the second", width + 4 <= secondLabelLeft + 0.01f)
+            assertTrue("$count steps: centered labels meet", width + 4 <= pitch + 0.01f)
+        }
     }
 
     private val hasAnyText = SemanticsMatcher("has text") { SemanticsProperties.Text in it.config }

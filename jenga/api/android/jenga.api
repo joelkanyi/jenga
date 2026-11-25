@@ -3388,7 +3388,10 @@ public final class io/github/joelkanyi/jenga/component/stepindicator/ComposableS
 	public static final field INSTANCE Lio/github/joelkanyi/jenga/component/stepindicator/ComposableSingletons$JengaStepIndicatorPreviewsKt;
 	public fun <init> ()V
 	public final fun getLambda$-654980710$jenga_release ()Lkotlin/jvm/functions/Function2;
+	public final fun getLambda$-777620620$jenga_release ()Lkotlin/jvm/functions/Function2;
+	public final fun getLambda$163372481$jenga_release ()Lkotlin/jvm/functions/Function2;
 	public final fun getLambda$1710702879$jenga_release ()Lkotlin/jvm/functions/Function2;
+	public final fun getLambda$286886060$jenga_release ()Lkotlin/jvm/functions/Function2;
 }
 
 public final class io/github/joelkanyi/jenga/component/stepindicator/JengaStep {
@@ -3399,6 +3402,14 @@ public final class io/github/joelkanyi/jenga/component/stepindicator/JengaStep {
 	public final fun getState ()Lio/github/joelkanyi/jenga/component/stepindicator/JengaStepState;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
+}
+
+public final class io/github/joelkanyi/jenga/component/stepindicator/JengaStepIndicatorArrangement : java/lang/Enum {
+	public static final field Centered Lio/github/joelkanyi/jenga/component/stepindicator/JengaStepIndicatorArrangement;
+	public static final field EdgeToEdge Lio/github/joelkanyi/jenga/component/stepindicator/JengaStepIndicatorArrangement;
+	public static fun getEntries ()Lkotlin/enums/EnumEntries;
+	public static fun valueOf (Ljava/lang/String;)Lio/github/joelkanyi/jenga/component/stepindicator/JengaStepIndicatorArrangement;
+	public static fun values ()[Lio/github/joelkanyi/jenga/component/stepindicator/JengaStepIndicatorArrangement;
 }
 
 public final class io/github/joelkanyi/jenga/component/stepindicator/JengaStepIndicatorColors {
@@ -3433,7 +3444,7 @@ public final class io/github/joelkanyi/jenga/component/stepindicator/JengaStepIn
 }
 
 public final class io/github/joelkanyi/jenga/component/stepindicator/JengaStepIndicatorKt {
-	public static final fun JengaStepIndicator (Ljava/util/List;Lkotlin/jvm/functions/Function2;Landroidx/compose/ui/Modifier;Lio/github/joelkanyi/jenga/component/stepindicator/JengaStepIndicatorVariant;Lkotlin/jvm/functions/Function1;Lio/github/joelkanyi/jenga/component/stepindicator/JengaStepIndicatorColors;Landroidx/compose/runtime/Composer;II)V
+	public static final fun JengaStepIndicator (Ljava/util/List;Lkotlin/jvm/functions/Function2;Landroidx/compose/ui/Modifier;Lio/github/joelkanyi/jenga/component/stepindicator/JengaStepIndicatorVariant;Lio/github/joelkanyi/jenga/component/stepindicator/JengaStepIndicatorArrangement;Lkotlin/jvm/functions/Function1;Lio/github/joelkanyi/jenga/component/stepindicator/JengaStepIndicatorColors;Landroidx/compose/runtime/Composer;II)V
 	public static final synthetic fun JengaStepIndicator (Ljava/util/List;Lkotlin/jvm/functions/Function2;Landroidx/compose/ui/Modifier;Lkotlin/jvm/functions/Function1;Lio/github/joelkanyi/jenga/component/stepindicator/JengaStepIndicatorColors;Landroidx/compose/runtime/Composer;II)V
 }
 

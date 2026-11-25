@@ -23,6 +23,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.drawscope.Stroke
+import androidx.compose.ui.layout.Layout
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.semantics.clearAndSetSemantics
@@ -32,6 +33,7 @@ import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.unit.Constraints
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import dev.drewhamilton.poko.Poko
@@ -86,9 +88,46 @@ public enum class JengaStepIndicatorVariant {
      * "Step 2 of 4 · Product and plan". [JengaStep.label] is not drawn, but it is still passed
      * to `stepContentDescription` for screen readers.
      *
+     * A step is only as tall as its circle (28dp), so a tappable step relies on the platform
+     * widening small touch targets to its minimum size.
+     *
+     * The halo's height is always kept free above and below the row. Sideways it is not: when the
+     * current step's circle touches the row's edge (the first or last step in
+     * [JengaStepIndicatorArrangement.EdgeToEdge], or in a row too narrow for wider columns), the
+     * halo reaches 3dp past that edge. Leave that much room beside the indicator, or do not clip
+     * its parent.
+     *
+     * With [JengaStepIndicatorArrangement.Centered] the lines between circles shrink to short
+     * stubs from about five steps on a phone and all but vanish at nine. Use
+     * [JengaStepIndicatorArrangement.EdgeToEdge] for five steps or more.
+     *
      * @sample io.github.joelkanyi.jenga.samples.JengaStepIndicatorCompactSample
      */
     Compact,
+}
+
+/**
+ * Where a [JengaStepIndicator] puts its steps across the row. Both follow the layout direction.
+ *
+ * @sample io.github.joelkanyi.jenga.samples.JengaStepIndicatorEdgeToEdgeSample
+ */
+public enum class JengaStepIndicatorArrangement {
+    /**
+     * Each step gets an equal column, at most [JengaStepIndicatorDefaults.ColumnWidth] wide, with
+     * its circle and label centered in it, so the first and last circles sit in from the row's edges.
+     */
+    Centered,
+
+    /**
+     * The first circle sits at the start edge of the row and the last at the end edge, with the
+     * lines filling the space between. The first label starts under the first circle, the last
+     * label ends under the last circle and the ones between are centered under theirs. Labels
+     * share one width, as wide as fits without two neighbours meeting.
+     *
+     * In [JengaStepIndicatorVariant.Compact] the halo of a first or last current step reaches 3dp
+     * past the row's edge; see there.
+     */
+    EdgeToEdge,
 }
 
 /** One step in a [JengaStepIndicator]: its [label] and [state]. */
@@ -110,12 +149,15 @@ public class JengaStep(
  * @property label the label of a pending step.
  * @property currentLabel the label of the current step.
  * @property currentNumber the number inside the current step's ring
- *   ([JengaStepIndicatorVariant.Numbered] and [JengaStepIndicatorVariant.Compact]); defaults to [active]. It does not follow a later
- *   `copy(active = ...)`, so set the two together when customising.
+ *   ([JengaStepIndicatorVariant.Numbered] and [JengaStepIndicatorVariant.Compact]); defaults
+ *   to [active]. It does not follow a later `copy(active = ...)`, so set the two together when
+ *   customising.
  * @property pendingNumber the number inside a pending step's ring
- *   ([JengaStepIndicatorVariant.Numbered] and [JengaStepIndicatorVariant.Compact]); defaults to [label].
+ *   ([JengaStepIndicatorVariant.Numbered] and [JengaStepIndicatorVariant.Compact]); defaults
+ *   to [label].
  * @property currentHalo the soft halo around the current step's ring
- *   ([JengaStepIndicatorVariant.Compact]); defaults to [active] at 20% opacity. Like
+ *   ([JengaStepIndicatorVariant.Compact]). Built by hand it defaults to [active] at 20%
+ *   opacity; [JengaStepIndicatorDefaults.colors] uses the theme's `focusRing` color. Like
  *   [currentNumber], it does not follow a later `copy(active = ...)`.
  */
 @Poko
@@ -227,6 +269,7 @@ public object JengaStepIndicatorDefaults {
  * @param variant how the steps are drawn; see [JengaStepIndicatorVariant]. The numbers of
  *   [JengaStepIndicatorVariant.Numbered] and [JengaStepIndicatorVariant.Compact] are
  *   decoration: screen readers still read only [stepContentDescription].
+ * @param arrangement where the steps sit across the row; see [JengaStepIndicatorArrangement].
  * @param onStepClick called with a step's index when it is tapped; null makes the
  *   steps not tappable. Which taps to act on is up to the caller.
  * @param colors the color set; defaults to [JengaStepIndicatorDefaults.colors].
@@ -237,24 +280,26 @@ public fun JengaStepIndicator(
     stepContentDescription: (index: Int, step: JengaStep) -> String,
     modifier: Modifier = Modifier,
     variant: JengaStepIndicatorVariant = JengaStepIndicatorVariant.Labelled,
+    arrangement: JengaStepIndicatorArrangement = JengaStepIndicatorArrangement.Centered,
     onStepClick: ((index: Int) -> Unit)? = null,
     colors: JengaStepIndicatorColors = JengaStepIndicatorDefaults.colors(),
 ) {
+    if (arrangement == JengaStepIndicatorArrangement.EdgeToEdge) {
+        EdgeToEdgeSteps(steps, stepContentDescription, variant, onStepClick, colors, modifier)
+        return
+    }
     val compact = variant == JengaStepIndicatorVariant.Compact
     BoxWithConstraints(modifier = modifier.fillMaxWidth()) {
         val sharedWidth = columnWidth(rowWidth = maxWidth, stepCount = steps.size)
         // Without a label to shrink, a compact column never gets narrower than its node.
         val columnWidth = if (compact) maxOf(sharedWidth, JengaStepIndicatorDefaults.NodeSize) else sharedWidth
-        // The halo's height is kept free above and below at all times, so a scrolling parent
-        // cannot cut it and the row does not change height as the current step moves.
-        val haloSpace = if (compact) Modifier.padding(vertical = HaloWidth) else Modifier
-        Row(modifier = Modifier.fillMaxWidth().then(haloSpace), verticalAlignment = Alignment.Top) {
+        Row(modifier = Modifier.fillMaxWidth().haloSpace(compact), verticalAlignment = Alignment.Top) {
             steps.forEachIndexed { index, step ->
                 StepColumn(
                     step = step,
-                    width = columnWidth,
+                    modifier = Modifier.width(columnWidth),
                     index = index,
-                    number = if (variant == JengaStepIndicatorVariant.Labelled) null else index + 1,
+                    number = stepNumber(variant, index),
                     compact = compact,
                     description = stepContentDescription(index, step),
                     onClick = onStepClick,
@@ -269,27 +314,131 @@ public fun JengaStepIndicator(
     }
 }
 
+/**
+ * Lays the steps out for [JengaStepIndicatorArrangement.EdgeToEdge]: circles spread from edge to
+ * edge, a line in each gap, and every step's circle and label in one cell that is the tap and
+ * accessibility target.
+ */
+@Composable
+private fun EdgeToEdgeSteps(
+    steps: List<JengaStep>,
+    stepContentDescription: (index: Int, step: JengaStep) -> String,
+    variant: JengaStepIndicatorVariant,
+    onStepClick: ((index: Int) -> Unit)?,
+    colors: JengaStepIndicatorColors,
+    modifier: Modifier = Modifier,
+) {
+    val compact = variant == JengaStepIndicatorVariant.Compact
+    Layout(
+        modifier = modifier.fillMaxWidth().haloSpace(compact),
+        content = {
+            // The lines come first, so the measure policy can tell them from the steps by position.
+            for (index in 0 until steps.lastIndex) {
+                StepLine(reached = lineReached(steps[index], steps[index + 1]), colors = colors)
+            }
+            steps.forEachIndexed { index, step ->
+                StepColumn(
+                    step = step,
+                    index = index,
+                    number = stepNumber(variant, index),
+                    compact = compact,
+                    description = stepContentDescription(index, step),
+                    onClick = onStepClick,
+                    colors = colors,
+                    alignment = when {
+                        index == 0 -> Alignment.Start
+                        index == steps.lastIndex -> Alignment.End
+                        else -> Alignment.CenterHorizontally
+                    },
+                )
+            }
+        },
+    ) { measurables, constraints ->
+        // n steps come with n - 1 lines. Counting what was composed, not the list, keeps the two
+        // in step even if the list is changed without a recomposition.
+        val count = (measurables.size + 1) / 2
+        val node = JengaStepIndicatorDefaults.NodeSize.roundToPx()
+        // Without a width to fill (a horizontally scrolling parent), take the least that fits.
+        val rowWidth = if (constraints.hasBoundedWidth) {
+            constraints.maxWidth
+        } else {
+            (node * count + MinLineWidth.roundToPx() * (count - 1).coerceAtLeast(0)).coerceAtLeast(constraints.minWidth)
+        }
+        // In a row narrower than one node the nodes pile up at the start instead of running backwards.
+        val span = (rowWidth - node).coerceAtLeast(0)
+        val nodeLefts = IntArray(count) { index -> if (count < 2) 0 else (span.toLong() * index / (count - 1)).toInt() }
+
+        val lines = measurables.take((count - 1).coerceAtLeast(0)).mapIndexed { index, line ->
+            val gap = (nodeLefts[index + 1] - nodeLefts[index] - node).coerceAtLeast(0)
+            line.measure(Constraints.fixedWidth(gap))
+        }
+
+        val labelWidth = edgeToEdgeLabelWidth(rowWidth, count, node, LabelGap.roundToPx())
+        // Keeping the spare width even puts a centered circle on a whole pixel in both directions.
+        val cellWidth = if (compact) node else labelWidth - (labelWidth - node) % 2
+        val cells = measurables.drop(lines.size).map { it.measure(Constraints.fixedWidth(cellWidth)) }
+
+        val height = (cells.maxOfOrNull { it.height } ?: 0).coerceIn(constraints.minHeight, constraints.maxHeight)
+        layout(rowWidth, height) {
+            lines.forEachIndexed { index, line -> line.placeRelative(x = nodeLefts[index] + node, y = 0) }
+            cells.forEachIndexed { index, cell ->
+                val x = when {
+                    index == 0 -> 0
+                    index == count - 1 -> (rowWidth - cellWidth).coerceAtLeast(0)
+                    else -> nodeLefts[index] - (cellWidth - node) / 2
+                }
+                cell.placeRelative(x = x, y = 0)
+            }
+        }
+    }
+}
+
+/**
+ * The width every label gets in [JengaStepIndicatorArrangement.EdgeToEdge], in pixels: the widest
+ * at which a centered label cannot come within [gap] of the next centered one, nor of a first or
+ * last label that grows inward from its edge. Never narrower than the node.
+ */
+internal fun edgeToEdgeLabelWidth(rowWidth: Int, stepCount: Int, nodeSize: Int, gap: Int): Int {
+    val width = when {
+        stepCount <= 1 -> rowWidth
+        stepCount == 2 -> (rowWidth - gap) / 2
+        else -> {
+            val pitch = (rowWidth - nodeSize).toFloat() / (stepCount - 1)
+            minOf(pitch - gap, (2 * pitch + nodeSize - 2 * gap) / 3).toInt()
+        }
+    }
+    return width.coerceAtLeast(nodeSize)
+}
+
+private fun stepNumber(variant: JengaStepIndicatorVariant, index: Int): Int? = if (variant == JengaStepIndicatorVariant.Labelled) null else index + 1
+
+/**
+ * Keeps the halo's height free above and below a compact row at all times, so a scrolling parent
+ * cannot cut it and the row does not change height as the current step moves.
+ */
+private fun Modifier.haloSpace(compact: Boolean): Modifier = if (compact) padding(vertical = HaloWidth) else this
+
 @Composable
 private fun StepColumn(
     step: JengaStep,
-    width: Dp,
     index: Int,
     number: Int?,
     compact: Boolean,
     description: String,
     onClick: ((index: Int) -> Unit)?,
     colors: JengaStepIndicatorColors,
+    modifier: Modifier = Modifier,
+    alignment: Alignment.Horizontal = Alignment.CenterHorizontally,
 ) {
     val tap = if (onClick == null) Modifier else Modifier.clickable(role = Role.Button) { onClick(index) }
     Column(
-        modifier = Modifier
-            .width(width)
+        modifier = modifier
             .then(tap)
             .semantics(mergeDescendants = true) {
                 contentDescription = description
                 selected = step.state == JengaStepState.Current
             },
-        horizontalAlignment = Alignment.CenterHorizontally,
+        horizontalAlignment = alignment,
         verticalArrangement = Arrangement.spacedBy(6.dp),
     ) {
         StepNode(state = step.state, number = number, halo = compact, colors = colors)
@@ -298,7 +447,11 @@ private fun StepColumn(
                 text = step.label,
                 style = JengaTheme.typography.caption.copy(fontWeight = labelWeight(step.state)),
                 color = labelColor(step.state, colors),
-                textAlign = TextAlign.Center,
+                textAlign = when (alignment) {
+                    Alignment.Start -> TextAlign.Start
+                    Alignment.End -> TextAlign.End
+                    else -> TextAlign.Center
+                },
                 maxLines = 2,
                 overflow = TextOverflow.Ellipsis,
                 modifier = Modifier.clearAndSetSemantics {},
@@ -412,6 +565,9 @@ private fun labelColor(state: JengaStepState, colors: JengaStepIndicatorColors):
 }
 
 private val MinLineWidth = 12.dp
+
+/** The least space between two neighbouring labels in [JengaStepIndicatorArrangement.EdgeToEdge]. */
+private val LabelGap = 4.dp
 
 /** The width of the halo around the current step in [JengaStepIndicatorVariant.Compact]. */
 private val HaloWidth = 3.dp

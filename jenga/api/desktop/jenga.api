@@ -2611,6 +2611,14 @@ public final class io/github/joelkanyi/jenga/component/stepindicator/JengaStep {
 	public fun toString ()Ljava/lang/String;
 }
 
+public final class io/github/joelkanyi/jenga/component/stepindicator/JengaStepIndicatorArrangement : java/lang/Enum {
+	public static final field Centered Lio/github/joelkanyi/jenga/component/stepindicator/JengaStepIndicatorArrangement;
+	public static final field EdgeToEdge Lio/github/joelkanyi/jenga/component/stepindicator/JengaStepIndicatorArrangement;
+	public static fun getEntries ()Lkotlin/enums/EnumEntries;
+	public static fun valueOf (Ljava/lang/String;)Lio/github/joelkanyi/jenga/component/stepindicator/JengaStepIndicatorArrangement;
+	public static fun values ()[Lio/github/joelkanyi/jenga/component/stepindicator/JengaStepIndicatorArrangement;
+}
+
 public final class io/github/joelkanyi/jenga/component/stepindicator/JengaStepIndicatorColors {
 	public static final field $stable I
 	public synthetic fun <init> (JJJJJJJJJILkotlin/jvm/internal/DefaultConstructorMarker;)V
@@ -2643,7 +2651,7 @@ public final class io/github/joelkanyi/jenga/component/stepindicator/JengaStepIn
 }
 
 public final class io/github/joelkanyi/jenga/component/stepindicator/JengaStepIndicatorKt {
-	public static final fun JengaStepIndicator (Ljava/util/List;Lkotlin/jvm/functions/Function2;Landroidx/compose/ui/Modifier;Lio/github/joelkanyi/jenga/component/stepindicator/JengaStepIndicatorVariant;Lkotlin/jvm/functions/Function1;Lio/github/joelkanyi/jenga/component/stepindicator/JengaStepIndicatorColors;Landroidx/compose/runtime/Composer;II)V
+	public static final fun JengaStepIndicator (Ljava/util/List;Lkotlin/jvm/functions/Function2;Landroidx/compose/ui/Modifier;Lio/github/joelkanyi/jenga/component/stepindicator/JengaStepIndicatorVariant;Lio/github/joelkanyi/jenga/component/stepindicator/JengaStepIndicatorArrangement;Lkotlin/jvm/functions/Function1;Lio/github/joelkanyi/jenga/component/stepindicator/JengaStepIndicatorColors;Landroidx/compose/runtime/Composer;II)V
 	public static final synthetic fun JengaStepIndicator (Ljava/util/List;Lkotlin/jvm/functions/Function2;Landroidx/compose/ui/Modifier;Lkotlin/jvm/functions/Function1;Lio/github/joelkanyi/jenga/component/stepindicator/JengaStepIndicatorColors;Landroidx/compose/runtime/Composer;II)V
 }
 

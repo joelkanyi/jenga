@@ -7,9 +7,11 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import io.github.joelkanyi.jenga.component.text.JengaText
 import io.github.joelkanyi.jenga.core.preview.JengaBlockPreviews
+import io.github.joelkanyi.jenga.core.preview.RtlPreview
 import io.github.joelkanyi.jenga.theme.JengaTheme
 
 @JengaBlockPreviews
@@ -206,6 +208,119 @@ internal fun JengaStepIndicatorCompactPreview() {
     }
 }
 
+/** The edge-to-edge arrangement in every variant, in rows 328dp wide (a 360dp phone with margins). */
+@JengaBlockPreviews
+@Composable
+internal fun JengaStepIndicatorEdgeToEdgePreview() {
+    JengaTheme { EdgeToEdgeShowcase() }
+}
+
+@Preview(name = "RTL", showBackground = true)
+@Composable
+internal fun JengaStepIndicatorEdgeToEdgeRtlPreview() {
+    JengaTheme {
+        RtlPreview {
+            val phone = Modifier.width(328.dp)
+            val edgeToEdge = JengaStepIndicatorArrangement.EdgeToEdge
+            Column(
+                modifier = Modifier.background(JengaTheme.colors.surface).padding(JengaTheme.spacing.md),
+                verticalArrangement = Arrangement.spacedBy(JengaTheme.spacing.lg),
+            ) {
+                PreviewSteps(
+                    "Details" to JengaStepState.Done,
+                    "Product" to JengaStepState.Current,
+                    "Documents" to JengaStepState.Pending,
+                    "Sign" to JengaStepState.Pending,
+                    modifier = phone,
+                    arrangement = edgeToEdge,
+                )
+                PreviewSteps(
+                    "Taarifa za mteja" to JengaStepState.Done,
+                    "Bidhaa na mpango" to JengaStepState.Current,
+                    "Nyaraka" to JengaStepState.Pending,
+                    "Makubaliano" to JengaStepState.Pending,
+                    modifier = phone,
+                    variant = JengaStepIndicatorVariant.Numbered,
+                    arrangement = edgeToEdge,
+                )
+                PreviewSteps(
+                    *numberedSteps(count = 4, current = 0),
+                    modifier = phone,
+                    variant = JengaStepIndicatorVariant.Compact,
+                    arrangement = edgeToEdge,
+                )
+                PreviewSteps(
+                    *numberedSteps(count = 4, current = 1),
+                    modifier = phone,
+                    variant = JengaStepIndicatorVariant.Compact,
+                )
+            }
+        }
+    }
+}
+
+@Composable
+private fun EdgeToEdgeShowcase() {
+    val phone = Modifier.width(328.dp)
+    val edgeToEdge = JengaStepIndicatorArrangement.EdgeToEdge
+    Column(
+        modifier = Modifier.background(JengaTheme.colors.surface).padding(JengaTheme.spacing.md),
+        verticalArrangement = Arrangement.spacedBy(JengaTheme.spacing.lg),
+    ) {
+        PreviewSteps(
+            "Details" to JengaStepState.Done,
+            "Product" to JengaStepState.Current,
+            "Documents" to JengaStepState.Pending,
+            "Sign" to JengaStepState.Pending,
+            modifier = phone,
+            arrangement = edgeToEdge,
+        )
+        PreviewSteps(
+            "Taarifa za mteja" to JengaStepState.Done,
+            "Bidhaa na mpango" to JengaStepState.Current,
+            "Nyaraka" to JengaStepState.Pending,
+            "Makubaliano" to JengaStepState.Pending,
+            modifier = phone,
+            variant = JengaStepIndicatorVariant.Numbered,
+            arrangement = edgeToEdge,
+        )
+        PreviewSteps(
+            "Taarifa za mteja" to JengaStepState.Locked,
+            "Bidhaa na mpango" to JengaStepState.Locked,
+            "Nyaraka" to JengaStepState.Done,
+            "Makubaliano" to JengaStepState.Current,
+            "Malipo ya awali" to JengaStepState.Pending,
+            "Uthibitisho" to JengaStepState.Pending,
+            modifier = phone,
+            arrangement = edgeToEdge,
+        )
+        PreviewSteps(
+            *numberedSteps(count = 4, current = 3),
+            modifier = phone,
+            variant = JengaStepIndicatorVariant.Compact,
+            arrangement = edgeToEdge,
+        )
+        PreviewSteps(
+            *numberedSteps(count = 9, current = 0),
+            modifier = phone,
+            variant = JengaStepIndicatorVariant.Compact,
+            arrangement = edgeToEdge,
+        )
+        PreviewSteps(
+            "Taarifa za mteja" to JengaStepState.Done,
+            "Bidhaa na mpango" to JengaStepState.Current,
+            modifier = phone,
+            arrangement = edgeToEdge,
+        )
+        PreviewSteps(
+            "Taarifa za mteja na bidhaa" to JengaStepState.Current,
+            modifier = phone,
+            variant = JengaStepIndicatorVariant.Numbered,
+            arrangement = edgeToEdge,
+        )
+    }
+}
+
 private fun numberedSteps(count: Int, current: Int): Array<Pair<String, JengaStepState>> = Array(count) { index ->
     "Q${index + 1}" to when {
         index < current -> JengaStepState.Done
@@ -219,11 +334,13 @@ private fun PreviewSteps(
     vararg steps: Pair<String, JengaStepState>,
     modifier: Modifier = Modifier,
     variant: JengaStepIndicatorVariant = JengaStepIndicatorVariant.Labelled,
+    arrangement: JengaStepIndicatorArrangement = JengaStepIndicatorArrangement.Centered,
 ) {
     JengaStepIndicator(
         steps = steps.map { (label, state) -> JengaStep(label, state) },
         stepContentDescription = { _, step -> step.label },
         modifier = modifier,
         variant = variant,
+        arrangement = arrangement,
     )
 }

@@ -132,6 +132,7 @@ import io.github.joelkanyi.jenga.component.state.JengaStateLayout
 import io.github.joelkanyi.jenga.component.status.JengaStatusPill
 import io.github.joelkanyi.jenga.component.stepindicator.JengaStep
 import io.github.joelkanyi.jenga.component.stepindicator.JengaStepIndicator
+import io.github.joelkanyi.jenga.component.stepindicator.JengaStepIndicatorArrangement
 import io.github.joelkanyi.jenga.component.stepindicator.JengaStepIndicatorVariant
 import io.github.joelkanyi.jenga.component.stepindicator.JengaStepState
 import io.github.joelkanyi.jenga.component.stepper.JengaStepper
@@ -2029,6 +2030,33 @@ internal fun JengaStepIndicatorCompactSample() {
                 color = JengaTheme.colors.textMuted,
             )
         },
+    )
+}
+
+@Composable
+internal fun JengaStepIndicatorEdgeToEdgeSample() {
+    val steps = listOf(
+        JengaStep(
+            label = "Details",
+            state = JengaStepState.Done,
+        ),
+        JengaStep(
+            label = "Product",
+            state = JengaStepState.Current,
+        ),
+        JengaStep(
+            label = "Documents",
+            state = JengaStepState.Pending,
+        ),
+        JengaStep(
+            label = "Sign",
+            state = JengaStepState.Pending,
+        ),
+    )
+    JengaStepIndicator(
+        steps = steps,
+        stepContentDescription = { index, step -> "Step ${index + 1} of ${steps.size}, ${step.label}" },
+        arrangement = JengaStepIndicatorArrangement.EdgeToEdge,
     )
 }
 
