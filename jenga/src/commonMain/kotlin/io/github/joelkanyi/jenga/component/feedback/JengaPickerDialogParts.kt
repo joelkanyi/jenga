@@ -15,6 +15,7 @@ import androidx.compose.ui.unit.dp
 import io.github.joelkanyi.jenga.component.button.JengaButton
 import io.github.joelkanyi.jenga.component.button.JengaButtonSize
 import io.github.joelkanyi.jenga.component.button.JengaButtonVariant
+import io.github.joelkanyi.jenga.component.text.JengaText
 import io.github.joelkanyi.jenga.theme.JengaTheme
 
 @Composable
@@ -30,6 +31,12 @@ internal fun Modifier.jengaDialogCard(): Modifier {
 
 @Composable
 internal fun darkThemeHairline(): BorderStroke? = if (JengaTheme.colors.isLight) null else BorderStroke(1.dp, JengaTheme.colors.border)
+
+/** The title shared by the date and time picker dialogs; a long title wraps. */
+@Composable
+internal fun JengaPickerDialogTitle(title: String) {
+    JengaText(title, style = JengaTheme.typography.titleMedium, color = JengaTheme.colors.textPrimary)
+}
 
 @Composable
 internal fun JengaDialogActions(

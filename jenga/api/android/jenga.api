@@ -456,6 +456,18 @@ public final class io/github/joelkanyi/jenga/component/calendar/ComposableSingle
 	public final fun getLambda$1763492186$jenga_release ()Lkotlin/jvm/functions/Function2;
 }
 
+public final class io/github/joelkanyi/jenga/component/calendar/ComposableSingletons$JengaDatePickerDialogPreviewsKt {
+	public static final field INSTANCE Lio/github/joelkanyi/jenga/component/calendar/ComposableSingletons$JengaDatePickerDialogPreviewsKt;
+	public fun <init> ()V
+	public final fun getLambda$-101916344$jenga_release ()Lkotlin/jvm/functions/Function2;
+	public final fun getLambda$-2069092226$jenga_release ()Lkotlin/jvm/functions/Function2;
+	public final fun getLambda$-697906705$jenga_release ()Lkotlin/jvm/functions/Function2;
+	public final fun getLambda$1712038490$jenga_release ()Lkotlin/jvm/functions/Function2;
+	public final fun getLambda$2114472474$jenga_release ()Lkotlin/jvm/functions/Function2;
+	public final fun getLambda$373542539$jenga_release ()Lkotlin/jvm/functions/Function2;
+	public final fun getLambda$497056118$jenga_release ()Lkotlin/jvm/functions/Function2;
+}
+
 public final class io/github/joelkanyi/jenga/component/calendar/JengaCalendarColors {
 	public static final field $stable I
 	public synthetic fun <init> (JJJJJJJLkotlin/jvm/internal/DefaultConstructorMarker;)V
@@ -518,7 +530,8 @@ public final class io/github/joelkanyi/jenga/component/calendar/JengaCalendarSta
 
 public final class io/github/joelkanyi/jenga/component/calendar/JengaDatePickerDialogKt {
 	public static final synthetic fun JengaDatePickerDialog (Lkotlin/jvm/functions/Function0;Lkotlin/jvm/functions/Function1;Ljava/lang/String;Ljava/lang/String;Lkotlin/jvm/functions/Function1;Lkotlin/jvm/functions/Function1;Ljava/lang/String;Ljava/lang/String;Landroidx/compose/ui/Modifier;Lkotlinx/datetime/LocalDate;Lkotlin/jvm/functions/Function1;Lkotlin/jvm/functions/Function1;Lio/github/joelkanyi/jenga/component/calendar/JengaCalendarColors;Landroidx/compose/runtime/Composer;III)V
-	public static final fun JengaDatePickerDialog (Lkotlin/jvm/functions/Function0;Lkotlin/jvm/functions/Function1;Ljava/lang/String;Ljava/lang/String;Lkotlin/jvm/functions/Function1;Lkotlin/jvm/functions/Function1;Ljava/lang/String;Ljava/lang/String;Landroidx/compose/ui/Modifier;Lkotlinx/datetime/LocalDate;Lkotlin/jvm/functions/Function1;Lkotlin/jvm/functions/Function1;Lio/github/joelkanyi/jenga/component/calendar/JengaCalendarColors;Lkotlin/ranges/ClosedRange;Lkotlin/jvm/functions/Function1;Landroidx/compose/runtime/Composer;III)V
+	public static final fun JengaDatePickerDialog (Lkotlin/jvm/functions/Function0;Lkotlin/jvm/functions/Function1;Ljava/lang/String;Ljava/lang/String;Lkotlin/jvm/functions/Function1;Lkotlin/jvm/functions/Function1;Ljava/lang/String;Ljava/lang/String;Landroidx/compose/ui/Modifier;Lkotlinx/datetime/LocalDate;Lkotlin/jvm/functions/Function1;Lkotlin/jvm/functions/Function1;Lio/github/joelkanyi/jenga/component/calendar/JengaCalendarColors;Lkotlin/ranges/ClosedRange;Ljava/lang/String;Lkotlin/jvm/functions/Function1;Landroidx/compose/runtime/Composer;III)V
+	public static final synthetic fun JengaDatePickerDialog (Lkotlin/jvm/functions/Function0;Lkotlin/jvm/functions/Function1;Ljava/lang/String;Ljava/lang/String;Lkotlin/jvm/functions/Function1;Lkotlin/jvm/functions/Function1;Ljava/lang/String;Ljava/lang/String;Landroidx/compose/ui/Modifier;Lkotlinx/datetime/LocalDate;Lkotlin/jvm/functions/Function1;Lkotlin/jvm/functions/Function1;Lio/github/joelkanyi/jenga/component/calendar/JengaCalendarColors;Lkotlin/ranges/ClosedRange;Lkotlin/jvm/functions/Function1;Landroidx/compose/runtime/Composer;III)V
 }
 
 public final class io/github/joelkanyi/jenga/component/calendar/JengaDatePickerKt {
@@ -2209,6 +2222,14 @@ public final class io/github/joelkanyi/jenga/component/picker/ComposableSingleto
 	public fun <init> ()V
 	public final fun getLambda$203902213$jenga_release ()Lkotlin/jvm/functions/Function2;
 	public final fun getLambda$695861355$jenga_release ()Lkotlin/jvm/functions/Function2;
+}
+
+public final class io/github/joelkanyi/jenga/component/picker/ComposableSingletons$JengaTimePickerDialogPreviewsKt {
+	public static final field INSTANCE Lio/github/joelkanyi/jenga/component/picker/ComposableSingletons$JengaTimePickerDialogPreviewsKt;
+	public fun <init> ()V
+	public final fun getLambda$-1680446786$jenga_release ()Lkotlin/jvm/functions/Function2;
+	public final fun getLambda$291698872$jenga_release ()Lkotlin/jvm/functions/Function2;
+	public final fun getLambda$743796937$jenga_release ()Lkotlin/jvm/functions/Function2;
 }
 
 public final class io/github/joelkanyi/jenga/component/picker/ComposableSingletons$JengaWheelPickerPreviewsKt {

@@ -175,10 +175,12 @@ import io.github.joelkanyi.jenga.theme.JengaComponentStyles
 import io.github.joelkanyi.jenga.theme.JengaTheme
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import kotlinx.datetime.DateTimeUnit
 import kotlinx.datetime.LocalDate
 import kotlinx.datetime.LocalTime
-import kotlinx.datetime.Month
 import kotlinx.datetime.YearMonth
+import kotlinx.datetime.minus
+import kotlinx.datetime.plus
 import kotlin.math.roundToInt
 import kotlin.time.Duration.Companion.minutes
 import kotlin.time.Duration.Companion.seconds
@@ -4185,13 +4187,10 @@ fun componentEntries(): List<CatalogEntry> = listOf(
         description = "A month calendar for picking one date.",
         keywords = "date calendar day picker",
         code = """
+            val today = remember { JengaCalendarDefaults.today() }
             var date by remember {
                 mutableStateOf<LocalDate?>(
-                    value = LocalDate(
-                        year = 2026,
-                        month = 3,
-                        day = 18,
-                    ),
+                    value = today,
                 )
             }
             JengaDatePicker(
@@ -4215,13 +4214,10 @@ fun componentEntries(): List<CatalogEntry> = listOf(
             )
         """.trimIndent(),
         demo = {
+            val today = remember { JengaCalendarDefaults.today() }
             var date by remember {
                 mutableStateOf<LocalDate?>(
-                    value = LocalDate(
-                        year = 2026,
-                        month = 3,
-                        day = 18,
-                    ),
+                    value = today,
                 )
             }
             JengaDatePicker(
@@ -4248,10 +4244,11 @@ fun componentEntries(): List<CatalogEntry> = listOf(
     CatalogEntry(
         name = "Date picker dialog",
         group = "Inputs",
-        description = "A date picker in a dialog; here limited to adults' birth dates, with a year grid behind the title.",
-        keywords = "date calendar dialog modal range birth year",
+        description = "A date picker in a dialog with an optional title; here limited to adults' birth dates, with a year grid behind the month.",
+        keywords = "date calendar dialog modal range birth year title",
         stage = CatalogStage.Overlay,
         code = """
+            val today = remember { JengaCalendarDefaults.today() }
             var open by remember {
                 mutableStateOf(
                     value = false,
@@ -4266,14 +4263,14 @@ fun componentEntries(): List<CatalogEntry> = listOf(
                 JengaDatePickerDialog(
                     onDismissRequest = { open = false },
                     onConfirm = { open = false },
+                    title = "Date of birth",
                     dateRange = LocalDate(
                         year = 1906,
                         month = 1,
                         day = 1,
-                    )..LocalDate(
-                        year = 2008,
-                        month = 10,
-                        day = 28,
+                    )..today.minus(
+                        value = 18,
+                        unit = DateTimeUnit.YEAR,
                     ),
                     yearPickerLabel = { "Choose year, ${'$'}{it.year}" },
                     confirmLabel = "OK",
@@ -4297,6 +4294,7 @@ fun componentEntries(): List<CatalogEntry> = listOf(
             }
         """.trimIndent(),
         demo = { startOpen ->
+            val today = remember { JengaCalendarDefaults.today() }
             var open by remember {
                 mutableStateOf(
                     value = startOpen,
@@ -4311,14 +4309,14 @@ fun componentEntries(): List<CatalogEntry> = listOf(
                 JengaDatePickerDialog(
                     onDismissRequest = { open = false },
                     onConfirm = { open = false },
+                    title = "Date of birth",
                     dateRange = LocalDate(
                         year = 1906,
                         month = 1,
                         day = 1,
-                    )..LocalDate(
-                        year = 2008,
-                        month = 10,
-                        day = 28,
+                    )..today.minus(
+                        value = 18,
+                        unit = DateTimeUnit.YEAR,
                     ),
                     yearPickerLabel = { "Choose year, ${it.year}" },
                     confirmLabel = "OK",
@@ -4348,16 +4346,22 @@ fun componentEntries(): List<CatalogEntry> = listOf(
         description = "A paging month grid where every day cell is your own content.",
         keywords = "calendar month grid range custom",
         code = """
+            val today = remember { JengaCalendarDefaults.today() }
+            val thisMonth = YearMonth(
+                year = today.year,
+                month = today.month,
+            )
             val state =
                 rememberJengaCalendarState(
-                    startMonth = YearMonth(
-                        year = 2026,
-                        month = Month.JANUARY,
+                    startMonth = thisMonth.minus(
+                        value = 6,
+                        unit = DateTimeUnit.MONTH,
                     ),
-                    endMonth = YearMonth(
-                        year = 2026,
-                        month = Month.DECEMBER,
+                    endMonth = thisMonth.plus(
+                        value = 6,
+                        unit = DateTimeUnit.MONTH,
                     ),
+                    firstVisibleMonth = thisMonth,
                 )
             JengaCalendar(
                 state = state,
@@ -4366,7 +4370,7 @@ fun componentEntries(): List<CatalogEntry> = listOf(
                         day = day,
                         selected = day.date == picked,
                         enabled = true,
-                        isToday = false,
+                        isToday = day.date == today,
                         onClick = { picked = day.date },
                     )
                 },
@@ -4378,15 +4382,21 @@ fun componentEntries(): List<CatalogEntry> = listOf(
                     value = null,
                 )
             }
+            val today = remember { JengaCalendarDefaults.today() }
+            val thisMonth = YearMonth(
+                year = today.year,
+                month = today.month,
+            )
             val state = rememberJengaCalendarState(
-                startMonth = YearMonth(
-                    year = 2026,
-                    month = Month.JANUARY,
+                startMonth = thisMonth.minus(
+                    value = 6,
+                    unit = DateTimeUnit.MONTH,
                 ),
-                endMonth = YearMonth(
-                    year = 2026,
-                    month = Month.DECEMBER,
+                endMonth = thisMonth.plus(
+                    value = 6,
+                    unit = DateTimeUnit.MONTH,
                 ),
+                firstVisibleMonth = thisMonth,
             )
             JengaCalendar(
                 state = state,
@@ -4395,7 +4405,7 @@ fun componentEntries(): List<CatalogEntry> = listOf(
                         day = day,
                         selected = day.date == picked,
                         enabled = true,
-                        isToday = false,
+                        isToday = day.date == today,
                         onClick = { picked = day.date },
                     )
                 },

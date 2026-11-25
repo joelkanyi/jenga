@@ -10,6 +10,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.window.Dialog
 import io.github.joelkanyi.jenga.component.feedback.JengaDialogActions
+import io.github.joelkanyi.jenga.component.feedback.JengaPickerDialogTitle
 import io.github.joelkanyi.jenga.component.feedback.jengaDialogCard
 import io.github.joelkanyi.jenga.theme.JengaTheme
 import kotlinx.datetime.DayOfWeek
@@ -17,8 +18,9 @@ import kotlinx.datetime.LocalDate
 import kotlinx.datetime.YearMonth
 
 /**
- * A modal dialog holding a [JengaDatePicker] with confirm and dismiss actions.
- * The confirm action is enabled once a date is picked.
+ * A modal dialog holding a [JengaDatePicker] with confirm and dismiss actions,
+ * under an optional [title] that says which date is being set. The confirm action
+ * is enabled once a date is picked.
  *
  * @sample io.github.joelkanyi.jenga.samples.JengaDatePickerDialogSample
  *
@@ -36,6 +38,8 @@ import kotlinx.datetime.YearMonth
  * @param dateContentDescription accessibility label for a day cell; the ISO date by default.
  * @param colors the color set; defaults to [JengaCalendarDefaults.colors].
  * @param dateRange the earliest and latest dates that can be picked; see [JengaDatePicker].
+ * @param title the dialog title above the month (e.g. "Payment date"), styled like
+ *   [io.github.joelkanyi.jenga.component.picker.JengaTimePickerDialog]'s; null shows no title.
  * @param yearPickerLabel when set, the month title opens a grid of years; see [JengaDatePicker].
  */
 @Composable
@@ -54,36 +58,124 @@ public fun JengaDatePickerDialog(
     dateContentDescription: (LocalDate) -> String = { it.toString() },
     colors: JengaCalendarColors = JengaCalendarDefaults.colors(),
     dateRange: ClosedRange<LocalDate>? = null,
+    title: String? = null,
     yearPickerLabel: ((YearMonth) -> String)? = null,
 ) {
     var selected by remember { mutableStateOf(initialSelectedDate) }
     Dialog(onDismissRequest = onDismissRequest) {
-        Column(
-            modifier = modifier.jengaDialogCard(),
-            verticalArrangement = Arrangement.spacedBy(JengaTheme.spacing.md),
-        ) {
-            JengaDatePicker(
-                selectedDate = selected,
-                onSelectedDateChange = { selected = it },
-                monthTitle = monthTitle,
-                dayOfWeekLabel = dayOfWeekLabel,
-                previousMonthContentDescription = previousMonthContentDescription,
-                nextMonthContentDescription = nextMonthContentDescription,
-                isSelectable = isSelectable,
-                dateContentDescription = dateContentDescription,
-                colors = colors,
-                dateRange = dateRange,
-                yearPickerLabel = yearPickerLabel,
-            )
-            JengaDialogActions(
-                confirmLabel = confirmLabel,
-                dismissLabel = dismissLabel,
-                confirmEnabled = selected != null,
-                onConfirm = { selected?.let(onConfirm) },
-                onDismiss = onDismissRequest,
-            )
-        }
+        JengaDatePickerDialogSurface(
+            selectedDate = selected,
+            onSelectedDateChange = { selected = it },
+            onDismissRequest = onDismissRequest,
+            onConfirm = onConfirm,
+            confirmLabel = confirmLabel,
+            dismissLabel = dismissLabel,
+            monthTitle = monthTitle,
+            dayOfWeekLabel = dayOfWeekLabel,
+            previousMonthContentDescription = previousMonthContentDescription,
+            nextMonthContentDescription = nextMonthContentDescription,
+            modifier = modifier,
+            isSelectable = isSelectable,
+            dateContentDescription = dateContentDescription,
+            colors = colors,
+            dateRange = dateRange,
+            title = title,
+            yearPickerLabel = yearPickerLabel,
+        )
     }
+}
+
+/**
+ * The card inside [JengaDatePickerDialog], without the dialog window, so previews can
+ * render it. Stateless: the dialog holds the picked date outside its window.
+ */
+@Composable
+internal fun JengaDatePickerDialogSurface(
+    selectedDate: LocalDate?,
+    onSelectedDateChange: (LocalDate) -> Unit,
+    onDismissRequest: () -> Unit,
+    onConfirm: (LocalDate) -> Unit,
+    confirmLabel: String,
+    dismissLabel: String,
+    monthTitle: (YearMonth) -> String,
+    dayOfWeekLabel: (DayOfWeek) -> String,
+    previousMonthContentDescription: String,
+    nextMonthContentDescription: String,
+    isSelectable: (LocalDate) -> Boolean,
+    dateContentDescription: (LocalDate) -> String,
+    colors: JengaCalendarColors,
+    dateRange: ClosedRange<LocalDate>?,
+    title: String?,
+    yearPickerLabel: ((YearMonth) -> String)?,
+    modifier: Modifier = Modifier,
+    today: LocalDate = remember { JengaCalendarDefaults.today() },
+) {
+    Column(
+        modifier = modifier.jengaDialogCard(),
+        verticalArrangement = Arrangement.spacedBy(JengaTheme.spacing.md),
+    ) {
+        if (title != null) JengaPickerDialogTitle(title)
+        JengaDatePicker(
+            selectedDate = selectedDate,
+            onSelectedDateChange = onSelectedDateChange,
+            monthTitle = monthTitle,
+            dayOfWeekLabel = dayOfWeekLabel,
+            previousMonthContentDescription = previousMonthContentDescription,
+            nextMonthContentDescription = nextMonthContentDescription,
+            isSelectable = isSelectable,
+            today = today,
+            dateContentDescription = dateContentDescription,
+            colors = colors,
+            dateRange = dateRange,
+            yearPickerLabel = yearPickerLabel,
+        )
+        JengaDialogActions(
+            confirmLabel = confirmLabel,
+            dismissLabel = dismissLabel,
+            confirmEnabled = selectedDate != null,
+            onConfirm = { selectedDate?.let(onConfirm) },
+            onDismiss = onDismissRequest,
+        )
+    }
+}
+
+@Deprecated("Kept for binary compatibility", level = DeprecationLevel.HIDDEN)
+@Composable
+public fun JengaDatePickerDialog(
+    onDismissRequest: () -> Unit,
+    onConfirm: (LocalDate) -> Unit,
+    confirmLabel: String,
+    dismissLabel: String,
+    monthTitle: (YearMonth) -> String,
+    dayOfWeekLabel: (DayOfWeek) -> String,
+    previousMonthContentDescription: String,
+    nextMonthContentDescription: String,
+    modifier: Modifier = Modifier,
+    initialSelectedDate: LocalDate? = null,
+    isSelectable: (LocalDate) -> Boolean = { true },
+    dateContentDescription: (LocalDate) -> String = { it.toString() },
+    colors: JengaCalendarColors = JengaCalendarDefaults.colors(),
+    dateRange: ClosedRange<LocalDate>? = null,
+    yearPickerLabel: ((YearMonth) -> String)? = null,
+) {
+    JengaDatePickerDialog(
+        onDismissRequest = onDismissRequest,
+        onConfirm = onConfirm,
+        confirmLabel = confirmLabel,
+        dismissLabel = dismissLabel,
+        monthTitle = monthTitle,
+        dayOfWeekLabel = dayOfWeekLabel,
+        previousMonthContentDescription = previousMonthContentDescription,
+        nextMonthContentDescription = nextMonthContentDescription,
+        modifier = modifier,
+        initialSelectedDate = initialSelectedDate,
+        isSelectable = isSelectable,
+        dateContentDescription = dateContentDescription,
+        colors = colors,
+        dateRange = dateRange,
+        yearPickerLabel = yearPickerLabel,
+        title = null,
+    )
 }
 
 @Deprecated("Kept for binary compatibility", level = DeprecationLevel.HIDDEN)
@@ -119,5 +211,6 @@ public fun JengaDatePickerDialog(
         colors = colors,
         dateRange = null,
         yearPickerLabel = null,
+        title = null,
     )
 }

@@ -1408,6 +1408,7 @@ internal fun JengaDatePickerDialogSample() {
             },
             previousMonthContentDescription = "Previous month",
             nextMonthContentDescription = "Next month",
+            title = "Payment date",
         )
     }
 }
