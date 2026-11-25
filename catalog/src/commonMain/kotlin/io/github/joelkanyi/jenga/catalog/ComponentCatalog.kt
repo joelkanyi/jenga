@@ -22,6 +22,7 @@ import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -95,7 +96,11 @@ import io.github.joelkanyi.jenga.component.layout.JengaSection
 import io.github.joelkanyi.jenga.component.layout.JengaSpacer
 import io.github.joelkanyi.jenga.component.layout.JengaStack
 import io.github.joelkanyi.jenga.component.layout.JengaWrap
+import io.github.joelkanyi.jenga.component.link.JengaInlineLink
 import io.github.joelkanyi.jenga.component.link.JengaLink
+import io.github.joelkanyi.jenga.component.link.JengaLinkDefaults
+import io.github.joelkanyi.jenga.component.link.JengaTextWithLinks
+import io.github.joelkanyi.jenga.component.link.appendJengaLink
 import io.github.joelkanyi.jenga.component.list.JengaCheckboxListItem
 import io.github.joelkanyi.jenga.component.list.JengaKeyValueEmphasis
 import io.github.joelkanyi.jenga.component.list.JengaKeyValueRow
@@ -507,6 +512,96 @@ fun componentEntries(): List<CatalogEntry> = listOf(
                                 text = "Unavailable",
                                 onClick = {},
                                 enabled = false,
+                            )
+                        },
+                    )
+                },
+            )
+        },
+    ),
+    CatalogEntry(
+        name = "Inline link",
+        group = "Actions",
+        description = "A link inside a sentence: underlined, wraps with the text.",
+        keywords = "link inline text sentence terms hyperlink annotated underline",
+        code = """
+            JengaTextWithLinks(
+                text = "By continuing, the customer accepts the terms of the agreement and the privacy policy.",
+                links = listOf(
+                    JengaInlineLink(
+                        text = "terms of the agreement",
+                        onClick = {},
+                    ),
+                    JengaInlineLink(
+                        text = "privacy policy",
+                        onClick = {},
+                    ),
+                ),
+                color = JengaTheme.colors.textSecondary,
+            )
+
+            // Or build the text yourself. The string is built once, so read
+            // the callback through rememberUpdatedState.
+            @Composable
+            fun SupportLine(
+                onCallSupport: () -> Unit,
+            ) {
+                val linkStyles = JengaLinkDefaults.inlineStyles()
+                val currentOnCallSupport by rememberUpdatedState(onCallSupport)
+                JengaText(
+                    text = remember(linkStyles) {
+                        buildAnnotatedString {
+                            append("Need help? ")
+                            appendJengaLink(
+                                text = "Call support",
+                                styles = linkStyles,
+                                onClick = { currentOnCallSupport() },
+                            )
+                            append(".")
+                        }
+                    },
+                )
+            }
+        """.trimIndent(),
+        demo = {
+            ActionFeedback(
+                content = { confirm ->
+                    JengaStack(
+                        space = JengaTheme.spacing.md,
+                        content = {
+                            JengaTextWithLinks(
+                                text = "By continuing, the customer accepts the terms of the agreement " +
+                                    "and the privacy policy.",
+                                links = listOf(
+                                    JengaInlineLink(
+                                        text = "terms of the agreement",
+                                        onClick = { confirm("Opening the terms") },
+                                    ),
+                                    JengaInlineLink(
+                                        text = "privacy policy",
+                                        onClick = { confirm("Opening the privacy policy") },
+                                    ),
+                                ),
+                                color = JengaTheme.colors.textSecondary,
+                            )
+                            val linkStyles = JengaLinkDefaults.inlineStyles()
+                            val currentConfirm by rememberUpdatedState(confirm)
+                            JengaText(
+                                text = remember(linkStyles) {
+                                    buildAnnotatedString {
+                                        append(
+                                            text = "Need help? ",
+                                        )
+                                        appendJengaLink(
+                                            text = "Call support",
+                                            styles = linkStyles,
+                                            onClick = { currentConfirm("Calling support") },
+                                        )
+                                        append(
+                                            text = ".",
+                                        )
+                                    }
+                                },
                             )
                         },
                     )

@@ -13,6 +13,8 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.SpanStyle
+import androidx.compose.ui.text.TextLinkStyles
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextDecoration
 import dev.drewhamilton.poko.Poko
@@ -38,6 +40,9 @@ public class JengaLinkColors(
  * Theme-wide style for every [JengaLink], set through
  * [io.github.joelkanyi.jenga.theme.JengaComponentStyles.link]. A `null` value keeps Jenga's
  * default; arguments passed to a call still win.
+ *
+ * The [colors] and the weight of [textStyle] also apply to links inside a sentence
+ * ([JengaTextWithLinks], [appendJengaLink]); [underline] applies to the standalone link only.
  *
  * @property textStyle the link text style.
  * @property underline whether the label is underlined.
@@ -81,7 +86,40 @@ public object JengaLinkDefaults {
         val c = JengaTheme.colors
         return JengaLinkColors(content = c.brand, disabledContent = c.textMuted)
     }
+
+    /**
+     * The look of a link inside a sentence, for [appendJengaLink] or any Compose
+     * `LinkAnnotation`: the link color and an underline, at the size of the text around it.
+     *
+     * The weight follows the theme's [JengaLinkStyle.textStyle] when the theme sets one;
+     * otherwise the link keeps the weight of the surrounding text. The size, line height and
+     * font family always come from the surrounding text, so the link sits on the same
+     * baseline. While the link has keyboard focus it gets a tinted background.
+     *
+     * The theme's [JengaLinkStyle.underline] does not apply here: it describes the standalone
+     * [JengaLink]. A link inside a sentence is underlined so it can be told from the text
+     * around it without relying on color.
+     *
+     * @param colors the link colors; defaults to [colors].
+     */
+    @Composable
+    public fun inlineStyles(colors: JengaLinkColors = colors()): TextLinkStyles {
+        val fontWeight = JengaTheme.components.link?.textStyle?.fontWeight
+        return remember(colors, fontWeight) {
+            TextLinkStyles(
+                style = SpanStyle(
+                    color = colors.content,
+                    fontWeight = fontWeight,
+                    textDecoration = TextDecoration.Underline,
+                ),
+                focusedStyle = SpanStyle(background = colors.content.copy(alpha = InlineLinkFocusAlpha)),
+            )
+        }
+    }
 }
+
+/** Opacity of the link color behind an inline link that has keyboard focus. */
+private const val InlineLinkFocusAlpha = 0.16f
 
 /**
  * A tappable text link: brand-coloured and underlined by convention, the way a
@@ -92,6 +130,8 @@ public object JengaLinkDefaults {
  * It carries no ripple: an inline link should feel like text, not a button. It reserves
  * no 48dp layout box, so it fits a tight row (e.g. a section header action); taps just
  * outside a small link still reach it through Compose's minimum touch target.
+ *
+ * For a link inside a wrapping sentence, use [JengaTextWithLinks] or [appendJengaLink].
  *
  * @sample io.github.joelkanyi.jenga.samples.JengaLinkSample
  *

@@ -22,6 +22,8 @@
  * New: `JengaBottomBar` has an overload taking `primaryAction` and an optional `secondaryAction`: two actions sit side by side (secondary at the start, primary at the end, equal widths) when both labels fit on one line in their half of the bar, otherwise they stack full width with the primary on top, `spacing.md` (12dp) apart. The `RowScope` overload is unchanged.
  * New: `JengaNavigationBarItem` takes `badgeCount` and shows it in a `JengaBadge` at the top end of the icon: hidden at 0, "99+" above 99, `JengaBadgeTone.Error` unless `badgeTone` is set. `badgeContentDescription` (e.g. "3 new") is what a screen reader says after the item's name.
  * New: `JengaNavigationRailItem` takes the same `badgeCount`, `badgeContentDescription` and `badgeTone`; the badge follows the label.
+ * New: `JengaTextWithLinks` shows a sentence with links inside it: pass the sentence and a `JengaInlineLink` (phrase and `onClick`) for each link. Links are in the link color, underlined, wrap with the text, and are announced as links by screen readers.
+ * New: `appendJengaLink` adds a link inside `buildAnnotatedString`, styled with `JengaLinkDefaults.inlineStyles()`, for text shown with `JengaText`.
 
 ## Version 0.8.6
 

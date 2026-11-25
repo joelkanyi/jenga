@@ -13,10 +13,12 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.state.ToggleableState
 import androidx.compose.ui.text.AnnotatedString
+import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.unit.dp
 import io.github.joelkanyi.jenga.component.action.JengaAction
 import io.github.joelkanyi.jenga.component.avatar.JengaAvatar
@@ -70,7 +72,11 @@ import io.github.joelkanyi.jenga.component.layout.JengaInline
 import io.github.joelkanyi.jenga.component.layout.JengaSection
 import io.github.joelkanyi.jenga.component.layout.JengaStack
 import io.github.joelkanyi.jenga.component.layout.JengaWrap
+import io.github.joelkanyi.jenga.component.link.JengaInlineLink
 import io.github.joelkanyi.jenga.component.link.JengaLink
+import io.github.joelkanyi.jenga.component.link.JengaLinkDefaults
+import io.github.joelkanyi.jenga.component.link.JengaTextWithLinks
+import io.github.joelkanyi.jenga.component.link.appendJengaLink
 import io.github.joelkanyi.jenga.component.list.JengaCheckboxListItem
 import io.github.joelkanyi.jenga.component.list.JengaKeyValueEmphasis
 import io.github.joelkanyi.jenga.component.list.JengaKeyValueRow
@@ -277,6 +283,41 @@ internal fun JengaLinkSample() {
         text = "Privacy policy",
         onClick = {},
     )
+}
+
+@Composable
+internal fun JengaTextWithLinksSample() {
+    // The sentence and each link phrase are separate strings, so a translation can move the
+    // links to wherever its word order needs them.
+    JengaTextWithLinks(
+        text = "By continuing, the customer accepts the terms of the agreement and the privacy policy.",
+        links = listOf(
+            JengaInlineLink(text = "terms of the agreement", onClick = {}),
+            JengaInlineLink(text = "privacy policy", onClick = {}),
+        ),
+    )
+}
+
+@Composable
+internal fun JengaAppendLinkSample(
+    onCallSupport: () -> Unit,
+    onOpenGuide: () -> Unit,
+) {
+    val linkStyles = JengaLinkDefaults.inlineStyles()
+    // The string is built once, so the links read the callbacks through rememberUpdatedState
+    // and always call the latest ones.
+    val currentOnCallSupport by rememberUpdatedState(onCallSupport)
+    val currentOnOpenGuide by rememberUpdatedState(onOpenGuide)
+    val text = remember(linkStyles) {
+        buildAnnotatedString {
+            append("Need help? ")
+            appendJengaLink(text = "Call support", styles = linkStyles, onClick = { currentOnCallSupport() })
+            append(" or ")
+            appendJengaLink(text = "read the guide", styles = linkStyles, onClick = { currentOnOpenGuide() })
+            append(".")
+        }
+    }
+    JengaText(text = text)
 }
 
 @Composable

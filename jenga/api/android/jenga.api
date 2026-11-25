@@ -1667,6 +1667,16 @@ public final class io/github/joelkanyi/jenga/component/layout/JengaStacksKt {
 	public static final fun JengaWrap-djqs-MU (Landroidx/compose/ui/Modifier;FFLkotlin/jvm/functions/Function3;Landroidx/compose/runtime/Composer;II)V
 }
 
+public final class io/github/joelkanyi/jenga/component/link/ComposableSingletons$JengaInlineLinkPreviewsKt {
+	public static final field INSTANCE Lio/github/joelkanyi/jenga/component/link/ComposableSingletons$JengaInlineLinkPreviewsKt;
+	public fun <init> ()V
+	public final fun getLambda$-636886902$jenga_release ()Lkotlin/jvm/functions/Function2;
+	public final fun getLambda$-658068379$jenga_release ()Lkotlin/jvm/functions/Function2;
+	public final fun getLambda$2131068373$jenga_release ()Lkotlin/jvm/functions/Function2;
+	public final fun getLambda$706617252$jenga_release ()Lkotlin/jvm/functions/Function2;
+	public final fun getLambda$8944583$jenga_release ()Lkotlin/jvm/functions/Function3;
+}
+
 public final class io/github/joelkanyi/jenga/component/link/ComposableSingletons$JengaLinkPreviewsKt {
 	public static final field INSTANCE Lio/github/joelkanyi/jenga/component/link/ComposableSingletons$JengaLinkPreviewsKt;
 	public fun <init> ()V
@@ -1677,6 +1687,23 @@ public final class io/github/joelkanyi/jenga/component/link/ComposableSingletons
 	public final fun getLambda$1054214204$jenga_release ()Lkotlin/jvm/functions/Function2;
 	public final fun getLambda$571242125$jenga_release ()Lkotlin/jvm/functions/Function2;
 	public final fun getLambda$811230020$jenga_release ()Lkotlin/jvm/functions/Function2;
+}
+
+public final class io/github/joelkanyi/jenga/component/link/JengaInlineLink {
+	public static final field $stable I
+	public fun <init> (Ljava/lang/String;ZLkotlin/jvm/functions/Function0;)V
+	public synthetic fun <init> (Ljava/lang/String;ZLkotlin/jvm/functions/Function0;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getEnabled ()Z
+	public final fun getOnClick ()Lkotlin/jvm/functions/Function0;
+	public final fun getText ()Ljava/lang/String;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class io/github/joelkanyi/jenga/component/link/JengaInlineLinkKt {
+	public static final fun JengaTextWithLinks-DPK9RgA (Ljava/lang/String;Ljava/util/List;Landroidx/compose/ui/Modifier;JLandroidx/compose/ui/text/TextStyle;Landroidx/compose/ui/text/style/TextAlign;IZIILjava/lang/Float;Lio/github/joelkanyi/jenga/component/link/JengaLinkColors;Landroidx/compose/runtime/Composer;III)V
+	public static final fun appendJengaLink (Landroidx/compose/ui/text/AnnotatedString$Builder;Ljava/lang/String;Landroidx/compose/ui/text/TextLinkStyles;Lkotlin/jvm/functions/Function0;)V
 }
 
 public final class io/github/joelkanyi/jenga/component/link/JengaLinkColors {
@@ -1698,6 +1725,7 @@ public final class io/github/joelkanyi/jenga/component/link/JengaLinkDefaults {
 	public final fun getContentPadding (Landroidx/compose/runtime/Composer;I)Landroidx/compose/foundation/layout/PaddingValues;
 	public final fun getTextStyle (Landroidx/compose/runtime/Composer;I)Landroidx/compose/ui/text/TextStyle;
 	public final fun getUnderline (Landroidx/compose/runtime/Composer;I)Z
+	public final fun inlineStyles (Lio/github/joelkanyi/jenga/component/link/JengaLinkColors;Landroidx/compose/runtime/Composer;II)Landroidx/compose/ui/text/TextLinkStyles;
 }
 
 public final class io/github/joelkanyi/jenga/component/link/JengaLinkKt {
