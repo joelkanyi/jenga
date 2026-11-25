@@ -178,6 +178,7 @@ import io.github.joelkanyi.jenga.component.timeline.JengaTimelineMarkerStyle
 import io.github.joelkanyi.jenga.component.timeline.JengaTimelinePosition
 import io.github.joelkanyi.jenga.component.timeline.JengaTimelineState
 import io.github.joelkanyi.jenga.component.tooltip.JengaTooltip
+import io.github.joelkanyi.jenga.component.tooltip.JengaTooltipBox
 import io.github.joelkanyi.jenga.component.verdict.JengaVerdictBar
 import io.github.joelkanyi.jenga.component.verdict.JengaVerdictSublines
 import io.github.joelkanyi.jenga.component.verdict.JengaVerdictTone
@@ -1969,16 +1970,123 @@ fun componentEntries(): List<CatalogEntry> = listOf(
     CatalogEntry(
         name = "Tooltip",
         group = "Feedback",
-        description = "A small label that explains an element.",
-        keywords = "hint label",
+        description = "A small label that explains an element. JengaTooltipBox shows it next to the element, pointing at it and kept on screen.",
+        keywords = "hint label pointer arrow caret info tip anchor popup",
+        stage = CatalogStage.Overlay,
         code = """
+            var expanded by remember {
+                mutableStateOf(
+                    value = false,
+                )
+            }
+            JengaInline(
+                space = JengaTheme.spacing.none,
+                content = {
+                    JengaText(
+                        text = "Deposit",
+                        style = JengaTheme.typography.label,
+                    )
+                    JengaTooltipBox(
+                        text = "First payment before the device is unlocked. Usually KES 3,000 for the iMax 3000.",
+                        content = {
+                            JengaIcon(
+                                imageVector = JengaTheme.icons.info,
+                                contentDescription = "What is the deposit?",
+                                size = JengaTheme.sizing.iconSmall,
+                            )
+                        },
+                    )
+                },
+            )
+            JengaInline(
+                modifier = Modifier.fillMaxWidth(),
+                space = JengaTheme.spacing.none,
+                content = {
+                    JengaText(
+                        text = "Last synced 14:02",
+                        modifier = Modifier.weight(1f),
+                    )
+                    JengaTooltipBox(
+                        text = "Sales made offline upload when the device is back online.",
+                        expanded = expanded,
+                        onDismissRequest = { expanded = false },
+                        content = {
+                            JengaIconButton(
+                                onClick = { expanded = !expanded },
+                                content = {
+                                    JengaIcon(
+                                        imageVector = JengaTheme.icons.info,
+                                        contentDescription = "About syncing",
+                                    )
+                                },
+                            )
+                        },
+                    )
+                },
+            )
             JengaTooltip(
                 text = "Re-admit this attendee",
             )
         """.trimIndent(),
-        demo = {
-            JengaTooltip(
-                text = "Re-admit this attendee",
+        demo = { startOpen ->
+            var expanded by remember {
+                mutableStateOf(
+                    value = startOpen,
+                )
+            }
+            JengaStack(
+                modifier = Modifier.fillMaxWidth(),
+                space = JengaTheme.spacing.md,
+                content = {
+                    JengaInline(
+                        space = JengaTheme.spacing.none,
+                        content = {
+                            JengaText(
+                                text = "Deposit",
+                                style = JengaTheme.typography.label,
+                            )
+                            JengaTooltipBox(
+                                text = "First payment before the device is unlocked. Usually KES 3,000 for the iMax 3000.",
+                                content = {
+                                    JengaIcon(
+                                        imageVector = JengaTheme.icons.info,
+                                        contentDescription = "What is the deposit?",
+                                        size = JengaTheme.sizing.iconSmall,
+                                    )
+                                },
+                            )
+                        },
+                    )
+                    JengaInline(
+                        modifier = Modifier.fillMaxWidth(),
+                        space = JengaTheme.spacing.none,
+                        content = {
+                            JengaText(
+                                text = "Last synced 14:02",
+                                modifier = Modifier.weight(1f),
+                            )
+                            JengaTooltipBox(
+                                text = "Sales made offline upload when the device is back online.",
+                                expanded = expanded,
+                                onDismissRequest = { expanded = false },
+                                content = {
+                                    JengaIconButton(
+                                        onClick = { expanded = !expanded },
+                                        content = {
+                                            JengaIcon(
+                                                imageVector = JengaTheme.icons.info,
+                                                contentDescription = "About syncing",
+                                            )
+                                        },
+                                    )
+                                },
+                            )
+                        },
+                    )
+                    JengaTooltip(
+                        text = "Re-admit this attendee",
+                    )
+                },
             )
         },
     ),

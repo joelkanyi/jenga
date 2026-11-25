@@ -3872,9 +3872,25 @@ public final class io/github/joelkanyi/jenga/component/timeline/JengaTimelineSta
 public final class io/github/joelkanyi/jenga/component/tooltip/ComposableSingletons$JengaTooltipPreviewsKt {
 	public static final field INSTANCE Lio/github/joelkanyi/jenga/component/tooltip/ComposableSingletons$JengaTooltipPreviewsKt;
 	public fun <init> ()V
+	public final fun getLambda$-1039326413$jenga_release ()Lkotlin/jvm/functions/Function2;
 	public final fun getLambda$-1522471327$jenga_release ()Lkotlin/jvm/functions/Function2;
+	public final fun getLambda$-1764392224$jenga_release ()Lkotlin/jvm/functions/Function2;
+	public final fun getLambda$-351276996$jenga_release ()Lkotlin/jvm/functions/Function2;
+	public final fun getLambda$-590670696$jenga_release ()Lkotlin/jvm/functions/Function2;
+	public final fun getLambda$-918694733$jenga_release ()Lkotlin/jvm/functions/Function2;
+	public final fun getLambda$1044238631$jenga_release ()Lkotlin/jvm/functions/Function2;
+	public final fun getLambda$1205378201$jenga_release ()Lkotlin/jvm/functions/Function2;
+	public final fun getLambda$142026462$jenga_release ()Lkotlin/jvm/functions/Function2;
+	public final fun getLambda$1654121672$jenga_release ()Lkotlin/jvm/functions/Function2;
 	public final fun getLambda$195118326$jenga_release ()Lkotlin/jvm/functions/Function2;
 	public final fun getLambda$2020284831$jenga_release ()Lkotlin/jvm/functions/Function2;
+	public final fun getLambda$258606045$jenga_release ()Lkotlin/jvm/functions/Function2;
+	public final fun getLambda$972225090$jenga_release ()Lkotlin/jvm/functions/Function2;
+}
+
+public final class io/github/joelkanyi/jenga/component/tooltip/JengaTooltipBoxKt {
+	public static final fun JengaTooltipBox (Ljava/lang/String;Landroidx/compose/ui/Modifier;Lio/github/joelkanyi/jenga/component/tooltip/JengaTooltipColors;Lkotlin/jvm/functions/Function2;Landroidx/compose/runtime/Composer;II)V
+	public static final fun JengaTooltipBox (Ljava/lang/String;ZLkotlin/jvm/functions/Function0;Landroidx/compose/ui/Modifier;Lio/github/joelkanyi/jenga/component/tooltip/JengaTooltipColors;Lkotlin/jvm/functions/Function2;Landroidx/compose/runtime/Composer;II)V
 }
 
 public final class io/github/joelkanyi/jenga/component/tooltip/JengaTooltipColors {
@@ -3896,7 +3912,31 @@ public final class io/github/joelkanyi/jenga/component/tooltip/JengaTooltipDefau
 }
 
 public final class io/github/joelkanyi/jenga/component/tooltip/JengaTooltipKt {
-	public static final fun JengaTooltip (Ljava/lang/String;Landroidx/compose/ui/Modifier;Lio/github/joelkanyi/jenga/component/tooltip/JengaTooltipColors;Landroidx/compose/runtime/Composer;II)V
+	public static final synthetic fun JengaTooltip (Ljava/lang/String;Landroidx/compose/ui/Modifier;Lio/github/joelkanyi/jenga/component/tooltip/JengaTooltipColors;Landroidx/compose/runtime/Composer;II)V
+	public static final fun JengaTooltip (Ljava/lang/String;Landroidx/compose/ui/Modifier;Lio/github/joelkanyi/jenga/component/tooltip/JengaTooltipColors;Lio/github/joelkanyi/jenga/component/tooltip/JengaTooltipPointer;Landroidx/compose/runtime/Composer;II)V
+}
+
+public final class io/github/joelkanyi/jenga/component/tooltip/JengaTooltipPointer {
+	public static final field $stable I
+	public synthetic fun <init> (Lio/github/joelkanyi/jenga/component/tooltip/JengaTooltipPointerEdge;FILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public synthetic fun <init> (Lio/github/joelkanyi/jenga/component/tooltip/JengaTooltipPointerEdge;FLkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun copy-3ABfNKs (Lio/github/joelkanyi/jenga/component/tooltip/JengaTooltipPointerEdge;F)Lio/github/joelkanyi/jenga/component/tooltip/JengaTooltipPointer;
+	public static synthetic fun copy-3ABfNKs$default (Lio/github/joelkanyi/jenga/component/tooltip/JengaTooltipPointer;Lio/github/joelkanyi/jenga/component/tooltip/JengaTooltipPointerEdge;FILjava/lang/Object;)Lio/github/joelkanyi/jenga/component/tooltip/JengaTooltipPointer;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getEdge ()Lio/github/joelkanyi/jenga/component/tooltip/JengaTooltipPointerEdge;
+	public final fun getOffset-D9Ej5fM ()F
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class io/github/joelkanyi/jenga/component/tooltip/JengaTooltipPointerEdge : java/lang/Enum {
+	public static final field Bottom Lio/github/joelkanyi/jenga/component/tooltip/JengaTooltipPointerEdge;
+	public static final field End Lio/github/joelkanyi/jenga/component/tooltip/JengaTooltipPointerEdge;
+	public static final field Start Lio/github/joelkanyi/jenga/component/tooltip/JengaTooltipPointerEdge;
+	public static final field Top Lio/github/joelkanyi/jenga/component/tooltip/JengaTooltipPointerEdge;
+	public static fun getEntries ()Lkotlin/enums/EnumEntries;
+	public static fun valueOf (Ljava/lang/String;)Lio/github/joelkanyi/jenga/component/tooltip/JengaTooltipPointerEdge;
+	public static fun values ()[Lio/github/joelkanyi/jenga/component/tooltip/JengaTooltipPointerEdge;
 }
 
 public final class io/github/joelkanyi/jenga/component/verdict/ComposableSingletons$JengaVerdictBarPreviewsKt {
@@ -4341,6 +4381,7 @@ public final class io/github/joelkanyi/jenga/samples/ComposableSingletons$JengaS
 	public final fun getLambda$-1877431549$jenga_release ()Lkotlin/jvm/functions/Function3;
 	public final fun getLambda$-1944683725$jenga_release ()Lkotlin/jvm/functions/Function3;
 	public final fun getLambda$-1988505284$jenga_release ()Lkotlin/jvm/functions/Function3;
+	public final fun getLambda$-2016653771$jenga_release ()Lkotlin/jvm/functions/Function2;
 	public final fun getLambda$-2138543669$jenga_release ()Lkotlin/jvm/functions/Function3;
 	public final fun getLambda$-2146798839$jenga_release ()Lkotlin/jvm/functions/Function2;
 	public final fun getLambda$-270386691$jenga_release ()Lkotlin/jvm/functions/Function3;
@@ -4379,6 +4420,7 @@ public final class io/github/joelkanyi/jenga/samples/ComposableSingletons$JengaS
 	public final fun getLambda$878903685$jenga_release ()Lkotlin/jvm/functions/Function2;
 	public final fun getLambda$927163277$jenga_release ()Lkotlin/jvm/functions/Function3;
 	public final fun getLambda$935433820$jenga_release ()Lkotlin/jvm/functions/Function2;
+	public final fun getLambda$999824040$jenga_release ()Lkotlin/jvm/functions/Function2;
 }
 
 public final class io/github/joelkanyi/jenga/theme/ComposableSingletons$JengaBrandShowcasePreviewsKt {

@@ -4,6 +4,7 @@ package io.github.joelkanyi.jenga.samples
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -15,6 +16,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.state.ToggleableState
 import androidx.compose.ui.text.AnnotatedString
@@ -143,6 +145,9 @@ import io.github.joelkanyi.jenga.component.timeline.JengaTimelineItem
 import io.github.joelkanyi.jenga.component.timeline.JengaTimelinePosition
 import io.github.joelkanyi.jenga.component.timeline.JengaTimelineState
 import io.github.joelkanyi.jenga.component.tooltip.JengaTooltip
+import io.github.joelkanyi.jenga.component.tooltip.JengaTooltipBox
+import io.github.joelkanyi.jenga.component.tooltip.JengaTooltipPointer
+import io.github.joelkanyi.jenga.component.tooltip.JengaTooltipPointerEdge
 import io.github.joelkanyi.jenga.component.verdict.JengaVerdictBar
 import io.github.joelkanyi.jenga.component.verdict.JengaVerdictSublines
 import io.github.joelkanyi.jenga.component.verdict.JengaVerdictTone
@@ -1115,6 +1120,44 @@ internal fun JengaTooltipSample() {
     JengaTooltip(
         text = "Re-admit this attendee",
     )
+}
+
+@Composable
+internal fun JengaTooltipPointerSample() {
+    // The bubble alone, its pointer on the top edge 24dp from the start. To aim it at a host, use JengaTooltipBox.
+    JengaTooltip(
+        text = "First payment before the device is unlocked.",
+        pointer = JengaTooltipPointer(edge = JengaTooltipPointerEdge.Top, offset = 24.dp),
+    )
+}
+
+@Composable
+internal fun JengaTooltipBoxSample() {
+    Row(verticalAlignment = Alignment.CenterVertically) {
+        JengaText(text = "Deposit", style = JengaTheme.typography.label)
+        // A tap on the icon shows the tooltip under it; the next tap anywhere hides it.
+        JengaTooltipBox(text = "First payment before the device is unlocked. Usually KES 3,000 for the iMax 3000.") {
+            JengaIcon(
+                imageVector = JengaTheme.icons.info,
+                contentDescription = "What is the deposit?",
+                size = JengaTheme.sizing.iconSmall,
+            )
+        }
+    }
+}
+
+@Composable
+internal fun JengaTooltipBoxExpandedSample() {
+    var expanded by remember { mutableStateOf(false) }
+    JengaTooltipBox(
+        text = "Synced with the server 2 minutes ago.",
+        expanded = expanded,
+        onDismissRequest = { expanded = false },
+    ) {
+        JengaIconButton(onClick = { expanded = !expanded }) {
+            JengaIcon(imageVector = JengaTheme.icons.info, contentDescription = "Sync status")
+        }
+    }
 }
 
 @Composable
