@@ -40,6 +40,8 @@ import io.github.joelkanyi.jenga.component.calendar.JengaCalendar
 import io.github.joelkanyi.jenga.component.calendar.JengaCalendarDefaults
 import io.github.joelkanyi.jenga.component.calendar.JengaDatePicker
 import io.github.joelkanyi.jenga.component.calendar.JengaDatePickerDialog
+import io.github.joelkanyi.jenga.component.calendar.JengaWeeklyCalendar
+import io.github.joelkanyi.jenga.component.calendar.JengaWeeklyCalendarDefaults
 import io.github.joelkanyi.jenga.component.calendar.rememberJengaCalendarState
 import io.github.joelkanyi.jenga.component.camera.JengaCaptureFrame
 import io.github.joelkanyi.jenga.component.camera.JengaCaptureShape
@@ -157,10 +159,13 @@ import io.github.joelkanyi.jenga.pattern.JengaSectionHeader
 import io.github.joelkanyi.jenga.pattern.JengaStatCard
 import io.github.joelkanyi.jenga.pattern.JengaTicketRow
 import io.github.joelkanyi.jenga.theme.JengaTheme
+import kotlinx.datetime.DateTimeUnit
 import kotlinx.datetime.LocalDate
 import kotlinx.datetime.LocalTime
 import kotlinx.datetime.Month
 import kotlinx.datetime.YearMonth
+import kotlinx.datetime.minus
+import kotlinx.datetime.plus
 import kotlin.time.Duration.Companion.minutes
 
 /**
@@ -1810,6 +1815,53 @@ internal fun JengaCalendarRangeSample() {
                     }
                 },
             )
+        },
+    )
+}
+
+@Composable
+internal fun JengaWeeklyCalendarSample() {
+    val today = remember { JengaCalendarDefaults.today() }
+    var weekStart by remember {
+        mutableStateOf(
+            value = JengaWeeklyCalendarDefaults.weekStartOf(
+                date = today,
+            ),
+        )
+    }
+    var selected by remember {
+        mutableStateOf<LocalDate?>(
+            value = today,
+        )
+    }
+    JengaWeeklyCalendar(
+        weekStart = weekStart,
+        selectedDate = selected,
+        onSelectedDateChange = { selected = it },
+        onPreviousWeek = {
+            weekStart = weekStart.minus(
+                value = 7,
+                unit = DateTimeUnit.DAY,
+            )
+        },
+        onNextWeek = {
+            weekStart = weekStart.plus(
+                value = 7,
+                unit = DateTimeUnit.DAY,
+            )
+        },
+        weekTitle = { start, end -> "${start.day} ${start.month.name} – ${end.day} ${end.month.name}" },
+        dayOfWeekLabel = {
+            it.name.take(
+                n = 3,
+            )
+        },
+        previousWeekContentDescription = "Previous week",
+        nextWeekContentDescription = "Next week",
+        today = today,
+        dateContentDescription = { date ->
+            val day = "${date.dayOfWeek.name} ${date.day} ${date.month.name}"
+            if (date == today) "$day, today" else day
         },
     )
 }

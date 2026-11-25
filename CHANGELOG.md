@@ -29,6 +29,7 @@
  * New: `JengaStepIndicator` takes `variant`: `JengaStepIndicatorVariant.Labelled` (the default, as before) or `Numbered`, which shows the step number inside the ring of the current and pending steps. `JengaStepIndicatorColors` gains `currentNumber` and `pendingNumber`.
  * New: `JengaStepIndicatorVariant.Compact` draws numbered steps and lines with no labels and no space kept for them, for long step names or many steps; the current step gets a soft halo in `JengaStepIndicatorColors.currentHalo`. Show the current step's name once under the row yourself.
  * New: `JengaStepIndicator` takes `arrangement`: `JengaStepIndicatorArrangement.Centered` (equal columns, the default, as before) or `EdgeToEdge`, which puts the first step at the start edge and the last at the end edge with the lines filling the space between; the first label is start-aligned, the last end-aligned and the others centered.
+ * New: `JengaWeeklyCalendar`, one week of days in a row: a week title between previous-week and next-week buttons, seven selectable days (day name over the number in a circle) with selected, today and disabled states, an optional `dateRange`, an optional dot under a day (`isMarked`) and a divider (`showDivider`). The caller keeps `weekStart` and `selectedDate`; `JengaWeeklyCalendarDefaults.weekStartOf` gives the first day of a date's week.
 
 ## Version 0.8.6
 

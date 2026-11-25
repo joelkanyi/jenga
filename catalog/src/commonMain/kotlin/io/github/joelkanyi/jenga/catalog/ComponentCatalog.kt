@@ -59,6 +59,7 @@ import io.github.joelkanyi.jenga.component.calendar.JengaCalendar
 import io.github.joelkanyi.jenga.component.calendar.JengaCalendarDefaults
 import io.github.joelkanyi.jenga.component.calendar.JengaDatePicker
 import io.github.joelkanyi.jenga.component.calendar.JengaDatePickerDialog
+import io.github.joelkanyi.jenga.component.calendar.JengaWeeklyCalendar
 import io.github.joelkanyi.jenga.component.calendar.rememberJengaCalendarState
 import io.github.joelkanyi.jenga.component.camera.JengaCaptureFrame
 import io.github.joelkanyi.jenga.component.camera.JengaCaptureShape
@@ -5186,6 +5187,142 @@ fun componentEntries(): List<CatalogEntry> = listOf(
                         onClick = { picked = day.date },
                     )
                 },
+            )
+        },
+    ),
+    CatalogEntry(
+        name = "Weekly calendar",
+        group = "Inputs",
+        description = "One week of days in a row: pick a day and move between weeks.",
+        keywords = "weekly calendar week strip day horizontal planner",
+        code = """
+            var weekStart by remember {
+                mutableStateOf(
+                    value = LocalDate(
+                        year = 2026,
+                        month = 11,
+                        day = 16,
+                    ),
+                )
+            }
+            var date by remember {
+                mutableStateOf<LocalDate?>(
+                    value = LocalDate(
+                        year = 2026,
+                        month = 11,
+                        day = 18,
+                    ),
+                )
+            }
+            JengaWeeklyCalendar(
+                weekStart = weekStart,
+                selectedDate = date,
+                onSelectedDateChange = { date = it },
+                onPreviousWeek = {
+                    weekStart = weekStart.minus(
+                        value = 7,
+                        unit = DateTimeUnit.DAY,
+                    )
+                },
+                onNextWeek = {
+                    weekStart = weekStart.plus(
+                        value = 7,
+                        unit = DateTimeUnit.DAY,
+                    )
+                },
+                weekTitle = { start, end ->
+                    val months = listOf(
+                        start,
+                        end,
+                    ).map { day ->
+                        day.month.name.take(
+                            n = 3,
+                        ).lowercase().replaceFirstChar(
+                            transform = Char::uppercase,
+                        )
+                    }
+                    "${'$'}{start.day} ${'$'}{months[0]} – ${'$'}{end.day} ${'$'}{months[1]}"
+                },
+                dayOfWeekLabel = {
+                    it.name.take(
+                        n = 3,
+                    ).lowercase().replaceFirstChar(
+                        transform = Char::uppercase,
+                    )
+                },
+                previousWeekContentDescription = "Previous week",
+                nextWeekContentDescription = "Next week",
+                today = LocalDate(
+                    year = 2026,
+                    month = 11,
+                    day = 17,
+                ),
+                isMarked = { it.day % 3 == 0 },
+            )
+        """.trimIndent(),
+        demo = {
+            var weekStart by remember {
+                mutableStateOf(
+                    value = LocalDate(
+                        year = 2026,
+                        month = 11,
+                        day = 16,
+                    ),
+                )
+            }
+            var date by remember {
+                mutableStateOf<LocalDate?>(
+                    value = LocalDate(
+                        year = 2026,
+                        month = 11,
+                        day = 18,
+                    ),
+                )
+            }
+            JengaWeeklyCalendar(
+                weekStart = weekStart,
+                selectedDate = date,
+                onSelectedDateChange = { date = it },
+                onPreviousWeek = {
+                    weekStart = weekStart.minus(
+                        value = 7,
+                        unit = DateTimeUnit.DAY,
+                    )
+                },
+                onNextWeek = {
+                    weekStart = weekStart.plus(
+                        value = 7,
+                        unit = DateTimeUnit.DAY,
+                    )
+                },
+                weekTitle = { start, end ->
+                    val months = listOf(
+                        start,
+                        end,
+                    ).map { day ->
+                        day.month.name.take(
+                            n = 3,
+                        ).lowercase().replaceFirstChar(
+                            transform = Char::uppercase,
+                        )
+                    }
+                    "${start.day} ${months[0]} – ${end.day} ${months[1]}"
+                },
+                dayOfWeekLabel = {
+                    it.name.take(
+                        n = 3,
+                    ).lowercase().replaceFirstChar(
+                        transform = Char::uppercase,
+                    )
+                },
+                previousWeekContentDescription = "Previous week",
+                nextWeekContentDescription = "Next week",
+                today = LocalDate(
+                    year = 2026,
+                    month = 11,
+                    day = 17,
+                ),
+                isMarked = { it.day % 3 == 0 },
             )
         },
     ),
