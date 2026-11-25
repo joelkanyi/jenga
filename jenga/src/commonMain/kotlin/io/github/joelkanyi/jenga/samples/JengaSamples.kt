@@ -391,6 +391,36 @@ internal fun JengaSnackbarDismissSample() {
 }
 
 @Composable
+internal fun JengaSnackbarLeadingSample() {
+    JengaStack(
+        space = JengaTheme.spacing.sm,
+        content = {
+            // An icon that says what happened. It takes the snackbar's content color.
+            JengaSnackbar(
+                message = "12 visits synced",
+                leadingContent = {
+                    JengaIcon(
+                        imageVector = JengaIcons.CheckCircle,
+                        contentDescription = null,
+                    )
+                },
+            )
+            // A counter, with an action.
+            JengaSnackbar(
+                message = "Photos still uploading",
+                actionLabel = "View",
+                onAction = { },
+                leadingContent = {
+                    JengaBadge(
+                        text = "3",
+                    )
+                },
+            )
+        },
+    )
+}
+
+@Composable
 internal fun JengaDialogSample() {
     var open by remember {
         mutableStateOf(
@@ -1031,6 +1061,11 @@ internal fun JengaSnackbarHostSample() {
     //   hostState.showSnackbar("Sync failed for 2 sales",
     //       duration = JengaSnackbarDuration.Indefinite,
     //       dismissContentDescription = "Dismiss")
+    // One small item before the message, an icon or a counter:
+    //   hostState.showSnackbar("12 visits synced",
+    //       leadingContent = { JengaIcon(JengaIcons.CheckCircle, contentDescription = null) })
+    //   hostState.showSnackbar("Photos still uploading", actionLabel = "View",
+    //       leadingContent = { JengaBadge(text = "3") })
     JengaSnackbarHost(
         hostState = hostState,
     )

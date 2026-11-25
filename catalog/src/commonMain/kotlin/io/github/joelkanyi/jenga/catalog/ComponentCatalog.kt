@@ -4804,6 +4804,103 @@ fun componentEntries(): List<CatalogEntry> = listOf(
         },
     ),
     CatalogEntry(
+        name = "Snackbar with a leading item",
+        group = "Feedback",
+        description = "One small item before the message, in place of the tone dot: an icon or a counter.",
+        keywords = "snackbar toast leading start icon counter badge count status",
+        code = """
+            JengaSnackbar(
+                message = "12 visits synced",
+                leadingContent = {
+                    JengaIcon(
+                        imageVector = JengaIcons.CheckCircle,
+                        contentDescription = null,
+                    )
+                },
+            )
+            JengaSnackbar(
+                message = "Photos still uploading",
+                actionLabel = "View",
+                onAction = {},
+                leadingContent = {
+                    JengaBadge(
+                        text = "3",
+                    )
+                },
+            )
+            // Through a host:
+            val host = rememberJengaSnackbarHostState()
+            val scope = rememberCoroutineScope()
+            JengaButton(
+                text = "Sync visits",
+                onClick = {
+                    scope.launch {
+                        host.showSnackbar(
+                            message = "12 visits synced",
+                            leadingContent = {
+                                JengaIcon(
+                                    imageVector = JengaIcons.CheckCircle,
+                                    contentDescription = null,
+                                )
+                            },
+                        )
+                    }
+                },
+            )
+            JengaSnackbarHost(
+                hostState = host,
+            )
+        """.trimIndent(),
+        demo = {
+            val host = rememberJengaSnackbarHostState()
+            val scope = rememberCoroutineScope()
+            JengaStack(
+                space = JengaTheme.spacing.sm,
+                content = {
+                    JengaSnackbar(
+                        message = "12 visits synced",
+                        leadingContent = {
+                            JengaIcon(
+                                imageVector = JengaIcons.CheckCircle,
+                                contentDescription = null,
+                            )
+                        },
+                    )
+                    JengaSnackbar(
+                        message = "Photos still uploading",
+                        actionLabel = "View",
+                        onAction = {},
+                        leadingContent = {
+                            JengaBadge(
+                                text = "3",
+                            )
+                        },
+                    )
+                    JengaButton(
+                        text = "Sync visits",
+                        onClick = {
+                            scope.launch {
+                                host.showSnackbar(
+                                    message = "12 visits synced",
+                                    leadingContent = {
+                                        JengaIcon(
+                                            imageVector = JengaIcons.CheckCircle,
+                                            contentDescription = null,
+                                        )
+                                    },
+                                )
+                            }
+                        },
+                        variant = JengaButtonVariant.Outline,
+                    )
+                    JengaSnackbarHost(
+                        hostState = host,
+                    )
+                },
+            )
+        },
+    ),
+    CatalogEntry(
         name = "Timeline with your own markers",
         group = "Data display",
         description = "Timeline rows with any marker and any content; positions worked out from the list.",

@@ -7,10 +7,12 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.calculateEndPadding
+import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.Immutable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -28,6 +30,7 @@ import dev.drewhamilton.poko.Poko
 import io.github.joelkanyi.jenga.component.icon.JengaIcon
 import io.github.joelkanyi.jenga.component.text.JengaText
 import io.github.joelkanyi.jenga.theme.JengaTheme
+import io.github.joelkanyi.jenga.theme.LocalJengaContentColor
 
 /** Semantic tone of a [JengaSnackbar]. */
 public enum class JengaSnackbarTone { Neutral, Success, Error }
@@ -127,17 +130,20 @@ public object JengaSnackbarDefaults {
 }
 
 /**
- * A transient message surface with an optional action and an optional close ✕.
+ * A transient message surface with an optional leading item, an optional action and an optional
+ * close ✕, in that order: leading item, message, action, ✕.
  *
  * This is the visual component; host it yourself (e.g. in a `Box` overlay or via
  * your navigation shell). It does not manage its own visibility or timing.
  *
  * @sample io.github.joelkanyi.jenga.samples.JengaSnackbarSample
  * @sample io.github.joelkanyi.jenga.samples.JengaSnackbarDismissSample
+ * @sample io.github.joelkanyi.jenga.samples.JengaSnackbarLeadingSample
  *
  * @param message the message to show.
  * @param modifier the [Modifier] for this snackbar.
- * @param tone the semantic tone; see [JengaSnackbarTone].
+ * @param tone the semantic tone; see [JengaSnackbarTone]. Its accent dot is not drawn when [leadingContent]
+ *   is set.
  * @param actionLabel optional action label; when set with [onAction], shows a
  *   trailing action.
  * @param onAction called when the action is tapped.
@@ -146,6 +152,10 @@ public object JengaSnackbarDefaults {
  * @param contentPadding padding inside the snackbar.
  * @param messageStyle the message text style.
  * @param actionStyle the action label text style.
+ * @param leadingContent optional single small item before the message: an icon that says what happened
+ *   (a [JengaIcon] at its default size) or a counter (a small badge). It replaces the tone dot, is
+ *   centred on the message and keeps the same gap to it as the dot. [JengaSnackbarColors.content]
+ *   is provided as its content color, so a [JengaIcon] in it needs no tint.
  * @param onDismiss called when the close ✕ is tapped. The ✕ is shown at the end, after the action,
  *   in [JengaSnackbarColors.content], when this is set together with [dismissContentDescription];
  *   hide the snackbar from it.
@@ -164,6 +174,7 @@ public fun JengaSnackbar(
     contentPadding: PaddingValues = JengaSnackbarDefaults.contentPadding,
     messageStyle: TextStyle = JengaSnackbarDefaults.messageStyle,
     actionStyle: TextStyle = JengaSnackbarDefaults.actionStyle,
+    leadingContent: (@Composable () -> Unit)? = null,
     onDismiss: (() -> Unit)? = null,
     dismissContentDescription: String? = null,
 ) {
@@ -178,7 +189,19 @@ public fun JengaSnackbar(
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.spacedBy(JengaTheme.spacing.md),
     ) {
-        if (toneColor != null) {
+        if (leadingContent != null) {
+            // At least an icon wide and tall, so an icon and a narrower item start the message at the
+            // same place; a wider item (a two-digit counter) takes the room it needs.
+            Box(
+                modifier = Modifier.defaultMinSize(
+                    minWidth = JengaTheme.sizing.iconMedium,
+                    minHeight = JengaTheme.sizing.iconMedium,
+                ),
+                contentAlignment = Alignment.Center,
+            ) {
+                CompositionLocalProvider(LocalJengaContentColor provides colors.content, content = leadingContent)
+            }
+        } else if (toneColor != null) {
             Box(
                 modifier = Modifier
                     .size(JengaSnackbarDefaults.DotSize)
@@ -253,6 +276,7 @@ public fun JengaSnackbar(
         contentPadding = contentPadding,
         messageStyle = messageStyle,
         actionStyle = actionStyle,
+        leadingContent = null,
         onDismiss = null,
         dismissContentDescription = null,
     )

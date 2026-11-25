@@ -74,6 +74,13 @@ public class JengaSnackbarHostState internal constructor(
      *   even with an action, so an Undo never sits on screen indefinitely. Pass
      *   [JengaSnackbarDuration.Long] for a comfortable Undo window, or
      *   [JengaSnackbarDuration.Indefinite] to keep it until acted upon.
+     * @param leadingContent optional single small item before the message, in place of the tone dot: an
+     *   icon that says what happened or a counter; see [JengaSnackbar]. It is composed inside the
+     *   snackbar with the snackbar's content color, so pass a plain lambda such as
+     *   `{ JengaIcon(JengaIcons.CheckCircle, contentDescription = null) }`.
+     *   The lambda is captured when `showSnackbar` is called and composed inside the host, so
+     *   composition locals from the call site do not apply and plain captured values are fixed, like
+     *   [message]; only reads of `State` update while the snackbar is shown.
      * @param dismissContentDescription when set, the snackbar shows a close ✕ at the end, after the
      *   action, with this accessibility label (e.g. "Dismiss"), in the user's language. Tapping it
      *   dismisses the snackbar and returns [JengaSnackbarResult.Dismissed].
@@ -84,12 +91,13 @@ public class JengaSnackbarHostState internal constructor(
         tone: JengaSnackbarTone = JengaSnackbarTone.Neutral,
         actionLabel: String? = null,
         duration: JengaSnackbarDuration = JengaSnackbarDuration.Short,
+        leadingContent: (@Composable () -> Unit)? = null,
         dismissContentDescription: String? = null,
     ): JengaSnackbarResult {
         // Tone is carried out-of-band so the host can render the right accent.
         currentTone = tone
         val result = m3.showSnackbar(
-            JengaSnackbarVisuals(message, actionLabel, duration.toMaterial(), dismissContentDescription),
+            JengaSnackbarVisuals(message, actionLabel, duration.toMaterial(), leadingContent, dismissContentDescription),
         )
         return when (result) {
             SnackbarResult.ActionPerformed -> JengaSnackbarResult.ActionPerformed
@@ -103,7 +111,7 @@ public class JengaSnackbarHostState internal constructor(
         tone: JengaSnackbarTone = JengaSnackbarTone.Neutral,
         actionLabel: String? = null,
         duration: JengaSnackbarDuration = JengaSnackbarDuration.Short,
-    ): JengaSnackbarResult = showSnackbar(message, tone, actionLabel, duration, dismissContentDescription = null)
+    ): JengaSnackbarResult = showSnackbar(message, tone, actionLabel, duration, leadingContent = null, dismissContentDescription = null)
 
     /**
      * Shows a snackbar for exactly [durationMillis], or until its action is tapped,
@@ -113,6 +121,13 @@ public class JengaSnackbarHostState internal constructor(
      * @param durationMillis how long the snackbar stays, in milliseconds.
      * @param tone the semantic tone (accent dot); see [JengaSnackbarTone].
      * @param actionLabel optional action label.
+     * @param leadingContent optional single small item before the message, in place of the tone dot: an
+     *   icon that says what happened or a counter; see [JengaSnackbar]. It is composed inside the
+     *   snackbar with the snackbar's content color, so pass a plain lambda such as
+     *   `{ JengaIcon(JengaIcons.CheckCircle, contentDescription = null) }`.
+     *   The lambda is captured when `showSnackbar` is called and composed inside the host, so
+     *   composition locals from the call site do not apply and plain captured values are fixed, like
+     *   [message]; only reads of `State` update while the snackbar is shown.
      * @param dismissContentDescription when set, the snackbar shows a close ✕ at the end, after the
      *   action, with this accessibility label (e.g. "Dismiss"), in the user's language. Tapping it
      *   dismisses the snackbar and returns [JengaSnackbarResult.Dismissed].
@@ -123,11 +138,12 @@ public class JengaSnackbarHostState internal constructor(
         durationMillis: Long,
         tone: JengaSnackbarTone = JengaSnackbarTone.Neutral,
         actionLabel: String? = null,
+        leadingContent: (@Composable () -> Unit)? = null,
         dismissContentDescription: String? = null,
     ): JengaSnackbarResult = coroutineScope {
         currentTone = tone
         // Indefinite for Material; the timer below ends it after durationMillis.
-        val visuals = JengaSnackbarVisuals(message, actionLabel, SnackbarDuration.Indefinite, dismissContentDescription)
+        val visuals = JengaSnackbarVisuals(message, actionLabel, SnackbarDuration.Indefinite, leadingContent, dismissContentDescription)
         val timer = launch {
             val shown = snapshotFlow { m3.currentSnackbarData }.first { it?.visuals === visuals }
             delay(durationMillis)
@@ -149,7 +165,7 @@ public class JengaSnackbarHostState internal constructor(
         durationMillis: Long,
         tone: JengaSnackbarTone = JengaSnackbarTone.Neutral,
         actionLabel: String? = null,
-    ): JengaSnackbarResult = showSnackbar(message, durationMillis, tone, actionLabel, dismissContentDescription = null)
+    ): JengaSnackbarResult = showSnackbar(message, durationMillis, tone, actionLabel, leadingContent = null, dismissContentDescription = null)
 
     internal var currentTone: JengaSnackbarTone = JengaSnackbarTone.Neutral
 }
@@ -191,6 +207,7 @@ public fun JengaSnackbarHost(
         hostState = hostState.m3,
         modifier = modifier,
     ) { data ->
+        val visuals = data.visuals as? JengaSnackbarVisuals
         JengaSnackbar(
             message = data.visuals.message,
             modifier = Modifier.padding(snackbarPadding),
@@ -202,17 +219,22 @@ public fun JengaSnackbarHost(
             contentPadding = contentPadding,
             messageStyle = messageStyle,
             actionStyle = actionStyle,
+            leadingContent = visuals?.leadingContent,
             onDismiss = { data.dismiss() },
-            dismissContentDescription = (data.visuals as? JengaSnackbarVisuals)?.dismissContentDescription,
+            dismissContentDescription = visuals?.dismissContentDescription,
         )
     }
 }
 
-/** What the host needs to draw one queued snackbar; Material's visuals plus the label of the close ✕. */
+/**
+ * What the host needs to draw one queued snackbar: Material's visuals plus the leading item and the
+ * label of the close ✕.
+ */
 private class JengaSnackbarVisuals(
     override val message: String,
     override val actionLabel: String?,
     override val duration: SnackbarDuration,
+    val leadingContent: (@Composable () -> Unit)?,
     val dismissContentDescription: String?,
 ) : SnackbarVisuals {
     override val withDismissAction: Boolean get() = dismissContentDescription != null

@@ -8,6 +8,8 @@
  * New: `JengaImageViewer` (both the single image and the pages overloads) takes `closeButtonPosition`: `JengaImageViewerCloseButtonPosition.Start` (close, title, actions; the default) or `End` (title, actions, close, with the title starting at the leading edge at the start padding of a top bar title).
  * New: `JengaSnackbar` takes `onDismiss` and `dismissContentDescription` and shows a close ✕ at the end, after the action, in `JengaSnackbarColors.content`, with a 48dp touch target.
  * New: `JengaSnackbarHostState.showSnackbar` takes `dismissContentDescription`; the snackbar then shows the close ✕, and tapping it returns `JengaSnackbarResult.Dismissed`.
+ * New: `JengaSnackbar` takes `leadingContent`, one small item before the message (a 20dp icon or a counter badge): it replaces the tone dot, is centred on the message and takes `JengaSnackbarColors.content` as its content color.
+ * New: `JengaSnackbarHostState.showSnackbar` takes `leadingContent`, shown before the message of that snackbar.
 
 ## Version 0.8.6
 

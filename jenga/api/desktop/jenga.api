@@ -979,19 +979,19 @@ public final class io/github/joelkanyi/jenga/component/feedback/JengaSnackbarHos
 
 public final class io/github/joelkanyi/jenga/component/feedback/JengaSnackbarHostState {
 	public static final field $stable I
-	public final fun showSnackbar (Ljava/lang/String;JLio/github/joelkanyi/jenga/component/feedback/JengaSnackbarTone;Ljava/lang/String;Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public final synthetic fun showSnackbar (Ljava/lang/String;JLio/github/joelkanyi/jenga/component/feedback/JengaSnackbarTone;Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public final fun showSnackbar (Ljava/lang/String;Lio/github/joelkanyi/jenga/component/feedback/JengaSnackbarTone;Ljava/lang/String;Lio/github/joelkanyi/jenga/component/feedback/JengaSnackbarDuration;Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public final fun showSnackbar (Ljava/lang/String;JLio/github/joelkanyi/jenga/component/feedback/JengaSnackbarTone;Ljava/lang/String;Lkotlin/jvm/functions/Function2;Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public final synthetic fun showSnackbar (Ljava/lang/String;Lio/github/joelkanyi/jenga/component/feedback/JengaSnackbarTone;Ljava/lang/String;Lio/github/joelkanyi/jenga/component/feedback/JengaSnackbarDuration;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public static synthetic fun showSnackbar$default (Lio/github/joelkanyi/jenga/component/feedback/JengaSnackbarHostState;Ljava/lang/String;JLio/github/joelkanyi/jenga/component/feedback/JengaSnackbarTone;Ljava/lang/String;Ljava/lang/String;Lkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
+	public final fun showSnackbar (Ljava/lang/String;Lio/github/joelkanyi/jenga/component/feedback/JengaSnackbarTone;Ljava/lang/String;Lio/github/joelkanyi/jenga/component/feedback/JengaSnackbarDuration;Lkotlin/jvm/functions/Function2;Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public static synthetic fun showSnackbar$default (Lio/github/joelkanyi/jenga/component/feedback/JengaSnackbarHostState;Ljava/lang/String;JLio/github/joelkanyi/jenga/component/feedback/JengaSnackbarTone;Ljava/lang/String;Lkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
-	public static synthetic fun showSnackbar$default (Lio/github/joelkanyi/jenga/component/feedback/JengaSnackbarHostState;Ljava/lang/String;Lio/github/joelkanyi/jenga/component/feedback/JengaSnackbarTone;Ljava/lang/String;Lio/github/joelkanyi/jenga/component/feedback/JengaSnackbarDuration;Ljava/lang/String;Lkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
+	public static synthetic fun showSnackbar$default (Lio/github/joelkanyi/jenga/component/feedback/JengaSnackbarHostState;Ljava/lang/String;JLio/github/joelkanyi/jenga/component/feedback/JengaSnackbarTone;Ljava/lang/String;Lkotlin/jvm/functions/Function2;Ljava/lang/String;Lkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
 	public static synthetic fun showSnackbar$default (Lio/github/joelkanyi/jenga/component/feedback/JengaSnackbarHostState;Ljava/lang/String;Lio/github/joelkanyi/jenga/component/feedback/JengaSnackbarTone;Ljava/lang/String;Lio/github/joelkanyi/jenga/component/feedback/JengaSnackbarDuration;Lkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
+	public static synthetic fun showSnackbar$default (Lio/github/joelkanyi/jenga/component/feedback/JengaSnackbarHostState;Ljava/lang/String;Lio/github/joelkanyi/jenga/component/feedback/JengaSnackbarTone;Ljava/lang/String;Lio/github/joelkanyi/jenga/component/feedback/JengaSnackbarDuration;Lkotlin/jvm/functions/Function2;Ljava/lang/String;Lkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
 }
 
 public final class io/github/joelkanyi/jenga/component/feedback/JengaSnackbarKt {
 	public static final synthetic fun JengaSnackbar (Ljava/lang/String;Landroidx/compose/ui/Modifier;Lio/github/joelkanyi/jenga/component/feedback/JengaSnackbarTone;Ljava/lang/String;Lkotlin/jvm/functions/Function0;Landroidx/compose/ui/graphics/Shape;Lio/github/joelkanyi/jenga/component/feedback/JengaSnackbarColors;Landroidx/compose/foundation/layout/PaddingValues;Landroidx/compose/ui/text/TextStyle;Landroidx/compose/ui/text/TextStyle;Landroidx/compose/runtime/Composer;II)V
-	public static final fun JengaSnackbar (Ljava/lang/String;Landroidx/compose/ui/Modifier;Lio/github/joelkanyi/jenga/component/feedback/JengaSnackbarTone;Ljava/lang/String;Lkotlin/jvm/functions/Function0;Landroidx/compose/ui/graphics/Shape;Lio/github/joelkanyi/jenga/component/feedback/JengaSnackbarColors;Landroidx/compose/foundation/layout/PaddingValues;Landroidx/compose/ui/text/TextStyle;Landroidx/compose/ui/text/TextStyle;Lkotlin/jvm/functions/Function0;Ljava/lang/String;Landroidx/compose/runtime/Composer;III)V
+	public static final fun JengaSnackbar (Ljava/lang/String;Landroidx/compose/ui/Modifier;Lio/github/joelkanyi/jenga/component/feedback/JengaSnackbarTone;Ljava/lang/String;Lkotlin/jvm/functions/Function0;Landroidx/compose/ui/graphics/Shape;Lio/github/joelkanyi/jenga/component/feedback/JengaSnackbarColors;Landroidx/compose/foundation/layout/PaddingValues;Landroidx/compose/ui/text/TextStyle;Landroidx/compose/ui/text/TextStyle;Lkotlin/jvm/functions/Function2;Lkotlin/jvm/functions/Function0;Ljava/lang/String;Landroidx/compose/runtime/Composer;III)V
 }
 
 public final class io/github/joelkanyi/jenga/component/feedback/JengaSnackbarResult : java/lang/Enum {
@@ -3364,10 +3364,13 @@ public final class io/github/joelkanyi/jenga/samples/ComposableSingletons$JengaS
 	public final fun getLambda$-2146798839$jenga ()Lkotlin/jvm/functions/Function2;
 	public final fun getLambda$-270386691$jenga ()Lkotlin/jvm/functions/Function3;
 	public final fun getLambda$-526265762$jenga ()Lkotlin/jvm/functions/Function2;
+	public final fun getLambda$-53955776$jenga ()Lkotlin/jvm/functions/Function3;
 	public final fun getLambda$-626117203$jenga ()Lkotlin/jvm/functions/Function2;
 	public final fun getLambda$-67187725$jenga ()Lkotlin/jvm/functions/Function3;
+	public final fun getLambda$-714408400$jenga ()Lkotlin/jvm/functions/Function2;
 	public final fun getLambda$-73259007$jenga ()Lkotlin/jvm/functions/Function2;
 	public final fun getLambda$-895332967$jenga ()Lkotlin/jvm/functions/Function3;
+	public final fun getLambda$-956031833$jenga ()Lkotlin/jvm/functions/Function2;
 	public final fun getLambda$-983531617$jenga ()Lkotlin/jvm/functions/Function3;
 	public final fun getLambda$1056921111$jenga ()Lkotlin/jvm/functions/Function2;
 	public final fun getLambda$1375474695$jenga ()Lkotlin/jvm/functions/Function3;
