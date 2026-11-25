@@ -25,6 +25,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.state.ToggleableState
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
@@ -958,8 +959,8 @@ fun componentEntries(): List<CatalogEntry> = listOf(
     CatalogEntry(
         name = "Checkbox",
         group = "Selection",
-        description = "A box for a single on or off choice.",
-        keywords = "check tick",
+        description = "A box for a single on or off choice, with a mixed state for \"Select all\".",
+        keywords = "check tick mixed indeterminate select all",
         code = """
             var checked by remember {
                 mutableStateOf(
@@ -970,6 +971,22 @@ fun componentEntries(): List<CatalogEntry> = listOf(
                 checked = checked,
                 onCheckedChange = { checked = it },
             )
+            // Three states: the caller picks the next one.
+            var state by remember {
+                mutableStateOf(
+                    value = ToggleableState.Indeterminate,
+                )
+            }
+            JengaCheckbox(
+                state = state,
+                onClick = {
+                    state = if (state == ToggleableState.On) {
+                        ToggleableState.Off
+                    } else {
+                        ToggleableState.On
+                    }
+                },
+            )
         """.trimIndent(),
         demo = {
             var checked by remember {
@@ -977,9 +994,29 @@ fun componentEntries(): List<CatalogEntry> = listOf(
                     value = true,
                 )
             }
-            JengaCheckbox(
-                checked = checked,
-                onCheckedChange = { checked = it },
+            var state by remember {
+                mutableStateOf(
+                    value = ToggleableState.Indeterminate,
+                )
+            }
+            JengaInline(
+                space = JengaTheme.spacing.sm,
+                content = {
+                    JengaCheckbox(
+                        checked = checked,
+                        onCheckedChange = { checked = it },
+                    )
+                    JengaCheckbox(
+                        state = state,
+                        onClick = {
+                            state = if (state == ToggleableState.On) {
+                                ToggleableState.Off
+                            } else {
+                                ToggleableState.On
+                            }
+                        },
+                    )
+                },
             )
         },
     ),
@@ -1093,25 +1130,48 @@ fun componentEntries(): List<CatalogEntry> = listOf(
     CatalogEntry(
         name = "Checkbox list item",
         group = "Selection",
-        description = "A list row with a checkbox, for picking several options.",
-        keywords = "checkbox multi select list row",
+        description = "A list row with a checkbox, for picking several options; a \"Select all\" row shows the mixed state.",
+        keywords = "checkbox multi select list row mixed indeterminate select all",
         code = """
-            var checked by remember {
+            var battery by remember {
                 mutableStateOf(
                     value = true,
                 )
             }
-            JengaCheckboxListItem(
-                headline = "Battery",
-                checked = checked,
-                onCheckedChange = { checked = it },
-            )
+            var panel by remember {
+                mutableStateOf(
+                    value = false,
+                )
+            }
             JengaCheckboxListItem(
                 headline = "Inverter",
                 checked = false,
                 onCheckedChange = {},
                 supporting = "Saving",
                 loading = true,
+            )
+            JengaCheckboxListItem(
+                headline = "Select all",
+                state = when {
+                    battery && panel -> ToggleableState.On
+                    battery || panel -> ToggleableState.Indeterminate
+                    else -> ToggleableState.Off
+                },
+                onClick = {
+                    val all = !(battery && panel)
+                    battery = all
+                    panel = all
+                },
+            )
+            JengaCheckboxListItem(
+                headline = "Battery",
+                checked = battery,
+                onCheckedChange = { battery = it },
+            )
+            JengaCheckboxListItem(
+                headline = "Panel",
+                checked = panel,
+                onCheckedChange = { panel = it },
             )
         """.trimIndent(),
         demo = {
@@ -1129,6 +1189,26 @@ fun componentEntries(): List<CatalogEntry> = listOf(
                 space = JengaTheme.spacing.none,
                 content = {
                     JengaCheckboxListItem(
+                        headline = "Inverter",
+                        checked = false,
+                        onCheckedChange = {},
+                        supporting = "Saving",
+                        loading = true,
+                    )
+                    JengaCheckboxListItem(
+                        headline = "Select all",
+                        state = when {
+                            battery && panel -> ToggleableState.On
+                            battery || panel -> ToggleableState.Indeterminate
+                            else -> ToggleableState.Off
+                        },
+                        onClick = {
+                            val all = !(battery && panel)
+                            battery = all
+                            panel = all
+                        },
+                    )
+                    JengaCheckboxListItem(
                         headline = "Battery",
                         checked = battery,
                         onCheckedChange = { battery = it },
@@ -1137,13 +1217,6 @@ fun componentEntries(): List<CatalogEntry> = listOf(
                         headline = "Panel",
                         checked = panel,
                         onCheckedChange = { panel = it },
-                    )
-                    JengaCheckboxListItem(
-                        headline = "Inverter",
-                        checked = false,
-                        onCheckedChange = {},
-                        supporting = "Saving",
-                        loading = true,
                     )
                 },
             )

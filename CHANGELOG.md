@@ -1,5 +1,9 @@
 # Change Log
 
+## Unreleased
+
+ * New: `JengaCheckbox` and `JengaCheckboxListItem` have overloads that take `state` (`ToggleableState.Off`, `On` or `Indeterminate`) and `onClick`, for a "Select all" box. The mixed state (`Indeterminate`) draws the checked box with a dash in `JengaCheckboxColors.checkmark`, and screen readers announce it as partially checked; the caller picks the next state in `onClick`.
+
 ## Version 0.8.6
 
 _2026-11-10_

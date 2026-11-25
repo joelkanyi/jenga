@@ -15,6 +15,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.state.ToggleableState
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.unit.dp
 import io.github.joelkanyi.jenga.component.action.JengaAction
@@ -319,6 +320,30 @@ internal fun JengaCheckboxSample() {
     JengaCheckbox(
         checked = checked,
         onCheckedChange = { checked = it },
+    )
+}
+
+@Composable
+internal fun JengaCheckboxMixedSample() {
+    var checked by remember {
+        mutableStateOf(
+            value = setOf("Battery"),
+        )
+    }
+    val units = listOf("Battery", "Panel", "Inverter")
+    JengaCheckbox(
+        state = when (checked.size) {
+            0 -> ToggleableState.Off
+            units.size -> ToggleableState.On
+            else -> ToggleableState.Indeterminate
+        },
+        onClick = {
+            checked = if (checked.size == units.size) {
+                emptySet()
+            } else {
+                units.toSet()
+            }
+        },
     )
 }
 
@@ -655,6 +680,50 @@ internal fun JengaCheckboxListItemSample() {
         headline = "Battery",
         checked = checked,
         onCheckedChange = { checked = it },
+    )
+}
+
+@Composable
+internal fun JengaCheckboxListItemMixedSample() {
+    val units = listOf("Battery", "Panel", "Inverter")
+    var checked by remember {
+        mutableStateOf(
+            value = setOf("Battery"),
+        )
+    }
+    JengaStack(
+        space = JengaTheme.spacing.none,
+        content = {
+            JengaCheckboxListItem(
+                headline = "Select all",
+                state = when (checked.size) {
+                    0 -> ToggleableState.Off
+                    units.size -> ToggleableState.On
+                    else -> ToggleableState.Indeterminate
+                },
+                onClick = {
+                    checked = if (checked.size == units.size) {
+                        emptySet()
+                    } else {
+                        units.toSet()
+                    }
+                },
+                supporting = "${checked.size} of ${units.size} ticked",
+            )
+            units.forEach { unit ->
+                JengaCheckboxListItem(
+                    headline = unit,
+                    checked = unit in checked,
+                    onCheckedChange = { on ->
+                        checked = if (on) {
+                            checked + unit
+                        } else {
+                            checked - unit
+                        }
+                    },
+                )
+            }
+        },
     )
 }
 

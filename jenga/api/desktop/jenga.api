@@ -1410,6 +1410,7 @@ public final class io/github/joelkanyi/jenga/component/list/JengaSelectionListIt
 }
 
 public final class io/github/joelkanyi/jenga/component/list/JengaSelectionListItemsKt {
+	public static final fun JengaCheckboxListItem-4k9a6ps (Ljava/lang/String;Landroidx/compose/ui/state/ToggleableState;Lkotlin/jvm/functions/Function0;Landroidx/compose/ui/Modifier;Ljava/lang/String;ZLio/github/joelkanyi/jenga/component/list/JengaControlPosition;FLandroidx/compose/foundation/layout/PaddingValues;FLandroidx/compose/ui/text/TextStyle;Landroidx/compose/ui/text/TextStyle;IILkotlin/jvm/functions/Function2;Landroidx/compose/ui/graphics/Shape;Lio/github/joelkanyi/jenga/component/list/JengaListItemColors;Lio/github/joelkanyi/jenga/component/selection/JengaCheckboxColors;ZLandroidx/compose/runtime/Composer;III)V
 	public static final fun JengaCheckboxListItem-4k9a6ps (Ljava/lang/String;ZLkotlin/jvm/functions/Function1;Landroidx/compose/ui/Modifier;Ljava/lang/String;ZLio/github/joelkanyi/jenga/component/list/JengaControlPosition;FLandroidx/compose/foundation/layout/PaddingValues;FLandroidx/compose/ui/text/TextStyle;Landroidx/compose/ui/text/TextStyle;IILkotlin/jvm/functions/Function2;Landroidx/compose/ui/graphics/Shape;Lio/github/joelkanyi/jenga/component/list/JengaListItemColors;Lio/github/joelkanyi/jenga/component/selection/JengaCheckboxColors;ZLandroidx/compose/runtime/Composer;III)V
 	public static final fun JengaRadioListItem-6kJPO8E (Ljava/lang/String;ZLkotlin/jvm/functions/Function0;Landroidx/compose/ui/Modifier;Ljava/lang/String;ZLio/github/joelkanyi/jenga/component/list/JengaControlPosition;FLandroidx/compose/foundation/layout/PaddingValues;FLandroidx/compose/ui/text/TextStyle;Landroidx/compose/ui/text/TextStyle;IIFLio/github/joelkanyi/jenga/component/list/JengaListItemColors;Lkotlin/jvm/functions/Function2;Landroidx/compose/runtime/Composer;III)V
 }
@@ -2199,6 +2200,7 @@ public final class io/github/joelkanyi/jenga/component/selection/JengaCheckboxDe
 }
 
 public final class io/github/joelkanyi/jenga/component/selection/JengaCheckboxKt {
+	public static final fun JengaCheckbox (Landroidx/compose/ui/state/ToggleableState;Lkotlin/jvm/functions/Function0;Landroidx/compose/ui/Modifier;ZLandroidx/compose/ui/graphics/Shape;Lio/github/joelkanyi/jenga/component/selection/JengaCheckboxColors;Landroidx/compose/runtime/Composer;II)V
 	public static final fun JengaCheckbox (ZLkotlin/jvm/functions/Function1;Landroidx/compose/ui/Modifier;ZLandroidx/compose/ui/graphics/Shape;Lio/github/joelkanyi/jenga/component/selection/JengaCheckboxColors;Landroidx/compose/runtime/Composer;II)V
 }
 
