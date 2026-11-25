@@ -151,6 +151,7 @@ import io.github.joelkanyi.jenga.component.stat.JengaStatTile
 import io.github.joelkanyi.jenga.component.stat.JengaStatTone
 import io.github.joelkanyi.jenga.component.state.JengaEmptyState
 import io.github.joelkanyi.jenga.component.state.JengaErrorState
+import io.github.joelkanyi.jenga.component.state.JengaStateLayout
 import io.github.joelkanyi.jenga.component.status.JengaStatusPill
 import io.github.joelkanyi.jenga.component.stepindicator.JengaStep
 import io.github.joelkanyi.jenga.component.stepindicator.JengaStepIndicator
@@ -1690,6 +1691,51 @@ fun componentEntries(): List<CatalogEntry> = listOf(
                         },
                         actionLabel = "Retry",
                         onAction = { confirm("Retrying") },
+                    )
+                },
+            )
+        },
+    ),
+    CatalogEntry(
+        name = "Full-screen state",
+        group = "Feedback",
+        description = "An empty or error state that fills the screen, with full-width actions pinned at the bottom and an optional second action.",
+        keywords = "error empty full screen fill no connection offline session expired update required support second action",
+        code = """
+            JengaErrorState(
+                title = "No internet connection",
+                description = "Check mobile data or Wi-Fi and try again.",
+                icon = {
+                    JengaIcon(
+                        imageVector = JengaIcons.CloudOff,
+                        contentDescription = null,
+                    )
+                },
+                actionLabel = "Try again",
+                onAction = {},
+                secondaryActionLabel = "Contact support",
+                onSecondaryAction = {},
+                layout = JengaStateLayout.FillScreen,
+            )
+        """.trimIndent(),
+        demo = {
+            ActionFeedback(
+                content = { confirm ->
+                    JengaErrorState(
+                        title = "No internet connection",
+                        modifier = Modifier.height(420.dp),
+                        description = "Check mobile data or Wi-Fi and try again.",
+                        icon = {
+                            JengaIcon(
+                                imageVector = JengaIcons.CloudOff,
+                                contentDescription = null,
+                            )
+                        },
+                        actionLabel = "Try again",
+                        onAction = { confirm("Retrying") },
+                        secondaryActionLabel = "Contact support",
+                        onSecondaryAction = { confirm("Opening support") },
+                        layout = JengaStateLayout.FillScreen,
                     )
                 },
             )

@@ -17,6 +17,8 @@
  * New: `JengaIcons.BadgeCheck`.
  * New: `JengaDialog` takes `icon`, a slot above the title, separated from it by the dialog's `spacing.md` gap (12dp by default), and `iconAlignment`: `JengaDialogIconAlignment.Start` (the default) or `Center`, which also centres the title and text.
  * New: `JengaDialog` takes `actionsLayout`: `JengaDialogActionsLayout.Row` (one row at the end edge, the default) or `Stacked` (full-width buttons one above the other, the confirm button first, `actionSpacing` apart).
+ * New: `JengaEmptyState` and `JengaErrorState` take a second action, `secondaryActionLabel` and `onSecondaryAction`, shown under the first; `secondaryActionVariant` defaults to Ghost.
+ * New: `JengaEmptyState` and `JengaErrorState` take `layout`. `JengaStateLayout.FillScreen` fills the given bounds, centers the icon, title and description in the space above the actions (scrolling when they do not fit) and pins the actions at the bottom as full-width buttons with 16dp at the sides. It does not pad for system bars: pass the scaffold's content padding through `modifier`, or add `Modifier.windowInsetsPadding(WindowInsets.safeDrawing)`. `JengaStateLayout.Inline`, the default, is the layout as before.
 
 ## Version 0.8.6
 

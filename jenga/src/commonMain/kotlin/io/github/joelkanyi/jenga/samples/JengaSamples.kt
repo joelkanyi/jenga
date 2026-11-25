@@ -119,6 +119,7 @@ import io.github.joelkanyi.jenga.component.stat.JengaStatTile
 import io.github.joelkanyi.jenga.component.stat.JengaStatTone
 import io.github.joelkanyi.jenga.component.state.JengaEmptyState
 import io.github.joelkanyi.jenga.component.state.JengaErrorState
+import io.github.joelkanyi.jenga.component.state.JengaStateLayout
 import io.github.joelkanyi.jenga.component.status.JengaStatusPill
 import io.github.joelkanyi.jenga.component.stepindicator.JengaStep
 import io.github.joelkanyi.jenga.component.stepindicator.JengaStepIndicator
@@ -604,6 +605,23 @@ internal fun JengaErrorStateSample() {
         actionLabel = "Retry",
         onAction = { },
     )
+}
+
+@Composable
+internal fun JengaErrorStateFillScreenSample() {
+    JengaScaffold { padding ->
+        JengaErrorState(
+            title = "No internet connection",
+            modifier = Modifier.padding(padding),
+            description = "Check mobile data or Wi-Fi and try again.",
+            icon = { JengaIcon(JengaIcons.CloudOff, contentDescription = null) },
+            actionLabel = "Try again",
+            onAction = { },
+            secondaryActionLabel = "Contact support",
+            onSecondaryAction = { },
+            layout = JengaStateLayout.FillScreen,
+        )
+    }
 }
 
 @Composable

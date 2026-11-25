@@ -2504,6 +2504,14 @@ public final class io/github/joelkanyi/jenga/component/state/JengaStateDefaults 
 	public final fun getTitleStyle (Landroidx/compose/runtime/Composer;I)Landroidx/compose/ui/text/TextStyle;
 }
 
+public final class io/github/joelkanyi/jenga/component/state/JengaStateLayout : java/lang/Enum {
+	public static final field FillScreen Lio/github/joelkanyi/jenga/component/state/JengaStateLayout;
+	public static final field Inline Lio/github/joelkanyi/jenga/component/state/JengaStateLayout;
+	public static fun getEntries ()Lkotlin/enums/EnumEntries;
+	public static fun valueOf (Ljava/lang/String;)Lio/github/joelkanyi/jenga/component/state/JengaStateLayout;
+	public static fun values ()[Lio/github/joelkanyi/jenga/component/state/JengaStateLayout;
+}
+
 public final class io/github/joelkanyi/jenga/component/state/JengaStateStyle {
 	public static final field $stable I
 	public synthetic fun <init> (Landroidx/compose/ui/text/TextStyle;Landroidx/compose/ui/text/TextStyle;Landroidx/compose/foundation/layout/PaddingValues;Landroidx/compose/ui/unit/Dp;Landroidx/compose/ui/unit/Dp;Lio/github/joelkanyi/jenga/component/button/JengaButtonSize;Lio/github/joelkanyi/jenga/component/state/JengaStateColors;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
@@ -2523,8 +2531,10 @@ public final class io/github/joelkanyi/jenga/component/state/JengaStateStyle {
 }
 
 public final class io/github/joelkanyi/jenga/component/state/JengaStatesKt {
-	public static final fun JengaEmptyState-PQhSXEI (Ljava/lang/String;Landroidx/compose/ui/Modifier;Ljava/lang/String;Lkotlin/jvm/functions/Function2;Ljava/lang/String;Lkotlin/jvm/functions/Function0;Lio/github/joelkanyi/jenga/component/button/JengaButtonVariant;Lio/github/joelkanyi/jenga/component/state/JengaStateColors;Landroidx/compose/ui/text/TextStyle;Landroidx/compose/ui/text/TextStyle;Landroidx/compose/foundation/layout/PaddingValues;FFLio/github/joelkanyi/jenga/component/button/JengaButtonSize;Landroidx/compose/runtime/Composer;III)V
-	public static final fun JengaErrorState-PQhSXEI (Ljava/lang/String;Landroidx/compose/ui/Modifier;Ljava/lang/String;Lkotlin/jvm/functions/Function2;Ljava/lang/String;Lkotlin/jvm/functions/Function0;Lio/github/joelkanyi/jenga/component/button/JengaButtonVariant;Lio/github/joelkanyi/jenga/component/state/JengaStateColors;Landroidx/compose/ui/text/TextStyle;Landroidx/compose/ui/text/TextStyle;Landroidx/compose/foundation/layout/PaddingValues;FFLio/github/joelkanyi/jenga/component/button/JengaButtonSize;Landroidx/compose/runtime/Composer;III)V
+	public static final fun JengaEmptyState-1L_vnuA (Ljava/lang/String;Landroidx/compose/ui/Modifier;Ljava/lang/String;Lkotlin/jvm/functions/Function2;Ljava/lang/String;Lkotlin/jvm/functions/Function0;Lio/github/joelkanyi/jenga/component/button/JengaButtonVariant;Lio/github/joelkanyi/jenga/component/state/JengaStateColors;Landroidx/compose/ui/text/TextStyle;Landroidx/compose/ui/text/TextStyle;Landroidx/compose/foundation/layout/PaddingValues;FFLio/github/joelkanyi/jenga/component/button/JengaButtonSize;Ljava/lang/String;Lkotlin/jvm/functions/Function0;Lio/github/joelkanyi/jenga/component/button/JengaButtonVariant;Lio/github/joelkanyi/jenga/component/state/JengaStateLayout;Landroidx/compose/runtime/Composer;III)V
+	public static final synthetic fun JengaEmptyState-PQhSXEI (Ljava/lang/String;Landroidx/compose/ui/Modifier;Ljava/lang/String;Lkotlin/jvm/functions/Function2;Ljava/lang/String;Lkotlin/jvm/functions/Function0;Lio/github/joelkanyi/jenga/component/button/JengaButtonVariant;Lio/github/joelkanyi/jenga/component/state/JengaStateColors;Landroidx/compose/ui/text/TextStyle;Landroidx/compose/ui/text/TextStyle;Landroidx/compose/foundation/layout/PaddingValues;FFLio/github/joelkanyi/jenga/component/button/JengaButtonSize;Landroidx/compose/runtime/Composer;III)V
+	public static final fun JengaErrorState-1L_vnuA (Ljava/lang/String;Landroidx/compose/ui/Modifier;Ljava/lang/String;Lkotlin/jvm/functions/Function2;Ljava/lang/String;Lkotlin/jvm/functions/Function0;Lio/github/joelkanyi/jenga/component/button/JengaButtonVariant;Lio/github/joelkanyi/jenga/component/state/JengaStateColors;Landroidx/compose/ui/text/TextStyle;Landroidx/compose/ui/text/TextStyle;Landroidx/compose/foundation/layout/PaddingValues;FFLio/github/joelkanyi/jenga/component/button/JengaButtonSize;Ljava/lang/String;Lkotlin/jvm/functions/Function0;Lio/github/joelkanyi/jenga/component/button/JengaButtonVariant;Lio/github/joelkanyi/jenga/component/state/JengaStateLayout;Landroidx/compose/runtime/Composer;III)V
+	public static final synthetic fun JengaErrorState-PQhSXEI (Ljava/lang/String;Landroidx/compose/ui/Modifier;Ljava/lang/String;Lkotlin/jvm/functions/Function2;Ljava/lang/String;Lkotlin/jvm/functions/Function0;Lio/github/joelkanyi/jenga/component/button/JengaButtonVariant;Lio/github/joelkanyi/jenga/component/state/JengaStateColors;Landroidx/compose/ui/text/TextStyle;Landroidx/compose/ui/text/TextStyle;Landroidx/compose/foundation/layout/PaddingValues;FFLio/github/joelkanyi/jenga/component/button/JengaButtonSize;Landroidx/compose/runtime/Composer;III)V
 }
 
 public final class io/github/joelkanyi/jenga/component/status/JengaStatusPillColors {
@@ -3397,6 +3407,7 @@ public final class io/github/joelkanyi/jenga/samples/ComposableSingletons$JengaS
 	public static final field INSTANCE Lio/github/joelkanyi/jenga/samples/ComposableSingletons$JengaSamplesKt;
 	public fun <init> ()V
 	public final fun getLambda$-1218986121$jenga ()Lkotlin/jvm/functions/Function2;
+	public final fun getLambda$-1674523590$jenga ()Lkotlin/jvm/functions/Function2;
 	public final fun getLambda$-1725066229$jenga ()Lkotlin/jvm/functions/Function2;
 	public final fun getLambda$-1848930134$jenga ()Lkotlin/jvm/functions/Function2;
 	public final fun getLambda$-1877431549$jenga ()Lkotlin/jvm/functions/Function3;
@@ -3430,6 +3441,7 @@ public final class io/github/joelkanyi/jenga/samples/ComposableSingletons$JengaS
 	public final fun getLambda$401415822$jenga ()Lkotlin/jvm/functions/Function3;
 	public final fun getLambda$452703386$jenga ()Lkotlin/jvm/functions/Function2;
 	public final fun getLambda$561998281$jenga ()Lkotlin/jvm/functions/Function2;
+	public final fun getLambda$671071714$jenga ()Lkotlin/jvm/functions/Function3;
 	public final fun getLambda$683166734$jenga ()Lkotlin/jvm/functions/Function2;
 	public final fun getLambda$878903685$jenga ()Lkotlin/jvm/functions/Function2;
 	public final fun getLambda$927163277$jenga ()Lkotlin/jvm/functions/Function3;
