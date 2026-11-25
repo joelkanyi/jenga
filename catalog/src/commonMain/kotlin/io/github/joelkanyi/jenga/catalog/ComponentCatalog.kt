@@ -5666,8 +5666,8 @@ fun componentEntries(): List<CatalogEntry> = listOf(
     CatalogEntry(
         name = "Step indicator",
         group = "Navigation",
-        description = "A row of steps for a multi-step flow: done, current, pending or locked, with a dot or the step number.",
-        keywords = "steps stepper progress wizard flow checkout numbered number",
+        description = "A row of steps for a multi-step flow: done, current, pending or locked, with a dot or the step number, with or without labels.",
+        keywords = "steps stepper progress wizard flow checkout numbered number compact",
         code = """
             val steps =
                 listOf(
@@ -5696,6 +5696,18 @@ fun componentEntries(): List<CatalogEntry> = listOf(
                     "Step ${'$'}{index + 1} of 3, ${'$'}{step.label}"
                 },
                 variant = JengaStepIndicatorVariant.Numbered,
+            )
+            JengaStepIndicator(
+                steps = steps,
+                stepContentDescription = { index, step ->
+                    "Step ${'$'}{index + 1} of 3, ${'$'}{step.label}"
+                },
+                variant = JengaStepIndicatorVariant.Compact,
+            )
+            JengaText(
+                text = "Step 2 of 3 · Choices",
+                style = JengaTheme.typography.caption,
+                color = JengaTheme.colors.textMuted,
             )
         """.trimIndent(),
         demo = {
@@ -5731,6 +5743,22 @@ fun componentEntries(): List<CatalogEntry> = listOf(
                         stepContentDescription = { index, step -> "Step ${index + 1} of 3, ${step.label}" },
                         variant = JengaStepIndicatorVariant.Numbered,
                         onStepClick = { current = it },
+                    )
+                    JengaStack(
+                        space = JengaTheme.spacing.sm,
+                        content = {
+                            JengaStepIndicator(
+                                steps = steps,
+                                stepContentDescription = { index, step -> "Step ${index + 1} of 3, ${step.label}" },
+                                variant = JengaStepIndicatorVariant.Compact,
+                                onStepClick = { current = it },
+                            )
+                            JengaText(
+                                text = "Step ${current + 1} of 3 · ${steps[current].label}",
+                                style = JengaTheme.typography.caption,
+                                color = JengaTheme.colors.textMuted,
+                            )
+                        },
                     )
                 },
             )

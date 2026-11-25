@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import io.github.joelkanyi.jenga.component.text.JengaText
 import io.github.joelkanyi.jenga.core.preview.JengaBlockPreviews
 import io.github.joelkanyi.jenga.theme.JengaTheme
 
@@ -129,6 +130,87 @@ internal fun JengaStepIndicatorNumberedPreview() {
                 variant = numbered,
             )
         }
+    }
+}
+
+/**
+ * The compact variant in every state, in rows 328dp wide (a 360dp phone with margins). With nine
+ * steps the nodes reach the row's edges, so the halo of a first or last current step runs 3dp
+ * past them into the padding.
+ */
+@JengaBlockPreviews
+@Composable
+internal fun JengaStepIndicatorCompactPreview() {
+    val compact = JengaStepIndicatorVariant.Compact
+    val phone = Modifier.width(328.dp)
+    JengaTheme {
+        Column(
+            modifier = Modifier.background(JengaTheme.colors.surface).padding(JengaTheme.spacing.md),
+            verticalArrangement = Arrangement.spacedBy(JengaTheme.spacing.lg),
+        ) {
+            PreviewSteps(
+                "Customer details" to JengaStepState.Current,
+                "Product and plan" to JengaStepState.Pending,
+                "Documents" to JengaStepState.Pending,
+                "Agreement" to JengaStepState.Pending,
+                modifier = phone,
+                variant = compact,
+            )
+            Column(verticalArrangement = Arrangement.spacedBy(JengaTheme.spacing.sm)) {
+                PreviewSteps(
+                    "Taarifa za mteja" to JengaStepState.Done,
+                    "Bidhaa na mpango" to JengaStepState.Current,
+                    "Nyaraka" to JengaStepState.Pending,
+                    "Makubaliano" to JengaStepState.Pending,
+                    modifier = phone,
+                    variant = compact,
+                )
+                JengaText(
+                    text = "Hatua 2 kati ya 4 · Bidhaa na mpango",
+                    style = JengaTheme.typography.caption,
+                    color = JengaTheme.colors.textMuted,
+                )
+            }
+            PreviewSteps(
+                "Customer details" to JengaStepState.Locked,
+                "Product and plan" to JengaStepState.Locked,
+                "Documents" to JengaStepState.Locked,
+                "Agreement" to JengaStepState.Current,
+                modifier = phone,
+                variant = compact,
+            )
+            PreviewSteps(
+                "Customer details" to JengaStepState.Done,
+                "Product and plan" to JengaStepState.Done,
+                "Documents" to JengaStepState.Done,
+                "Agreement" to JengaStepState.Done,
+                modifier = phone,
+                variant = compact,
+            )
+            PreviewSteps(
+                *numberedSteps(count = 6, current = 2),
+                modifier = phone,
+                variant = compact,
+            )
+            PreviewSteps(
+                *numberedSteps(count = 9, current = 0),
+                modifier = phone,
+                variant = compact,
+            )
+            PreviewSteps(
+                *numberedSteps(count = 9, current = 8),
+                modifier = phone,
+                variant = compact,
+            )
+        }
+    }
+}
+
+private fun numberedSteps(count: Int, current: Int): Array<Pair<String, JengaStepState>> = Array(count) { index ->
+    "Q${index + 1}" to when {
+        index < current -> JengaStepState.Done
+        index == current -> JengaStepState.Current
+        else -> JengaStepState.Pending
     }
 }
 

@@ -1996,6 +1996,43 @@ internal fun JengaStepIndicatorNumberedSample() {
 }
 
 @Composable
+internal fun JengaStepIndicatorCompactSample() {
+    val names = listOf(
+        "Customer details",
+        "Product and plan",
+        "Documents",
+        "Agreement",
+    )
+    val current = 1
+    val steps = names.mapIndexed { index, name ->
+        JengaStep(
+            label = name,
+            state = when {
+                index < current -> JengaStepState.Done
+                index == current -> JengaStepState.Current
+                else -> JengaStepState.Pending
+            },
+        )
+    }
+    JengaStack(
+        space = JengaTheme.spacing.sm,
+        content = {
+            JengaStepIndicator(
+                steps = steps,
+                stepContentDescription = { index, step -> "Step ${index + 1} of ${steps.size}, ${step.label}" },
+                variant = JengaStepIndicatorVariant.Compact,
+            )
+            // The compact variant draws no labels: name the current step once, under the row.
+            JengaText(
+                text = "Step ${current + 1} of ${steps.size} · ${names[current]}",
+                style = JengaTheme.typography.caption,
+                color = JengaTheme.colors.textMuted,
+            )
+        },
+    )
+}
+
+@Composable
 internal fun JengaTimeInputSample() {
     var time by remember {
         mutableStateOf(

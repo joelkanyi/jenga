@@ -20,7 +20,9 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.semantics.clearAndSetSemantics
@@ -45,10 +47,16 @@ public enum class JengaStepState {
     /** Finished: a filled circle with a check. */
     Done,
 
-    /** The step the user is on: a ring with a dot, or with the step number in [JengaStepIndicatorVariant.Numbered]. */
+    /**
+     * The step the user is on: a ring with a dot, or with the step number in
+     * [JengaStepIndicatorVariant.Numbered] and [JengaStepIndicatorVariant.Compact].
+     */
     Current,
 
-    /** Not reached yet: an outline ring, with the step number in [JengaStepIndicatorVariant.Numbered]. */
+    /**
+     * Not reached yet: an outline ring, with the step number in
+     * [JengaStepIndicatorVariant.Numbered] and [JengaStepIndicatorVariant.Compact].
+     */
     Pending,
 
     /** Finished and no longer editable: a filled circle with a lock. */
@@ -69,6 +77,18 @@ public enum class JengaStepIndicatorVariant {
      * current and pending steps. Done and locked steps keep the check and the lock.
      */
     Numbered,
+
+    /**
+     * Numbered steps and lines only: no label is drawn and no space is kept for one, for long
+     * step names or many steps. The current step also gets a soft halo around its ring.
+     *
+     * Show the current step's name once under the row yourself, for example
+     * "Step 2 of 4 · Product and plan". [JengaStep.label] is not drawn, but it is still passed
+     * to `stepContentDescription` for screen readers.
+     *
+     * @sample io.github.joelkanyi.jenga.samples.JengaStepIndicatorCompactSample
+     */
+    Compact,
 }
 
 /** One step in a [JengaStepIndicator]: its [label] and [state]. */
@@ -90,10 +110,13 @@ public class JengaStep(
  * @property label the label of a pending step.
  * @property currentLabel the label of the current step.
  * @property currentNumber the number inside the current step's ring
- *   ([JengaStepIndicatorVariant.Numbered]); defaults to [active]. It does not follow a later
+ *   ([JengaStepIndicatorVariant.Numbered] and [JengaStepIndicatorVariant.Compact]); defaults to [active]. It does not follow a later
  *   `copy(active = ...)`, so set the two together when customising.
  * @property pendingNumber the number inside a pending step's ring
- *   ([JengaStepIndicatorVariant.Numbered]); defaults to [label].
+ *   ([JengaStepIndicatorVariant.Numbered] and [JengaStepIndicatorVariant.Compact]); defaults to [label].
+ * @property currentHalo the soft halo around the current step's ring
+ *   ([JengaStepIndicatorVariant.Compact]); defaults to [active] at 20% opacity. Like
+ *   [currentNumber], it does not follow a later `copy(active = ...)`.
  */
 @Poko
 @Immutable
@@ -106,6 +129,7 @@ public class JengaStepIndicatorColors(
     public val currentLabel: Color,
     public val currentNumber: Color = active,
     public val pendingNumber: Color = label,
+    public val currentHalo: Color = active.copy(alpha = 0.2f),
 ) {
     @Deprecated("Kept for binary compatibility", level = DeprecationLevel.HIDDEN)
     public constructor(
@@ -115,7 +139,17 @@ public class JengaStepIndicatorColors(
         line: Color,
         label: Color,
         currentLabel: Color,
-    ) : this(active, onActive, pending, line, label, currentLabel, currentNumber = active, pendingNumber = label)
+    ) : this(
+        active,
+        onActive,
+        pending,
+        line,
+        label,
+        currentLabel,
+        currentNumber = active,
+        pendingNumber = label,
+        currentHalo = active.copy(alpha = 0.2f),
+    )
 
     public fun copy(
         active: Color = this.active,
@@ -126,7 +160,18 @@ public class JengaStepIndicatorColors(
         currentLabel: Color = this.currentLabel,
         currentNumber: Color = this.currentNumber,
         pendingNumber: Color = this.pendingNumber,
-    ): JengaStepIndicatorColors = JengaStepIndicatorColors(active, onActive, pending, line, label, currentLabel, currentNumber, pendingNumber)
+        currentHalo: Color = this.currentHalo,
+    ): JengaStepIndicatorColors = JengaStepIndicatorColors(
+        active,
+        onActive,
+        pending,
+        line,
+        label,
+        currentLabel,
+        currentNumber,
+        pendingNumber,
+        currentHalo,
+    )
 
     @Deprecated("Kept for binary compatibility", level = DeprecationLevel.HIDDEN)
     public fun copy(
@@ -136,7 +181,7 @@ public class JengaStepIndicatorColors(
         line: Color = this.line,
         label: Color = this.label,
         currentLabel: Color = this.currentLabel,
-    ): JengaStepIndicatorColors = copy(active, onActive, pending, line, label, currentLabel, this.currentNumber, this.pendingNumber)
+    ): JengaStepIndicatorColors = copy(active, onActive, pending, line, label, currentLabel, this.currentNumber, this.pendingNumber, this.currentHalo)
 }
 
 /** Defaults and token mappings for [JengaStepIndicator]. */
@@ -160,14 +205,15 @@ public object JengaStepIndicatorDefaults {
             currentLabel = c.textPrimary,
             currentNumber = c.brand,
             pendingNumber = c.textMuted,
+            currentHalo = c.focusRing,
         )
     }
 }
 
 /**
- * A horizontal row of steps joined by lines, with a label under each step, for
- * multi-step flows such as sign-up, verification or checkout. [variant] chooses what the
- * step circles show.
+ * A horizontal row of steps joined by lines, for multi-step flows such as sign-up,
+ * verification or checkout. [variant] chooses what the step circles show and whether a
+ * label is drawn under each step.
  *
  * A line is drawn in the active color once the step on its left is done and the
  * next one has been reached (done, current or locked).
@@ -178,9 +224,9 @@ public object JengaStepIndicatorDefaults {
  * @param stepContentDescription accessibility label for a step, given its index
  *   (e.g. "Step 2 of 3, Payment, current step").
  * @param modifier the [Modifier] for the row.
- * @param variant how the steps are drawn; see [JengaStepIndicatorVariant]. With
- *   [JengaStepIndicatorVariant.Numbered] the numbers are decoration: screen readers still read
- *   only [stepContentDescription].
+ * @param variant how the steps are drawn; see [JengaStepIndicatorVariant]. The numbers of
+ *   [JengaStepIndicatorVariant.Numbered] and [JengaStepIndicatorVariant.Compact] are
+ *   decoration: screen readers still read only [stepContentDescription].
  * @param onStepClick called with a step's index when it is tapped; null makes the
  *   steps not tappable. Which taps to act on is up to the caller.
  * @param colors the color set; defaults to [JengaStepIndicatorDefaults.colors].
@@ -194,15 +240,22 @@ public fun JengaStepIndicator(
     onStepClick: ((index: Int) -> Unit)? = null,
     colors: JengaStepIndicatorColors = JengaStepIndicatorDefaults.colors(),
 ) {
+    val compact = variant == JengaStepIndicatorVariant.Compact
     BoxWithConstraints(modifier = modifier.fillMaxWidth()) {
-        val columnWidth = columnWidth(rowWidth = maxWidth, stepCount = steps.size)
-        Row(modifier = Modifier.fillMaxWidth(), verticalAlignment = Alignment.Top) {
+        val sharedWidth = columnWidth(rowWidth = maxWidth, stepCount = steps.size)
+        // Without a label to shrink, a compact column never gets narrower than its node.
+        val columnWidth = if (compact) maxOf(sharedWidth, JengaStepIndicatorDefaults.NodeSize) else sharedWidth
+        // The halo's height is kept free above and below at all times, so a scrolling parent
+        // cannot cut it and the row does not change height as the current step moves.
+        val haloSpace = if (compact) Modifier.padding(vertical = HaloWidth) else Modifier
+        Row(modifier = Modifier.fillMaxWidth().then(haloSpace), verticalAlignment = Alignment.Top) {
             steps.forEachIndexed { index, step ->
                 StepColumn(
                     step = step,
                     width = columnWidth,
                     index = index,
-                    number = if (variant == JengaStepIndicatorVariant.Numbered) index + 1 else null,
+                    number = if (variant == JengaStepIndicatorVariant.Labelled) null else index + 1,
+                    compact = compact,
                     description = stepContentDescription(index, step),
                     onClick = onStepClick,
                     colors = colors,
@@ -222,6 +275,7 @@ private fun StepColumn(
     width: Dp,
     index: Int,
     number: Int?,
+    compact: Boolean,
     description: String,
     onClick: ((index: Int) -> Unit)?,
     colors: JengaStepIndicatorColors,
@@ -238,21 +292,23 @@ private fun StepColumn(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.spacedBy(6.dp),
     ) {
-        StepNode(state = step.state, number = number, colors = colors)
-        JengaText(
-            text = step.label,
-            style = JengaTheme.typography.caption.copy(fontWeight = labelWeight(step.state)),
-            color = labelColor(step.state, colors),
-            textAlign = TextAlign.Center,
-            maxLines = 2,
-            overflow = TextOverflow.Ellipsis,
-            modifier = Modifier.clearAndSetSemantics {},
-        )
+        StepNode(state = step.state, number = number, halo = compact, colors = colors)
+        if (!compact) {
+            JengaText(
+                text = step.label,
+                style = JengaTheme.typography.caption.copy(fontWeight = labelWeight(step.state)),
+                color = labelColor(step.state, colors),
+                textAlign = TextAlign.Center,
+                maxLines = 2,
+                overflow = TextOverflow.Ellipsis,
+                modifier = Modifier.clearAndSetSemantics {},
+            )
+        }
     }
 }
 
 @Composable
-private fun StepNode(state: JengaStepState, number: Int?, colors: JengaStepIndicatorColors) {
+private fun StepNode(state: JengaStepState, number: Int?, halo: Boolean, colors: JengaStepIndicatorColors) {
     val size = JengaStepIndicatorDefaults.NodeSize
     when (state) {
         JengaStepState.Done -> JengaTimelineMarker(color = colors.active, size = size, contentColor = colors.onActive) {
@@ -263,6 +319,7 @@ private fun StepNode(state: JengaStepState, number: Int?, colors: JengaStepIndic
         }
         JengaStepState.Current -> JengaTimelineMarker(
             color = colors.active,
+            modifier = if (halo) Modifier.halo(colors.currentHalo) else Modifier,
             style = JengaTimelineMarkerStyle.Ring,
             size = size,
             ringWidth = 2.dp,
@@ -281,6 +338,12 @@ private fun StepNode(state: JengaStepState, number: Int?, colors: JengaStepIndic
             content = if (number == null) null else ({ StepNumber(number = number, color = colors.pendingNumber) }),
         )
     }
+}
+
+/** A band [HaloWidth] wide just outside the node's edge. It is drawn outside the node's bounds. */
+private fun Modifier.halo(color: Color): Modifier = drawBehind {
+    val width = HaloWidth.toPx()
+    drawCircle(color = color, radius = (size.minDimension + width) / 2f, style = Stroke(width = width))
 }
 
 /**
@@ -349,6 +412,9 @@ private fun labelColor(state: JengaStepState, colors: JengaStepIndicatorColors):
 }
 
 private val MinLineWidth = 12.dp
+
+/** The width of the halo around the current step in [JengaStepIndicatorVariant.Compact]. */
+private val HaloWidth = 3.dp
 
 /** The tallest a step number's font gets, as a fraction of the node size. */
 private const val MaxNumberSize = 0.5f
