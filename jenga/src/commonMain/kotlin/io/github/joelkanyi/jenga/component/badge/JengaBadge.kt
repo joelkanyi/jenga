@@ -132,3 +132,16 @@ public fun JengaBadge(
         )
     }
 }
+
+/** Largest count a badge shows as a number; above it the text is "99+". */
+private const val MaxBadgeCount = 99
+
+/**
+ * The text of a count badge: null when [count] is zero or less (no badge), the number up to 99,
+ * and "99+" above it. Shared by the components that show a count in a [JengaBadge].
+ */
+internal fun jengaBadgeCountText(count: Int): String? = when {
+    count <= 0 -> null
+    count > MaxBadgeCount -> "$MaxBadgeCount+"
+    else -> count.toString()
+}

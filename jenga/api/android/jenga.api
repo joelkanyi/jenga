@@ -2102,15 +2102,24 @@ public final class io/github/joelkanyi/jenga/component/navigation/ComposableSing
 	public fun <init> ()V
 	public final fun getLambda$-1020414542$jenga_release ()Lkotlin/jvm/functions/Function2;
 	public final fun getLambda$-10452845$jenga_release ()Lkotlin/jvm/functions/Function2;
+	public final fun getLambda$-1247595373$jenga_release ()Lkotlin/jvm/functions/Function2;
+	public final fun getLambda$-1685581082$jenga_release ()Lkotlin/jvm/functions/Function2;
+	public final fun getLambda$-1968664849$jenga_release ()Lkotlin/jvm/functions/Function2;
+	public final fun getLambda$-2063629001$jenga_release ()Lkotlin/jvm/functions/Function2;
 	public final fun getLambda$-276913111$jenga_release ()Lkotlin/jvm/functions/Function2;
+	public final fun getLambda$-477925720$jenga_release ()Lkotlin/jvm/functions/Function2;
 	public final fun getLambda$-937207598$jenga_release ()Lkotlin/jvm/functions/Function2;
 	public final fun getLambda$-989889061$jenga_release ()Lkotlin/jvm/functions/Function2;
 	public final fun getLambda$1086729127$jenga_release ()Lkotlin/jvm/functions/Function3;
+	public final fun getLambda$146920419$jenga_release ()Lkotlin/jvm/functions/Function3;
 	public final fun getLambda$1538574378$jenga_release ()Lkotlin/jvm/functions/Function2;
+	public final fun getLambda$1572269637$jenga_release ()Lkotlin/jvm/functions/Function2;
 	public final fun getLambda$1817455643$jenga_release ()Lkotlin/jvm/functions/Function2;
 	public final fun getLambda$1827696912$jenga_release ()Lkotlin/jvm/functions/Function2;
 	public final fun getLambda$1835983322$jenga_release ()Lkotlin/jvm/functions/Function2;
 	public final fun getLambda$1995581502$jenga_release ()Lkotlin/jvm/functions/Function3;
+	public final fun getLambda$264604605$jenga_release ()Lkotlin/jvm/functions/Function2;
+	public final fun getLambda$535153060$jenga_release ()Lkotlin/jvm/functions/Function2;
 }
 
 public final class io/github/joelkanyi/jenga/component/navigation/ComposableSingletons$JengaNavigationRailItemPreviewsKt {
@@ -2118,8 +2127,15 @@ public final class io/github/joelkanyi/jenga/component/navigation/ComposableSing
 	public fun <init> ()V
 	public final fun getLambda$-1117215453$jenga_release ()Lkotlin/jvm/functions/Function2;
 	public final fun getLambda$-1447684284$jenga_release ()Lkotlin/jvm/functions/Function2;
+	public final fun getLambda$-1555942319$jenga_release ()Lkotlin/jvm/functions/Function2;
+	public final fun getLambda$-1823691908$jenga_release ()Lkotlin/jvm/functions/Function2;
 	public final fun getLambda$-355460901$jenga_release ()Lkotlin/jvm/functions/Function2;
+	public final fun getLambda$-568909891$jenga_release ()Lkotlin/jvm/functions/Function2;
 	public final fun getLambda$-672466178$jenga_release ()Lkotlin/jvm/functions/Function2;
+	public final fun getLambda$1216493371$jenga_release ()Lkotlin/jvm/functions/Function2;
+	public final fun getLambda$1579981828$jenga_release ()Lkotlin/jvm/functions/Function2;
+	public final fun getLambda$2061049786$jenga_release ()Lkotlin/jvm/functions/Function2;
+	public final fun getLambda$498514917$jenga_release ()Lkotlin/jvm/functions/Function2;
 	public final fun getLambda$575815267$jenga_release ()Lkotlin/jvm/functions/Function2;
 	public final fun getLambda$576641560$jenga_release ()Lkotlin/jvm/functions/Function2;
 }
@@ -2158,7 +2174,8 @@ public final class io/github/joelkanyi/jenga/component/navigation/JengaNavigatio
 
 public final class io/github/joelkanyi/jenga/component/navigation/JengaNavigationBarKt {
 	public static final fun JengaNavigationBar (Landroidx/compose/ui/Modifier;Lio/github/joelkanyi/jenga/component/navigation/JengaNavigationBarColors;Lkotlin/jvm/functions/Function3;Landroidx/compose/runtime/Composer;II)V
-	public static final fun JengaNavigationBarItem (Landroidx/compose/foundation/layout/RowScope;ZLkotlin/jvm/functions/Function0;Lkotlin/jvm/functions/Function2;Landroidx/compose/ui/Modifier;Ljava/lang/String;ZLio/github/joelkanyi/jenga/component/navigation/JengaNavIndicator;Lio/github/joelkanyi/jenga/component/navigation/JengaNavigationBarColors;Landroidx/compose/runtime/Composer;II)V
+	public static final fun JengaNavigationBarItem (Landroidx/compose/foundation/layout/RowScope;ZLkotlin/jvm/functions/Function0;Lkotlin/jvm/functions/Function2;Landroidx/compose/ui/Modifier;Ljava/lang/String;ZLio/github/joelkanyi/jenga/component/navigation/JengaNavIndicator;Lio/github/joelkanyi/jenga/component/navigation/JengaNavigationBarColors;ILjava/lang/String;Lio/github/joelkanyi/jenga/component/badge/JengaBadgeTone;Landroidx/compose/runtime/Composer;III)V
+	public static final synthetic fun JengaNavigationBarItem (Landroidx/compose/foundation/layout/RowScope;ZLkotlin/jvm/functions/Function0;Lkotlin/jvm/functions/Function2;Landroidx/compose/ui/Modifier;Ljava/lang/String;ZLio/github/joelkanyi/jenga/component/navigation/JengaNavIndicator;Lio/github/joelkanyi/jenga/component/navigation/JengaNavigationBarColors;Landroidx/compose/runtime/Composer;II)V
 }
 
 public final class io/github/joelkanyi/jenga/component/navigation/JengaNavigationRailItemColors {
@@ -2188,7 +2205,8 @@ public final class io/github/joelkanyi/jenga/component/navigation/JengaNavigatio
 }
 
 public final class io/github/joelkanyi/jenga/component/navigation/JengaNavigationRailItemKt {
-	public static final fun JengaNavigationRailItem-xKBSf-U (Ljava/lang/String;ZLkotlin/jvm/functions/Function0;Lkotlin/jvm/functions/Function2;Landroidx/compose/ui/Modifier;ZZFLandroidx/compose/ui/graphics/Shape;Landroidx/compose/foundation/layout/PaddingValues;Landroidx/compose/ui/text/TextStyle;Landroidx/compose/ui/text/TextStyle;Lio/github/joelkanyi/jenga/component/navigation/JengaNavigationRailItemColors;Landroidx/compose/runtime/Composer;III)V
+	public static final fun JengaNavigationRailItem-RnoHquI (Ljava/lang/String;ZLkotlin/jvm/functions/Function0;Lkotlin/jvm/functions/Function2;Landroidx/compose/ui/Modifier;ZZFLandroidx/compose/ui/graphics/Shape;Landroidx/compose/foundation/layout/PaddingValues;Landroidx/compose/ui/text/TextStyle;Landroidx/compose/ui/text/TextStyle;Lio/github/joelkanyi/jenga/component/navigation/JengaNavigationRailItemColors;ILjava/lang/String;Lio/github/joelkanyi/jenga/component/badge/JengaBadgeTone;Landroidx/compose/runtime/Composer;III)V
+	public static final synthetic fun JengaNavigationRailItem-xKBSf-U (Ljava/lang/String;ZLkotlin/jvm/functions/Function0;Lkotlin/jvm/functions/Function2;Landroidx/compose/ui/Modifier;ZZFLandroidx/compose/ui/graphics/Shape;Landroidx/compose/foundation/layout/PaddingValues;Landroidx/compose/ui/text/TextStyle;Landroidx/compose/ui/text/TextStyle;Lio/github/joelkanyi/jenga/component/navigation/JengaNavigationRailItemColors;Landroidx/compose/runtime/Composer;III)V
 }
 
 public final class io/github/joelkanyi/jenga/component/navigation/JengaNavigationRailItemStyle {
@@ -4301,6 +4319,7 @@ public final class io/github/joelkanyi/jenga/samples/ComposableSingletons$JengaS
 	public final fun getLambda$-526265762$jenga_release ()Lkotlin/jvm/functions/Function2;
 	public final fun getLambda$-53955776$jenga_release ()Lkotlin/jvm/functions/Function3;
 	public final fun getLambda$-541749141$jenga_release ()Lkotlin/jvm/functions/Function2;
+	public final fun getLambda$-574767514$jenga_release ()Lkotlin/jvm/functions/Function2;
 	public final fun getLambda$-626117203$jenga_release ()Lkotlin/jvm/functions/Function2;
 	public final fun getLambda$-67187725$jenga_release ()Lkotlin/jvm/functions/Function3;
 	public final fun getLambda$-714408400$jenga_release ()Lkotlin/jvm/functions/Function2;
@@ -4310,6 +4329,7 @@ public final class io/github/joelkanyi/jenga/samples/ComposableSingletons$JengaS
 	public final fun getLambda$-956031833$jenga_release ()Lkotlin/jvm/functions/Function2;
 	public final fun getLambda$-983531617$jenga_release ()Lkotlin/jvm/functions/Function3;
 	public final fun getLambda$1056921111$jenga_release ()Lkotlin/jvm/functions/Function2;
+	public final fun getLambda$1094555631$jenga_release ()Lkotlin/jvm/functions/Function2;
 	public final fun getLambda$1375474695$jenga_release ()Lkotlin/jvm/functions/Function3;
 	public final fun getLambda$1557062852$jenga_release ()Lkotlin/jvm/functions/Function3;
 	public final fun getLambda$1718255370$jenga_release ()Lkotlin/jvm/functions/Function2;
@@ -4320,6 +4340,7 @@ public final class io/github/joelkanyi/jenga/samples/ComposableSingletons$JengaS
 	public final fun getLambda$205903528$jenga_release ()Lkotlin/jvm/functions/Function2;
 	public final fun getLambda$2082387659$jenga_release ()Lkotlin/jvm/functions/Function2;
 	public final fun getLambda$2127897924$jenga_release ()Lkotlin/jvm/functions/Function2;
+	public final fun getLambda$273428084$jenga_release ()Lkotlin/jvm/functions/Function2;
 	public final fun getLambda$277114736$jenga_release ()Lkotlin/jvm/functions/Function3;
 	public final fun getLambda$380858747$jenga_release ()Lkotlin/jvm/functions/Function2;
 	public final fun getLambda$401415822$jenga_release ()Lkotlin/jvm/functions/Function3;

@@ -108,6 +108,7 @@ import io.github.joelkanyi.jenga.component.menu.JengaDropdownMenu
 import io.github.joelkanyi.jenga.component.menu.JengaDropdownMenuDivider
 import io.github.joelkanyi.jenga.component.menu.JengaDropdownMenuItem
 import io.github.joelkanyi.jenga.component.menu.JengaDropdownMenuItemTone
+import io.github.joelkanyi.jenga.component.navigation.JengaNavIndicator
 import io.github.joelkanyi.jenga.component.navigation.JengaNavigationBar
 import io.github.joelkanyi.jenga.component.navigation.JengaNavigationBarItem
 import io.github.joelkanyi.jenga.component.navigation.JengaNavigationRailItem
@@ -2520,6 +2521,114 @@ fun componentEntries(): List<CatalogEntry> = listOf(
         },
     ),
     CatalogEntry(
+        name = "Navigation bar with a count",
+        group = "Navigation",
+        description = "A count badge at the top end of an item's icon; hidden at 0, 99+ above 99.",
+        keywords = "bottom nav badge count unread notifications",
+        code = """
+            var selected by remember {
+                mutableIntStateOf(
+                    value = 0,
+                )
+            }
+            val unread = 3
+            JengaNavigationBar(
+                content = {
+                    JengaNavigationBarItem(
+                        selected = selected == 0,
+                        onClick = { selected = 0 },
+                        icon = {
+                            JengaIcon(
+                                imageVector = JengaIcons.Search,
+                                contentDescription = null,
+                            )
+                        },
+                        label = "Events",
+                        indicator = JengaNavIndicator.Pill,
+                    )
+                    JengaNavigationBarItem(
+                        selected = selected == 1,
+                        onClick = { selected = 1 },
+                        icon = {
+                            JengaIcon(
+                                imageVector = JengaIcons.Bell,
+                                contentDescription = null,
+                            )
+                        },
+                        label = "Notifications",
+                        indicator = JengaNavIndicator.Pill,
+                        badgeCount = unread,
+                        badgeContentDescription = "${'$'}unread new",
+                    )
+                    JengaNavigationBarItem(
+                        selected = selected == 2,
+                        onClick = { selected = 2 },
+                        icon = {
+                            JengaIcon(
+                                imageVector = JengaIcons.Ticket,
+                                contentDescription = null,
+                            )
+                        },
+                        label = "Tickets",
+                        indicator = JengaNavIndicator.Pill,
+                        badgeCount = 120,
+                    )
+                },
+            )
+        """.trimIndent(),
+        demo = {
+            var selected by remember {
+                mutableIntStateOf(
+                    value = 0,
+                )
+            }
+            val unread = 3
+            JengaNavigationBar(
+                content = {
+                    JengaNavigationBarItem(
+                        selected = selected == 0,
+                        onClick = { selected = 0 },
+                        icon = {
+                            JengaIcon(
+                                imageVector = JengaIcons.Search,
+                                contentDescription = null,
+                            )
+                        },
+                        label = "Events",
+                        indicator = JengaNavIndicator.Pill,
+                    )
+                    JengaNavigationBarItem(
+                        selected = selected == 1,
+                        onClick = { selected = 1 },
+                        icon = {
+                            JengaIcon(
+                                imageVector = JengaIcons.Bell,
+                                contentDescription = null,
+                            )
+                        },
+                        label = "Notifications",
+                        indicator = JengaNavIndicator.Pill,
+                        badgeCount = unread,
+                        badgeContentDescription = "$unread new",
+                    )
+                    JengaNavigationBarItem(
+                        selected = selected == 2,
+                        onClick = { selected = 2 },
+                        icon = {
+                            JengaIcon(
+                                imageVector = JengaIcons.Ticket,
+                                contentDescription = null,
+                            )
+                        },
+                        label = "Tickets",
+                        indicator = JengaNavIndicator.Pill,
+                        badgeCount = 120,
+                    )
+                },
+            )
+        },
+    ),
+    CatalogEntry(
         name = "Bottom bar",
         group = "Navigation",
         description = "A footer row of actions for the current screen.",
@@ -4098,6 +4207,86 @@ fun componentEntries(): List<CatalogEntry> = listOf(
                             )
                         },
                         showDot = true,
+                    )
+                },
+            )
+        },
+    ),
+    CatalogEntry(
+        name = "Navigation rail item with a count",
+        group = "Navigation",
+        description = "A count badge after the label of a destination row.",
+        keywords = "rail side nav badge count unread notifications",
+        code = """
+            var selected by remember {
+                mutableIntStateOf(
+                    value = 0,
+                )
+            }
+            val unread = 3
+            JengaStack(
+                space = JengaTheme.spacing.none,
+                content = {
+                    JengaNavigationRailItem(
+                        label = "Tickets",
+                        selected = selected == 0,
+                        onClick = { selected = 0 },
+                        icon = {
+                            JengaIcon(
+                                imageVector = JengaIcons.Ticket,
+                                contentDescription = null,
+                            )
+                        },
+                    )
+                    JengaNavigationRailItem(
+                        label = "Notifications",
+                        selected = selected == 1,
+                        onClick = { selected = 1 },
+                        icon = {
+                            JengaIcon(
+                                imageVector = JengaIcons.Bell,
+                                contentDescription = null,
+                            )
+                        },
+                        badgeCount = unread,
+                        badgeContentDescription = "${'$'}unread new",
+                    )
+                },
+            )
+        """.trimIndent(),
+        demo = {
+            var selected by remember {
+                mutableIntStateOf(
+                    value = 0,
+                )
+            }
+            val unread = 3
+            JengaStack(
+                space = JengaTheme.spacing.none,
+                content = {
+                    JengaNavigationRailItem(
+                        label = "Tickets",
+                        selected = selected == 0,
+                        onClick = { selected = 0 },
+                        icon = {
+                            JengaIcon(
+                                imageVector = JengaIcons.Ticket,
+                                contentDescription = null,
+                            )
+                        },
+                    )
+                    JengaNavigationRailItem(
+                        label = "Notifications",
+                        selected = selected == 1,
+                        onClick = { selected = 1 },
+                        icon = {
+                            JengaIcon(
+                                imageVector = JengaIcons.Bell,
+                                contentDescription = null,
+                            )
+                        },
+                        badgeCount = unread,
+                        badgeContentDescription = "$unread new",
                     )
                 },
             )

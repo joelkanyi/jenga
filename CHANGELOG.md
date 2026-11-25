@@ -20,6 +20,8 @@
  * New: `JengaEmptyState` and `JengaErrorState` take a second action, `secondaryActionLabel` and `onSecondaryAction`, shown under the first; `secondaryActionVariant` defaults to Ghost.
  * New: `JengaEmptyState` and `JengaErrorState` take `layout`. `JengaStateLayout.FillScreen` fills the given bounds, centers the icon, title and description in the space above the actions (scrolling when they do not fit) and pins the actions at the bottom as full-width buttons with 16dp at the sides. It does not pad for system bars: pass the scaffold's content padding through `modifier`, or add `Modifier.windowInsetsPadding(WindowInsets.safeDrawing)`. `JengaStateLayout.Inline`, the default, is the layout as before.
  * New: `JengaBottomBar` has an overload taking `primaryAction` and an optional `secondaryAction`: two actions sit side by side (secondary at the start, primary at the end, equal widths) when both labels fit on one line in their half of the bar, otherwise they stack full width with the primary on top, `spacing.md` (12dp) apart. The `RowScope` overload is unchanged.
+ * New: `JengaNavigationBarItem` takes `badgeCount` and shows it in a `JengaBadge` at the top end of the icon: hidden at 0, "99+" above 99, `JengaBadgeTone.Error` unless `badgeTone` is set. `badgeContentDescription` (e.g. "3 new") is what a screen reader says after the item's name.
+ * New: `JengaNavigationRailItem` takes the same `badgeCount`, `badgeContentDescription` and `badgeTone`; the badge follows the label.
 
 ## Version 0.8.6
 

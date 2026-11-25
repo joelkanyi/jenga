@@ -81,6 +81,7 @@ import io.github.joelkanyi.jenga.component.media.JengaImageViewerCloseButtonPosi
 import io.github.joelkanyi.jenga.component.media.JengaMediaHero
 import io.github.joelkanyi.jenga.component.menu.JengaDropdownMenu
 import io.github.joelkanyi.jenga.component.menu.JengaDropdownMenuItem
+import io.github.joelkanyi.jenga.component.navigation.JengaNavIndicator
 import io.github.joelkanyi.jenga.component.navigation.JengaNavigationBar
 import io.github.joelkanyi.jenga.component.navigation.JengaNavigationBarItem
 import io.github.joelkanyi.jenga.component.navigation.JengaNavigationRailItem
@@ -747,6 +748,42 @@ internal fun JengaNavigationBarSample() {
 }
 
 @Composable
+internal fun JengaNavigationBarBadgeSample() {
+    val unread = 3
+    JengaNavigationBar(
+        content = {
+            JengaNavigationBarItem(
+                selected = true,
+                onClick = { },
+                icon = {
+                    JengaIcon(
+                        imageVector = JengaIcons.Search,
+                        contentDescription = null,
+                    )
+                },
+                label = "Events",
+                indicator = JengaNavIndicator.Pill,
+            )
+            JengaNavigationBarItem(
+                selected = false,
+                onClick = { },
+                icon = {
+                    JengaIcon(
+                        imageVector = JengaIcons.Bell,
+                        contentDescription = null,
+                    )
+                },
+                label = "Notifications",
+                indicator = JengaNavIndicator.Pill,
+                badgeCount = unread,
+                // Read after the label: "Notifications, 3 new". Use a plural string resource.
+                badgeContentDescription = "$unread new",
+            )
+        },
+    )
+}
+
+@Composable
 internal fun JengaTabsSample() {
     JengaTabs(
         selectedIndex = 0,
@@ -1379,6 +1416,25 @@ internal fun JengaCardFooterSample() {
                 text = "Waiting for parts since Monday",
             )
         },
+    )
+}
+
+@Composable
+internal fun JengaNavigationRailItemBadgeSample() {
+    val unread = 3
+    JengaNavigationRailItem(
+        label = "Notifications",
+        selected = false,
+        onClick = { },
+        icon = {
+            JengaIcon(
+                imageVector = JengaIcons.Bell,
+                contentDescription = null,
+            )
+        },
+        badgeCount = unread,
+        // Read after the label: "Notifications, 3 new". Use a plural string resource.
+        badgeContentDescription = "$unread new",
     )
 }
 
