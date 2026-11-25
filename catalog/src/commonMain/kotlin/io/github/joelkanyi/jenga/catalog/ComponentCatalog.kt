@@ -162,6 +162,7 @@ import io.github.joelkanyi.jenga.component.state.JengaStateLayout
 import io.github.joelkanyi.jenga.component.status.JengaStatusPill
 import io.github.joelkanyi.jenga.component.stepindicator.JengaStep
 import io.github.joelkanyi.jenga.component.stepindicator.JengaStepIndicator
+import io.github.joelkanyi.jenga.component.stepindicator.JengaStepIndicatorVariant
 import io.github.joelkanyi.jenga.component.stepindicator.JengaStepState
 import io.github.joelkanyi.jenga.component.stepper.JengaStepper
 import io.github.joelkanyi.jenga.component.swipe.JengaSwipeToDismiss
@@ -5665,8 +5666,8 @@ fun componentEntries(): List<CatalogEntry> = listOf(
     CatalogEntry(
         name = "Step indicator",
         group = "Navigation",
-        description = "A row of steps for a multi-step flow: done, current, pending or locked.",
-        keywords = "steps stepper progress wizard flow checkout",
+        description = "A row of steps for a multi-step flow: done, current, pending or locked, with a dot or the step number.",
+        keywords = "steps stepper progress wizard flow checkout numbered number",
         code = """
             val steps =
                 listOf(
@@ -5689,6 +5690,13 @@ fun componentEntries(): List<CatalogEntry> = listOf(
                     "Step ${'$'}{index + 1} of 3, ${'$'}{step.label}"
                 },
             )
+            JengaStepIndicator(
+                steps = steps,
+                stepContentDescription = { index, step ->
+                    "Step ${'$'}{index + 1} of 3, ${'$'}{step.label}"
+                },
+                variant = JengaStepIndicatorVariant.Numbered,
+            )
         """.trimIndent(),
         demo = {
             var current by remember {
@@ -5710,10 +5718,21 @@ fun componentEntries(): List<CatalogEntry> = listOf(
                     },
                 )
             }
-            JengaStepIndicator(
-                steps = steps,
-                stepContentDescription = { index, step -> "Step ${index + 1} of 3, ${step.label}" },
-                onStepClick = { current = it },
+            JengaStack(
+                space = JengaTheme.spacing.lg,
+                content = {
+                    JengaStepIndicator(
+                        steps = steps,
+                        stepContentDescription = { index, step -> "Step ${index + 1} of 3, ${step.label}" },
+                        onStepClick = { current = it },
+                    )
+                    JengaStepIndicator(
+                        steps = steps,
+                        stepContentDescription = { index, step -> "Step ${index + 1} of 3, ${step.label}" },
+                        variant = JengaStepIndicatorVariant.Numbered,
+                        onStepClick = { current = it },
+                    )
+                },
             )
         },
     ),

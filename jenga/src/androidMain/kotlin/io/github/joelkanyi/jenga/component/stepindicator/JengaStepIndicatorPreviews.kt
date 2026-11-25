@@ -54,11 +54,94 @@ internal fun JengaStepIndicatorLongLabelsPreview() {
     }
 }
 
+/**
+ * The numbered variant in every state. The first two rows show the same steps as labelled then
+ * numbered, so the nodes can be compared; the rest are 328dp wide, a 360dp phone with margins.
+ */
+@JengaBlockPreviews
 @Composable
-private fun PreviewSteps(vararg steps: Pair<String, JengaStepState>, modifier: Modifier = Modifier) {
+internal fun JengaStepIndicatorNumberedPreview() {
+    val numbered = JengaStepIndicatorVariant.Numbered
+    val phone = Modifier.width(328.dp)
+    JengaTheme {
+        Column(
+            modifier = Modifier.background(JengaTheme.colors.surface).padding(JengaTheme.spacing.md),
+            verticalArrangement = Arrangement.spacedBy(JengaTheme.spacing.lg),
+        ) {
+            PreviewSteps(
+                "Details" to JengaStepState.Done,
+                "Product" to JengaStepState.Current,
+                "Documents" to JengaStepState.Pending,
+                "Sign" to JengaStepState.Pending,
+                modifier = phone,
+            )
+            PreviewSteps(
+                "Details" to JengaStepState.Done,
+                "Product" to JengaStepState.Current,
+                "Documents" to JengaStepState.Pending,
+                "Sign" to JengaStepState.Pending,
+                modifier = phone,
+                variant = numbered,
+            )
+            PreviewSteps(
+                "Details" to JengaStepState.Current,
+                "Product" to JengaStepState.Pending,
+                "Documents" to JengaStepState.Pending,
+                "Sign" to JengaStepState.Pending,
+                modifier = phone,
+                variant = numbered,
+            )
+            PreviewSteps(
+                "Details" to JengaStepState.Locked,
+                "Product" to JengaStepState.Locked,
+                "Documents" to JengaStepState.Locked,
+                "Sign" to JengaStepState.Current,
+                modifier = phone,
+                variant = numbered,
+            )
+            PreviewSteps(
+                "Details" to JengaStepState.Done,
+                "Product" to JengaStepState.Done,
+                "Documents" to JengaStepState.Done,
+                "Sign" to JengaStepState.Done,
+                modifier = phone,
+                variant = numbered,
+            )
+            PreviewSteps(
+                "Taarifa za mteja" to JengaStepState.Done,
+                "Bidhaa na mpango" to JengaStepState.Done,
+                "Nyaraka" to JengaStepState.Current,
+                "Makubaliano" to JengaStepState.Pending,
+                "Malipo ya awali" to JengaStepState.Pending,
+                "Uthibitisho" to JengaStepState.Pending,
+                modifier = phone,
+                variant = numbered,
+            )
+            PreviewSteps(
+                *Array(10) { index ->
+                    "Q${index + 1}" to when {
+                        index < 2 -> JengaStepState.Done
+                        index == 2 -> JengaStepState.Current
+                        else -> JengaStepState.Pending
+                    }
+                },
+                modifier = Modifier.width(420.dp),
+                variant = numbered,
+            )
+        }
+    }
+}
+
+@Composable
+private fun PreviewSteps(
+    vararg steps: Pair<String, JengaStepState>,
+    modifier: Modifier = Modifier,
+    variant: JengaStepIndicatorVariant = JengaStepIndicatorVariant.Labelled,
+) {
     JengaStepIndicator(
         steps = steps.map { (label, state) -> JengaStep(label, state) },
         stepContentDescription = { _, step -> step.label },
         modifier = modifier,
+        variant = variant,
     )
 }

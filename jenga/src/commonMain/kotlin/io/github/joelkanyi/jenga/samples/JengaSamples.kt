@@ -132,6 +132,7 @@ import io.github.joelkanyi.jenga.component.state.JengaStateLayout
 import io.github.joelkanyi.jenga.component.status.JengaStatusPill
 import io.github.joelkanyi.jenga.component.stepindicator.JengaStep
 import io.github.joelkanyi.jenga.component.stepindicator.JengaStepIndicator
+import io.github.joelkanyi.jenga.component.stepindicator.JengaStepIndicatorVariant
 import io.github.joelkanyi.jenga.component.stepindicator.JengaStepState
 import io.github.joelkanyi.jenga.component.stepper.JengaStepper
 import io.github.joelkanyi.jenga.component.swipe.JengaSwipeToDismiss
@@ -1964,6 +1965,33 @@ internal fun JengaStepIndicatorSample() {
     JengaStepIndicator(
         steps = steps,
         stepContentDescription = { index, step -> "Step ${index + 1} of ${steps.size}, ${step.label}" },
+    )
+}
+
+@Composable
+internal fun JengaStepIndicatorNumberedSample() {
+    val steps = listOf(
+        JengaStep(
+            label = "Details",
+            state = JengaStepState.Done,
+        ),
+        JengaStep(
+            label = "Product",
+            state = JengaStepState.Current,
+        ),
+        JengaStep(
+            label = "Documents",
+            state = JengaStepState.Pending,
+        ),
+        JengaStep(
+            label = "Sign",
+            state = JengaStepState.Pending,
+        ),
+    )
+    JengaStepIndicator(
+        steps = steps,
+        stepContentDescription = { index, step -> "Step ${index + 1} of ${steps.size}, ${step.label}" },
+        variant = JengaStepIndicatorVariant.Numbered,
     )
 }
 

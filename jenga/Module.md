@@ -219,7 +219,7 @@ Code scanning: `JengaScannerViewfinder` and `JengaScanFeedback`.
 
 # Package io.github.joelkanyi.jenga.component.stepindicator
 
-`JengaStepIndicator`: a row of steps (done, current, pending, locked) for a multi-step flow.
+`JengaStepIndicator`: a row of steps (done, current, pending, locked) for a multi-step flow, optionally with the step number inside the current and pending steps.
 
 # Package io.github.joelkanyi.jenga.component.stepper
 
