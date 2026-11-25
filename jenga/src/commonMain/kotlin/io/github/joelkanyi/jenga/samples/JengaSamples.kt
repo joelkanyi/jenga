@@ -20,6 +20,7 @@ import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.unit.dp
 import io.github.joelkanyi.jenga.component.action.JengaAction
 import io.github.joelkanyi.jenga.component.avatar.JengaAvatar
+import io.github.joelkanyi.jenga.component.avatar.JengaAvatarDefaults
 import io.github.joelkanyi.jenga.component.badge.JengaBadge
 import io.github.joelkanyi.jenga.component.badge.JengaBadgeTone
 import io.github.joelkanyi.jenga.component.banner.JengaBanner
@@ -351,6 +352,11 @@ internal fun JengaCheckboxMixedSample() {
 internal fun JengaAvatarSample() {
     JengaAvatar(
         name = "Ada Lovelace",
+    )
+    // A grey avatar, so the brand color stays for actions.
+    JengaAvatar(
+        name = "Grace Hopper",
+        colors = JengaAvatarDefaults.neutralColors(),
     )
 }
 

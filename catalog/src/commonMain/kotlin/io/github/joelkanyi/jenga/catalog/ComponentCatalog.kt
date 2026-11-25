@@ -1,6 +1,7 @@
 package io.github.joelkanyi.jenga.catalog
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
@@ -35,6 +36,8 @@ import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import io.github.joelkanyi.jenga.component.action.JengaAction
 import io.github.joelkanyi.jenga.component.avatar.JengaAvatar
+import io.github.joelkanyi.jenga.component.avatar.JengaAvatarColors
+import io.github.joelkanyi.jenga.component.avatar.JengaAvatarDefaults
 import io.github.joelkanyi.jenga.component.avatar.JengaAvatarSize
 import io.github.joelkanyi.jenga.component.badge.JengaBadge
 import io.github.joelkanyi.jenga.component.badge.JengaBadgeTone
@@ -2507,8 +2510,8 @@ fun componentEntries(): List<CatalogEntry> = listOf(
     CatalogEntry(
         name = "Avatar",
         group = "Data display",
-        description = "Initials or an image, in three sizes or a custom diameter.",
-        keywords = "initials profile picture diameter",
+        description = "Initials or an image, in three sizes or a custom diameter, in brand, neutral or custom colors.",
+        keywords = "initials profile picture diameter colors neutral grey",
         code = """
             JengaAvatar(
                 name = "Joel Kanyi",
@@ -2526,25 +2529,108 @@ fun componentEntries(): List<CatalogEntry> = listOf(
                 diameter = 72.dp,
                 textStyle = JengaTheme.typography.headingSmall,
             )
-        """.trimIndent(),
-        demo = {
+            // Neutral avatars sit on a surface, such as a list row or card.
             JengaInline(
+                modifier = Modifier
+                    .clip(
+                        shape = JengaTheme.shapes.md,
+                    )
+                    .background(
+                        color = JengaTheme.colors.surface,
+                    )
+                    .border(
+                        width = 1.dp,
+                        color = JengaTheme.colors.border,
+                        shape = JengaTheme.shapes.md,
+                    )
+                    .padding(
+                        all = JengaTheme.spacing.md,
+                    ),
                 content = {
                     JengaAvatar(
-                        name = "Joel Kanyi",
-                        size = JengaAvatarSize.Small,
+                        name = "Jane Wanjiru",
+                        colors = JengaAvatarDefaults.neutralColors(),
                     )
                     JengaAvatar(
-                        name = "Ada Lovelace",
+                        colors = JengaAvatarDefaults.neutralColors(),
+                        content = {
+                            JengaIcon(
+                                imageVector = JengaIcons.User,
+                                contentDescription = "No name yet",
+                            )
+                        },
                     )
                     JengaAvatar(
-                        name = "Grace Hopper",
-                        size = JengaAvatarSize.Large,
+                        name = "Peter Kamau",
+                        colors = JengaAvatarColors(
+                            container = JengaTheme.colors.infoContainer,
+                            content = JengaTheme.colors.onInfoContainer,
+                        ),
                     )
-                    JengaAvatar(
-                        name = "Alan Turing",
-                        diameter = 72.dp,
-                        textStyle = JengaTheme.typography.headingSmall,
+                },
+            )
+        """.trimIndent(),
+        demo = {
+            JengaStack(
+                content = {
+                    JengaInline(
+                        content = {
+                            JengaAvatar(
+                                name = "Joel Kanyi",
+                                size = JengaAvatarSize.Small,
+                            )
+                            JengaAvatar(
+                                name = "Ada Lovelace",
+                            )
+                            JengaAvatar(
+                                name = "Grace Hopper",
+                                size = JengaAvatarSize.Large,
+                            )
+                            JengaAvatar(
+                                name = "Alan Turing",
+                                diameter = 72.dp,
+                                textStyle = JengaTheme.typography.headingSmall,
+                            )
+                        },
+                    )
+                    JengaInline(
+                        modifier = Modifier
+                            .clip(
+                                shape = JengaTheme.shapes.md,
+                            )
+                            .background(
+                                color = JengaTheme.colors.surface,
+                            )
+                            .border(
+                                width = 1.dp,
+                                color = JengaTheme.colors.border,
+                                shape = JengaTheme.shapes.md,
+                            )
+                            .padding(
+                                all = JengaTheme.spacing.md,
+                            ),
+                        content = {
+                            JengaAvatar(
+                                name = "Jane Wanjiru",
+                                colors = JengaAvatarDefaults.neutralColors(),
+                            )
+                            JengaAvatar(
+                                colors = JengaAvatarDefaults.neutralColors(),
+                                content = {
+                                    JengaIcon(
+                                        imageVector = JengaIcons.User,
+                                        contentDescription = "No name yet",
+                                    )
+                                },
+                            )
+                            JengaAvatar(
+                                name = "Peter Kamau",
+                                colors = JengaAvatarColors(
+                                    container = JengaTheme.colors.infoContainer,
+                                    content = JengaTheme.colors.onInfoContainer,
+                                ),
+                            )
+                        },
                     )
                 },
             )

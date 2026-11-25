@@ -10,16 +10,33 @@ public final class io/github/joelkanyi/jenga/component/action/JengaAction {
 	public fun toString ()Ljava/lang/String;
 }
 
+public final class io/github/joelkanyi/jenga/component/avatar/JengaAvatarColors {
+	public static final field $stable I
+	public synthetic fun <init> (JJLkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun copy--OWjLjI (JJ)Lio/github/joelkanyi/jenga/component/avatar/JengaAvatarColors;
+	public static synthetic fun copy--OWjLjI$default (Lio/github/joelkanyi/jenga/component/avatar/JengaAvatarColors;JJILjava/lang/Object;)Lio/github/joelkanyi/jenga/component/avatar/JengaAvatarColors;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getContainer-0d7_KjU ()J
+	public final fun getContent-0d7_KjU ()J
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
 public final class io/github/joelkanyi/jenga/component/avatar/JengaAvatarDefaults {
 	public static final field $stable I
 	public static final field INSTANCE Lio/github/joelkanyi/jenga/component/avatar/JengaAvatarDefaults;
+	public final fun colors (Landroidx/compose/runtime/Composer;I)Lio/github/joelkanyi/jenga/component/avatar/JengaAvatarColors;
+	public final fun contentSlotColors (Landroidx/compose/runtime/Composer;I)Lio/github/joelkanyi/jenga/component/avatar/JengaAvatarColors;
 	public final fun diameter-u2uoSUM (Lio/github/joelkanyi/jenga/component/avatar/JengaAvatarSize;)F
+	public final fun neutralColors (Landroidx/compose/runtime/Composer;I)Lio/github/joelkanyi/jenga/component/avatar/JengaAvatarColors;
 	public final fun textStyle (Lio/github/joelkanyi/jenga/component/avatar/JengaAvatarSize;Landroidx/compose/runtime/Composer;I)Landroidx/compose/ui/text/TextStyle;
 }
 
 public final class io/github/joelkanyi/jenga/component/avatar/JengaAvatarKt {
-	public static final fun JengaAvatar-942rkJo (Landroidx/compose/ui/Modifier;Lio/github/joelkanyi/jenga/component/avatar/JengaAvatarSize;FLkotlin/jvm/functions/Function2;Landroidx/compose/runtime/Composer;II)V
-	public static final fun JengaAvatar-hGBTI10 (Ljava/lang/String;Landroidx/compose/ui/Modifier;Lio/github/joelkanyi/jenga/component/avatar/JengaAvatarSize;FLandroidx/compose/ui/text/TextStyle;Landroidx/compose/runtime/Composer;II)V
+	public static final synthetic fun JengaAvatar-942rkJo (Landroidx/compose/ui/Modifier;Lio/github/joelkanyi/jenga/component/avatar/JengaAvatarSize;FLkotlin/jvm/functions/Function2;Landroidx/compose/runtime/Composer;II)V
+	public static final fun JengaAvatar-TN_CM5M (Landroidx/compose/ui/Modifier;Lio/github/joelkanyi/jenga/component/avatar/JengaAvatarSize;FLio/github/joelkanyi/jenga/component/avatar/JengaAvatarColors;Lkotlin/jvm/functions/Function2;Landroidx/compose/runtime/Composer;II)V
+	public static final synthetic fun JengaAvatar-hGBTI10 (Ljava/lang/String;Landroidx/compose/ui/Modifier;Lio/github/joelkanyi/jenga/component/avatar/JengaAvatarSize;FLandroidx/compose/ui/text/TextStyle;Landroidx/compose/runtime/Composer;II)V
+	public static final fun JengaAvatar-jIwJxvA (Ljava/lang/String;Landroidx/compose/ui/Modifier;Lio/github/joelkanyi/jenga/component/avatar/JengaAvatarSize;FLandroidx/compose/ui/text/TextStyle;Lio/github/joelkanyi/jenga/component/avatar/JengaAvatarColors;Landroidx/compose/runtime/Composer;II)V
 }
 
 public final class io/github/joelkanyi/jenga/component/avatar/JengaAvatarSize : java/lang/Enum {
@@ -47,11 +64,16 @@ public final class io/github/joelkanyi/jenga/component/avatar/JengaAvatarSizeSty
 public final class io/github/joelkanyi/jenga/component/avatar/JengaAvatarStyle {
 	public static final field $stable I
 	public fun <init> ()V
-	public fun <init> (Lio/github/joelkanyi/jenga/component/avatar/JengaAvatarSizeStyle;Lio/github/joelkanyi/jenga/component/avatar/JengaAvatarSizeStyle;Lio/github/joelkanyi/jenga/component/avatar/JengaAvatarSizeStyle;)V
+	public synthetic fun <init> (Lio/github/joelkanyi/jenga/component/avatar/JengaAvatarSizeStyle;Lio/github/joelkanyi/jenga/component/avatar/JengaAvatarSizeStyle;Lio/github/joelkanyi/jenga/component/avatar/JengaAvatarSizeStyle;)V
 	public synthetic fun <init> (Lio/github/joelkanyi/jenga/component/avatar/JengaAvatarSizeStyle;Lio/github/joelkanyi/jenga/component/avatar/JengaAvatarSizeStyle;Lio/github/joelkanyi/jenga/component/avatar/JengaAvatarSizeStyle;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
-	public final fun copy (Lio/github/joelkanyi/jenga/component/avatar/JengaAvatarSizeStyle;Lio/github/joelkanyi/jenga/component/avatar/JengaAvatarSizeStyle;Lio/github/joelkanyi/jenga/component/avatar/JengaAvatarSizeStyle;)Lio/github/joelkanyi/jenga/component/avatar/JengaAvatarStyle;
+	public fun <init> (Lio/github/joelkanyi/jenga/component/avatar/JengaAvatarSizeStyle;Lio/github/joelkanyi/jenga/component/avatar/JengaAvatarSizeStyle;Lio/github/joelkanyi/jenga/component/avatar/JengaAvatarSizeStyle;Lio/github/joelkanyi/jenga/component/avatar/JengaAvatarColors;)V
+	public synthetic fun <init> (Lio/github/joelkanyi/jenga/component/avatar/JengaAvatarSizeStyle;Lio/github/joelkanyi/jenga/component/avatar/JengaAvatarSizeStyle;Lio/github/joelkanyi/jenga/component/avatar/JengaAvatarSizeStyle;Lio/github/joelkanyi/jenga/component/avatar/JengaAvatarColors;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final synthetic fun copy (Lio/github/joelkanyi/jenga/component/avatar/JengaAvatarSizeStyle;Lio/github/joelkanyi/jenga/component/avatar/JengaAvatarSizeStyle;Lio/github/joelkanyi/jenga/component/avatar/JengaAvatarSizeStyle;)Lio/github/joelkanyi/jenga/component/avatar/JengaAvatarStyle;
+	public final fun copy (Lio/github/joelkanyi/jenga/component/avatar/JengaAvatarSizeStyle;Lio/github/joelkanyi/jenga/component/avatar/JengaAvatarSizeStyle;Lio/github/joelkanyi/jenga/component/avatar/JengaAvatarSizeStyle;Lio/github/joelkanyi/jenga/component/avatar/JengaAvatarColors;)Lio/github/joelkanyi/jenga/component/avatar/JengaAvatarStyle;
 	public static synthetic fun copy$default (Lio/github/joelkanyi/jenga/component/avatar/JengaAvatarStyle;Lio/github/joelkanyi/jenga/component/avatar/JengaAvatarSizeStyle;Lio/github/joelkanyi/jenga/component/avatar/JengaAvatarSizeStyle;Lio/github/joelkanyi/jenga/component/avatar/JengaAvatarSizeStyle;ILjava/lang/Object;)Lio/github/joelkanyi/jenga/component/avatar/JengaAvatarStyle;
+	public static synthetic fun copy$default (Lio/github/joelkanyi/jenga/component/avatar/JengaAvatarStyle;Lio/github/joelkanyi/jenga/component/avatar/JengaAvatarSizeStyle;Lio/github/joelkanyi/jenga/component/avatar/JengaAvatarSizeStyle;Lio/github/joelkanyi/jenga/component/avatar/JengaAvatarSizeStyle;Lio/github/joelkanyi/jenga/component/avatar/JengaAvatarColors;ILjava/lang/Object;)Lio/github/joelkanyi/jenga/component/avatar/JengaAvatarStyle;
 	public fun equals (Ljava/lang/Object;)Z
+	public final fun getColors ()Lio/github/joelkanyi/jenga/component/avatar/JengaAvatarColors;
 	public final fun getLarge ()Lio/github/joelkanyi/jenga/component/avatar/JengaAvatarSizeStyle;
 	public final fun getMedium ()Lio/github/joelkanyi/jenga/component/avatar/JengaAvatarSizeStyle;
 	public final fun getSmall ()Lio/github/joelkanyi/jenga/component/avatar/JengaAvatarSizeStyle;

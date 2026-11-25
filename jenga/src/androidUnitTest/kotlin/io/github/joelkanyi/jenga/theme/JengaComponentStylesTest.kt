@@ -14,6 +14,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import io.github.joelkanyi.jenga.component.avatar.JengaAvatar
+import io.github.joelkanyi.jenga.component.avatar.JengaAvatarColors
+import io.github.joelkanyi.jenga.component.avatar.JengaAvatarDefaults
 import io.github.joelkanyi.jenga.component.avatar.JengaAvatarSizeStyle
 import io.github.joelkanyi.jenga.component.avatar.JengaAvatarStyle
 import io.github.joelkanyi.jenga.component.banner.JengaInfoBarDefaults
@@ -309,6 +311,24 @@ class JengaComponentStylesTest {
         compose.onNodeWithTag("avatar").assertWidthIsEqualTo(42.dp)
         compose.onNodeWithTag("spinner").assertWidthIsEqualTo(18.dp)
         compose.onNodeWithTag("fab").assertHeightIsEqualTo(52.dp)
+    }
+
+    @Test
+    fun avatarColorsFollowTheThemeStyle() {
+        val themed = JengaAvatarColors(container = Color.DarkGray, content = Color.White)
+        compose.setContent {
+            JengaTheme {
+                val c = JengaTheme.colors
+                assertEquals(JengaAvatarColors(c.brandSubtle, c.onBrandSubtle), JengaAvatarDefaults.colors())
+                assertEquals(JengaAvatarColors(c.surfaceSunk, c.textPrimary), JengaAvatarDefaults.contentSlotColors())
+                assertEquals(JengaAvatarColors(c.surfaceVariant, c.textSecondary), JengaAvatarDefaults.neutralColors())
+            }
+            JengaTheme(components = phase2b.copy(avatar = JengaAvatarStyle(colors = themed))) {
+                assertEquals(themed, JengaAvatarDefaults.colors())
+                assertEquals(themed, JengaAvatarDefaults.contentSlotColors())
+            }
+        }
+        compose.waitForIdle()
     }
 
     @Test

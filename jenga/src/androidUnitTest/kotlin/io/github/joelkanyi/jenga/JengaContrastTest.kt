@@ -83,6 +83,9 @@ class JengaContrastTest {
         atLeast(AA, c.onInfoContainer, c.infoContainer.over(c.surface), "onInfoContainer")
         atLeast(AA, c.onBrandSubtle, c.brandSubtle.over(c.surface), "onBrandSubtle")
 
+        // Neutral avatar initials (JengaAvatarDefaults.neutralColors): AA 4.5:1
+        atLeast(AA, c.textSecondary, c.surfaceVariant.over(c.surface), "textSecondary on surfaceVariant")
+
         // High-contrast inverse surfaces (snackbars/tooltips): AA 4.5:1
         atLeast(AA, c.inverseOnSurface, c.inverseSurface, "inverseOnSurface on inverseSurface")
         atLeast(AA, c.onInk, c.ink, "onInk on ink")
