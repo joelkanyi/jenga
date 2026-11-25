@@ -49,7 +49,9 @@ import io.github.joelkanyi.jenga.component.camera.JengaShutterButton
 import io.github.joelkanyi.jenga.component.card.JengaCard
 import io.github.joelkanyi.jenga.component.card.JengaCardFooter
 import io.github.joelkanyi.jenga.component.chart.JengaBarChart
+import io.github.joelkanyi.jenga.component.chart.JengaBarChartDefaults
 import io.github.joelkanyi.jenga.component.chart.JengaBarChartEntry
+import io.github.joelkanyi.jenga.component.chart.JengaChartTarget
 import io.github.joelkanyi.jenga.component.chip.JengaChip
 import io.github.joelkanyi.jenga.component.divider.JengaDivider
 import io.github.joelkanyi.jenga.component.expandable.JengaExpandableRow
@@ -2015,6 +2017,66 @@ internal fun JengaBarChartSample() {
         barContentDescription = { "${it.label}, ${it.value}" },
         selectedIndex = selected,
         onSelect = { selected = it },
+    )
+}
+
+@Composable
+internal fun JengaBarChartTargetSample() {
+    // Thousands collected on each day of this week. Thursday is today; the rest has no data yet.
+    val days = listOf(
+        JengaBarChartEntry(
+            label = "Mon",
+            value = 32f,
+        ),
+        JengaBarChartEntry(
+            label = "Tue",
+            value = 41f,
+        ),
+        JengaBarChartEntry(
+            label = "Wed",
+            value = 28f,
+        ),
+        JengaBarChartEntry(
+            label = "Thu",
+            value = 48.2f,
+        ),
+        JengaBarChartEntry(
+            label = "Fri",
+            value = 0f,
+        ),
+        JengaBarChartEntry(
+            label = "Sat",
+            value = 0f,
+        ),
+        JengaBarChartEntry(
+            label = "Sun",
+            value = 0f,
+        ),
+    )
+    val today = 3
+    val daysToCome = setOf("Fri", "Sat", "Sun")
+    var selected by remember {
+        mutableIntStateOf(
+            value = today,
+        )
+    }
+    JengaBarChart(
+        entries = days,
+        barContentDescription = { day ->
+            if (day.label in daysToCome) "${day.label}, no data yet" else "${day.label}, ${day.value} thousand"
+        },
+        contentDescription = "Collections this week",
+        selectedIndex = selected,
+        onSelect = { selected = it },
+        highlightedIndices = setOf(today),
+        emptyIndices = days.indices.filter { days[it].label in daysToCome }.toSet(),
+        maxValue = 50f,
+        target = JengaChartTarget(
+            value = 40f,
+            label = "Target",
+            contentDescription = "Target 40 thousand a day",
+        ),
+        colors = JengaBarChartDefaults.highlightColors(),
     )
 }
 

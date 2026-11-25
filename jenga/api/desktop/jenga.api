@@ -682,14 +682,23 @@ public final class io/github/joelkanyi/jenga/component/chart/JengaBarChartArrang
 
 public final class io/github/joelkanyi/jenga/component/chart/JengaBarChartColors {
 	public static final field $stable I
+	public synthetic fun <init> (JJJJJJJJJJILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public synthetic fun <init> (JJJJJJJJJJLkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public synthetic fun <init> (JJJJJLkotlin/jvm/internal/DefaultConstructorMarker;)V
-	public final fun copy-t635Npw (JJJJJ)Lio/github/joelkanyi/jenga/component/chart/JengaBarChartColors;
+	public final fun copy--K518z4 (JJJJJJJJJJ)Lio/github/joelkanyi/jenga/component/chart/JengaBarChartColors;
+	public static synthetic fun copy--K518z4$default (Lio/github/joelkanyi/jenga/component/chart/JengaBarChartColors;JJJJJJJJJJILjava/lang/Object;)Lio/github/joelkanyi/jenga/component/chart/JengaBarChartColors;
+	public final synthetic fun copy-t635Npw (JJJJJ)Lio/github/joelkanyi/jenga/component/chart/JengaBarChartColors;
 	public static synthetic fun copy-t635Npw$default (Lio/github/joelkanyi/jenga/component/chart/JengaBarChartColors;JJJJJILjava/lang/Object;)Lio/github/joelkanyi/jenga/component/chart/JengaBarChartColors;
 	public fun equals (Ljava/lang/Object;)Z
 	public final fun getBar-0d7_KjU ()J
+	public final fun getEmptyBar-0d7_KjU ()J
+	public final fun getHighlightedBar-0d7_KjU ()J
 	public final fun getLabel-0d7_KjU ()J
 	public final fun getSelectedBar-0d7_KjU ()J
 	public final fun getSelectedLabel-0d7_KjU ()J
+	public final fun getSelectedOutline-0d7_KjU ()J
+	public final fun getTargetLabel-0d7_KjU ()J
+	public final fun getTargetLine-0d7_KjU ()J
 	public final fun getUnselectedBar-0d7_KjU ()J
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
@@ -704,11 +713,14 @@ public final class io/github/joelkanyi/jenga/component/chart/JengaBarChartDefaul
 	public final fun getBarShape (Landroidx/compose/runtime/Composer;I)Landroidx/compose/ui/graphics/Shape;
 	public final fun getBarSpacing (Landroidx/compose/runtime/Composer;I)F
 	public final fun getContentPadding (Landroidx/compose/runtime/Composer;I)Landroidx/compose/foundation/layout/PaddingValues;
+	public final fun getEmptyBarHeight-D9Ej5fM ()F
 	public final fun getLabelSpacing (Landroidx/compose/runtime/Composer;I)F
 	public final fun getLabelStyle (Landroidx/compose/runtime/Composer;I)Landroidx/compose/ui/text/TextStyle;
 	public final fun getMinBarHeight-D9Ej5fM ()F
 	public final fun getPlotHeight-D9Ej5fM ()F
 	public final fun getSelectedLabelStyle (Landroidx/compose/runtime/Composer;I)Landroidx/compose/ui/text/TextStyle;
+	public final fun getTargetLabelStyle (Landroidx/compose/runtime/Composer;I)Landroidx/compose/ui/text/TextStyle;
+	public final fun highlightColors (Landroidx/compose/runtime/Composer;I)Lio/github/joelkanyi/jenga/component/chart/JengaBarChartColors;
 }
 
 public final class io/github/joelkanyi/jenga/component/chart/JengaBarChartEntry {
@@ -722,7 +734,20 @@ public final class io/github/joelkanyi/jenga/component/chart/JengaBarChartEntry 
 }
 
 public final class io/github/joelkanyi/jenga/component/chart/JengaBarChartKt {
-	public static final fun JengaBarChart-N4_Bn9k (Ljava/util/List;Lkotlin/jvm/functions/Function1;Landroidx/compose/ui/Modifier;Ljava/lang/Integer;Lkotlin/jvm/functions/Function1;Ljava/lang/Float;Lio/github/joelkanyi/jenga/component/chart/JengaBarChartArrangement;FFFFLandroidx/compose/ui/graphics/Shape;FLandroidx/compose/foundation/layout/PaddingValues;Landroidx/compose/ui/text/TextStyle;Landroidx/compose/ui/text/TextStyle;Lio/github/joelkanyi/jenga/component/chart/JengaBarChartColors;Landroidx/compose/animation/core/AnimationSpec;Lkotlin/jvm/functions/Function4;Lkotlin/jvm/functions/Function4;Landroidx/compose/runtime/Composer;III)V
+	public static final fun JengaBarChart-BI9Bv40 (Ljava/util/List;Lkotlin/jvm/functions/Function1;Landroidx/compose/ui/Modifier;Ljava/lang/String;Ljava/lang/Integer;Lkotlin/jvm/functions/Function1;Ljava/util/Set;Ljava/util/Set;Ljava/lang/Float;Lio/github/joelkanyi/jenga/component/chart/JengaChartTarget;Lio/github/joelkanyi/jenga/component/chart/JengaBarChartArrangement;FFFFFLandroidx/compose/ui/graphics/Shape;FLandroidx/compose/foundation/layout/PaddingValues;Landroidx/compose/ui/text/TextStyle;Landroidx/compose/ui/text/TextStyle;Landroidx/compose/ui/text/TextStyle;Lio/github/joelkanyi/jenga/component/chart/JengaBarChartColors;Landroidx/compose/animation/core/AnimationSpec;Lkotlin/jvm/functions/Function4;Lkotlin/jvm/functions/Function4;Landroidx/compose/runtime/Composer;IIII)V
+	public static final synthetic fun JengaBarChart-N4_Bn9k (Ljava/util/List;Lkotlin/jvm/functions/Function1;Landroidx/compose/ui/Modifier;Ljava/lang/Integer;Lkotlin/jvm/functions/Function1;Ljava/lang/Float;Lio/github/joelkanyi/jenga/component/chart/JengaBarChartArrangement;FFFFLandroidx/compose/ui/graphics/Shape;FLandroidx/compose/foundation/layout/PaddingValues;Landroidx/compose/ui/text/TextStyle;Landroidx/compose/ui/text/TextStyle;Lio/github/joelkanyi/jenga/component/chart/JengaBarChartColors;Landroidx/compose/animation/core/AnimationSpec;Lkotlin/jvm/functions/Function4;Lkotlin/jvm/functions/Function4;Landroidx/compose/runtime/Composer;III)V
+}
+
+public final class io/github/joelkanyi/jenga/component/chart/JengaChartTarget {
+	public static final field $stable I
+	public fun <init> (FLjava/lang/String;Ljava/lang/String;)V
+	public synthetic fun <init> (FLjava/lang/String;Ljava/lang/String;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getContentDescription ()Ljava/lang/String;
+	public final fun getLabel ()Ljava/lang/String;
+	public final fun getValue ()F
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
 }
 
 public final class io/github/joelkanyi/jenga/component/chip/JengaChipColors {

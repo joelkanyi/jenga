@@ -68,7 +68,9 @@ import io.github.joelkanyi.jenga.component.card.JengaCard
 import io.github.joelkanyi.jenga.component.card.JengaCardFooter
 import io.github.joelkanyi.jenga.component.card.JengaCardVariant
 import io.github.joelkanyi.jenga.component.chart.JengaBarChart
+import io.github.joelkanyi.jenga.component.chart.JengaBarChartDefaults
 import io.github.joelkanyi.jenga.component.chart.JengaBarChartEntry
+import io.github.joelkanyi.jenga.component.chart.JengaChartTarget
 import io.github.joelkanyi.jenga.component.chip.JengaChip
 import io.github.joelkanyi.jenga.component.divider.JengaDivider
 import io.github.joelkanyi.jenga.component.expandable.JengaExpandableRow
@@ -5712,6 +5714,80 @@ fun componentEntries(): List<CatalogEntry> = listOf(
                 barContentDescription = { "${it.label}, ${it.value}" },
                 selectedIndex = selected,
                 onSelect = { selected = it },
+            )
+        },
+    ),
+    CatalogEntry(
+        name = "Bar chart with a target",
+        group = "Data display",
+        description = "A dashed target line, today highlighted, days to come empty, and a ring on the selected bar.",
+        keywords = "chart bar graph data target goal highlight today empty week ring",
+        code = """
+            var selected by remember {
+                mutableIntStateOf(
+                    value = 3,
+                )
+            }
+            val days =
+                listOf("Mon" to 32f, "Tue" to 41f, "Wed" to 28f, "Thu" to 48.2f, "Fri" to 0f, "Sat" to 0f, "Sun" to 0f)
+                    .map { (day, thousands) ->
+                        JengaBarChartEntry(
+                            label = day,
+                            value = thousands,
+                        )
+                    }
+            val daysToCome = setOf("Fri", "Sat", "Sun")
+            JengaBarChart(
+                entries = days,
+                barContentDescription = { day ->
+                    if (day.label in daysToCome) "${'$'}{day.label}, no data yet" else "${'$'}{day.label}, ${'$'}{day.value} thousand"
+                },
+                contentDescription = "Collections this week",
+                selectedIndex = selected,
+                onSelect = { selected = it },
+                highlightedIndices = setOf(3),
+                emptyIndices = days.indices.filter { days[it].label in daysToCome }.toSet(),
+                maxValue = 50f,
+                target = JengaChartTarget(
+                    value = 40f,
+                    label = "Target",
+                    contentDescription = "Target 40 thousand a day",
+                ),
+                colors = JengaBarChartDefaults.highlightColors(),
+            )
+        """.trimIndent(),
+        demo = {
+            var selected by remember {
+                mutableIntStateOf(
+                    value = 3,
+                )
+            }
+            val days =
+                listOf("Mon" to 32f, "Tue" to 41f, "Wed" to 28f, "Thu" to 48.2f, "Fri" to 0f, "Sat" to 0f, "Sun" to 0f)
+                    .map { (day, thousands) ->
+                        JengaBarChartEntry(
+                            label = day,
+                            value = thousands,
+                        )
+                    }
+            val daysToCome = setOf("Fri", "Sat", "Sun")
+            JengaBarChart(
+                entries = days,
+                barContentDescription = { day ->
+                    if (day.label in daysToCome) "${day.label}, no data yet" else "${day.label}, ${day.value} thousand"
+                },
+                contentDescription = "Collections this week",
+                selectedIndex = selected,
+                onSelect = { selected = it },
+                highlightedIndices = setOf(3),
+                emptyIndices = days.indices.filter { days[it].label in daysToCome }.toSet(),
+                maxValue = 50f,
+                target = JengaChartTarget(
+                    value = 40f,
+                    label = "Target",
+                    contentDescription = "Target 40 thousand a day",
+                ),
+                colors = JengaBarChartDefaults.highlightColors(),
             )
         },
     ),
