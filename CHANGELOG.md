@@ -15,6 +15,8 @@
  * New: `JengaBanner` takes `emphasis`: `JengaBannerEmphasis.Default` or `Prominent`, for the result of a check (credit approved, ID not matched): a 28dp result icon in `JengaBannerColors.content` centred on the text, and the message in `JengaBannerColors.prominentMessage` (the primary text color by default).
  * New: `JengaBanner` takes `icon`, which replaces the tone's icon in either emphasis. `JengaBannerDefaults.icon(tone, emphasis)` gives the default: for a prominent banner, `JengaIcons.BadgeCheck` (Success), `AlertCircle` (Warning), `Ban` (Error).
  * New: `JengaIcons.BadgeCheck`.
+ * New: `JengaDialog` takes `icon`, a slot above the title, separated from it by the dialog's `spacing.md` gap (12dp by default), and `iconAlignment`: `JengaDialogIconAlignment.Start` (the default) or `Center`, which also centres the title and text.
+ * New: `JengaDialog` takes `actionsLayout`: `JengaDialogActionsLayout.Row` (one row at the end edge, the default) or `Stacked` (full-width buttons one above the other, the confirm button first, `actionSpacing` apart).
 
 ## Version 0.8.6
 

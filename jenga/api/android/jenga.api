@@ -1059,11 +1059,41 @@ public final class io/github/joelkanyi/jenga/component/feedback/ComposableSingle
 public final class io/github/joelkanyi/jenga/component/feedback/ComposableSingletons$JengaDialogPreviewsKt {
 	public static final field INSTANCE Lio/github/joelkanyi/jenga/component/feedback/ComposableSingletons$JengaDialogPreviewsKt;
 	public fun <init> ()V
+	public final fun getLambda$-1090203602$jenga_release ()Lkotlin/jvm/functions/Function2;
+	public final fun getLambda$-1485542752$jenga_release ()Lkotlin/jvm/functions/Function2;
+	public final fun getLambda$-1545535542$jenga_release ()Lkotlin/jvm/functions/Function2;
+	public final fun getLambda$-1772898931$jenga_release ()Lkotlin/jvm/functions/Function2;
 	public final fun getLambda$-189102324$jenga_release ()Lkotlin/jvm/functions/Function2;
+	public final fun getLambda$-2032331165$jenga_release ()Lkotlin/jvm/functions/Function2;
+	public final fun getLambda$-216401039$jenga_release ()Lkotlin/jvm/functions/Function2;
+	public final fun getLambda$-225295006$jenga_release ()Lkotlin/jvm/functions/Function2;
+	public final fun getLambda$-233884282$jenga_release ()Lkotlin/jvm/functions/Function2;
 	public final fun getLambda$-325325717$jenga_release ()Lkotlin/jvm/functions/Function2;
+	public final fun getLambda$-499007922$jenga_release ()Lkotlin/jvm/functions/Function2;
+	public final fun getLambda$-602221813$jenga_release ()Lkotlin/jvm/functions/Function2;
+	public final fun getLambda$-65892205$jenga_release ()Lkotlin/jvm/functions/Function2;
+	public final fun getLambda$-806150004$jenga_release ()Lkotlin/jvm/functions/Function2;
+	public final fun getLambda$-907910385$jenga_release ()Lkotlin/jvm/functions/Function2;
+	public final fun getLambda$-982940688$jenga_release ()Lkotlin/jvm/functions/Function2;
+	public final fun getLambda$1005292107$jenga_release ()Lkotlin/jvm/functions/Function2;
+	public final fun getLambda$1039961294$jenga_release ()Lkotlin/jvm/functions/Function2;
+	public final fun getLambda$1042425028$jenga_release ()Lkotlin/jvm/functions/Function2;
+	public final fun getLambda$1061560763$jenga_release ()Lkotlin/jvm/functions/Function2;
+	public final fun getLambda$129109506$jenga_release ()Lkotlin/jvm/functions/Function2;
 	public final fun getLambda$1442992136$jenga_release ()Lkotlin/jvm/functions/Function2;
+	public final fun getLambda$1481711720$jenga_release ()Lkotlin/jvm/functions/Function2;
+	public final fun getLambda$1508246836$jenga_release ()Lkotlin/jvm/functions/Function2;
 	public final fun getLambda$1540365391$jenga_release ()Lkotlin/jvm/functions/Function2;
+	public final fun getLambda$156117926$jenga_release ()Lkotlin/jvm/functions/Function2;
+	public final fun getLambda$1810238665$jenga_release ()Lkotlin/jvm/functions/Function2;
+	public final fun getLambda$1866854482$jenga_release ()Lkotlin/jvm/functions/Function2;
+	public final fun getLambda$1986638673$jenga_release ()Lkotlin/jvm/functions/Function2;
+	public final fun getLambda$2088952648$jenga_release ()Lkotlin/jvm/functions/Function2;
+	public final fun getLambda$586064709$jenga_release ()Lkotlin/jvm/functions/Function2;
+	public final fun getLambda$61461597$jenga_release ()Lkotlin/jvm/functions/Function2;
+	public final fun getLambda$7883375$jenga_release ()Lkotlin/jvm/functions/Function2;
 	public final fun getLambda$977006390$jenga_release ()Lkotlin/jvm/functions/Function2;
+	public final fun getLambda$998286519$jenga_release ()Lkotlin/jvm/functions/Function2;
 }
 
 public final class io/github/joelkanyi/jenga/component/feedback/ComposableSingletons$JengaListSheetKt {
@@ -1122,6 +1152,14 @@ public final class io/github/joelkanyi/jenga/component/feedback/JengaBottomSheet
 	public static final fun rememberJengaSheetState (ZLkotlin/jvm/functions/Function0;Landroidx/compose/runtime/Composer;II)Lio/github/joelkanyi/jenga/component/feedback/JengaSheetState;
 }
 
+public final class io/github/joelkanyi/jenga/component/feedback/JengaDialogActionsLayout : java/lang/Enum {
+	public static final field Row Lio/github/joelkanyi/jenga/component/feedback/JengaDialogActionsLayout;
+	public static final field Stacked Lio/github/joelkanyi/jenga/component/feedback/JengaDialogActionsLayout;
+	public static fun getEntries ()Lkotlin/enums/EnumEntries;
+	public static fun valueOf (Ljava/lang/String;)Lio/github/joelkanyi/jenga/component/feedback/JengaDialogActionsLayout;
+	public static fun values ()[Lio/github/joelkanyi/jenga/component/feedback/JengaDialogActionsLayout;
+}
+
 public final class io/github/joelkanyi/jenga/component/feedback/JengaDialogColors {
 	public static final field $stable I
 	public synthetic fun <init> (JJJLkotlin/jvm/internal/DefaultConstructorMarker;)V
@@ -1147,9 +1185,18 @@ public final class io/github/joelkanyi/jenga/component/feedback/JengaDialogDefau
 	public final fun getTitleStyle (Landroidx/compose/runtime/Composer;I)Landroidx/compose/ui/text/TextStyle;
 }
 
+public final class io/github/joelkanyi/jenga/component/feedback/JengaDialogIconAlignment : java/lang/Enum {
+	public static final field Center Lio/github/joelkanyi/jenga/component/feedback/JengaDialogIconAlignment;
+	public static final field Start Lio/github/joelkanyi/jenga/component/feedback/JengaDialogIconAlignment;
+	public static fun getEntries ()Lkotlin/enums/EnumEntries;
+	public static fun valueOf (Ljava/lang/String;)Lio/github/joelkanyi/jenga/component/feedback/JengaDialogIconAlignment;
+	public static fun values ()[Lio/github/joelkanyi/jenga/component/feedback/JengaDialogIconAlignment;
+}
+
 public final class io/github/joelkanyi/jenga/component/feedback/JengaDialogKt {
-	public static final fun JengaDialog-ajgufuY (Lkotlin/jvm/functions/Function0;Lkotlin/jvm/functions/Function2;Landroidx/compose/ui/Modifier;Ljava/lang/String;Ljava/lang/String;Lkotlin/jvm/functions/Function2;Landroidx/compose/ui/graphics/Shape;Landroidx/compose/foundation/layout/PaddingValues;Landroidx/compose/ui/text/TextStyle;Landroidx/compose/ui/text/TextStyle;FLio/github/joelkanyi/jenga/component/feedback/JengaDialogColors;Landroidx/compose/foundation/BorderStroke;Landroidx/compose/runtime/Composer;III)V
+	public static final synthetic fun JengaDialog-ajgufuY (Lkotlin/jvm/functions/Function0;Lkotlin/jvm/functions/Function2;Landroidx/compose/ui/Modifier;Ljava/lang/String;Ljava/lang/String;Lkotlin/jvm/functions/Function2;Landroidx/compose/ui/graphics/Shape;Landroidx/compose/foundation/layout/PaddingValues;Landroidx/compose/ui/text/TextStyle;Landroidx/compose/ui/text/TextStyle;FLio/github/joelkanyi/jenga/component/feedback/JengaDialogColors;Landroidx/compose/foundation/BorderStroke;Landroidx/compose/runtime/Composer;III)V
 	public static final synthetic fun JengaDialog-gKLzdoI (Lkotlin/jvm/functions/Function0;Lkotlin/jvm/functions/Function2;Landroidx/compose/ui/Modifier;Ljava/lang/String;Ljava/lang/String;Lkotlin/jvm/functions/Function2;Landroidx/compose/ui/graphics/Shape;Landroidx/compose/foundation/layout/PaddingValues;Landroidx/compose/ui/text/TextStyle;Landroidx/compose/ui/text/TextStyle;FLio/github/joelkanyi/jenga/component/feedback/JengaDialogColors;Landroidx/compose/runtime/Composer;III)V
+	public static final fun JengaDialog-yKWcYTc (Lkotlin/jvm/functions/Function0;Lkotlin/jvm/functions/Function2;Landroidx/compose/ui/Modifier;Ljava/lang/String;Ljava/lang/String;Lkotlin/jvm/functions/Function2;Landroidx/compose/ui/graphics/Shape;Landroidx/compose/foundation/layout/PaddingValues;Landroidx/compose/ui/text/TextStyle;Landroidx/compose/ui/text/TextStyle;FLio/github/joelkanyi/jenga/component/feedback/JengaDialogColors;Landroidx/compose/foundation/BorderStroke;Lkotlin/jvm/functions/Function2;Lio/github/joelkanyi/jenga/component/feedback/JengaDialogIconAlignment;Lio/github/joelkanyi/jenga/component/feedback/JengaDialogActionsLayout;Landroidx/compose/runtime/Composer;III)V
 }
 
 public final class io/github/joelkanyi/jenga/component/feedback/JengaDialogStyle {
@@ -4215,6 +4262,7 @@ public final class io/github/joelkanyi/jenga/samples/ComposableSingletons$JengaS
 	public static final field INSTANCE Lio/github/joelkanyi/jenga/samples/ComposableSingletons$JengaSamplesKt;
 	public fun <init> ()V
 	public final fun getLambda$-1218986121$jenga_release ()Lkotlin/jvm/functions/Function2;
+	public final fun getLambda$-1725066229$jenga_release ()Lkotlin/jvm/functions/Function2;
 	public final fun getLambda$-1848930134$jenga_release ()Lkotlin/jvm/functions/Function2;
 	public final fun getLambda$-1877431549$jenga_release ()Lkotlin/jvm/functions/Function3;
 	public final fun getLambda$-1944683725$jenga_release ()Lkotlin/jvm/functions/Function3;

@@ -73,6 +73,7 @@ import io.github.joelkanyi.jenga.component.fab.JengaExtendedFab
 import io.github.joelkanyi.jenga.component.fab.JengaFab
 import io.github.joelkanyi.jenga.component.feedback.JengaBottomSheet
 import io.github.joelkanyi.jenga.component.feedback.JengaDialog
+import io.github.joelkanyi.jenga.component.feedback.JengaDialogActionsLayout
 import io.github.joelkanyi.jenga.component.feedback.JengaListSheet
 import io.github.joelkanyi.jenga.component.feedback.JengaSideSheet
 import io.github.joelkanyi.jenga.component.feedback.JengaSnackbar
@@ -82,6 +83,7 @@ import io.github.joelkanyi.jenga.component.feedback.rememberJengaSheetState
 import io.github.joelkanyi.jenga.component.feedback.rememberJengaSnackbarHostState
 import io.github.joelkanyi.jenga.component.icon.JengaIcon
 import io.github.joelkanyi.jenga.component.icon.JengaIconTile
+import io.github.joelkanyi.jenga.component.icon.JengaIconTileSize
 import io.github.joelkanyi.jenga.component.icon.JengaIcons
 import io.github.joelkanyi.jenga.component.image.JengaImage
 import io.github.joelkanyi.jenga.component.layout.JengaBox
@@ -1902,6 +1904,99 @@ fun componentEntries(): List<CatalogEntry> = listOf(
                     dismissButton = {
                         JengaButton(
                             text = "Cancel",
+                            onClick = { open = false },
+                            variant = JengaButtonVariant.Ghost,
+                        )
+                    },
+                )
+            }
+        },
+    ),
+    CatalogEntry(
+        name = "Dialog with icon and stacked actions",
+        group = "Feedback",
+        description = "A confirmation with an icon on top and full-width actions: the action first, the way out below.",
+        keywords = "alert modal confirm destructive icon stacked full width",
+        stage = CatalogStage.Overlay,
+        code = """
+            var open by remember {
+                mutableStateOf(
+                    value = false,
+                )
+            }
+            JengaButton(
+                text = "Confirmation",
+                onClick = { open = true },
+                variant = JengaButtonVariant.Outline,
+            )
+            if (open) {
+                JengaDialog(
+                    onDismissRequest = { open = false },
+                    icon = {
+                        JengaIconTile(
+                            icon = JengaIcons.Warning,
+                            contentDescription = null,
+                            tone = JengaBadgeTone.Error,
+                            size = JengaIconTileSize.Large,
+                            shape = JengaTheme.shapes.pill,
+                        )
+                    },
+                    title = "Cancel this sale?",
+                    text = "The sale and its documents will be removed. This cannot be undone.",
+                    actionsLayout = JengaDialogActionsLayout.Stacked,
+                    confirmButton = {
+                        JengaButton(
+                            text = "Cancel sale",
+                            onClick = { open = false },
+                            variant = JengaButtonVariant.Danger,
+                        )
+                    },
+                    dismissButton = {
+                        JengaButton(
+                            text = "Keep sale",
+                            onClick = { open = false },
+                            variant = JengaButtonVariant.Ghost,
+                        )
+                    },
+                )
+            }
+        """.trimIndent(),
+        demo = { startOpen ->
+            var open by remember {
+                mutableStateOf(
+                    value = startOpen,
+                )
+            }
+            JengaButton(
+                text = "Confirmation",
+                onClick = { open = true },
+                variant = JengaButtonVariant.Outline,
+            )
+            if (open) {
+                JengaDialog(
+                    onDismissRequest = { open = false },
+                    icon = {
+                        JengaIconTile(
+                            icon = JengaIcons.Warning,
+                            contentDescription = null,
+                            tone = JengaBadgeTone.Error,
+                            size = JengaIconTileSize.Large,
+                            shape = JengaTheme.shapes.pill,
+                        )
+                    },
+                    title = "Cancel this sale?",
+                    text = "The sale and its documents will be removed. This cannot be undone.",
+                    actionsLayout = JengaDialogActionsLayout.Stacked,
+                    confirmButton = {
+                        JengaButton(
+                            text = "Cancel sale",
+                            onClick = { open = false },
+                            variant = JengaButtonVariant.Danger,
+                        )
+                    },
+                    dismissButton = {
+                        JengaButton(
+                            text = "Keep sale",
                             onClick = { open = false },
                             variant = JengaButtonVariant.Ghost,
                         )

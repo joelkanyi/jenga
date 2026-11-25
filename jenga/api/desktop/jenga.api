@@ -857,6 +857,14 @@ public final class io/github/joelkanyi/jenga/component/feedback/JengaBottomSheet
 	public static final fun rememberJengaSheetState (ZLkotlin/jvm/functions/Function0;Landroidx/compose/runtime/Composer;II)Lio/github/joelkanyi/jenga/component/feedback/JengaSheetState;
 }
 
+public final class io/github/joelkanyi/jenga/component/feedback/JengaDialogActionsLayout : java/lang/Enum {
+	public static final field Row Lio/github/joelkanyi/jenga/component/feedback/JengaDialogActionsLayout;
+	public static final field Stacked Lio/github/joelkanyi/jenga/component/feedback/JengaDialogActionsLayout;
+	public static fun getEntries ()Lkotlin/enums/EnumEntries;
+	public static fun valueOf (Ljava/lang/String;)Lio/github/joelkanyi/jenga/component/feedback/JengaDialogActionsLayout;
+	public static fun values ()[Lio/github/joelkanyi/jenga/component/feedback/JengaDialogActionsLayout;
+}
+
 public final class io/github/joelkanyi/jenga/component/feedback/JengaDialogColors {
 	public static final field $stable I
 	public synthetic fun <init> (JJJLkotlin/jvm/internal/DefaultConstructorMarker;)V
@@ -882,9 +890,18 @@ public final class io/github/joelkanyi/jenga/component/feedback/JengaDialogDefau
 	public final fun getTitleStyle (Landroidx/compose/runtime/Composer;I)Landroidx/compose/ui/text/TextStyle;
 }
 
+public final class io/github/joelkanyi/jenga/component/feedback/JengaDialogIconAlignment : java/lang/Enum {
+	public static final field Center Lio/github/joelkanyi/jenga/component/feedback/JengaDialogIconAlignment;
+	public static final field Start Lio/github/joelkanyi/jenga/component/feedback/JengaDialogIconAlignment;
+	public static fun getEntries ()Lkotlin/enums/EnumEntries;
+	public static fun valueOf (Ljava/lang/String;)Lio/github/joelkanyi/jenga/component/feedback/JengaDialogIconAlignment;
+	public static fun values ()[Lio/github/joelkanyi/jenga/component/feedback/JengaDialogIconAlignment;
+}
+
 public final class io/github/joelkanyi/jenga/component/feedback/JengaDialogKt {
-	public static final fun JengaDialog-ajgufuY (Lkotlin/jvm/functions/Function0;Lkotlin/jvm/functions/Function2;Landroidx/compose/ui/Modifier;Ljava/lang/String;Ljava/lang/String;Lkotlin/jvm/functions/Function2;Landroidx/compose/ui/graphics/Shape;Landroidx/compose/foundation/layout/PaddingValues;Landroidx/compose/ui/text/TextStyle;Landroidx/compose/ui/text/TextStyle;FLio/github/joelkanyi/jenga/component/feedback/JengaDialogColors;Landroidx/compose/foundation/BorderStroke;Landroidx/compose/runtime/Composer;III)V
+	public static final synthetic fun JengaDialog-ajgufuY (Lkotlin/jvm/functions/Function0;Lkotlin/jvm/functions/Function2;Landroidx/compose/ui/Modifier;Ljava/lang/String;Ljava/lang/String;Lkotlin/jvm/functions/Function2;Landroidx/compose/ui/graphics/Shape;Landroidx/compose/foundation/layout/PaddingValues;Landroidx/compose/ui/text/TextStyle;Landroidx/compose/ui/text/TextStyle;FLio/github/joelkanyi/jenga/component/feedback/JengaDialogColors;Landroidx/compose/foundation/BorderStroke;Landroidx/compose/runtime/Composer;III)V
 	public static final synthetic fun JengaDialog-gKLzdoI (Lkotlin/jvm/functions/Function0;Lkotlin/jvm/functions/Function2;Landroidx/compose/ui/Modifier;Ljava/lang/String;Ljava/lang/String;Lkotlin/jvm/functions/Function2;Landroidx/compose/ui/graphics/Shape;Landroidx/compose/foundation/layout/PaddingValues;Landroidx/compose/ui/text/TextStyle;Landroidx/compose/ui/text/TextStyle;FLio/github/joelkanyi/jenga/component/feedback/JengaDialogColors;Landroidx/compose/runtime/Composer;III)V
+	public static final fun JengaDialog-yKWcYTc (Lkotlin/jvm/functions/Function0;Lkotlin/jvm/functions/Function2;Landroidx/compose/ui/Modifier;Ljava/lang/String;Ljava/lang/String;Lkotlin/jvm/functions/Function2;Landroidx/compose/ui/graphics/Shape;Landroidx/compose/foundation/layout/PaddingValues;Landroidx/compose/ui/text/TextStyle;Landroidx/compose/ui/text/TextStyle;FLio/github/joelkanyi/jenga/component/feedback/JengaDialogColors;Landroidx/compose/foundation/BorderStroke;Lkotlin/jvm/functions/Function2;Lio/github/joelkanyi/jenga/component/feedback/JengaDialogIconAlignment;Lio/github/joelkanyi/jenga/component/feedback/JengaDialogActionsLayout;Landroidx/compose/runtime/Composer;III)V
 }
 
 public final class io/github/joelkanyi/jenga/component/feedback/JengaDialogStyle {
@@ -3380,6 +3397,7 @@ public final class io/github/joelkanyi/jenga/samples/ComposableSingletons$JengaS
 	public static final field INSTANCE Lio/github/joelkanyi/jenga/samples/ComposableSingletons$JengaSamplesKt;
 	public fun <init> ()V
 	public final fun getLambda$-1218986121$jenga ()Lkotlin/jvm/functions/Function2;
+	public final fun getLambda$-1725066229$jenga ()Lkotlin/jvm/functions/Function2;
 	public final fun getLambda$-1848930134$jenga ()Lkotlin/jvm/functions/Function2;
 	public final fun getLambda$-1877431549$jenga ()Lkotlin/jvm/functions/Function3;
 	public final fun getLambda$-1944683725$jenga ()Lkotlin/jvm/functions/Function3;
