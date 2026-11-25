@@ -24,6 +24,7 @@ import io.github.joelkanyi.jenga.component.avatar.JengaAvatarDefaults
 import io.github.joelkanyi.jenga.component.badge.JengaBadge
 import io.github.joelkanyi.jenga.component.badge.JengaBadgeTone
 import io.github.joelkanyi.jenga.component.banner.JengaBanner
+import io.github.joelkanyi.jenga.component.banner.JengaBannerActionPosition
 import io.github.joelkanyi.jenga.component.banner.JengaBannerTone
 import io.github.joelkanyi.jenga.component.banner.JengaInfoBar
 import io.github.joelkanyi.jenga.component.button.JengaButton
@@ -887,6 +888,33 @@ internal fun JengaBannerSample() {
         message = "Working offline, scans will sync later.",
         tone = JengaBannerTone.Info,
     )
+}
+
+@Composable
+internal fun JengaBannerDismissSample() {
+    var visible by remember {
+        mutableStateOf(
+            value = true,
+        )
+    }
+    // Info and Success banners can be closed: a ✕ at the end. With the ✕, a longer
+    // action goes under the message so the text keeps its width.
+    if (visible) {
+        JengaBanner(
+            message = "KES 3,000 received from 0712 345 678.",
+            tone = JengaBannerTone.Success,
+            title = "Deposit confirmed",
+            action = {
+                JengaLink(
+                    text = "View receipt",
+                    onClick = {},
+                )
+            },
+            actionPosition = JengaBannerActionPosition.Below,
+            onDismiss = { visible = false },
+            dismissContentDescription = "Dismiss",
+        )
+    }
 }
 
 @Composable

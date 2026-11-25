@@ -10,6 +10,8 @@
  * New: `JengaSnackbarHostState.showSnackbar` takes `dismissContentDescription`; the snackbar then shows the close ✕, and tapping it returns `JengaSnackbarResult.Dismissed`.
  * New: `JengaSnackbar` takes `leadingContent`, one small item before the message (a 20dp icon or a counter badge): it replaces the tone dot, is centred on the message and takes `JengaSnackbarColors.content` as its content color.
  * New: `JengaSnackbarHostState.showSnackbar` takes `leadingContent`, shown before the message of that snackbar.
+ * New: `JengaBanner` takes `onDismiss` and `dismissContentDescription` and shows a close ✕ at the end, after the action, in `JengaBannerColors.content`, with a 48dp touch target.
+ * New: `JengaBanner` takes `actionPosition`: `JengaBannerActionPosition.End` (beside the text, the default) or `Below` (under the message, so the text keeps the width when the banner also has the close ✕).
 
 ## Version 0.8.6
 

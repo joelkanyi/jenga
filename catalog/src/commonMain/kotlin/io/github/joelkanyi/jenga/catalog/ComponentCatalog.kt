@@ -42,6 +42,7 @@ import io.github.joelkanyi.jenga.component.avatar.JengaAvatarSize
 import io.github.joelkanyi.jenga.component.badge.JengaBadge
 import io.github.joelkanyi.jenga.component.badge.JengaBadgeTone
 import io.github.joelkanyi.jenga.component.banner.JengaBanner
+import io.github.joelkanyi.jenga.component.banner.JengaBannerActionPosition
 import io.github.joelkanyi.jenga.component.banner.JengaBannerTone
 import io.github.joelkanyi.jenga.component.banner.JengaInfoBar
 import io.github.joelkanyi.jenga.component.button.JengaButton
@@ -1522,8 +1523,8 @@ fun componentEntries(): List<CatalogEntry> = listOf(
     CatalogEntry(
         name = "Banner",
         group = "Feedback",
-        description = "An inline, tinted message tied to a status.",
-        keywords = "inline message info error",
+        description = "An inline, tinted message tied to a status, with an optional action and close.",
+        keywords = "inline message info error alert close dismiss",
         code = """
             JengaBanner(
                 message = "Working offline; scans will sync later.",
@@ -1533,18 +1534,69 @@ fun componentEntries(): List<CatalogEntry> = listOf(
                 message = "Already scanned.",
                 tone = JengaBannerTone.Error,
             )
+            var visible by remember {
+                mutableStateOf(
+                    value = true,
+                )
+            }
+            if (visible) {
+                JengaBanner(
+                    message = "KES 3,000 received.",
+                    tone = JengaBannerTone.Success,
+                    title = "Deposit confirmed",
+                    action = {
+                        JengaLink(
+                            text = "View receipt",
+                            onClick = {},
+                        )
+                    },
+                    actionPosition = JengaBannerActionPosition.Below,
+                    onDismiss = { visible = false },
+                    dismissContentDescription = "Dismiss",
+                )
+            }
         """.trimIndent(),
         demo = {
-            JengaStack(
-                space = JengaTheme.spacing.sm,
-                content = {
-                    JengaBanner(
-                        message = "Working offline; scans will sync later.",
-                        tone = JengaBannerTone.Info,
-                    )
-                    JengaBanner(
-                        message = "Already scanned.",
-                        tone = JengaBannerTone.Error,
+            var visible by remember {
+                mutableStateOf(
+                    value = true,
+                )
+            }
+            ActionFeedback(
+                content = { confirm ->
+                    JengaStack(
+                        space = JengaTheme.spacing.sm,
+                        content = {
+                            JengaBanner(
+                                message = "Working offline; scans will sync later.",
+                                tone = JengaBannerTone.Info,
+                            )
+                            JengaBanner(
+                                message = "Already scanned.",
+                                tone = JengaBannerTone.Error,
+                            )
+                            if (visible) {
+                                JengaBanner(
+                                    message = "KES 3,000 received.",
+                                    tone = JengaBannerTone.Success,
+                                    title = "Deposit confirmed",
+                                    action = {
+                                        JengaLink(
+                                            text = "View receipt",
+                                            onClick = { confirm("Opening receipt") },
+                                        )
+                                    },
+                                    actionPosition = JengaBannerActionPosition.Below,
+                                    onDismiss = { visible = false },
+                                    dismissContentDescription = "Dismiss",
+                                )
+                            } else {
+                                JengaLink(
+                                    text = "Show the banner again",
+                                    onClick = { visible = true },
+                                )
+                            }
+                        },
                     )
                 },
             )
