@@ -12,6 +12,9 @@
  * New: `JengaSnackbarHostState.showSnackbar` takes `leadingContent`, shown before the message of that snackbar.
  * New: `JengaBanner` takes `onDismiss` and `dismissContentDescription` and shows a close ✕ at the end, after the action, in `JengaBannerColors.content`, with a 48dp touch target.
  * New: `JengaBanner` takes `actionPosition`: `JengaBannerActionPosition.End` (beside the text, the default) or `Below` (under the message, so the text keeps the width when the banner also has the close ✕).
+ * New: `JengaBanner` takes `emphasis`: `JengaBannerEmphasis.Default` or `Prominent`, for the result of a check (credit approved, ID not matched): a 28dp result icon in `JengaBannerColors.content` centred on the text, and the message in `JengaBannerColors.prominentMessage` (the primary text color by default).
+ * New: `JengaBanner` takes `icon`, which replaces the tone's icon in either emphasis. `JengaBannerDefaults.icon(tone, emphasis)` gives the default: for a prominent banner, `JengaIcons.BadgeCheck` (Success), `AlertCircle` (Warning), `Ban` (Error).
+ * New: `JengaIcons.BadgeCheck`.
 
 ## Version 0.8.6
 

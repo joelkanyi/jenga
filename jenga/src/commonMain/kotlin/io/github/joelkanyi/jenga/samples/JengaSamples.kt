@@ -25,6 +25,7 @@ import io.github.joelkanyi.jenga.component.badge.JengaBadge
 import io.github.joelkanyi.jenga.component.badge.JengaBadgeTone
 import io.github.joelkanyi.jenga.component.banner.JengaBanner
 import io.github.joelkanyi.jenga.component.banner.JengaBannerActionPosition
+import io.github.joelkanyi.jenga.component.banner.JengaBannerEmphasis
 import io.github.joelkanyi.jenga.component.banner.JengaBannerTone
 import io.github.joelkanyi.jenga.component.banner.JengaInfoBar
 import io.github.joelkanyi.jenga.component.button.JengaButton
@@ -915,6 +916,18 @@ internal fun JengaBannerDismissSample() {
             dismissContentDescription = "Dismiss",
         )
     }
+}
+
+@Composable
+internal fun JengaBannerProminentSample() {
+    // The result of a check at the top of a screen. The tone picks the icon: a badge with a
+    // check for Success, an alert circle for Warning, a ban sign for Error; pass `icon` for another.
+    JengaBanner(
+        message = "All products are available on a payment plan.",
+        tone = JengaBannerTone.Success,
+        title = "Credit approved",
+        emphasis = JengaBannerEmphasis.Prominent,
+    )
 }
 
 @Composable

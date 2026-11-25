@@ -129,13 +129,18 @@ public final class io/github/joelkanyi/jenga/component/banner/JengaBannerActionP
 
 public final class io/github/joelkanyi/jenga/component/banner/JengaBannerColors {
 	public static final field $stable I
+	public synthetic fun <init> (JJJJILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public synthetic fun <init> (JJJJLkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public synthetic fun <init> (JJJLkotlin/jvm/internal/DefaultConstructorMarker;)V
-	public final fun copy-ysEtTa8 (JJJ)Lio/github/joelkanyi/jenga/component/banner/JengaBannerColors;
+	public final fun copy-jRlVdoo (JJJJ)Lio/github/joelkanyi/jenga/component/banner/JengaBannerColors;
+	public static synthetic fun copy-jRlVdoo$default (Lio/github/joelkanyi/jenga/component/banner/JengaBannerColors;JJJJILjava/lang/Object;)Lio/github/joelkanyi/jenga/component/banner/JengaBannerColors;
+	public final synthetic fun copy-ysEtTa8 (JJJ)Lio/github/joelkanyi/jenga/component/banner/JengaBannerColors;
 	public static synthetic fun copy-ysEtTa8$default (Lio/github/joelkanyi/jenga/component/banner/JengaBannerColors;JJJILjava/lang/Object;)Lio/github/joelkanyi/jenga/component/banner/JengaBannerColors;
 	public fun equals (Ljava/lang/Object;)Z
 	public final fun getContainer-0d7_KjU ()J
 	public final fun getContent-0d7_KjU ()J
 	public final fun getIcon-0d7_KjU ()J
+	public final fun getProminentMessage-0d7_KjU ()J
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
 }
@@ -145,11 +150,20 @@ public final class io/github/joelkanyi/jenga/component/banner/JengaBannerDefault
 	public static final field INSTANCE Lio/github/joelkanyi/jenga/component/banner/JengaBannerDefaults;
 	public final fun colors (Lio/github/joelkanyi/jenga/component/banner/JengaBannerTone;Landroidx/compose/runtime/Composer;I)Lio/github/joelkanyi/jenga/component/banner/JengaBannerColors;
 	public final fun icon (Lio/github/joelkanyi/jenga/component/banner/JengaBannerTone;Landroidx/compose/runtime/Composer;I)Landroidx/compose/ui/graphics/vector/ImageVector;
+	public final fun icon (Lio/github/joelkanyi/jenga/component/banner/JengaBannerTone;Lio/github/joelkanyi/jenga/component/banner/JengaBannerEmphasis;Landroidx/compose/runtime/Composer;I)Landroidx/compose/ui/graphics/vector/ImageVector;
+}
+
+public final class io/github/joelkanyi/jenga/component/banner/JengaBannerEmphasis : java/lang/Enum {
+	public static final field Default Lio/github/joelkanyi/jenga/component/banner/JengaBannerEmphasis;
+	public static final field Prominent Lio/github/joelkanyi/jenga/component/banner/JengaBannerEmphasis;
+	public static fun getEntries ()Lkotlin/enums/EnumEntries;
+	public static fun valueOf (Ljava/lang/String;)Lio/github/joelkanyi/jenga/component/banner/JengaBannerEmphasis;
+	public static fun values ()[Lio/github/joelkanyi/jenga/component/banner/JengaBannerEmphasis;
 }
 
 public final class io/github/joelkanyi/jenga/component/banner/JengaBannerKt {
 	public static final synthetic fun JengaBanner (Ljava/lang/String;Landroidx/compose/ui/Modifier;Lio/github/joelkanyi/jenga/component/banner/JengaBannerTone;Ljava/lang/String;Lkotlin/jvm/functions/Function2;Lio/github/joelkanyi/jenga/component/banner/JengaBannerColors;Landroidx/compose/runtime/Composer;II)V
-	public static final fun JengaBanner (Ljava/lang/String;Landroidx/compose/ui/Modifier;Lio/github/joelkanyi/jenga/component/banner/JengaBannerTone;Ljava/lang/String;Lkotlin/jvm/functions/Function2;Lio/github/joelkanyi/jenga/component/banner/JengaBannerColors;Lio/github/joelkanyi/jenga/component/banner/JengaBannerActionPosition;Lkotlin/jvm/functions/Function0;Ljava/lang/String;Landroidx/compose/runtime/Composer;II)V
+	public static final fun JengaBanner (Ljava/lang/String;Landroidx/compose/ui/Modifier;Lio/github/joelkanyi/jenga/component/banner/JengaBannerTone;Ljava/lang/String;Lkotlin/jvm/functions/Function2;Lio/github/joelkanyi/jenga/component/banner/JengaBannerColors;Lio/github/joelkanyi/jenga/component/banner/JengaBannerActionPosition;Lkotlin/jvm/functions/Function0;Ljava/lang/String;Lio/github/joelkanyi/jenga/component/banner/JengaBannerEmphasis;Landroidx/compose/ui/graphics/vector/ImageVector;Landroidx/compose/runtime/Composer;III)V
 }
 
 public final class io/github/joelkanyi/jenga/component/banner/JengaBannerTone : java/lang/Enum {
@@ -1135,6 +1149,7 @@ public final class io/github/joelkanyi/jenga/component/icon/JengaIcons {
 	public final fun getAlertCircle (Landroidx/compose/runtime/Composer;I)Landroidx/compose/ui/graphics/vector/ImageVector;
 	public final fun getArrowBack (Landroidx/compose/runtime/Composer;I)Landroidx/compose/ui/graphics/vector/ImageVector;
 	public final fun getArrowRight (Landroidx/compose/runtime/Composer;I)Landroidx/compose/ui/graphics/vector/ImageVector;
+	public final fun getBadgeCheck (Landroidx/compose/runtime/Composer;I)Landroidx/compose/ui/graphics/vector/ImageVector;
 	public final fun getBan (Landroidx/compose/runtime/Composer;I)Landroidx/compose/ui/graphics/vector/ImageVector;
 	public final fun getBanknote (Landroidx/compose/runtime/Composer;I)Landroidx/compose/ui/graphics/vector/ImageVector;
 	public final fun getBell (Landroidx/compose/runtime/Composer;I)Landroidx/compose/ui/graphics/vector/ImageVector;

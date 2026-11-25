@@ -43,6 +43,7 @@ import io.github.joelkanyi.jenga.component.badge.JengaBadge
 import io.github.joelkanyi.jenga.component.badge.JengaBadgeTone
 import io.github.joelkanyi.jenga.component.banner.JengaBanner
 import io.github.joelkanyi.jenga.component.banner.JengaBannerActionPosition
+import io.github.joelkanyi.jenga.component.banner.JengaBannerEmphasis
 import io.github.joelkanyi.jenga.component.banner.JengaBannerTone
 import io.github.joelkanyi.jenga.component.banner.JengaInfoBar
 import io.github.joelkanyi.jenga.component.button.JengaButton
@@ -1523,8 +1524,8 @@ fun componentEntries(): List<CatalogEntry> = listOf(
     CatalogEntry(
         name = "Banner",
         group = "Feedback",
-        description = "An inline, tinted message tied to a status, with an optional action and close.",
-        keywords = "inline message info error alert close dismiss",
+        description = "An inline, tinted message tied to a status, with an optional action and close, and a prominent look for the result of a check.",
+        keywords = "inline message info error alert close dismiss prominent result verdict check",
         code = """
             JengaBanner(
                 message = "Working offline; scans will sync later.",
@@ -1555,6 +1556,12 @@ fun componentEntries(): List<CatalogEntry> = listOf(
                     dismissContentDescription = "Dismiss",
                 )
             }
+            JengaBanner(
+                message = "All products are available on a payment plan.",
+                tone = JengaBannerTone.Success,
+                title = "Credit approved",
+                emphasis = JengaBannerEmphasis.Prominent,
+            )
         """.trimIndent(),
         demo = {
             var visible by remember {
@@ -1596,6 +1603,12 @@ fun componentEntries(): List<CatalogEntry> = listOf(
                                     onClick = { visible = true },
                                 )
                             }
+                            JengaBanner(
+                                message = "All products are available on a payment plan.",
+                                tone = JengaBannerTone.Success,
+                                title = "Credit approved",
+                                emphasis = JengaBannerEmphasis.Prominent,
+                            )
                         },
                     )
                 },

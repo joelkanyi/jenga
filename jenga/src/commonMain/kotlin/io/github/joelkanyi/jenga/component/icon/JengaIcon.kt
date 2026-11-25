@@ -14,6 +14,7 @@ import io.github.joelkanyi.jenga.resources.jenga_ic_add
 import io.github.joelkanyi.jenga.resources.jenga_ic_alert_circle
 import io.github.joelkanyi.jenga.resources.jenga_ic_arrow_back
 import io.github.joelkanyi.jenga.resources.jenga_ic_arrow_right
+import io.github.joelkanyi.jenga.resources.jenga_ic_badge_check
 import io.github.joelkanyi.jenga.resources.jenga_ic_ban
 import io.github.joelkanyi.jenga.resources.jenga_ic_banknote
 import io.github.joelkanyi.jenga.resources.jenga_ic_bell
@@ -300,4 +301,6 @@ public object JengaIcons {
         @Composable get() = vectorResource(Res.drawable.jenga_ic_users)
     public val UserCog: ImageVector
         @Composable get() = vectorResource(Res.drawable.jenga_ic_user_cog)
+    public val BadgeCheck: ImageVector
+        @Composable get() = vectorResource(Res.drawable.jenga_ic_badge_check)
 }

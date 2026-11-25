@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import io.github.joelkanyi.jenga.component.icon.JengaIcons
 import io.github.joelkanyi.jenga.component.link.JengaLink
 import io.github.joelkanyi.jenga.core.preview.JengaBlockPreviews
 import io.github.joelkanyi.jenga.core.preview.RtlPreview
@@ -154,6 +155,155 @@ private fun BannerDismissNarrowShowcase() {
             title = "Deposit confirmed",
             action = { JengaLink(text = "View receipt", onClick = {}) },
             actionPosition = JengaBannerActionPosition.Below,
+        )
+    }
+}
+
+@JengaBlockPreviews
+@Composable
+internal fun JengaBannerProminentPreview() {
+    JengaTheme { BannerProminentShowcase() }
+}
+
+@Preview(name = "RTL", showBackground = true)
+@Composable
+internal fun JengaBannerProminentRtlPreview() {
+    JengaTheme { RtlPreview { BannerProminentShowcase() } }
+}
+
+@JengaBlockPreviews
+@Composable
+internal fun JengaBannerProminentActionsPreview() {
+    JengaTheme { BannerProminentActionsShowcase() }
+}
+
+@Preview(name = "RTL", showBackground = true)
+@Composable
+internal fun JengaBannerProminentActionsRtlPreview() {
+    JengaTheme { RtlPreview { BannerProminentActionsShowcase() } }
+}
+
+/** A title that wraps to two lines on a 360dp-wide phone, alone and beside an action and the ✕. */
+@Preview(name = "360dp", showBackground = true, widthDp = 360)
+@Composable
+internal fun JengaBannerProminentNarrowPreview() {
+    JengaTheme { BannerProminentNarrowShowcase() }
+}
+
+/**
+ * The result of a check: positive, caution and negative with their default icons, a caller's own
+ * icon, and Info with a message only.
+ */
+@Composable
+private fun BannerProminentShowcase() {
+    Column(
+        modifier = Modifier
+            .background(JengaTheme.colors.background)
+            .padding(JengaTheme.spacing.lg),
+        verticalArrangement = Arrangement.spacedBy(JengaTheme.spacing.md),
+    ) {
+        JengaBanner(
+            message = "All products are available on a payment plan.",
+            tone = JengaBannerTone.Success,
+            title = "Credit approved",
+            emphasis = JengaBannerEmphasis.Prominent,
+        )
+        JengaBanner(
+            message = "Only products up to KES 20,000.",
+            tone = JengaBannerTone.Warning,
+            title = "Approved for smaller systems",
+            emphasis = JengaBannerEmphasis.Prominent,
+        )
+        JengaBanner(
+            message = "Offer a cash sale, or try again in 30 days.",
+            tone = JengaBannerTone.Error,
+            title = "Credit not approved",
+            emphasis = JengaBannerEmphasis.Prominent,
+        )
+        JengaBanner(
+            message = "The name on the ID matches the customer.",
+            tone = JengaBannerTone.Success,
+            title = "ID matched",
+            emphasis = JengaBannerEmphasis.Prominent,
+            icon = JengaIcons.ShieldCheck,
+        )
+        JengaBanner(
+            message = "Credit check in progress.",
+            tone = JengaBannerTone.Info,
+            emphasis = JengaBannerEmphasis.Prominent,
+        )
+    }
+}
+
+/**
+ * A prominent banner with an action beside the text, with the ✕, with both and the action under
+ * the message, and with the ✕ on a message with no title.
+ */
+@Composable
+private fun BannerProminentActionsShowcase() {
+    Column(
+        modifier = Modifier
+            .background(JengaTheme.colors.background)
+            .padding(JengaTheme.spacing.lg),
+        verticalArrangement = Arrangement.spacedBy(JengaTheme.spacing.md),
+    ) {
+        JengaBanner(
+            message = "Only products up to KES 20,000.",
+            tone = JengaBannerTone.Warning,
+            title = "Approved for smaller systems",
+            action = { JengaLink(text = "Why", onClick = {}) },
+            emphasis = JengaBannerEmphasis.Prominent,
+        )
+        JengaBanner(
+            message = "All products are available.",
+            tone = JengaBannerTone.Success,
+            title = "Credit approved",
+            onDismiss = {},
+            dismissContentDescription = "Dismiss",
+            emphasis = JengaBannerEmphasis.Prominent,
+        )
+        JengaBanner(
+            message = "Offer a cash sale, or try again in 30 days.",
+            tone = JengaBannerTone.Error,
+            title = "Credit not approved",
+            action = { JengaLink(text = "See the reasons", onClick = {}) },
+            actionPosition = JengaBannerActionPosition.Below,
+            onDismiss = {},
+            dismissContentDescription = "Dismiss",
+            emphasis = JengaBannerEmphasis.Prominent,
+        )
+        JengaBanner(
+            message = "Phone name matched.",
+            tone = JengaBannerTone.Success,
+            onDismiss = {},
+            dismissContentDescription = "Dismiss",
+            emphasis = JengaBannerEmphasis.Prominent,
+        )
+    }
+}
+
+@Composable
+private fun BannerProminentNarrowShowcase() {
+    Column(
+        modifier = Modifier
+            .background(JengaTheme.colors.background)
+            .padding(JengaTheme.spacing.lg),
+        verticalArrangement = Arrangement.spacedBy(JengaTheme.spacing.md),
+    ) {
+        JengaBanner(
+            message = "All products are available on a payment plan.",
+            tone = JengaBannerTone.Success,
+            title = "Credit approved for every product in the catalogue",
+            emphasis = JengaBannerEmphasis.Prominent,
+        )
+        JengaBanner(
+            message = "Only products up to KES 20,000.",
+            tone = JengaBannerTone.Warning,
+            title = "Approved for smaller systems and accessories only",
+            action = { JengaLink(text = "Why", onClick = {}) },
+            onDismiss = {},
+            dismissContentDescription = "Dismiss",
+            emphasis = JengaBannerEmphasis.Prominent,
         )
     }
 }
