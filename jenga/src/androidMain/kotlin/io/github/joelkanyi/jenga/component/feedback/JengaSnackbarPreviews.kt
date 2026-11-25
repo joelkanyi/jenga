@@ -43,3 +43,52 @@ private fun SnackbarShowcase() {
         )
     }
 }
+
+@JengaBlockPreviews
+@Composable
+internal fun JengaSnackbarEndPreview() {
+    JengaTheme { SnackbarEndShowcase() }
+}
+
+@Preview(name = "RTL", showBackground = true)
+@Composable
+internal fun JengaSnackbarEndRtlPreview() {
+    JengaTheme { RtlPreview { SnackbarEndShowcase() } }
+}
+
+/** The four ends of a snackbar: none, action, close, action + close; then two lines and a tone. */
+@Composable
+private fun SnackbarEndShowcase() {
+    Column(
+        modifier = Modifier
+            .background(JengaTheme.colors.background)
+            .padding(JengaTheme.spacing.xl),
+        verticalArrangement = Arrangement.spacedBy(JengaTheme.spacing.md),
+    ) {
+        JengaSnackbar(message = "Payment saved")
+        JengaSnackbar(message = "Sale registered", actionLabel = "Undo", onAction = {})
+        JengaSnackbar(message = "Sync failed for 2 sales", onDismiss = {}, dismissContentDescription = "Dismiss")
+        JengaSnackbar(
+            message = "Couldn't send the prompt",
+            actionLabel = "Retry",
+            onAction = {},
+            onDismiss = {},
+            dismissContentDescription = "Dismiss",
+        )
+        JengaSnackbar(
+            message = "Sync failed for 2 sales. They're saved on this phone and will sync later.",
+            actionLabel = "Retry",
+            onAction = {},
+            onDismiss = {},
+            dismissContentDescription = "Dismiss",
+        )
+        JengaSnackbar(
+            message = "Upload failed",
+            tone = JengaSnackbarTone.Error,
+            actionLabel = "Retry",
+            onAction = {},
+            onDismiss = {},
+            dismissContentDescription = "Dismiss",
+        )
+    }
+}

@@ -1721,14 +1721,16 @@ fun componentEntries(): List<CatalogEntry> = listOf(
     CatalogEntry(
         name = "Snackbar",
         group = "Feedback",
-        description = "A brief message with an optional action.",
-        keywords = "toast action undo",
+        description = "A brief message with an optional action and close.",
+        keywords = "toast action undo close dismiss",
         code = """
             JengaSnackbar(
                 message = "Saved offline",
                 tone = JengaSnackbarTone.Neutral,
                 actionLabel = "Undo",
                 onAction = {},
+                onDismiss = {},
+                dismissContentDescription = "Dismiss",
             )
         """.trimIndent(),
         demo = {
@@ -1743,6 +1745,8 @@ fun componentEntries(): List<CatalogEntry> = listOf(
                     tone = JengaSnackbarTone.Neutral,
                     actionLabel = "Undo",
                     onAction = { visible = false },
+                    onDismiss = { visible = false },
+                    dismissContentDescription = "Dismiss",
                 )
             } else {
                 JengaLink(

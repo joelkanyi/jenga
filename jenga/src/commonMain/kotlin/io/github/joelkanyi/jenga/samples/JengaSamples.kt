@@ -372,6 +372,25 @@ internal fun JengaSnackbarSample() {
 }
 
 @Composable
+internal fun JengaSnackbarDismissSample() {
+    var visible by remember {
+        mutableStateOf(
+            value = true,
+        )
+    }
+    // A message that stays until it is read: a close ✕ after the action.
+    if (visible) {
+        JengaSnackbar(
+            message = "Couldn't send the prompt",
+            actionLabel = "Retry",
+            onAction = { },
+            onDismiss = { visible = false },
+            dismissContentDescription = "Dismiss",
+        )
+    }
+}
+
+@Composable
 internal fun JengaDialogSample() {
     var open by remember {
         mutableStateOf(
@@ -1007,6 +1026,11 @@ internal fun JengaSnackbarHostSample() {
     // still auto-dismisses instead of sitting there indefinitely:
     //   hostState.showSnackbar("Removed", actionLabel = "Undo",
     //       duration = JengaSnackbarDuration.Long)
+    // A message that must stay until it is read gets a close ✕; tapping it returns
+    // JengaSnackbarResult.Dismissed:
+    //   hostState.showSnackbar("Sync failed for 2 sales",
+    //       duration = JengaSnackbarDuration.Indefinite,
+    //       dismissContentDescription = "Dismiss")
     JengaSnackbarHost(
         hostState = hostState,
     )
