@@ -896,6 +896,33 @@ public final class io/github/joelkanyi/jenga/component/chart/ComposableSingleton
 	public final fun getLambda$931468639$jenga_release ()Lkotlin/jvm/functions/Function2;
 }
 
+public final class io/github/joelkanyi/jenga/component/chart/ComposableSingletons$JengaLineChartPreviewsKt {
+	public static final field INSTANCE Lio/github/joelkanyi/jenga/component/chart/ComposableSingletons$JengaLineChartPreviewsKt;
+	public fun <init> ()V
+	public final fun getLambda$-1029704744$jenga_release ()Lkotlin/jvm/functions/Function2;
+	public final fun getLambda$-139433301$jenga_release ()Lkotlin/jvm/functions/Function2;
+	public final fun getLambda$-1496224179$jenga_release ()Lkotlin/jvm/functions/Function2;
+	public final fun getLambda$-37844620$jenga_release ()Lkotlin/jvm/functions/Function2;
+	public final fun getLambda$-425792277$jenga_release ()Lkotlin/jvm/functions/Function2;
+	public final fun getLambda$-539385075$jenga_release ()Lkotlin/jvm/functions/Function2;
+	public final fun getLambda$-543361093$jenga_release ()Lkotlin/jvm/functions/Function2;
+	public final fun getLambda$-751298540$jenga_release ()Lkotlin/jvm/functions/Function2;
+	public final fun getLambda$-814092174$jenga_release ()Lkotlin/jvm/functions/Function2;
+	public final fun getLambda$-952329774$jenga_release ()Lkotlin/jvm/functions/Function2;
+	public final fun getLambda$1511939636$jenga_release ()Lkotlin/jvm/functions/Function2;
+	public final fun getLambda$1532672332$jenga_release ()Lkotlin/jvm/functions/Function2;
+	public final fun getLambda$1667062532$jenga_release ()Lkotlin/jvm/functions/Function2;
+	public final fun getLambda$1721515251$jenga_release ()Lkotlin/jvm/functions/Function2;
+	public final fun getLambda$1932680619$jenga_release ()Lkotlin/jvm/functions/Function2;
+	public final fun getLambda$2046994722$jenga_release ()Lkotlin/jvm/functions/Function2;
+	public final fun getLambda$266601547$jenga_release ()Lkotlin/jvm/functions/Function2;
+	public final fun getLambda$306510125$jenga_release ()Lkotlin/jvm/functions/Function2;
+	public final fun getLambda$338997482$jenga_release ()Lkotlin/jvm/functions/Function2;
+	public final fun getLambda$478885236$jenga_release ()Lkotlin/jvm/functions/Function2;
+	public final fun getLambda$683913227$jenga_release ()Lkotlin/jvm/functions/Function2;
+	public final fun getLambda$7835211$jenga_release ()Lkotlin/jvm/functions/Function2;
+}
+
 public abstract interface class io/github/joelkanyi/jenga/component/chart/JengaBarChartArrangement {
 }
 
@@ -984,6 +1011,56 @@ public final class io/github/joelkanyi/jenga/component/chart/JengaChartTarget {
 	public final fun getValue ()F
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
+}
+
+public final class io/github/joelkanyi/jenga/component/chart/JengaLineChartColors {
+	public static final field $stable I
+	public synthetic fun <init> (JJJJJJJJJLkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun copy-5r9EGqc (JJJJJJJJJ)Lio/github/joelkanyi/jenga/component/chart/JengaLineChartColors;
+	public static synthetic fun copy-5r9EGqc$default (Lio/github/joelkanyi/jenga/component/chart/JengaLineChartColors;JJJJJJJJJILjava/lang/Object;)Lio/github/joelkanyi/jenga/component/chart/JengaLineChartColors;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getGridline-0d7_KjU ()J
+	public final fun getLabel-0d7_KjU ()J
+	public final fun getLine-0d7_KjU ()J
+	public final fun getPoint-0d7_KjU ()J
+	public final fun getPointFill-0d7_KjU ()J
+	public final fun getSelectedLabel-0d7_KjU ()J
+	public final fun getSelectedPoint-0d7_KjU ()J
+	public final fun getTargetLabel-0d7_KjU ()J
+	public final fun getTargetLine-0d7_KjU ()J
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class io/github/joelkanyi/jenga/component/chart/JengaLineChartDefaults {
+	public static final field $stable I
+	public static final field GridlineCount I
+	public static final field INSTANCE Lio/github/joelkanyi/jenga/component/chart/JengaLineChartDefaults;
+	public final fun colors (Landroidx/compose/runtime/Composer;I)Lio/github/joelkanyi/jenga/component/chart/JengaLineChartColors;
+	public final fun getAnimationSpec (Landroidx/compose/runtime/Composer;I)Landroidx/compose/animation/core/AnimationSpec;
+	public final fun getContentPadding (Landroidx/compose/runtime/Composer;I)Landroidx/compose/foundation/layout/PaddingValues;
+	public final fun getLabelSpacing (Landroidx/compose/runtime/Composer;I)F
+	public final fun getLabelStyle (Landroidx/compose/runtime/Composer;I)Landroidx/compose/ui/text/TextStyle;
+	public final fun getLineWidth-D9Ej5fM ()F
+	public final fun getPlotHeight-D9Ej5fM ()F
+	public final fun getPointRadius-D9Ej5fM ()F
+	public final fun getSelectedLabelStyle (Landroidx/compose/runtime/Composer;I)Landroidx/compose/ui/text/TextStyle;
+	public final fun getSelectedPointRadius-D9Ej5fM ()F
+	public final fun getTargetLabelStyle (Landroidx/compose/runtime/Composer;I)Landroidx/compose/ui/text/TextStyle;
+}
+
+public final class io/github/joelkanyi/jenga/component/chart/JengaLineChartEntry {
+	public static final field $stable I
+	public fun <init> (Ljava/lang/String;F)V
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getLabel ()Ljava/lang/String;
+	public final fun getValue ()F
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class io/github/joelkanyi/jenga/component/chart/JengaLineChartKt {
+	public static final fun JengaLineChart-C6J9rm4 (Ljava/util/List;Lkotlin/jvm/functions/Function1;Landroidx/compose/ui/Modifier;Ljava/lang/String;Ljava/lang/Integer;Lkotlin/jvm/functions/Function1;Ljava/lang/Float;Ljava/lang/Float;Lio/github/joelkanyi/jenga/component/chart/JengaChartTarget;IFFFFFLandroidx/compose/foundation/layout/PaddingValues;Landroidx/compose/ui/text/TextStyle;Landroidx/compose/ui/text/TextStyle;Landroidx/compose/ui/text/TextStyle;Lio/github/joelkanyi/jenga/component/chart/JengaLineChartColors;Landroidx/compose/animation/core/AnimationSpec;Lkotlin/jvm/functions/Function4;Landroidx/compose/runtime/Composer;IIII)V
 }
 
 public final class io/github/joelkanyi/jenga/component/chip/ComposableSingletons$JengaChipPreviewsKt {

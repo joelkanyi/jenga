@@ -38,11 +38,14 @@ import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.unit.Constraints
+import androidx.compose.ui.unit.Density
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import dev.drewhamilton.poko.Poko
 import io.github.joelkanyi.jenga.component.text.JengaText
 import io.github.joelkanyi.jenga.theme.JengaTheme
+import kotlin.math.roundToInt
 
 /** One bar of a [JengaBarChart]: a [label] under the bar and a non-negative [value]. */
 @Poko
@@ -429,9 +432,12 @@ public fun JengaBarChart(
             target = target,
             // The same mapping as a bar's height, so a bar at the target value just touches the line.
             lineHeight = minBarHeight + (plotHeight - minBarHeight) * barFraction(target.value, max),
-            barTops = barTops,
-            slotsShareWidth = arrangement == JengaBarChartArrangement.Fill,
-            slotSpacing = barSpacing,
+            chartTop = barTops.maxOrNull() ?: 0.dp,
+            occupiedUnderLabel = barsUnderTargetLabel(
+                barTops = barTops,
+                slotsShareWidth = arrangement == JengaBarChartArrangement.Fill,
+                slotSpacing = barSpacing,
+            ),
             contentPadding = contentPadding,
             lineColor = colors.targetLine,
             labelColor = colors.targetLabel,
@@ -505,6 +511,16 @@ public fun JengaBarChart(
     )
 }
 
+/**
+ * The value drawn at full plot height: [maxValue], or the largest entry ([entriesMax]) without
+ * one, raised to [target] when the target is higher. Without a target this is the chart's scale
+ * as it was before targets existed.
+ */
+internal fun chartScaleMax(entriesMax: Float?, maxValue: Float?, target: Float?): Float {
+    val max = maxValue ?: entriesMax ?: 0f
+    return if (target != null && target > max) target else max
+}
+
 /** How far up the plot a bar of [value] reaches, from 0 to 1, when [max] is a full-height bar. */
 private fun barFraction(value: Float, max: Float): Float = if (max > 0f) (value / max).coerceIn(0f, 1f) else 0f
 
@@ -513,6 +529,31 @@ private fun barHeight(fraction: Float, empty: Boolean, plotHeight: Dp, minBarHei
     emptyBarHeight.coerceAtMost(plotHeight)
 } else {
     minBarHeight + (plotHeight - minBarHeight) * fraction
+}
+
+/**
+ * How far above the baseline, in px, the bars under a target label reach, for [ChartTargetLayout].
+ * [barTops] gives how far above the baseline each bar's slot is occupied once its animation has
+ * settled. With [slotsShareWidth] (bars fill the width) the bars under the label are those whose
+ * slot overlaps it horizontally; otherwise (a scrolling chart) every bar counts, so the label
+ * stays put while the bars scroll under it.
+ */
+private fun barsUnderTargetLabel(
+    barTops: List<Dp>,
+    slotsShareWidth: Boolean,
+    slotSpacing: Dp,
+): Density.(labelWidth: Int, plotWidth: Int) -> Int = { labelWidth, plotWidth ->
+    val under = if (slotsShareWidth && plotWidth != Constraints.Infinity) {
+        slotsUnderTargetLabel(
+            slotCount = barTops.size,
+            plotWidth = plotWidth.toFloat(),
+            spacing = slotSpacing.toPx(),
+            labelWidth = labelWidth.toFloat(),
+        )
+    } else {
+        barTops.size
+    }
+    barTops.takeLast(under).maxOfOrNull { it.toPx() }?.roundToInt() ?: 0
 }
 
 /**

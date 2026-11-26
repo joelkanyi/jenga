@@ -71,6 +71,8 @@ import io.github.joelkanyi.jenga.component.chart.JengaBarChart
 import io.github.joelkanyi.jenga.component.chart.JengaBarChartDefaults
 import io.github.joelkanyi.jenga.component.chart.JengaBarChartEntry
 import io.github.joelkanyi.jenga.component.chart.JengaChartTarget
+import io.github.joelkanyi.jenga.component.chart.JengaLineChart
+import io.github.joelkanyi.jenga.component.chart.JengaLineChartEntry
 import io.github.joelkanyi.jenga.component.chip.JengaChip
 import io.github.joelkanyi.jenga.component.divider.JengaDivider
 import io.github.joelkanyi.jenga.component.expandable.JengaExpandableRow
@@ -5788,6 +5790,66 @@ fun componentEntries(): List<CatalogEntry> = listOf(
                     contentDescription = "Target 40 thousand a day",
                 ),
                 colors = JengaBarChartDefaults.highlightColors(),
+            )
+        },
+    ),
+    CatalogEntry(
+        name = "Line chart",
+        group = "Data display",
+        description = "One line through a point per entry, the selected or latest point emphasised, with an optional target line.",
+        keywords = "chart line graph data trend month point target goal gridlines",
+        code = """
+            var selected by remember {
+                mutableStateOf<Int?>(
+                    value = null,
+                )
+            }
+            val months =
+                listOf("Jun" to 72f, "Jul" to 75f, "Aug" to 79f, "Sep" to 81f, "Oct" to 84f, "Nov" to 86f)
+                    .map { (month, percent) ->
+                        JengaLineChartEntry(
+                            label = month,
+                            value = percent,
+                        )
+                    }
+            JengaLineChart(
+                entries = months,
+                pointContentDescription = { "${'$'}{it.label}, ${'$'}{it.value.toInt()}%" },
+                contentDescription = "Customers paying on time",
+                selectedIndex = selected,
+                onSelect = { selected = it },
+                target = JengaChartTarget(
+                    value = 90f,
+                    label = "Target",
+                    contentDescription = "Target 90%",
+                ),
+            )
+        """.trimIndent(),
+        demo = {
+            var selected by remember {
+                mutableStateOf<Int?>(
+                    value = null,
+                )
+            }
+            val months =
+                listOf("Jun" to 72f, "Jul" to 75f, "Aug" to 79f, "Sep" to 81f, "Oct" to 84f, "Nov" to 86f)
+                    .map { (month, percent) ->
+                        JengaLineChartEntry(
+                            label = month,
+                            value = percent,
+                        )
+                    }
+            JengaLineChart(
+                entries = months,
+                pointContentDescription = { "${it.label}, ${it.value.toInt()}%" },
+                contentDescription = "Customers paying on time",
+                selectedIndex = selected,
+                onSelect = { selected = it },
+                target = JengaChartTarget(
+                    value = 90f,
+                    label = "Target",
+                    contentDescription = "Target 90%",
+                ),
             )
         },
     ),

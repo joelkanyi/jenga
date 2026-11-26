@@ -115,7 +115,7 @@ Camera screens: `JengaCaptureFrame`, a guide over a camera preview for a face, c
 
 # Package io.github.joelkanyi.jenga.component.chart
 
-`JengaBarChart`: vertical bars from a shared baseline, optionally selectable.
+`JengaBarChart`: vertical bars from a shared baseline, optionally selectable. `JengaLineChart`: one line through a point per entry, optionally selectable. Both take a `JengaChartTarget`, a dashed target line.
 
 # Package io.github.joelkanyi.jenga.component.chip
 

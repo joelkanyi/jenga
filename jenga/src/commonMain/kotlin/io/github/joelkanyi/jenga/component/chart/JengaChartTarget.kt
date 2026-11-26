@@ -20,6 +20,7 @@ import androidx.compose.ui.semantics.testTag
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.Constraints
+import androidx.compose.ui.unit.Density
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.constrainHeight
@@ -34,11 +35,13 @@ import kotlin.math.roundToInt
  * as the data. The chart always scales to include it, so the line never leaves the plot.
  *
  * @sample io.github.joelkanyi.jenga.samples.JengaBarChartTargetSample
+ * @sample io.github.joelkanyi.jenga.samples.JengaLineChartSample
  *
  * @property value where the line sits, in the same unit as the chart's entries.
  * @property label optional short text shown above the line's end, e.g. "Target"; null or empty
  *   shows none. It never covers a bar: where a bar under it is taller than the line, the label
- *   sits just above that bar instead (in a scrolling chart, above the tallest bar).
+ *   sits just above that bar instead (in a scrolling chart, above the tallest bar). On a line
+ *   chart it never covers the line or a point: where they rise into it, it sits just above them.
  * @property contentDescription what screen readers hear for the target, e.g. "Target 40,000";
  *   it is added to the chart's description. Defaults to [label]; null leaves the target out.
  */
@@ -56,10 +59,13 @@ internal val ChartTargetLineWidth: Dp = 1.dp
 /** Length of each dash, and of each gap, of a chart's target line. */
 private val ChartTargetDash: Dp = 4.dp
 
-/** Gap between a chart's target line and the label above it. */
-private val ChartTargetLabelGap: Dp = 2.dp
+/** Gap between a chart's target line, or the data under its label, and the label above it. */
+internal val ChartTargetLabelGap: Dp = 2.dp
 
-/** The y position that target heights are measured up from: the bottom of a bar chart's bars. */
+/**
+ * The y position that target heights are measured up from: the bottom of a bar chart's bars, or
+ * of a line chart's plot.
+ */
 internal val ChartBaseline: HorizontalAlignmentLine = HorizontalAlignmentLine(::max)
 
 /** Reports the bottom edge of this element as the [ChartBaseline] of the chart it is in. */
@@ -68,16 +74,6 @@ internal fun Modifier.chartBaseline(): Modifier = layout { measurable, constrain
     layout(placeable.width, placeable.height, mapOf(ChartBaseline to placeable.height)) {
         placeable.place(0, 0)
     }
-}
-
-/**
- * The value drawn at full plot height: [maxValue], or the largest entry ([entriesMax]) without
- * one, raised to [target] when the target is higher. Without a target this is the chart's scale
- * as it was before targets existed.
- */
-internal fun chartScaleMax(entriesMax: Float?, maxValue: Float?, target: Float?): Float {
-    val max = maxValue ?: entriesMax ?: 0f
-    return if (target != null && target > max) target else max
 }
 
 /** A chart's description for screen readers: its own [contentDescription], then the target's. */
@@ -108,16 +104,18 @@ internal fun slotsUnderTargetLabel(slotCount: Int, plotWidth: Float, spacing: Fl
  * end. The line sits [lineHeight] above the chart's [ChartBaseline] (its bottom edge when the
  * chart reports none) and spans the chart's width inside [contentPadding].
  *
- * The label never covers a bar: when a bar under it is taller than the line, the label sits just
- * above that bar instead. [barTops] gives how far above the baseline each bar's slot is occupied
- * once its animation has settled, so the label does not move while bars animate. With
- * [slotsShareWidth] (bars fill the width) the bars under the label are those whose slot overlaps
- * it horizontally; otherwise (a scrolling chart) every bar counts, so the label stays put while
- * the bars scroll under it.
+ * The label never covers the chart's data: when the data under it reaches above the line, the
+ * label sits just above the data instead. [occupiedUnderLabel] gives how far above the baseline,
+ * in px, the data reaches under a label `labelWidth` px wide at the end edge of a plot
+ * `plotWidth` px wide ([Constraints.Infinity] when the width is unbounded); 0 when there is
+ * none. It should describe the data once its animation has settled, so the label does not move
+ * while the data animates.
  *
  * The layout grows upward only as far as needed to keep the line and its label inside its
  * bounds; with a bounded height it gives the chart that much less room instead, and never
- * reports a height outside its constraints.
+ * reports a height outside its constraints. [chartTop] is how far above the baseline [chart]'s
+ * own layout reaches once settled (a bar chart's tallest bar, a line chart's plot), which is
+ * what tells how much more room the line and label need.
  *
  * [chart] must emit exactly one layout.
  */
@@ -125,9 +123,8 @@ internal fun slotsUnderTargetLabel(slotCount: Int, plotWidth: Float, spacing: Fl
 internal fun ChartTargetLayout(
     target: JengaChartTarget,
     lineHeight: Dp,
-    barTops: List<Dp>,
-    slotsShareWidth: Boolean,
-    slotSpacing: Dp,
+    chartTop: Dp,
+    occupiedUnderLabel: Density.(labelWidth: Int, plotWidth: Int) -> Int,
     contentPadding: PaddingValues,
     lineColor: Color,
     labelColor: Color,
@@ -185,28 +182,16 @@ internal fun ChartTargetLayout(
         }
         val labelPlaceable = measurables.getOrNull(2)?.measure(Constraints(maxWidth = plotWidth))
 
-        // Heights above the baseline, in px, of the tallest bar and of the tallest bar under the label.
-        val tallestBar = barTops.maxOfOrNull { it.toPx() }?.roundToInt() ?: 0
-        val barUnderLabel = when {
-            labelPlaceable == null -> 0
-            slotsShareWidth && plotWidth != Constraints.Infinity -> {
-                val under = slotsUnderTargetLabel(
-                    slotCount = barTops.size,
-                    plotWidth = plotWidth.toFloat(),
-                    spacing = slotSpacing.toPx(),
-                    labelWidth = labelPlaceable.width.toFloat(),
-                )
-                barTops.takeLast(under).maxOfOrNull { it.toPx() }?.roundToInt() ?: 0
-            }
-            else -> tallestBar
-        }
+        // Heights above the baseline, in px, of the chart's own top and of the data under the label.
+        val chartTopPx = chartTop.toPx().roundToInt()
+        val dataUnderLabel = labelPlaceable?.let { occupiedUnderLabel(it.width, plotWidth) } ?: 0
         // Distances above the baseline: the line's top edge, the label's bottom, and the top of it all.
         val lineTopAbove = lineHeightPx + strokePx / 2
-        val labelBottomAbove = max(lineTopAbove, barUnderLabel) + gapPx
+        val labelBottomAbove = max(lineTopAbove, dataUnderLabel) + gapPx
         val topAbove = labelPlaceable?.let { labelBottomAbove + it.height } ?: lineTopAbove
 
-        // With a bounded height the room above the bars comes out of the chart's own height.
-        val reserved = (topAbove - tallestBar).coerceAtLeast(0)
+        // With a bounded height the room above the chart comes out of the chart's own height.
+        val reserved = (topAbove - chartTopPx).coerceAtLeast(0)
         val chartConstraints = if (constraints.hasBoundedHeight) {
             constraints.copy(
                 minHeight = (constraints.minHeight - reserved).coerceAtLeast(0),

@@ -52,6 +52,8 @@ import io.github.joelkanyi.jenga.component.chart.JengaBarChart
 import io.github.joelkanyi.jenga.component.chart.JengaBarChartDefaults
 import io.github.joelkanyi.jenga.component.chart.JengaBarChartEntry
 import io.github.joelkanyi.jenga.component.chart.JengaChartTarget
+import io.github.joelkanyi.jenga.component.chart.JengaLineChart
+import io.github.joelkanyi.jenga.component.chart.JengaLineChartEntry
 import io.github.joelkanyi.jenga.component.chip.JengaChip
 import io.github.joelkanyi.jenga.component.divider.JengaDivider
 import io.github.joelkanyi.jenga.component.expandable.JengaExpandableRow
@@ -2077,6 +2079,55 @@ internal fun JengaBarChartTargetSample() {
             contentDescription = "Target 40 thousand a day",
         ),
         colors = JengaBarChartDefaults.highlightColors(),
+    )
+}
+
+@Composable
+internal fun JengaLineChartSample() {
+    // The share of customers paying on time, in percent, over six months.
+    val months = listOf(
+        JengaLineChartEntry(
+            label = "Jun",
+            value = 72f,
+        ),
+        JengaLineChartEntry(
+            label = "Jul",
+            value = 75f,
+        ),
+        JengaLineChartEntry(
+            label = "Aug",
+            value = 79f,
+        ),
+        JengaLineChartEntry(
+            label = "Sep",
+            value = 81f,
+        ),
+        JengaLineChartEntry(
+            label = "Oct",
+            value = 84f,
+        ),
+        JengaLineChartEntry(
+            label = "Nov",
+            value = 86f,
+        ),
+    )
+    // Nothing selected: the latest month is the emphasised point.
+    var selected by remember {
+        mutableStateOf<Int?>(
+            value = null,
+        )
+    }
+    JengaLineChart(
+        entries = months,
+        pointContentDescription = { "${it.label}, ${it.value.toInt()}%" },
+        contentDescription = "Customers paying on time",
+        selectedIndex = selected,
+        onSelect = { selected = it },
+        target = JengaChartTarget(
+            value = 90f,
+            label = "Target",
+            contentDescription = "Target 90%",
+        ),
     )
 }
 

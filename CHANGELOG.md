@@ -36,6 +36,7 @@
  * New: `JengaBarChart` takes `highlightedIndices` (bars that keep `JengaBarChartColors.highlightedBar` whichever bar is selected, e.g. today) and `emptyIndices` (entries with no data yet, drawn as a stub `emptyBarHeight` tall in `emptyBar`).
  * New: `JengaBarChartDefaults.highlightColors()`: brand highlighted bars, neutral ordinary bars that meet 3:1 against `surface`, and a ring around the selected bar (`JengaBarChartColors.selectedOutline`) instead of a change of color. `JengaBarChartDefaults.colors()` and existing charts look as before.
  * New: `JengaBarChart` takes `contentDescription`, a description of the chart as a whole for screen readers; the target's description is added to it.
+ * New: `JengaLineChart`, a simple line chart: one line through a point per `JengaLineChartEntry` (label and value), labels underneath and light horizontal gridlines (`gridlineCount`). Tap a point to select it (`selectedIndex`, `onSelect`); the selected point, or the latest when none is selected, is drawn larger and filled. It takes the same `target` as `JengaBarChart`, a `contentDescription` for the chart and a `pointContentDescription` for each point. Values may be negative. The scale runs from the smallest to the largest value, not from zero, or from `minValue` to `maxValue`, and is widened to include the target.
 
 ## Version 0.8.6
 
