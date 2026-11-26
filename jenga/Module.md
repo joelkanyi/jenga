@@ -103,7 +103,7 @@ Page-level messages: `JengaBanner` in a tone, and `JengaInfoBar`, a button-shape
 
 # Package io.github.joelkanyi.jenga.component.calendar
 
-Dates: `JengaDatePicker` (optionally limited to a `dateRange`, with a year grid behind the title), `JengaDatePickerDialog`, `JengaCalendar`, a paging month grid whose day cells are your own content, and `JengaWeeklyCalendar`, one week of selectable days in a row with buttons to move between weeks.
+Dates: `JengaDatePicker` (optionally limited to a `dateRange`, with a year grid behind the title), `JengaDatePickerDialog`, `JengaCalendar`, a paging month grid whose day cells are your own content, and `JengaWeeklyCalendar`, one week of selectable days in a row with buttons to move between weeks, your own content in each day and bands that join runs of days.
 
 # Package io.github.joelkanyi.jenga.component.camera
 

@@ -15,15 +15,26 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.selection.selectable
 import androidx.compose.foundation.selection.selectableGroup
+import androidx.compose.foundation.shape.CornerSize
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.key
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.draw.rotate
+import androidx.compose.ui.geometry.CornerRadius
+import androidx.compose.ui.geometry.Rect
+import androidx.compose.ui.geometry.RoundRect
+import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.Path
+import androidx.compose.ui.graphics.isSpecified
+import androidx.compose.ui.layout.Layout
 import androidx.compose.ui.layout.layout
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.semantics.clearAndSetSemantics
@@ -34,8 +45,12 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.Constraints
+import androidx.compose.ui.unit.Density
 import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.TextUnit
+import androidx.compose.ui.unit.constrainHeight
+import androidx.compose.ui.unit.constrainWidth
 import androidx.compose.ui.unit.dp
 import dev.drewhamilton.poko.Poko
 import io.github.joelkanyi.jenga.component.button.JengaIconButton
@@ -43,12 +58,14 @@ import io.github.joelkanyi.jenga.component.divider.JengaDivider
 import io.github.joelkanyi.jenga.component.icon.JengaIcon
 import io.github.joelkanyi.jenga.component.text.JengaText
 import io.github.joelkanyi.jenga.theme.JengaTheme
+import io.github.joelkanyi.jenga.theme.LocalJengaContentColor
 import kotlinx.datetime.DateTimeUnit
 import kotlinx.datetime.DayOfWeek
 import kotlinx.datetime.LocalDate
 import kotlinx.datetime.isoDayNumber
 import kotlinx.datetime.minus
 import kotlinx.datetime.plus
+import kotlin.math.roundToInt
 
 /** Resolved colors for a [JengaWeeklyCalendar]. Override via [JengaWeeklyCalendarDefaults.colors]. */
 @Poko
@@ -120,16 +137,6 @@ public object JengaWeeklyCalendarDefaults {
             marker = c.brand,
         )
     }
-
-    /**
-     * The first day of the week that contains [date], for a week starting on
-     * [firstDayOfWeek]: the `weekStart` to give [JengaWeeklyCalendar]. A date that
-     * falls on [firstDayOfWeek] is its own week start.
-     */
-    public fun weekStartOf(date: LocalDate, firstDayOfWeek: DayOfWeek = DayOfWeek.MONDAY): LocalDate {
-        val daysIntoWeek = (date.dayOfWeek.isoDayNumber - firstDayOfWeek.isoDayNumber + DaysInWeek) % DaysInWeek
-        return date.minus(daysIntoWeek, DateTimeUnit.DAY)
-    }
 }
 
 /**
@@ -137,15 +144,25 @@ public object JengaWeeklyCalendarDefaults {
  * above seven selectable days, each a day name over its number in a circle. The
  * selected day is filled, and today has a ring.
  *
- * The calendar holds no state: the caller keeps [weekStart] and [selectedDate],
- * and moves [weekStart] by seven days in [onPreviousWeek] and [onNextWeek]. Every
+ * The calendar holds no state: the caller keeps [week] and [selectedDate], and
+ * moves [week] by seven days in [onPreviousWeek] and [onNextWeek]. [week] can be
+ * any date in the week to show (today, say): the calendar starts the row on the
+ * [firstDayOfWeek] on or before it, so the caller never has to line it up. Every
  * visible string comes from the caller ([weekTitle], [dayOfWeekLabel] and the
  * descriptions), so it follows the app's locale.
  *
- * @sample io.github.joelkanyi.jenga.samples.JengaWeeklyCalendarSample
+ * A day can show more than its number: [dayContent] draws your own content in each
+ * day (a check on a paid day, a lock on a locked day), under the number or, with
+ * [showDayNumber] off, in its place. [dayBackground] joins runs of days with a soft
+ * band behind them, like a date range. The selected fill and the today ring are
+ * drawn on top of both.
  *
- * @param weekStart the first day shown; the calendar shows it and the six days after
- *   it. Use [JengaWeeklyCalendarDefaults.weekStartOf] to get it from any date.
+ * @sample io.github.joelkanyi.jenga.samples.JengaWeeklyCalendarSample
+ * @sample io.github.joelkanyi.jenga.samples.JengaWeeklyCalendarDayContentSample
+ *
+ * @param week any date in the week to show. The row starts on the [firstDayOfWeek]
+ *   on or before it and shows seven days, so a Thursday shows the week around that
+ *   Thursday. Adding or subtracting seven days moves to the next or previous week.
  * @param selectedDate the selected date, or null for none.
  * @param onSelectedDateChange called with a tapped date.
  * @param onPreviousWeek called when the previous-week button is tapped.
@@ -155,6 +172,9 @@ public object JengaWeeklyCalendarDefaults {
  * @param previousWeekContentDescription accessibility label for the previous-week button.
  * @param nextWeekContentDescription accessibility label for the next-week button.
  * @param modifier the [Modifier] for the calendar.
+ * @param firstDayOfWeek the day each week starts on, and so the first day of the
+ *   row; Monday by default. The calendar does not read the locale: to follow the
+ *   locale's first day of the week (Sunday in the US, for example), pass it here.
  * @param dateRange the earliest and latest dates that can be picked; days outside it
  *   are disabled.
  * @param isSelectable whether a date can be picked.
@@ -163,13 +183,15 @@ public object JengaWeeklyCalendarDefaults {
  *   calendar can stay on screen past midnight.
  * @param dateContentDescription accessibility label for a day; the ISO date by
  *   default. Give the full date, and say so when it is today (e.g. "Tuesday 17
- *   November, today"). Screen readers add whether the day is selected.
+ *   November, today"). Screen readers add whether the day is selected. It is the
+ *   only thing read for a day, so also say here what [dayContent] or
+ *   [dayBackground] shows (e.g. "Sunday 22 November, locked").
  * @param previousWeekEnabled whether the previous-week button can be tapped. By
  *   default it is on when there is no [dateRange], or when [dateRange] starts before
- *   [weekStart].
+ *   the first day shown.
  * @param nextWeekEnabled whether the next-week button can be tapped. By default it is
  *   on when there is no [dateRange], or when [dateRange] ends after the last day
- *   shown (six days after [weekStart]).
+ *   shown (six days after the first).
  * @param showDivider whether a divider is drawn directly under the days, across the
  *   full width (outside [contentPadding]); add bottom [contentPadding] for more
  *   space above it.
@@ -184,12 +206,40 @@ public object JengaWeeklyCalendarDefaults {
  *   `caption` by default.
  * @param dayNumberStyle the text style of the day number; the theme's `bodyMedium` by
  *   default, so a theme whose `bodyMedium` is 14sp gives a 14sp number. Its line
- *   height is not used.
+ *   height is not used. In the taller cell (a number with [dayContent] under it) its
+ *   size is replaced by the theme's `bodySmall` size.
  * @param colors the color set; defaults to [JengaWeeklyCalendarDefaults.colors].
+ * @param showDayNumber used only with [dayContent]. When true, the number stays and
+ *   the content sits under it, in a taller rounded cell; the number is then drawn at
+ *   the theme's `bodySmall` size, and every day keeps room for content, so the
+ *   numbers line up. When false, the content takes the number's place in the circle,
+ *   and a day whose content is empty still shows its number.
+ * @param dayBackground the color of the band behind a day, or [Color.Unspecified]
+ *   (or a fully transparent color) for none. Use a soft container color, and draw
+ *   [dayContent] on it in the matching on-container color: `successContainer` with
+ *   `onSuccessContainer`, `errorContainer` with `onErrorContainer`. Days next to
+ *   each other that have a band are joined into one run, whatever their colors: the
+ *   band is rounded only where a run starts and ends and at the two ends of the
+ *   week, and two colors meet with no gap. A day on its own gets a band in the shape
+ *   of its circle or cell. The lambda is not composable, so read theme colors
+ *   outside it and capture them, as the sample does.
+ * @param dayContent content drawn in each day's cell, or null for the number alone.
+ *   Keep it small: about 20dp under the number, or inside the 34dp circle when
+ *   [showDayNumber] is false. [LocalJengaContentColor] follows the day's state, so
+ *   an untinted [JengaIcon] does too: the selected content color on the selected
+ *   day, else the disabled content color on a disabled day, else the today color on
+ *   today, else the content color. Content that sets its own color (a green check)
+ *   keeps it on a disabled day and on today, and should drop it when its date is
+ *   [selectedDate], or it will not show on the selected fill. The content should
+ *   not be clickable and is not read by screen readers: the whole day is one tab,
+ *   described by [dateContentDescription], and the content's semantics are cleared
+ *   (a test tag in it is found only in the unmerged tree). With [showDayNumber]
+ *   false, content wrapped in an animated visibility still takes up room while it
+ *   leaves, so the number comes back only when the exit animation ends.
  */
 @Composable
 public fun JengaWeeklyCalendar(
-    weekStart: LocalDate,
+    week: LocalDate,
     selectedDate: LocalDate?,
     onSelectedDateChange: (LocalDate) -> Unit,
     onPreviousWeek: () -> Unit,
@@ -199,12 +249,14 @@ public fun JengaWeeklyCalendar(
     previousWeekContentDescription: String,
     nextWeekContentDescription: String,
     modifier: Modifier = Modifier,
+    firstDayOfWeek: DayOfWeek = DayOfWeek.MONDAY,
     dateRange: ClosedRange<LocalDate>? = null,
     isSelectable: (LocalDate) -> Boolean = { true },
     today: LocalDate = remember { JengaCalendarDefaults.today() },
     dateContentDescription: (LocalDate) -> String = { it.toString() },
-    previousWeekEnabled: Boolean = dateRange == null || weekStart > dateRange.start,
-    nextWeekEnabled: Boolean = dateRange == null || weekStart.plus(6, DateTimeUnit.DAY) < dateRange.endInclusive,
+    previousWeekEnabled: Boolean = dateRange == null || firstDayOfWeekOn(week, firstDayOfWeek) > dateRange.start,
+    nextWeekEnabled: Boolean = dateRange == null ||
+        firstDayOfWeekOn(week, firstDayOfWeek).plus(DaysInWeek - 1, DateTimeUnit.DAY) < dateRange.endInclusive,
     showDivider: Boolean = true,
     isMarked: ((LocalDate) -> Boolean)? = null,
     contentPadding: PaddingValues = JengaWeeklyCalendarDefaults.ContentPadding,
@@ -212,8 +264,16 @@ public fun JengaWeeklyCalendar(
     dayOfWeekStyle: TextStyle = JengaWeeklyCalendarDefaults.dayOfWeekStyle,
     dayNumberStyle: TextStyle = JengaWeeklyCalendarDefaults.dayNumberStyle,
     colors: JengaWeeklyCalendarColors = JengaWeeklyCalendarDefaults.colors(),
+    showDayNumber: Boolean = true,
+    dayBackground: (LocalDate) -> Color = { Color.Unspecified },
+    dayContent: (@Composable (LocalDate) -> Unit)? = null,
 ) {
-    val days = remember(weekStart) { List(DaysInWeek) { weekStart.plus(it, DateTimeUnit.DAY) } }
+    val days = remember(week, firstDayOfWeek) {
+        val first = firstDayOfWeekOn(week, firstDayOfWeek)
+        List(DaysInWeek) { first.plus(it, DateTimeUnit.DAY) }
+    }
+    val bandColors = days.map(dayBackground)
+    val bandEdges = weekBandEdges(bandColors)
     Column(modifier = modifier) {
         Column(
             modifier = Modifier.fillMaxWidth().padding(contentPadding),
@@ -233,7 +293,7 @@ public fun JengaWeeklyCalendar(
             // No spacing between the columns: each day keeps the gap inside its own
             // touch target, as an inset on either side of its pressed shape.
             Row(modifier = Modifier.fillMaxWidth().selectableGroup()) {
-                days.forEach { date ->
+                days.forEachIndexed { index, date ->
                     // Keyed by date, so a pressed or focused highlight does not move to
                     // the same column of another week.
                     key(date) {
@@ -249,6 +309,10 @@ public fun JengaWeeklyCalendar(
                             dayOfWeekStyle = dayOfWeekStyle,
                             dayNumberStyle = dayNumberStyle,
                             colors = colors,
+                            bandColor = bandColors[index],
+                            bandEdges = bandEdges[index],
+                            showDayNumber = showDayNumber,
+                            dayContent = dayContent,
                             modifier = Modifier.weight(1f),
                         )
                     }
@@ -294,7 +358,10 @@ private fun WeekHeader(
     }
 }
 
-/** One day column. [marked] is null when the calendar shows no markers, so no room is kept for one. */
+/**
+ * One day column. [marked] is null when the calendar shows no markers, so no room is
+ * kept for one. [bandEdges] is null when the day has no band.
+ */
 @Composable
 private fun WeekDay(
     date: LocalDate,
@@ -308,6 +375,10 @@ private fun WeekDay(
     dayOfWeekStyle: TextStyle,
     dayNumberStyle: TextStyle,
     colors: JengaWeeklyCalendarColors,
+    bandColor: Color,
+    bandEdges: WeekBandEdges?,
+    showDayNumber: Boolean,
+    dayContent: (@Composable (LocalDate) -> Unit)?,
     modifier: Modifier = Modifier,
 ) {
     val interactionSource = remember { MutableInteractionSource() }
@@ -344,14 +415,46 @@ private fun WeekDay(
                 maxLines = 1,
                 modifier = Modifier.padding(horizontal = ColumnGap / 2).clearAndSetSemantics {},
             )
-            DayNumber(
-                date = date,
-                selected = selected,
-                isToday = isToday,
-                enabled = enabled,
-                style = dayNumberStyle,
-                colors = colors,
-            )
+            // The band is drawn on a wrapper as wide as the column, so the slices of
+            // two neighbouring days touch; the face (circle or cell) sits on top of it.
+            // By design it also covers the press indication over the face's height.
+            val pill = dayContent != null && showDayNumber
+            val faceShape = JengaTheme.shapes.pill
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .dayBand(bandColor, bandEdges, faceWidth = if (pill) DayPillWidth else DayCircleSize, faceShape),
+                contentAlignment = Alignment.Center,
+            ) {
+                when {
+                    dayContent == null -> DayNumber(
+                        date = date,
+                        selected = selected,
+                        isToday = isToday,
+                        enabled = enabled,
+                        style = dayNumberStyle,
+                        colors = colors,
+                        shape = faceShape,
+                    )
+
+                    showDayNumber -> DayNumberOverContent(
+                        date = date,
+                        selected = selected,
+                        isToday = isToday,
+                        enabled = enabled,
+                        style = dayNumberStyle,
+                        colors = colors,
+                        shape = faceShape,
+                        content = dayContent,
+                    )
+
+                    else -> DayContentOrNumber(
+                        modifier = Modifier.dayCircle().dayState(selected, isToday, colors, faceShape),
+                        dayContent = { DayContent(date, selected, isToday, enabled, colors, dayContent) },
+                        dayNumber = { DayNumberText(date, selected, isToday, enabled, dayNumberStyle, colors) },
+                    )
+                }
+            }
             if (marked != null) {
                 Box(
                     modifier = Modifier
@@ -371,28 +474,133 @@ private fun DayNumber(
     enabled: Boolean,
     style: TextStyle,
     colors: JengaWeeklyCalendarColors,
+    shape: RoundedCornerShape,
 ) {
-    val shape = JengaTheme.shapes.pill
-    val state = when {
-        selected -> Modifier.background(colors.selectedContainer, shape)
-        isToday -> Modifier.border(TodayBorderWidth, colors.todayBorder, shape)
-        else -> Modifier
+    Box(modifier = Modifier.dayCircle().dayState(selected, isToday, colors, shape), contentAlignment = Alignment.Center) {
+        DayNumberText(date, selected, isToday, enabled, style, colors, Modifier.clearAndSetSemantics {})
     }
-    Box(modifier = Modifier.dayCircle().then(state), contentAlignment = Alignment.Center) {
-        JengaText(
-            text = date.day.toString(),
-            style = style.copy(lineHeight = TextUnit.Unspecified),
-            color = when {
-                selected -> colors.selectedContent
-                !enabled -> colors.disabledContent
-                isToday -> colors.todayContent
-                else -> colors.content
-            },
-            softWrap = false,
-            maxLines = 1,
+}
+
+/** The taller cell of a day that shows its number and [content] under it. */
+@Composable
+private fun DayNumberOverContent(
+    date: LocalDate,
+    selected: Boolean,
+    isToday: Boolean,
+    enabled: Boolean,
+    style: TextStyle,
+    colors: JengaWeeklyCalendarColors,
+    shape: RoundedCornerShape,
+    content: @Composable (LocalDate) -> Unit,
+) {
+    Column(
+        modifier = Modifier.dayPill().dayState(selected, isToday, colors, shape),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.spacedBy(DayPillSpacing, Alignment.CenterVertically),
+    ) {
+        DayNumberText(
+            date = date,
+            selected = selected,
+            isToday = isToday,
+            enabled = enabled,
+            style = style.copy(fontSize = JengaTheme.typography.bodySmall.fontSize),
+            colors = colors,
             modifier = Modifier.clearAndSetSemantics {},
         )
+        // The box is kept for a day with no content, so the numbers of the week line up.
+        Box(modifier = Modifier.size(DayContentSize).clearAndSetSemantics {}, contentAlignment = Alignment.Center) {
+            DayContent(date, selected, isToday, enabled, colors, content)
+        }
     }
+}
+
+/**
+ * Shows [dayContent] centred, or [dayNumber] when [dayContent] emits nothing (or nothing
+ * that takes up room). Which one is known only once [dayContent] is measured, so both
+ * are composed and one is placed. Neither is read by screen readers.
+ */
+@Composable
+internal fun DayContentOrNumber(
+    dayContent: @Composable () -> Unit,
+    dayNumber: @Composable () -> Unit,
+    modifier: Modifier = Modifier,
+) {
+    Layout(
+        contents = listOf(dayContent, dayNumber),
+        modifier = modifier.clearAndSetSemantics {},
+    ) { (contentMeasurables, numberMeasurables), constraints ->
+        val loose = constraints.copy(minWidth = 0, minHeight = 0)
+        val contentPlaceables = contentMeasurables.map { it.measure(loose) }
+        val shown = if (contentPlaceables.any { it.width > 0 && it.height > 0 }) {
+            contentPlaceables
+        } else {
+            numberMeasurables.map { it.measure(loose) }
+        }
+        val width = constraints.constrainWidth(shown.maxOfOrNull { it.width } ?: 0)
+        val height = constraints.constrainHeight(shown.maxOfOrNull { it.height } ?: 0)
+        layout(width, height) {
+            shown.forEach { it.place((width - it.width) / 2, (height - it.height) / 2) }
+        }
+    }
+}
+
+/**
+ * The caller's content for a day, given the content color of the day's state: the
+ * same color as the day's number.
+ */
+@Composable
+private fun DayContent(
+    date: LocalDate,
+    selected: Boolean,
+    isToday: Boolean,
+    enabled: Boolean,
+    colors: JengaWeeklyCalendarColors,
+    content: @Composable (LocalDate) -> Unit,
+) {
+    val contentColor = when {
+        selected -> colors.selectedContent
+        !enabled -> colors.disabledContent
+        isToday -> colors.todayContent
+        else -> colors.content
+    }
+    CompositionLocalProvider(LocalJengaContentColor provides contentColor) { content(date) }
+}
+
+@Composable
+private fun DayNumberText(
+    date: LocalDate,
+    selected: Boolean,
+    isToday: Boolean,
+    enabled: Boolean,
+    style: TextStyle,
+    colors: JengaWeeklyCalendarColors,
+    modifier: Modifier = Modifier,
+) {
+    JengaText(
+        text = date.day.toString(),
+        style = style.copy(lineHeight = TextUnit.Unspecified),
+        color = when {
+            selected -> colors.selectedContent
+            !enabled -> colors.disabledContent
+            isToday -> colors.todayContent
+            else -> colors.content
+        },
+        softWrap = false,
+        maxLines = 1,
+        modifier = modifier,
+    )
+}
+
+/** The selected fill or the today ring of a day's circle or cell. */
+private fun Modifier.dayState(
+    selected: Boolean,
+    isToday: Boolean,
+    colors: JengaWeeklyCalendarColors,
+    shape: RoundedCornerShape,
+): Modifier = when {
+    selected -> background(colors.selectedContainer, shape)
+    isToday -> border(TodayBorderWidth, colors.todayBorder, shape)
+    else -> this
 }
 
 /**
@@ -401,17 +609,141 @@ private fun DayNumber(
  * wider than its column less the gap between columns.
  */
 private fun Modifier.dayCircle(): Modifier = layout { measurable, constraints ->
-    val growth = 1f + (fontScale - 1f).coerceAtLeast(0f) / 2f
-    val wanted = (DayCircleSize * growth).roundToPx()
-    val available = if (constraints.hasBoundedWidth) constraints.maxWidth - ColumnGap.roundToPx() else wanted
-    val side = minOf(wanted, available).coerceAtLeast(0)
+    val side = dayFaceWidth(DayCircleSize, constraints.maxWidth)
     val placeable = measurable.measure(Constraints.fixed(side, side))
     layout(side, side) { placeable.place(0, 0) }
 }
 
+/**
+ * Sizes the cell of a day that shows content under its number: [DayPillWidth] wide
+ * and at least [DayPillMinHeight] tall, both growing like the day circle, and never
+ * wider than its column less the gap between columns.
+ */
+private fun Modifier.dayPill(): Modifier = layout { measurable, constraints ->
+    val width = dayFaceWidth(DayPillWidth, constraints.maxWidth)
+    val minHeight = (DayPillMinHeight * fontGrowth()).roundToPx()
+    val placeable = measurable.measure(Constraints(minWidth = width, maxWidth = width, minHeight = minHeight))
+    layout(width, placeable.height) { placeable.place(0, 0) }
+}
+
+/** How much a day's circle or cell grows with the font scale: half as fast. */
+private fun Density.fontGrowth(): Float = 1f + (fontScale - 1f).coerceAtLeast(0f) / 2f
+
+/**
+ * The width in pixels of a day's circle or cell of [base] width, in a column
+ * [columnWidth] pixels wide ([Constraints.Infinity] when unbounded).
+ */
+private fun Density.dayFaceWidth(base: Dp, columnWidth: Int): Int {
+    val wanted = (base * fontGrowth()).roundToPx()
+    val available = if (columnWidth == Constraints.Infinity) wanted else columnWidth - ColumnGap.roundToPx()
+    return minOf(wanted, available).coerceAtLeast(0)
+}
+
+/**
+ * Where a day's slice of a band stops short of its column's edge, with rounded
+ * corners: at the [start] of a run, at its [end], or both for a day on its own.
+ */
+internal data class WeekBandEdges(val start: Boolean, val end: Boolean)
+
+/**
+ * The band edges of each day of a week, from each day's band color in display
+ * order: null for a day with no band ([Color.Unspecified] or fully transparent). A
+ * run is a stretch of neighbouring days that have a band, whatever their colors; it
+ * starts and ends where a neighbour has none, and at the first and last day of the
+ * week.
+ */
+internal fun weekBandEdges(colors: List<Color>): List<WeekBandEdges?> {
+    val banded = colors.map { it.isSpecified && it.alpha > 0f }
+    return banded.mapIndexed { index, hasBand ->
+        if (hasBand) {
+            WeekBandEdges(
+                start = index == 0 || !banded[index - 1],
+                end = index == banded.lastIndex || !banded[index + 1],
+            )
+        } else {
+            null
+        }
+    }
+}
+
+/**
+ * Draws a day's slice of a band behind its face (the circle or cell, [faceWidth]
+ * wide before font scaling and of [faceShape]), on a wrapper as wide as the day's
+ * column and as tall as the face. The slice fills the column's width, so it meets
+ * its neighbours' slices; at an edge of a run it stops at the face's edge and takes
+ * the corners [faceShape] gives the face there.
+ */
+private fun Modifier.dayBand(
+    color: Color,
+    edges: WeekBandEdges?,
+    faceWidth: Dp,
+    faceShape: RoundedCornerShape,
+): Modifier {
+    if (edges == null) return this
+    return drawBehind {
+        val face = dayFaceWidth(faceWidth, size.width.roundToInt())
+        // The same rounding as the centred face, so a rounded edge sits exactly on it.
+        val faceLeft = ((size.width - face) / 2f).roundToInt().toFloat()
+        val ltr = layoutDirection == LayoutDirection.Ltr
+        val roundLeft = if (ltr) edges.start else edges.end
+        val roundRight = if (ltr) edges.end else edges.start
+        // The face's own corners, resolved for its size as its shape resolves them.
+        val faceSize = Size(face.toFloat(), size.height)
+        val largest = faceSize.minDimension / 2f
+        fun corner(corner: CornerSize) = CornerRadius(corner.toPx(faceSize, this).coerceIn(0f, largest))
+        val startCorners = corner(faceShape.topStart) to corner(faceShape.bottomStart)
+        val endCorners = corner(faceShape.topEnd) to corner(faceShape.bottomEnd)
+        val none = CornerRadius.Zero to CornerRadius.Zero
+        val left = if (!roundLeft) {
+            none
+        } else if (ltr) {
+            startCorners
+        } else {
+            endCorners
+        }
+        val right = if (!roundRight) {
+            none
+        } else if (ltr) {
+            endCorners
+        } else {
+            startCorners
+        }
+        val slice = RoundRect(
+            rect = Rect(
+                left = if (roundLeft) faceLeft else 0f,
+                top = 0f,
+                right = if (roundRight) faceLeft + face else size.width,
+                bottom = size.height,
+            ),
+            topLeft = left.first,
+            topRight = right.first,
+            bottomRight = right.second,
+            bottomLeft = left.second,
+        )
+        drawPath(Path().apply { addRoundRect(slice) }, color)
+    }
+}
+
 private const val DaysInWeek = 7
 
+/** The [firstDayOfWeek] on or before [date]: the first day of the row that shows [date]. */
+private fun firstDayOfWeekOn(date: LocalDate, firstDayOfWeek: DayOfWeek): LocalDate {
+    val daysIntoWeek = (date.dayOfWeek.isoDayNumber - firstDayOfWeek.isoDayNumber + DaysInWeek) % DaysInWeek
+    return date.minus(daysIntoWeek, DateTimeUnit.DAY)
+}
+
 private val DayCircleSize: Dp = 34.dp
+
+/** The cell of a day that shows content under its number. */
+private val DayPillWidth: Dp = 36.dp
+
+private val DayPillMinHeight: Dp = 54.dp
+
+/** The gap between the number and the content in the cell. */
+private val DayPillSpacing: Dp = 2.dp
+
+/** The room kept for content under the number. */
+private val DayContentSize: Dp = 20.dp
 
 private val TodayBorderWidth: Dp = 1.5.dp
 

@@ -193,9 +193,11 @@ import io.github.joelkanyi.jenga.theme.JengaTheme
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.datetime.DateTimeUnit
+import kotlinx.datetime.DayOfWeek
 import kotlinx.datetime.LocalDate
 import kotlinx.datetime.LocalTime
 import kotlinx.datetime.YearMonth
+import kotlinx.datetime.daysUntil
 import kotlinx.datetime.minus
 import kotlinx.datetime.plus
 import kotlin.math.roundToInt
@@ -5196,36 +5198,41 @@ fun componentEntries(): List<CatalogEntry> = listOf(
         description = "One week of days in a row: pick a day and move between weeks.",
         keywords = "weekly calendar week strip day horizontal planner",
         code = """
-            var weekStart by remember {
+            val today = remember { JengaCalendarDefaults.today() }
+            // Any date in the week to show: the calendar starts the row on Monday.
+            var week by remember {
                 mutableStateOf(
-                    value = LocalDate(
-                        year = 2026,
-                        month = 11,
-                        day = 16,
-                    ),
+                    value = today,
                 )
             }
+            // The day after today (the day before, on a Sunday), so today's ring shows.
             var date by remember {
                 mutableStateOf<LocalDate?>(
-                    value = LocalDate(
-                        year = 2026,
-                        month = 11,
-                        day = 18,
-                    ),
+                    value = if (today.dayOfWeek == DayOfWeek.SUNDAY) {
+                        today.minus(
+                            value = 1,
+                            unit = DateTimeUnit.DAY,
+                        )
+                    } else {
+                        today.plus(
+                            value = 1,
+                            unit = DateTimeUnit.DAY,
+                        )
+                    },
                 )
             }
             JengaWeeklyCalendar(
-                weekStart = weekStart,
+                week = week,
                 selectedDate = date,
                 onSelectedDateChange = { date = it },
                 onPreviousWeek = {
-                    weekStart = weekStart.minus(
+                    week = week.minus(
                         value = 7,
                         unit = DateTimeUnit.DAY,
                     )
                 },
                 onNextWeek = {
-                    weekStart = weekStart.plus(
+                    week = week.plus(
                         value = 7,
                         unit = DateTimeUnit.DAY,
                     )
@@ -5252,45 +5259,46 @@ fun componentEntries(): List<CatalogEntry> = listOf(
                 },
                 previousWeekContentDescription = "Previous week",
                 nextWeekContentDescription = "Next week",
-                today = LocalDate(
-                    year = 2026,
-                    month = 11,
-                    day = 17,
-                ),
-                isMarked = { it.day % 3 == 0 },
+                today = today,
+                isMarked = { today.daysUntil(it) % 3 == 0 },
             )
         """.trimIndent(),
         demo = {
-            var weekStart by remember {
+            val today = remember { JengaCalendarDefaults.today() }
+            // Any date in the week to show: the calendar starts the row on Monday.
+            var week by remember {
                 mutableStateOf(
-                    value = LocalDate(
-                        year = 2026,
-                        month = 11,
-                        day = 16,
-                    ),
+                    value = today,
                 )
             }
+            // The day after today (the day before, on a Sunday), so today's ring shows.
             var date by remember {
                 mutableStateOf<LocalDate?>(
-                    value = LocalDate(
-                        year = 2026,
-                        month = 11,
-                        day = 18,
-                    ),
+                    value = if (today.dayOfWeek == DayOfWeek.SUNDAY) {
+                        today.minus(
+                            value = 1,
+                            unit = DateTimeUnit.DAY,
+                        )
+                    } else {
+                        today.plus(
+                            value = 1,
+                            unit = DateTimeUnit.DAY,
+                        )
+                    },
                 )
             }
             JengaWeeklyCalendar(
-                weekStart = weekStart,
+                week = week,
                 selectedDate = date,
                 onSelectedDateChange = { date = it },
                 onPreviousWeek = {
-                    weekStart = weekStart.minus(
+                    week = week.minus(
                         value = 7,
                         unit = DateTimeUnit.DAY,
                     )
                 },
                 onNextWeek = {
-                    weekStart = weekStart.plus(
+                    week = week.plus(
                         value = 7,
                         unit = DateTimeUnit.DAY,
                     )
@@ -5317,12 +5325,246 @@ fun componentEntries(): List<CatalogEntry> = listOf(
                 },
                 previousWeekContentDescription = "Previous week",
                 nextWeekContentDescription = "Next week",
-                today = LocalDate(
-                    year = 2026,
-                    month = 11,
-                    day = 17,
-                ),
-                isMarked = { it.day % 3 == 0 },
+                today = today,
+                isMarked = { today.daysUntil(it) % 3 == 0 },
+            )
+        },
+    ),
+    CatalogEntry(
+        name = "Weekly calendar with day content",
+        group = "Inputs",
+        description = "Your own content under each day's number, and bands that join runs of days.",
+        keywords = "weekly calendar week strip day content slot icon paid locked streak band payment",
+        code = """
+            val today = remember { JengaCalendarDefaults.today() }
+            // Any date in the week to show: the calendar starts the row on Monday.
+            var week by remember {
+                mutableStateOf(
+                    value = today,
+                )
+            }
+            // The day after today (the day before, on a Sunday), so today's ring shows.
+            var date by remember {
+                mutableStateOf<LocalDate?>(
+                    value = if (today.dayOfWeek == DayOfWeek.SUNDAY) {
+                        today.minus(
+                            value = 1,
+                            unit = DateTimeUnit.DAY,
+                        )
+                    } else {
+                        today.plus(
+                            value = 1,
+                            unit = DateTimeUnit.DAY,
+                        )
+                    },
+                )
+            }
+            // Paid from two days ago up to today; the next two days are locked.
+            val paid = remember(today) {
+                (-2..0).map { days ->
+                    today.plus(
+                        value = days,
+                        unit = DateTimeUnit.DAY,
+                    )
+                }
+            }
+            val locked = remember(today) {
+                (1..2).map { days ->
+                    today.plus(
+                        value = days,
+                        unit = DateTimeUnit.DAY,
+                    )
+                }
+            }
+            val paidBand = JengaTheme.colors.successContainer
+            val lockedBand = JengaTheme.colors.errorContainer
+            JengaWeeklyCalendar(
+                week = week,
+                selectedDate = date,
+                onSelectedDateChange = { date = it },
+                onPreviousWeek = {
+                    week = week.minus(
+                        value = 7,
+                        unit = DateTimeUnit.DAY,
+                    )
+                },
+                onNextWeek = {
+                    week = week.plus(
+                        value = 7,
+                        unit = DateTimeUnit.DAY,
+                    )
+                },
+                weekTitle = { start, end ->
+                    val months = listOf(
+                        start,
+                        end,
+                    ).map { day ->
+                        day.month.name.take(
+                            n = 3,
+                        ).lowercase().replaceFirstChar(
+                            transform = Char::uppercase,
+                        )
+                    }
+                    "${'$'}{start.day} ${'$'}{months[0]} – ${'$'}{end.day} ${'$'}{months[1]}"
+                },
+                dayOfWeekLabel = {
+                    it.name.take(
+                        n = 3,
+                    ).lowercase().replaceFirstChar(
+                        transform = Char::uppercase,
+                    )
+                },
+                previousWeekContentDescription = "Previous week",
+                nextWeekContentDescription = "Next week",
+                today = today,
+                dateContentDescription = { day ->
+                    when (day) {
+                        in paid -> "${'$'}day, paid"
+                        in locked -> "${'$'}day, locked"
+                        else -> day.toString()
+                    }
+                },
+                dayBackground = { day ->
+                    when (day) {
+                        in paid -> paidBand
+                        in locked -> lockedBand
+                        else -> Color.Unspecified
+                    }
+                },
+                dayContent = { day ->
+                    val selected = day == date
+                    when (day) {
+                        in paid -> JengaIcon(
+                            imageVector = JengaIcons.CheckCircle,
+                            contentDescription = null,
+                            tint = if (selected) Color.Unspecified else JengaTheme.colors.onSuccessContainer,
+                            size = 20.dp,
+                        )
+
+                        in locked -> JengaIcon(
+                            imageVector = JengaIcons.Lock,
+                            contentDescription = null,
+                            tint = if (selected) Color.Unspecified else JengaTheme.colors.onErrorContainer,
+                            size = 20.dp,
+                        )
+                    }
+                },
+            )
+        """.trimIndent(),
+        demo = {
+            val today = remember { JengaCalendarDefaults.today() }
+            // Any date in the week to show: the calendar starts the row on Monday.
+            var week by remember {
+                mutableStateOf(
+                    value = today,
+                )
+            }
+            // The day after today (the day before, on a Sunday), so today's ring shows.
+            var date by remember {
+                mutableStateOf<LocalDate?>(
+                    value = if (today.dayOfWeek == DayOfWeek.SUNDAY) {
+                        today.minus(
+                            value = 1,
+                            unit = DateTimeUnit.DAY,
+                        )
+                    } else {
+                        today.plus(
+                            value = 1,
+                            unit = DateTimeUnit.DAY,
+                        )
+                    },
+                )
+            }
+            // Paid from two days ago up to today; the next two days are locked.
+            val paid = remember(today) {
+                (-2..0).map { days ->
+                    today.plus(
+                        value = days,
+                        unit = DateTimeUnit.DAY,
+                    )
+                }
+            }
+            val locked = remember(today) {
+                (1..2).map { days ->
+                    today.plus(
+                        value = days,
+                        unit = DateTimeUnit.DAY,
+                    )
+                }
+            }
+            val paidBand = JengaTheme.colors.successContainer
+            val lockedBand = JengaTheme.colors.errorContainer
+            JengaWeeklyCalendar(
+                week = week,
+                selectedDate = date,
+                onSelectedDateChange = { date = it },
+                onPreviousWeek = {
+                    week = week.minus(
+                        value = 7,
+                        unit = DateTimeUnit.DAY,
+                    )
+                },
+                onNextWeek = {
+                    week = week.plus(
+                        value = 7,
+                        unit = DateTimeUnit.DAY,
+                    )
+                },
+                weekTitle = { start, end ->
+                    val months = listOf(
+                        start,
+                        end,
+                    ).map { day ->
+                        day.month.name.take(
+                            n = 3,
+                        ).lowercase().replaceFirstChar(
+                            transform = Char::uppercase,
+                        )
+                    }
+                    "${start.day} ${months[0]} – ${end.day} ${months[1]}"
+                },
+                dayOfWeekLabel = {
+                    it.name.take(
+                        n = 3,
+                    ).lowercase().replaceFirstChar(
+                        transform = Char::uppercase,
+                    )
+                },
+                previousWeekContentDescription = "Previous week",
+                nextWeekContentDescription = "Next week",
+                today = today,
+                dateContentDescription = { day ->
+                    when (day) {
+                        in paid -> "$day, paid"
+                        in locked -> "$day, locked"
+                        else -> day.toString()
+                    }
+                },
+                dayBackground = { day ->
+                    when (day) {
+                        in paid -> paidBand
+                        in locked -> lockedBand
+                        else -> Color.Unspecified
+                    }
+                },
+                dayContent = { day ->
+                    val selected = day == date
+                    when (day) {
+                        in paid -> JengaIcon(
+                            imageVector = JengaIcons.CheckCircle,
+                            contentDescription = null,
+                            tint = if (selected) Color.Unspecified else JengaTheme.colors.onSuccessContainer,
+                            size = 20.dp,
+                        )
+
+                        in locked -> JengaIcon(
+                            imageVector = JengaIcons.Lock,
+                            contentDescription = null,
+                            tint = if (selected) Color.Unspecified else JengaTheme.colors.onErrorContainer,
+                            size = 20.dp,
+                        )
+                    }
+                },
             )
         },
     ),

@@ -514,30 +514,47 @@ public final class io/github/joelkanyi/jenga/component/calendar/ComposableSingle
 public final class io/github/joelkanyi/jenga/component/calendar/ComposableSingletons$JengaWeeklyCalendarPreviewsKt {
 	public static final field INSTANCE Lio/github/joelkanyi/jenga/component/calendar/ComposableSingletons$JengaWeeklyCalendarPreviewsKt;
 	public fun <init> ()V
+	public final fun getLambda$-1018135894$jenga_release ()Lkotlin/jvm/functions/Function2;
 	public final fun getLambda$-1137943984$jenga_release ()Lkotlin/jvm/functions/Function2;
+	public final fun getLambda$-1147237848$jenga_release ()Lkotlin/jvm/functions/Function2;
 	public final fun getLambda$-1383170448$jenga_release ()Lkotlin/jvm/functions/Function2;
+	public final fun getLambda$-1610714370$jenga_release ()Lkotlin/jvm/functions/Function2;
+	public final fun getLambda$-1706393872$jenga_release ()Lkotlin/jvm/functions/Function2;
+	public final fun getLambda$-1829702605$jenga_release ()Lkotlin/jvm/functions/Function2;
 	public final fun getLambda$-2006831453$jenga_release ()Lkotlin/jvm/functions/Function2;
 	public final fun getLambda$-2008423786$jenga_release ()Lkotlin/jvm/functions/Function2;
 	public final fun getLambda$-201039620$jenga_release ()Lkotlin/jvm/functions/Function2;
+	public final fun getLambda$-358007563$jenga_release ()Lkotlin/jvm/functions/Function2;
 	public final fun getLambda$-475954164$jenga_release ()Lkotlin/jvm/functions/Function2;
 	public final fun getLambda$-535657452$jenga_release ()Lkotlin/jvm/functions/Function2;
+	public final fun getLambda$-570155003$jenga_release ()Lkotlin/jvm/functions/Function2;
 	public final fun getLambda$-636268938$jenga_release ()Lkotlin/jvm/functions/Function2;
+	public final fun getLambda$-736641084$jenga_release ()Lkotlin/jvm/functions/Function2;
 	public final fun getLambda$-763059964$jenga_release ()Lkotlin/jvm/functions/Function2;
 	public final fun getLambda$-80023813$jenga_release ()Lkotlin/jvm/functions/Function2;
 	public final fun getLambda$-809793927$jenga_release ()Lkotlin/jvm/functions/Function2;
+	public final fun getLambda$-828483349$jenga_release ()Lkotlin/jvm/functions/Function2;
 	public final fun getLambda$1519706928$jenga_release ()Lkotlin/jvm/functions/Function2;
+	public final fun getLambda$1522285952$jenga_release ()Lkotlin/jvm/functions/Function2;
 	public final fun getLambda$1612056361$jenga_release ()Lkotlin/jvm/functions/Function2;
 	public final fun getLambda$1626499339$jenga_release ()Lkotlin/jvm/functions/Function2;
+	public final fun getLambda$1643296684$jenga_release ()Lkotlin/jvm/functions/Function2;
 	public final fun getLambda$1716559629$jenga_release ()Lkotlin/jvm/functions/Function2;
+	public final fun getLambda$1730014622$jenga_release ()Lkotlin/jvm/functions/Function2;
 	public final fun getLambda$1836216918$jenga_release ()Lkotlin/jvm/functions/Function2;
+	public final fun getLambda$1926199027$jenga_release ()Lkotlin/jvm/functions/Function2;
 	public final fun getLambda$1991403368$jenga_release ()Lkotlin/jvm/functions/Function2;
 	public final fun getLambda$208187175$jenga_release ()Lkotlin/jvm/functions/Function2;
+	public final fun getLambda$41829628$jenga_release ()Lkotlin/jvm/functions/Function2;
 	public final fun getLambda$442248216$jenga_release ()Lkotlin/jvm/functions/Function2;
 	public final fun getLambda$520872882$jenga_release ()Lkotlin/jvm/functions/Function2;
 	public final fun getLambda$61364512$jenga_release ()Lkotlin/jvm/functions/Function2;
+	public final fun getLambda$760684063$jenga_release ()Lkotlin/jvm/functions/Function2;
 	public final fun getLambda$841112385$jenga_release ()Lkotlin/jvm/functions/Function2;
 	public final fun getLambda$910121768$jenga_release ()Lkotlin/jvm/functions/Function2;
 	public final fun getLambda$949402049$jenga_release ()Lkotlin/jvm/functions/Function2;
+	public final fun getLambda$957215929$jenga_release ()Lkotlin/jvm/functions/Function2;
+	public final fun getLambda$994703914$jenga_release ()Lkotlin/jvm/functions/Function2;
 }
 
 public final class io/github/joelkanyi/jenga/component/calendar/JengaCalendarColors {
@@ -638,12 +655,10 @@ public final class io/github/joelkanyi/jenga/component/calendar/JengaWeeklyCalen
 	public final fun getDayNumberStyle (Landroidx/compose/runtime/Composer;I)Landroidx/compose/ui/text/TextStyle;
 	public final fun getDayOfWeekStyle (Landroidx/compose/runtime/Composer;I)Landroidx/compose/ui/text/TextStyle;
 	public final fun getTitleStyle (Landroidx/compose/runtime/Composer;I)Landroidx/compose/ui/text/TextStyle;
-	public final fun weekStartOf (Lkotlinx/datetime/LocalDate;Lkotlinx/datetime/DayOfWeek;)Lkotlinx/datetime/LocalDate;
-	public static synthetic fun weekStartOf$default (Lio/github/joelkanyi/jenga/component/calendar/JengaWeeklyCalendarDefaults;Lkotlinx/datetime/LocalDate;Lkotlinx/datetime/DayOfWeek;ILjava/lang/Object;)Lkotlinx/datetime/LocalDate;
 }
 
 public final class io/github/joelkanyi/jenga/component/calendar/JengaWeeklyCalendarKt {
-	public static final fun JengaWeeklyCalendar (Lkotlinx/datetime/LocalDate;Lkotlinx/datetime/LocalDate;Lkotlin/jvm/functions/Function1;Lkotlin/jvm/functions/Function0;Lkotlin/jvm/functions/Function0;Lkotlin/jvm/functions/Function2;Lkotlin/jvm/functions/Function1;Ljava/lang/String;Ljava/lang/String;Landroidx/compose/ui/Modifier;Lkotlin/ranges/ClosedRange;Lkotlin/jvm/functions/Function1;Lkotlinx/datetime/LocalDate;Lkotlin/jvm/functions/Function1;ZZZLkotlin/jvm/functions/Function1;Landroidx/compose/foundation/layout/PaddingValues;Landroidx/compose/ui/text/TextStyle;Landroidx/compose/ui/text/TextStyle;Landroidx/compose/ui/text/TextStyle;Lio/github/joelkanyi/jenga/component/calendar/JengaWeeklyCalendarColors;Landroidx/compose/runtime/Composer;IIII)V
+	public static final fun JengaWeeklyCalendar (Lkotlinx/datetime/LocalDate;Lkotlinx/datetime/LocalDate;Lkotlin/jvm/functions/Function1;Lkotlin/jvm/functions/Function0;Lkotlin/jvm/functions/Function0;Lkotlin/jvm/functions/Function2;Lkotlin/jvm/functions/Function1;Ljava/lang/String;Ljava/lang/String;Landroidx/compose/ui/Modifier;Lkotlinx/datetime/DayOfWeek;Lkotlin/ranges/ClosedRange;Lkotlin/jvm/functions/Function1;Lkotlinx/datetime/LocalDate;Lkotlin/jvm/functions/Function1;ZZZLkotlin/jvm/functions/Function1;Landroidx/compose/foundation/layout/PaddingValues;Landroidx/compose/ui/text/TextStyle;Landroidx/compose/ui/text/TextStyle;Landroidx/compose/ui/text/TextStyle;Lio/github/joelkanyi/jenga/component/calendar/JengaWeeklyCalendarColors;ZLkotlin/jvm/functions/Function1;Lkotlin/jvm/functions/Function3;Landroidx/compose/runtime/Composer;IIII)V
 }
 
 public final class io/github/joelkanyi/jenga/component/camera/ComposableSingletons$JengaCameraPreviewsKt {

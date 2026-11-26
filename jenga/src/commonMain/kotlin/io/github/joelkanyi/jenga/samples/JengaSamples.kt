@@ -18,6 +18,7 @@ import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.state.ToggleableState
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.buildAnnotatedString
@@ -41,7 +42,6 @@ import io.github.joelkanyi.jenga.component.calendar.JengaCalendarDefaults
 import io.github.joelkanyi.jenga.component.calendar.JengaDatePicker
 import io.github.joelkanyi.jenga.component.calendar.JengaDatePickerDialog
 import io.github.joelkanyi.jenga.component.calendar.JengaWeeklyCalendar
-import io.github.joelkanyi.jenga.component.calendar.JengaWeeklyCalendarDefaults
 import io.github.joelkanyi.jenga.component.calendar.rememberJengaCalendarState
 import io.github.joelkanyi.jenga.component.camera.JengaCaptureFrame
 import io.github.joelkanyi.jenga.component.camera.JengaCaptureShape
@@ -160,6 +160,7 @@ import io.github.joelkanyi.jenga.pattern.JengaStatCard
 import io.github.joelkanyi.jenga.pattern.JengaTicketRow
 import io.github.joelkanyi.jenga.theme.JengaTheme
 import kotlinx.datetime.DateTimeUnit
+import kotlinx.datetime.DayOfWeek
 import kotlinx.datetime.LocalDate
 import kotlinx.datetime.LocalTime
 import kotlinx.datetime.Month
@@ -1822,11 +1823,10 @@ internal fun JengaCalendarRangeSample() {
 @Composable
 internal fun JengaWeeklyCalendarSample() {
     val today = remember { JengaCalendarDefaults.today() }
-    var weekStart by remember {
+    // Any date in the week: the calendar starts the row on firstDayOfWeek.
+    var week by remember {
         mutableStateOf(
-            value = JengaWeeklyCalendarDefaults.weekStartOf(
-                date = today,
-            ),
+            value = today,
         )
     }
     var selected by remember {
@@ -1835,17 +1835,17 @@ internal fun JengaWeeklyCalendarSample() {
         )
     }
     JengaWeeklyCalendar(
-        weekStart = weekStart,
+        week = week,
         selectedDate = selected,
         onSelectedDateChange = { selected = it },
         onPreviousWeek = {
-            weekStart = weekStart.minus(
+            week = week.minus(
                 value = 7,
                 unit = DateTimeUnit.DAY,
             )
         },
         onNextWeek = {
-            weekStart = weekStart.plus(
+            week = week.plus(
                 value = 7,
                 unit = DateTimeUnit.DAY,
             )
@@ -1858,12 +1858,99 @@ internal fun JengaWeeklyCalendarSample() {
         },
         previousWeekContentDescription = "Previous week",
         nextWeekContentDescription = "Next week",
+        // The day the app's locale starts the week on; Monday by default.
+        firstDayOfWeek = DayOfWeek.MONDAY,
         today = today,
         dateContentDescription = { date ->
             val day = "${date.dayOfWeek.name} ${date.day} ${date.month.name}"
             if (date == today) "$day, today" else day
         },
     )
+}
+
+@Composable
+internal fun JengaWeeklyCalendarDayContentSample() {
+    // A payment streak: a check on the days paid up to today, a lock on the next two
+    // days, joined by bands. The band colors are read here: dayBackground is not
+    // composable.
+    val today = remember { JengaCalendarDefaults.today() }
+    var selected by remember {
+        mutableStateOf<LocalDate?>(
+            value = today,
+        )
+    }
+    val paid = remember {
+        (-2..0).map { days ->
+            today.plus(
+                value = days,
+                unit = DateTimeUnit.DAY,
+            )
+        }
+    }
+    val locked = remember {
+        (1..2).map { days ->
+            today.plus(
+                value = days,
+                unit = DateTimeUnit.DAY,
+            )
+        }
+    }
+    val paidBand = JengaTheme.colors.successContainer
+    val lockedBand = JengaTheme.colors.errorContainer
+    JengaWeeklyCalendar(
+        week = today,
+        selectedDate = selected,
+        onSelectedDateChange = { selected = it },
+        onPreviousWeek = {},
+        onNextWeek = {},
+        weekTitle = { start, end -> "${start.day} ${start.month.name} – ${end.day} ${end.month.name}" },
+        dayOfWeekLabel = {
+            it.name.take(
+                n = 3,
+            )
+        },
+        previousWeekContentDescription = "Previous week",
+        nextWeekContentDescription = "Next week",
+        today = today,
+        // The description carries what the icon means: the icon itself is not read.
+        dateContentDescription = { date ->
+            val day = "${date.dayOfWeek.name} ${date.day} ${date.month.name}"
+            when (date) {
+                in paid -> "$day, paid"
+                in locked -> "$day, locked"
+                else -> day
+            }
+        },
+        // Set to false to put the icon in place of the number.
+        showDayNumber = true,
+        dayBackground = { date ->
+            when (date) {
+                in paid -> paidBand
+                in locked -> lockedBand
+                else -> Color.Unspecified
+            }
+        },
+    ) { date ->
+        // On a band, an icon takes the band's on-container color. It would not show
+        // on the selected fill: leave the tint unset there, and the icon takes the
+        // selected content color.
+        val isSelected = date == selected
+        when (date) {
+            in paid -> JengaIcon(
+                imageVector = JengaIcons.CheckCircle,
+                contentDescription = null,
+                tint = if (isSelected) Color.Unspecified else JengaTheme.colors.onSuccessContainer,
+                size = 20.dp,
+            )
+
+            in locked -> JengaIcon(
+                imageVector = JengaIcons.Lock,
+                contentDescription = null,
+                tint = if (isSelected) Color.Unspecified else JengaTheme.colors.onErrorContainer,
+                size = 20.dp,
+            )
+        }
+    }
 }
 
 @Composable

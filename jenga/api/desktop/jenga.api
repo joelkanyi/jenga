@@ -497,12 +497,10 @@ public final class io/github/joelkanyi/jenga/component/calendar/JengaWeeklyCalen
 	public final fun getDayNumberStyle (Landroidx/compose/runtime/Composer;I)Landroidx/compose/ui/text/TextStyle;
 	public final fun getDayOfWeekStyle (Landroidx/compose/runtime/Composer;I)Landroidx/compose/ui/text/TextStyle;
 	public final fun getTitleStyle (Landroidx/compose/runtime/Composer;I)Landroidx/compose/ui/text/TextStyle;
-	public final fun weekStartOf (Lkotlinx/datetime/LocalDate;Lkotlinx/datetime/DayOfWeek;)Lkotlinx/datetime/LocalDate;
-	public static synthetic fun weekStartOf$default (Lio/github/joelkanyi/jenga/component/calendar/JengaWeeklyCalendarDefaults;Lkotlinx/datetime/LocalDate;Lkotlinx/datetime/DayOfWeek;ILjava/lang/Object;)Lkotlinx/datetime/LocalDate;
 }
 
 public final class io/github/joelkanyi/jenga/component/calendar/JengaWeeklyCalendarKt {
-	public static final fun JengaWeeklyCalendar (Lkotlinx/datetime/LocalDate;Lkotlinx/datetime/LocalDate;Lkotlin/jvm/functions/Function1;Lkotlin/jvm/functions/Function0;Lkotlin/jvm/functions/Function0;Lkotlin/jvm/functions/Function2;Lkotlin/jvm/functions/Function1;Ljava/lang/String;Ljava/lang/String;Landroidx/compose/ui/Modifier;Lkotlin/ranges/ClosedRange;Lkotlin/jvm/functions/Function1;Lkotlinx/datetime/LocalDate;Lkotlin/jvm/functions/Function1;ZZZLkotlin/jvm/functions/Function1;Landroidx/compose/foundation/layout/PaddingValues;Landroidx/compose/ui/text/TextStyle;Landroidx/compose/ui/text/TextStyle;Landroidx/compose/ui/text/TextStyle;Lio/github/joelkanyi/jenga/component/calendar/JengaWeeklyCalendarColors;Landroidx/compose/runtime/Composer;IIII)V
+	public static final fun JengaWeeklyCalendar (Lkotlinx/datetime/LocalDate;Lkotlinx/datetime/LocalDate;Lkotlin/jvm/functions/Function1;Lkotlin/jvm/functions/Function0;Lkotlin/jvm/functions/Function0;Lkotlin/jvm/functions/Function2;Lkotlin/jvm/functions/Function1;Ljava/lang/String;Ljava/lang/String;Landroidx/compose/ui/Modifier;Lkotlinx/datetime/DayOfWeek;Lkotlin/ranges/ClosedRange;Lkotlin/jvm/functions/Function1;Lkotlinx/datetime/LocalDate;Lkotlin/jvm/functions/Function1;ZZZLkotlin/jvm/functions/Function1;Landroidx/compose/foundation/layout/PaddingValues;Landroidx/compose/ui/text/TextStyle;Landroidx/compose/ui/text/TextStyle;Landroidx/compose/ui/text/TextStyle;Lio/github/joelkanyi/jenga/component/calendar/JengaWeeklyCalendarColors;ZLkotlin/jvm/functions/Function1;Lkotlin/jvm/functions/Function3;Landroidx/compose/runtime/Composer;IIII)V
 }
 
 public final class io/github/joelkanyi/jenga/component/camera/JengaCaptureFrameColors {
