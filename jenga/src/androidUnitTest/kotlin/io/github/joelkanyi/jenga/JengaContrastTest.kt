@@ -83,6 +83,21 @@ class JengaContrastTest {
         atLeast(AA, c.onInfoContainer, c.infoContainer.over(c.surface), "onInfoContainer")
         atLeast(AA, c.onBrandSubtle, c.brandSubtle.over(c.surface), "onBrandSubtle")
 
+        // Neutral avatar initials (JengaAvatarDefaults.neutralColors): AA 4.5:1
+        atLeast(AA, c.textSecondary, c.surfaceVariant.over(c.surface), "textSecondary on surfaceVariant")
+
+        // The message of a prominent banner, in the primary text color on each tone's container: AA 4.5:1
+        atLeast(AA, c.textPrimary, c.successContainer.over(c.surface), "textPrimary on successContainer")
+        atLeast(AA, c.textPrimary, c.warningContainer.over(c.surface), "textPrimary on warningContainer")
+        atLeast(AA, c.textPrimary, c.errorContainer.over(c.surface), "textPrimary on errorContainer")
+        atLeast(AA, c.textPrimary, c.infoContainer.over(c.surface), "textPrimary on infoContainer")
+
+        // The result icon of a prominent banner, in each tone's content color on its container: UI 3:1
+        atLeast(AA_LARGE, c.onSuccessContainer, c.successContainer.over(c.surface), "prominent banner icon on successContainer")
+        atLeast(AA_LARGE, c.onWarningContainer, c.warningContainer.over(c.surface), "prominent banner icon on warningContainer")
+        atLeast(AA_LARGE, c.onErrorContainer, c.errorContainer.over(c.surface), "prominent banner icon on errorContainer")
+        atLeast(AA_LARGE, c.onInfoContainer, c.infoContainer.over(c.surface), "prominent banner icon on infoContainer")
+
         // High-contrast inverse surfaces (snackbars/tooltips): AA 4.5:1
         atLeast(AA, c.inverseOnSurface, c.inverseSurface, "inverseOnSurface on inverseSurface")
         atLeast(AA, c.onInk, c.ink, "onInk on ink")

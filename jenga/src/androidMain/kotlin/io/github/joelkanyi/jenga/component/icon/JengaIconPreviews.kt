@@ -112,3 +112,19 @@ internal fun JengaCameraIconsPreview() {
         }
     }
 }
+
+/** The glyphs a prominent `JengaBanner` shows for a positive, a cautionary and a negative result. */
+@JengaBlockPreviews
+@Composable
+internal fun JengaResultIconsPreview() {
+    JengaTheme {
+        JengaWrap(
+            modifier = Modifier.background(JengaTheme.colors.background).padding(JengaTheme.spacing.xl),
+            space = JengaTheme.spacing.md,
+        ) {
+            JengaIcon(JengaIcons.BadgeCheck, contentDescription = null, tint = JengaTheme.colors.success)
+            JengaIcon(JengaIcons.AlertCircle, contentDescription = null, tint = JengaTheme.colors.warning)
+            JengaIcon(JengaIcons.Ban, contentDescription = null, tint = JengaTheme.colors.error)
+        }
+    }
+}

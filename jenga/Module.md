@@ -103,7 +103,7 @@ Page-level messages: `JengaBanner` in a tone, and `JengaInfoBar`, a button-shape
 
 # Package io.github.joelkanyi.jenga.component.calendar
 
-Dates: `JengaDatePicker` (optionally limited to a `dateRange`, with a year grid behind the title), `JengaDatePickerDialog`, and `JengaCalendar`, a paging month grid whose day cells are your own content.
+Dates: `JengaDatePicker` (optionally limited to a `dateRange`, with a year grid behind the title), `JengaDatePickerDialog`, `JengaCalendar`, a paging month grid whose day cells are your own content, and `JengaWeeklyCalendar`, one week of selectable days in a row with buttons to move between weeks, your own content in each day and bands that join runs of days.
 
 # Package io.github.joelkanyi.jenga.component.camera
 
@@ -115,7 +115,7 @@ Camera screens: `JengaCaptureFrame`, a guide over a camera preview for a face, c
 
 # Package io.github.joelkanyi.jenga.component.chart
 
-`JengaBarChart`: vertical bars from a shared baseline, optionally selectable.
+`JengaBarChart`: vertical bars from a shared baseline, optionally selectable. `JengaLineChart`: one line through a point per entry, optionally selectable. Both take a `JengaChartTarget`, a dashed target line.
 
 # Package io.github.joelkanyi.jenga.component.chip
 
@@ -219,7 +219,7 @@ Code scanning: `JengaScannerViewfinder` and `JengaScanFeedback`.
 
 # Package io.github.joelkanyi.jenga.component.stepindicator
 
-`JengaStepIndicator`: a row of steps (done, current, pending, locked) for a multi-step flow.
+`JengaStepIndicator`: a row of steps (done, current, pending, locked) for a multi-step flow, optionally with the step number inside the current and pending steps, with or without labels, in centered columns or edge to edge.
 
 # Package io.github.joelkanyi.jenga.component.stepper
 

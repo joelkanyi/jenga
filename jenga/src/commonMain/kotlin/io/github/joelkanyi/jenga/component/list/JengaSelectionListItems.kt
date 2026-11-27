@@ -7,12 +7,14 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.selection.selectable
 import androidx.compose.foundation.selection.toggleable
+import androidx.compose.foundation.selection.triStateToggleable
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Immutable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.semantics.Role
+import androidx.compose.ui.state.ToggleableState
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
@@ -237,6 +239,135 @@ public fun JengaCheckboxListItem(
     checkboxColors: JengaCheckboxColors = JengaCheckboxDefaults.colors(),
     loading: Boolean = false,
 ) {
+    CheckboxListItem(
+        headline = headline,
+        state = ToggleableState(checked),
+        modifier = modifier.toggleable(
+            value = checked,
+            enabled = enabled && !loading,
+            role = Role.Checkbox,
+            onValueChange = onCheckedChange,
+        ),
+        supporting = supporting,
+        enabled = enabled,
+        controlPosition = controlPosition,
+        minHeight = minHeight,
+        contentPadding = contentPadding,
+        contentSpacing = contentSpacing,
+        headlineStyle = headlineStyle,
+        supportingStyle = supportingStyle,
+        headlineMaxLines = headlineMaxLines,
+        supportingMaxLines = supportingMaxLines,
+        trailingContent = trailingContent,
+        checkboxShape = checkboxShape,
+        colors = colors,
+        checkboxColors = checkboxColors,
+        loading = loading,
+    )
+}
+
+/**
+ * A list row with a three-state [JengaCheckbox]: unchecked, checked or mixed. Use it for a
+ * "Select all" row over a list; show [ToggleableState.Indeterminate] (mixed) while only some of
+ * the items are checked. The whole row is the touch target and is announced as a checkbox that is
+ * not checked, checked or partially checked.
+ *
+ * The row does not pick the next state: [onClick] only reports the tap. The usual "Select all"
+ * rule is mixed or unchecked to checked, and checked to unchecked.
+ *
+ * @sample io.github.joelkanyi.jenga.samples.JengaCheckboxListItemMixedSample
+ *
+ * @param headline the option label.
+ * @param state the state shown: [ToggleableState.Off], [ToggleableState.On] or
+ *   [ToggleableState.Indeterminate] (mixed).
+ * @param onClick called when the row is tapped.
+ * @param modifier the [Modifier] for this row.
+ * @param supporting optional secondary text below the headline.
+ * @param enabled whether the row is interactive.
+ * @param controlPosition whether the checkbox sits at the start or the end of the row.
+ * @param minHeight the minimum row height.
+ * @param contentPadding inner padding around the row content.
+ * @param contentSpacing the gap between the control and the text.
+ * @param headlineStyle the [headline] text style.
+ * @param supportingStyle the [supporting] text style.
+ * @param headlineMaxLines the maximum lines for [headline] before it is truncated.
+ * @param supportingMaxLines the maximum lines for [supporting] before it is truncated.
+ * @param trailingContent optional end slot (e.g. a count), before a trailing control; tapping it taps the row.
+ * @param checkboxShape the checkbox box shape.
+ * @param colors the row color set; its disabled colors apply when [enabled] is false.
+ * @param checkboxColors the checkbox color set; the mixed dash uses its checkmark colors.
+ * @param loading whether a spinner replaces the checkbox (e.g. while the change saves); taps are ignored.
+ */
+@Composable
+public fun JengaCheckboxListItem(
+    headline: String,
+    state: ToggleableState,
+    onClick: () -> Unit,
+    modifier: Modifier = Modifier,
+    supporting: String? = null,
+    enabled: Boolean = true,
+    controlPosition: JengaControlPosition = JengaControlPosition.Leading,
+    minHeight: Dp = JengaSelectionListItemDefaults.minHeight,
+    contentPadding: PaddingValues = JengaSelectionListItemDefaults.contentPadding,
+    contentSpacing: Dp = JengaSelectionListItemDefaults.contentSpacing,
+    headlineStyle: TextStyle = JengaSelectionListItemDefaults.headlineStyle,
+    supportingStyle: TextStyle = JengaSelectionListItemDefaults.supportingStyle,
+    headlineMaxLines: Int = 1,
+    supportingMaxLines: Int = 1,
+    trailingContent: (@Composable () -> Unit)? = null,
+    checkboxShape: Shape = JengaSelectionListItemDefaults.checkboxShape,
+    colors: JengaListItemColors = JengaSelectionListItemDefaults.colors(),
+    checkboxColors: JengaCheckboxColors = JengaCheckboxDefaults.colors(),
+    loading: Boolean = false,
+) {
+    CheckboxListItem(
+        headline = headline,
+        state = state,
+        modifier = modifier.triStateToggleable(
+            state = state,
+            enabled = enabled && !loading,
+            role = Role.Checkbox,
+            onClick = onClick,
+        ),
+        supporting = supporting,
+        enabled = enabled,
+        controlPosition = controlPosition,
+        minHeight = minHeight,
+        contentPadding = contentPadding,
+        contentSpacing = contentSpacing,
+        headlineStyle = headlineStyle,
+        supportingStyle = supportingStyle,
+        headlineMaxLines = headlineMaxLines,
+        supportingMaxLines = supportingMaxLines,
+        trailingContent = trailingContent,
+        checkboxShape = checkboxShape,
+        colors = colors,
+        checkboxColors = checkboxColors,
+        loading = loading,
+    )
+}
+
+@Composable
+private fun CheckboxListItem(
+    headline: String,
+    state: ToggleableState,
+    supporting: String?,
+    enabled: Boolean,
+    controlPosition: JengaControlPosition,
+    minHeight: Dp,
+    contentPadding: PaddingValues,
+    contentSpacing: Dp,
+    headlineStyle: TextStyle,
+    supportingStyle: TextStyle,
+    headlineMaxLines: Int,
+    supportingMaxLines: Int,
+    trailingContent: (@Composable () -> Unit)?,
+    checkboxShape: Shape,
+    colors: JengaListItemColors,
+    checkboxColors: JengaCheckboxColors,
+    loading: Boolean,
+    modifier: Modifier = Modifier,
+) {
     val control: @Composable () -> Unit = {
         if (loading) {
             Box(modifier = Modifier.size(JengaCheckboxDefaults.Size), contentAlignment = Alignment.Center) {
@@ -244,8 +375,8 @@ public fun JengaCheckboxListItem(
             }
         } else {
             JengaCheckbox(
-                checked = checked,
-                onCheckedChange = null,
+                state = state,
+                onClick = null,
                 enabled = enabled,
                 shape = checkboxShape,
                 colors = checkboxColors,
@@ -254,12 +385,7 @@ public fun JengaCheckboxListItem(
     }
     JengaListItem(
         headline = headline,
-        modifier = modifier.toggleable(
-            value = checked,
-            enabled = enabled && !loading,
-            role = Role.Checkbox,
-            onValueChange = onCheckedChange,
-        ),
+        modifier = modifier,
         supporting = supporting,
         leadingContent = control.takeIf { controlPosition == JengaControlPosition.Leading },
         trailingContent = trailingSlot(trailingContent, control.takeIf { controlPosition == JengaControlPosition.Trailing }, contentSpacing),

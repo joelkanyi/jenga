@@ -6,23 +6,31 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.calculateEndPadding
+import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.Immutable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
+import androidx.compose.ui.layout.layout
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.unit.Constraints
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.min
 import dev.drewhamilton.poko.Poko
+import io.github.joelkanyi.jenga.component.icon.JengaIcon
 import io.github.joelkanyi.jenga.component.text.JengaText
 import io.github.joelkanyi.jenga.theme.JengaTheme
+import io.github.joelkanyi.jenga.theme.LocalJengaContentColor
 
 /** Semantic tone of a [JengaSnackbar]. */
 public enum class JengaSnackbarTone { Neutral, Success, Error }
@@ -122,16 +130,20 @@ public object JengaSnackbarDefaults {
 }
 
 /**
- * A transient message surface with an optional action.
+ * A transient message surface with an optional leading item, an optional action and an optional
+ * close ✕, in that order: leading item, message, action, ✕.
  *
  * This is the visual component; host it yourself (e.g. in a `Box` overlay or via
  * your navigation shell). It does not manage its own visibility or timing.
  *
  * @sample io.github.joelkanyi.jenga.samples.JengaSnackbarSample
+ * @sample io.github.joelkanyi.jenga.samples.JengaSnackbarDismissSample
+ * @sample io.github.joelkanyi.jenga.samples.JengaSnackbarLeadingSample
  *
  * @param message the message to show.
  * @param modifier the [Modifier] for this snackbar.
- * @param tone the semantic tone; see [JengaSnackbarTone].
+ * @param tone the semantic tone; see [JengaSnackbarTone]. Its accent dot is not drawn when [leadingContent]
+ *   is set.
  * @param actionLabel optional action label; when set with [onAction], shows a
  *   trailing action.
  * @param onAction called when the action is tapped.
@@ -140,6 +152,15 @@ public object JengaSnackbarDefaults {
  * @param contentPadding padding inside the snackbar.
  * @param messageStyle the message text style.
  * @param actionStyle the action label text style.
+ * @param leadingContent optional single small item before the message: an icon that says what happened
+ *   (a [JengaIcon] at its default size) or a counter (a small badge). It replaces the tone dot, is
+ *   centred on the message and keeps the same gap to it as the dot. [JengaSnackbarColors.content]
+ *   is provided as its content color, so a [JengaIcon] in it needs no tint.
+ * @param onDismiss called when the close ✕ is tapped. The ✕ is shown at the end, after the action,
+ *   in [JengaSnackbarColors.content], when this is set together with [dismissContentDescription];
+ *   hide the snackbar from it.
+ * @param dismissContentDescription accessibility label for the close ✕ (e.g. "Dismiss"), in the
+ *   user's language.
  */
 @Composable
 public fun JengaSnackbar(
@@ -153,6 +174,9 @@ public fun JengaSnackbar(
     contentPadding: PaddingValues = JengaSnackbarDefaults.contentPadding,
     messageStyle: TextStyle = JengaSnackbarDefaults.messageStyle,
     actionStyle: TextStyle = JengaSnackbarDefaults.actionStyle,
+    leadingContent: (@Composable () -> Unit)? = null,
+    onDismiss: (() -> Unit)? = null,
+    dismissContentDescription: String? = null,
 ) {
     val toneColor = JengaSnackbarDefaults.toneColor(tone)
 
@@ -165,7 +189,19 @@ public fun JengaSnackbar(
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.spacedBy(JengaTheme.spacing.md),
     ) {
-        if (toneColor != null) {
+        if (leadingContent != null) {
+            // At least an icon wide and tall, so an icon and a narrower item start the message at the
+            // same place; a wider item (a two-digit counter) takes the room it needs.
+            Box(
+                modifier = Modifier.defaultMinSize(
+                    minWidth = JengaTheme.sizing.iconMedium,
+                    minHeight = JengaTheme.sizing.iconMedium,
+                ),
+                contentAlignment = Alignment.Center,
+            ) {
+                CompositionLocalProvider(LocalJengaContentColor provides colors.content, content = leadingContent)
+            }
+        } else if (toneColor != null) {
             Box(
                 modifier = Modifier
                     .size(JengaSnackbarDefaults.DotSize)
@@ -190,5 +226,84 @@ public fun JengaSnackbar(
                     .padding(horizontal = JengaTheme.spacing.sm, vertical = JengaTheme.spacing.xs),
             )
         }
+        if (onDismiss != null && dismissContentDescription != null) {
+            val iconSize = JengaTheme.sizing.iconMedium
+            Box(
+                modifier = Modifier
+                    .dismissTouchTarget(
+                        touchTarget = JengaTheme.sizing.minTouchTarget,
+                        iconSize = iconSize,
+                        contentPadding = contentPadding,
+                        spacing = JengaTheme.spacing.md,
+                    )
+                    .clip(JengaTheme.shapes.pill)
+                    .clickable(role = Role.Button, onClick = onDismiss),
+                contentAlignment = Alignment.Center,
+            ) {
+                JengaIcon(
+                    imageVector = JengaTheme.icons.close,
+                    contentDescription = dismissContentDescription,
+                    tint = colors.content,
+                    size = iconSize,
+                )
+            }
+        }
+    }
+}
+
+@Deprecated("Kept for binary compatibility", level = DeprecationLevel.HIDDEN)
+@Composable
+public fun JengaSnackbar(
+    message: String,
+    modifier: Modifier = Modifier,
+    tone: JengaSnackbarTone = JengaSnackbarTone.Neutral,
+    actionLabel: String? = null,
+    onAction: (() -> Unit)? = null,
+    shape: Shape = JengaSnackbarDefaults.shape,
+    colors: JengaSnackbarColors = JengaSnackbarDefaults.colors(),
+    contentPadding: PaddingValues = JengaSnackbarDefaults.contentPadding,
+    messageStyle: TextStyle = JengaSnackbarDefaults.messageStyle,
+    actionStyle: TextStyle = JengaSnackbarDefaults.actionStyle,
+) {
+    JengaSnackbar(
+        message = message,
+        modifier = modifier,
+        tone = tone,
+        actionLabel = actionLabel,
+        onAction = onAction,
+        shape = shape,
+        colors = colors,
+        contentPadding = contentPadding,
+        messageStyle = messageStyle,
+        actionStyle = actionStyle,
+        leadingContent = null,
+        onDismiss = null,
+        dismissContentDescription = null,
+    )
+}
+
+/**
+ * Gives the close ✕ its full [touchTarget] without pushing the glyph away from the edge or adding
+ * the target's height to the snackbar's: the target is measured at full size, but the part around
+ * the [iconSize] glyph that fits in the row's [spacing] (at the start) and in [contentPadding] (top,
+ * bottom and end) is not reported to the row. Top and bottom give up the same amount, the smaller
+ * of the two paddings, so the glyph stays on the message's centre line. With the default padding
+ * the glyph ends where the message would, a one-line snackbar is exactly as tall as the target, and
+ * the whole target stays inside the snackbar, so none of it is clipped away.
+ */
+private fun Modifier.dismissTouchTarget(
+    touchTarget: Dp,
+    iconSize: Dp,
+    contentPadding: PaddingValues,
+    spacing: Dp,
+): Modifier = layout { measurable, _ ->
+    val target = touchTarget.roundToPx()
+    val inset = ((touchTarget - iconSize) / 2).coerceAtLeast(0.dp)
+    val start = min(spacing, inset).roundToPx()
+    val end = min(contentPadding.calculateEndPadding(layoutDirection), inset).roundToPx()
+    val vertical = min(min(contentPadding.calculateTopPadding(), contentPadding.calculateBottomPadding()), inset).roundToPx()
+    val placeable = measurable.measure(Constraints.fixed(target, target))
+    layout(target - start - end, target - 2 * vertical) {
+        placeable.placeRelative(-start, -vertical)
     }
 }

@@ -4,6 +4,7 @@ package io.github.joelkanyi.jenga.samples
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -13,15 +14,23 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.state.ToggleableState
 import androidx.compose.ui.text.AnnotatedString
+import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.unit.dp
 import io.github.joelkanyi.jenga.component.action.JengaAction
 import io.github.joelkanyi.jenga.component.avatar.JengaAvatar
+import io.github.joelkanyi.jenga.component.avatar.JengaAvatarDefaults
 import io.github.joelkanyi.jenga.component.badge.JengaBadge
 import io.github.joelkanyi.jenga.component.badge.JengaBadgeTone
 import io.github.joelkanyi.jenga.component.banner.JengaBanner
+import io.github.joelkanyi.jenga.component.banner.JengaBannerActionPosition
+import io.github.joelkanyi.jenga.component.banner.JengaBannerEmphasis
 import io.github.joelkanyi.jenga.component.banner.JengaBannerTone
 import io.github.joelkanyi.jenga.component.banner.JengaInfoBar
 import io.github.joelkanyi.jenga.component.button.JengaButton
@@ -32,6 +41,7 @@ import io.github.joelkanyi.jenga.component.calendar.JengaCalendar
 import io.github.joelkanyi.jenga.component.calendar.JengaCalendarDefaults
 import io.github.joelkanyi.jenga.component.calendar.JengaDatePicker
 import io.github.joelkanyi.jenga.component.calendar.JengaDatePickerDialog
+import io.github.joelkanyi.jenga.component.calendar.JengaWeeklyCalendar
 import io.github.joelkanyi.jenga.component.calendar.rememberJengaCalendarState
 import io.github.joelkanyi.jenga.component.camera.JengaCaptureFrame
 import io.github.joelkanyi.jenga.component.camera.JengaCaptureShape
@@ -39,13 +49,18 @@ import io.github.joelkanyi.jenga.component.camera.JengaShutterButton
 import io.github.joelkanyi.jenga.component.card.JengaCard
 import io.github.joelkanyi.jenga.component.card.JengaCardFooter
 import io.github.joelkanyi.jenga.component.chart.JengaBarChart
+import io.github.joelkanyi.jenga.component.chart.JengaBarChartDefaults
 import io.github.joelkanyi.jenga.component.chart.JengaBarChartEntry
+import io.github.joelkanyi.jenga.component.chart.JengaChartTarget
+import io.github.joelkanyi.jenga.component.chart.JengaLineChart
+import io.github.joelkanyi.jenga.component.chart.JengaLineChartEntry
 import io.github.joelkanyi.jenga.component.chip.JengaChip
 import io.github.joelkanyi.jenga.component.divider.JengaDivider
 import io.github.joelkanyi.jenga.component.expandable.JengaExpandableRow
 import io.github.joelkanyi.jenga.component.fab.JengaFab
 import io.github.joelkanyi.jenga.component.feedback.JengaBottomSheet
 import io.github.joelkanyi.jenga.component.feedback.JengaDialog
+import io.github.joelkanyi.jenga.component.feedback.JengaDialogActionsLayout
 import io.github.joelkanyi.jenga.component.feedback.JengaListSheet
 import io.github.joelkanyi.jenga.component.feedback.JengaSideSheet
 import io.github.joelkanyi.jenga.component.feedback.JengaSnackbar
@@ -54,6 +69,7 @@ import io.github.joelkanyi.jenga.component.feedback.JengaSnackbarTone
 import io.github.joelkanyi.jenga.component.feedback.rememberJengaSnackbarHostState
 import io.github.joelkanyi.jenga.component.icon.JengaIcon
 import io.github.joelkanyi.jenga.component.icon.JengaIconTile
+import io.github.joelkanyi.jenga.component.icon.JengaIconTileSize
 import io.github.joelkanyi.jenga.component.icon.JengaIcons
 import io.github.joelkanyi.jenga.component.image.JengaImage
 import io.github.joelkanyi.jenga.component.image.JengaImageFit
@@ -64,16 +80,22 @@ import io.github.joelkanyi.jenga.component.layout.JengaInline
 import io.github.joelkanyi.jenga.component.layout.JengaSection
 import io.github.joelkanyi.jenga.component.layout.JengaStack
 import io.github.joelkanyi.jenga.component.layout.JengaWrap
+import io.github.joelkanyi.jenga.component.link.JengaInlineLink
 import io.github.joelkanyi.jenga.component.link.JengaLink
+import io.github.joelkanyi.jenga.component.link.JengaLinkDefaults
+import io.github.joelkanyi.jenga.component.link.JengaTextWithLinks
+import io.github.joelkanyi.jenga.component.link.appendJengaLink
 import io.github.joelkanyi.jenga.component.list.JengaCheckboxListItem
 import io.github.joelkanyi.jenga.component.list.JengaKeyValueEmphasis
 import io.github.joelkanyi.jenga.component.list.JengaKeyValueRow
 import io.github.joelkanyi.jenga.component.list.JengaListItem
 import io.github.joelkanyi.jenga.component.list.JengaRadioListItem
 import io.github.joelkanyi.jenga.component.media.JengaImageViewer
+import io.github.joelkanyi.jenga.component.media.JengaImageViewerCloseButtonPosition
 import io.github.joelkanyi.jenga.component.media.JengaMediaHero
 import io.github.joelkanyi.jenga.component.menu.JengaDropdownMenu
 import io.github.joelkanyi.jenga.component.menu.JengaDropdownMenuItem
+import io.github.joelkanyi.jenga.component.navigation.JengaNavIndicator
 import io.github.joelkanyi.jenga.component.navigation.JengaNavigationBar
 import io.github.joelkanyi.jenga.component.navigation.JengaNavigationBarItem
 import io.github.joelkanyi.jenga.component.navigation.JengaNavigationRailItem
@@ -112,9 +134,12 @@ import io.github.joelkanyi.jenga.component.stat.JengaStatTile
 import io.github.joelkanyi.jenga.component.stat.JengaStatTone
 import io.github.joelkanyi.jenga.component.state.JengaEmptyState
 import io.github.joelkanyi.jenga.component.state.JengaErrorState
+import io.github.joelkanyi.jenga.component.state.JengaStateLayout
 import io.github.joelkanyi.jenga.component.status.JengaStatusPill
 import io.github.joelkanyi.jenga.component.stepindicator.JengaStep
 import io.github.joelkanyi.jenga.component.stepindicator.JengaStepIndicator
+import io.github.joelkanyi.jenga.component.stepindicator.JengaStepIndicatorArrangement
+import io.github.joelkanyi.jenga.component.stepindicator.JengaStepIndicatorVariant
 import io.github.joelkanyi.jenga.component.stepindicator.JengaStepState
 import io.github.joelkanyi.jenga.component.stepper.JengaStepper
 import io.github.joelkanyi.jenga.component.swipe.JengaSwipeToDismiss
@@ -128,6 +153,9 @@ import io.github.joelkanyi.jenga.component.timeline.JengaTimelineItem
 import io.github.joelkanyi.jenga.component.timeline.JengaTimelinePosition
 import io.github.joelkanyi.jenga.component.timeline.JengaTimelineState
 import io.github.joelkanyi.jenga.component.tooltip.JengaTooltip
+import io.github.joelkanyi.jenga.component.tooltip.JengaTooltipBox
+import io.github.joelkanyi.jenga.component.tooltip.JengaTooltipPointer
+import io.github.joelkanyi.jenga.component.tooltip.JengaTooltipPointerEdge
 import io.github.joelkanyi.jenga.component.verdict.JengaVerdictBar
 import io.github.joelkanyi.jenga.component.verdict.JengaVerdictSublines
 import io.github.joelkanyi.jenga.component.verdict.JengaVerdictTone
@@ -135,10 +163,14 @@ import io.github.joelkanyi.jenga.pattern.JengaSectionHeader
 import io.github.joelkanyi.jenga.pattern.JengaStatCard
 import io.github.joelkanyi.jenga.pattern.JengaTicketRow
 import io.github.joelkanyi.jenga.theme.JengaTheme
+import kotlinx.datetime.DateTimeUnit
+import kotlinx.datetime.DayOfWeek
 import kotlinx.datetime.LocalDate
 import kotlinx.datetime.LocalTime
 import kotlinx.datetime.Month
 import kotlinx.datetime.YearMonth
+import kotlinx.datetime.minus
+import kotlinx.datetime.plus
 import kotlin.time.Duration.Companion.minutes
 
 /**
@@ -203,6 +235,25 @@ internal fun JengaBottomBarSample() {
 }
 
 @Composable
+internal fun JengaBottomBarActionsSample() {
+    JengaBottomBar(
+        primaryAction = {
+            JengaButton(
+                text = "Sajili mauzo na utume ujumbe",
+                onClick = { },
+            )
+        },
+        secondaryAction = {
+            JengaButton(
+                text = "Hifadhi kama rasimu kwa sasa",
+                onClick = { },
+                variant = JengaButtonVariant.Neutral,
+            )
+        },
+    )
+}
+
+@Composable
 internal fun JengaStatusPillSample() {
     JengaStatusPill(
         label = "Synced",
@@ -249,6 +300,41 @@ internal fun JengaLinkSample() {
         text = "Privacy policy",
         onClick = {},
     )
+}
+
+@Composable
+internal fun JengaTextWithLinksSample() {
+    // The sentence and each link phrase are separate strings, so a translation can move the
+    // links to wherever its word order needs them.
+    JengaTextWithLinks(
+        text = "By continuing, the customer accepts the terms of the agreement and the privacy policy.",
+        links = listOf(
+            JengaInlineLink(text = "terms of the agreement", onClick = {}),
+            JengaInlineLink(text = "privacy policy", onClick = {}),
+        ),
+    )
+}
+
+@Composable
+internal fun JengaAppendLinkSample(
+    onCallSupport: () -> Unit,
+    onOpenGuide: () -> Unit,
+) {
+    val linkStyles = JengaLinkDefaults.inlineStyles()
+    // The string is built once, so the links read the callbacks through rememberUpdatedState
+    // and always call the latest ones.
+    val currentOnCallSupport by rememberUpdatedState(onCallSupport)
+    val currentOnOpenGuide by rememberUpdatedState(onOpenGuide)
+    val text = remember(linkStyles) {
+        buildAnnotatedString {
+            append("Need help? ")
+            appendJengaLink(text = "Call support", styles = linkStyles, onClick = { currentOnCallSupport() })
+            append(" or ")
+            appendJengaLink(text = "read the guide", styles = linkStyles, onClick = { currentOnOpenGuide() })
+            append(".")
+        }
+    }
+    JengaText(text = text)
 }
 
 @Composable
@@ -323,9 +409,38 @@ internal fun JengaCheckboxSample() {
 }
 
 @Composable
+internal fun JengaCheckboxMixedSample() {
+    var checked by remember {
+        mutableStateOf(
+            value = setOf("Battery"),
+        )
+    }
+    val units = listOf("Battery", "Panel", "Inverter")
+    JengaCheckbox(
+        state = when (checked.size) {
+            0 -> ToggleableState.Off
+            units.size -> ToggleableState.On
+            else -> ToggleableState.Indeterminate
+        },
+        onClick = {
+            checked = if (checked.size == units.size) {
+                emptySet()
+            } else {
+                units.toSet()
+            }
+        },
+    )
+}
+
+@Composable
 internal fun JengaAvatarSample() {
     JengaAvatar(
         name = "Ada Lovelace",
+    )
+    // A grey avatar, so the brand color stays for actions.
+    JengaAvatar(
+        name = "Grace Hopper",
+        colors = JengaAvatarDefaults.neutralColors(),
     )
 }
 
@@ -336,6 +451,55 @@ internal fun JengaSnackbarSample() {
         tone = JengaSnackbarTone.Neutral,
         actionLabel = "Undo",
         onAction = { },
+    )
+}
+
+@Composable
+internal fun JengaSnackbarDismissSample() {
+    var visible by remember {
+        mutableStateOf(
+            value = true,
+        )
+    }
+    // A message that stays until it is read: a close ✕ after the action.
+    if (visible) {
+        JengaSnackbar(
+            message = "Couldn't send the prompt",
+            actionLabel = "Retry",
+            onAction = { },
+            onDismiss = { visible = false },
+            dismissContentDescription = "Dismiss",
+        )
+    }
+}
+
+@Composable
+internal fun JengaSnackbarLeadingSample() {
+    JengaStack(
+        space = JengaTheme.spacing.sm,
+        content = {
+            // An icon that says what happened. It takes the snackbar's content color.
+            JengaSnackbar(
+                message = "12 visits synced",
+                leadingContent = {
+                    JengaIcon(
+                        imageVector = JengaIcons.CheckCircle,
+                        contentDescription = null,
+                    )
+                },
+            )
+            // A counter, with an action.
+            JengaSnackbar(
+                message = "Photos still uploading",
+                actionLabel = "View",
+                onAction = { },
+                leadingContent = {
+                    JengaBadge(
+                        text = "3",
+                    )
+                },
+            )
+        },
     )
 }
 
@@ -361,6 +525,46 @@ internal fun JengaDialogSample() {
             dismissButton = {
                 JengaButton(
                     text = "Cancel",
+                    onClick = { open = false },
+                    variant = JengaButtonVariant.Ghost,
+                )
+            },
+        )
+    }
+}
+
+@Composable
+internal fun JengaDialogIconStackedSample() {
+    var open by remember {
+        mutableStateOf(
+            value = true,
+        )
+    }
+    if (open) {
+        JengaDialog(
+            onDismissRequest = { open = false },
+            icon = {
+                JengaIconTile(
+                    icon = JengaIcons.Warning,
+                    contentDescription = null,
+                    tone = JengaBadgeTone.Error,
+                    size = JengaIconTileSize.Large,
+                    shape = JengaTheme.shapes.pill,
+                )
+            },
+            title = "Cancel this sale?",
+            text = "The sale and its documents will be removed. This cannot be undone.",
+            actionsLayout = JengaDialogActionsLayout.Stacked,
+            confirmButton = {
+                JengaButton(
+                    text = "Cancel sale",
+                    onClick = { open = false },
+                    variant = JengaButtonVariant.Danger,
+                )
+            },
+            dismissButton = {
+                JengaButton(
+                    text = "Keep sale",
                     onClick = { open = false },
                     variant = JengaButtonVariant.Ghost,
                 )
@@ -482,6 +686,23 @@ internal fun JengaErrorStateSample() {
 }
 
 @Composable
+internal fun JengaErrorStateFillScreenSample() {
+    JengaScaffold { padding ->
+        JengaErrorState(
+            title = "No internet connection",
+            modifier = Modifier.padding(padding),
+            description = "Check mobile data or Wi-Fi and try again.",
+            icon = { JengaIcon(JengaIcons.CloudOff, contentDescription = null) },
+            actionLabel = "Try again",
+            onAction = { },
+            secondaryActionLabel = "Contact support",
+            onSecondaryAction = { },
+            layout = JengaStateLayout.FillScreen,
+        )
+    }
+}
+
+@Composable
 internal fun JengaLinearProgressSample() {
     JengaLinearProgress(
         progress = 0.6f,
@@ -585,6 +806,42 @@ internal fun JengaNavigationBarSample() {
 }
 
 @Composable
+internal fun JengaNavigationBarBadgeSample() {
+    val unread = 3
+    JengaNavigationBar(
+        content = {
+            JengaNavigationBarItem(
+                selected = true,
+                onClick = { },
+                icon = {
+                    JengaIcon(
+                        imageVector = JengaIcons.Search,
+                        contentDescription = null,
+                    )
+                },
+                label = "Events",
+                indicator = JengaNavIndicator.Pill,
+            )
+            JengaNavigationBarItem(
+                selected = false,
+                onClick = { },
+                icon = {
+                    JengaIcon(
+                        imageVector = JengaIcons.Bell,
+                        contentDescription = null,
+                    )
+                },
+                label = "Notifications",
+                indicator = JengaNavIndicator.Pill,
+                badgeCount = unread,
+                // Read after the label: "Notifications, 3 new". Use a plural string resource.
+                badgeContentDescription = "$unread new",
+            )
+        },
+    )
+}
+
+@Composable
 internal fun JengaTabsSample() {
     JengaTabs(
         selectedIndex = 0,
@@ -655,6 +912,50 @@ internal fun JengaCheckboxListItemSample() {
         headline = "Battery",
         checked = checked,
         onCheckedChange = { checked = it },
+    )
+}
+
+@Composable
+internal fun JengaCheckboxListItemMixedSample() {
+    val units = listOf("Battery", "Panel", "Inverter")
+    var checked by remember {
+        mutableStateOf(
+            value = setOf("Battery"),
+        )
+    }
+    JengaStack(
+        space = JengaTheme.spacing.none,
+        content = {
+            JengaCheckboxListItem(
+                headline = "Select all",
+                state = when (checked.size) {
+                    0 -> ToggleableState.Off
+                    units.size -> ToggleableState.On
+                    else -> ToggleableState.Indeterminate
+                },
+                onClick = {
+                    checked = if (checked.size == units.size) {
+                        emptySet()
+                    } else {
+                        units.toSet()
+                    }
+                },
+                supporting = "${checked.size} of ${units.size} ticked",
+            )
+            units.forEach { unit ->
+                JengaCheckboxListItem(
+                    headline = unit,
+                    checked = unit in checked,
+                    onCheckedChange = { on ->
+                        checked = if (on) {
+                            checked + unit
+                        } else {
+                            checked - unit
+                        }
+                    },
+                )
+            }
+        },
     )
 }
 
@@ -765,6 +1066,45 @@ internal fun JengaBannerSample() {
 }
 
 @Composable
+internal fun JengaBannerDismissSample() {
+    var visible by remember {
+        mutableStateOf(
+            value = true,
+        )
+    }
+    // Info and Success banners can be closed: a ✕ at the end. With the ✕, a longer
+    // action goes under the message so the text keeps its width.
+    if (visible) {
+        JengaBanner(
+            message = "KES 3,000 received from 0712 345 678.",
+            tone = JengaBannerTone.Success,
+            title = "Deposit confirmed",
+            action = {
+                JengaLink(
+                    text = "View receipt",
+                    onClick = {},
+                )
+            },
+            actionPosition = JengaBannerActionPosition.Below,
+            onDismiss = { visible = false },
+            dismissContentDescription = "Dismiss",
+        )
+    }
+}
+
+@Composable
+internal fun JengaBannerProminentSample() {
+    // The result of a check at the top of a screen. The tone picks the icon: a badge with a
+    // check for Success, an alert circle for Warning, a ban sign for Error; pass `icon` for another.
+    JengaBanner(
+        message = "All products are available on a payment plan.",
+        tone = JengaBannerTone.Success,
+        title = "Credit approved",
+        emphasis = JengaBannerEmphasis.Prominent,
+    )
+}
+
+@Composable
 internal fun JengaDropdownMenuSample() {
     var expanded by remember {
         mutableStateOf(
@@ -792,6 +1132,44 @@ internal fun JengaTooltipSample() {
     JengaTooltip(
         text = "Re-admit this attendee",
     )
+}
+
+@Composable
+internal fun JengaTooltipPointerSample() {
+    // The bubble alone, its pointer on the top edge 24dp from the start. To aim it at a host, use JengaTooltipBox.
+    JengaTooltip(
+        text = "First payment before the device is unlocked.",
+        pointer = JengaTooltipPointer(edge = JengaTooltipPointerEdge.Top, offset = 24.dp),
+    )
+}
+
+@Composable
+internal fun JengaTooltipBoxSample() {
+    Row(verticalAlignment = Alignment.CenterVertically) {
+        JengaText(text = "Deposit", style = JengaTheme.typography.label)
+        // A tap on the icon shows the tooltip under it; the next tap anywhere hides it.
+        JengaTooltipBox(text = "First payment before the device is unlocked. Usually KES 3,000 for the iMax 3000.") {
+            JengaIcon(
+                imageVector = JengaTheme.icons.info,
+                contentDescription = "What is the deposit?",
+                size = JengaTheme.sizing.iconSmall,
+            )
+        }
+    }
+}
+
+@Composable
+internal fun JengaTooltipBoxExpandedSample() {
+    var expanded by remember { mutableStateOf(false) }
+    JengaTooltipBox(
+        text = "Synced with the server 2 minutes ago.",
+        expanded = expanded,
+        onDismissRequest = { expanded = false },
+    ) {
+        JengaIconButton(onClick = { expanded = !expanded }) {
+            JengaIcon(imageVector = JengaTheme.icons.info, contentDescription = "Sync status")
+        }
+    }
 }
 
 @Composable
@@ -931,6 +1309,16 @@ internal fun JengaSnackbarHostSample() {
     // still auto-dismisses instead of sitting there indefinitely:
     //   hostState.showSnackbar("Removed", actionLabel = "Undo",
     //       duration = JengaSnackbarDuration.Long)
+    // A message that must stay until it is read gets a close ✕; tapping it returns
+    // JengaSnackbarResult.Dismissed:
+    //   hostState.showSnackbar("Sync failed for 2 sales",
+    //       duration = JengaSnackbarDuration.Indefinite,
+    //       dismissContentDescription = "Dismiss")
+    // One small item before the message, an icon or a counter:
+    //   hostState.showSnackbar("12 visits synced",
+    //       leadingContent = { JengaIcon(JengaIcons.CheckCircle, contentDescription = null) })
+    //   hostState.showSnackbar("Photos still uploading", actionLabel = "View",
+    //       leadingContent = { JengaBadge(text = "3") })
     JengaSnackbarHost(
         hostState = hostState,
     )
@@ -1128,6 +1516,25 @@ internal fun JengaCardFooterSample() {
 }
 
 @Composable
+internal fun JengaNavigationRailItemBadgeSample() {
+    val unread = 3
+    JengaNavigationRailItem(
+        label = "Notifications",
+        selected = false,
+        onClick = { },
+        icon = {
+            JengaIcon(
+                imageVector = JengaIcons.Bell,
+                contentDescription = null,
+            )
+        },
+        badgeCount = unread,
+        // Read after the label: "Notifications, 3 new". Use a plural string resource.
+        badgeContentDescription = "$unread new",
+    )
+}
+
+@Composable
 internal fun JengaNavigationRailItemSample() {
     var selected by remember {
         mutableIntStateOf(
@@ -1292,6 +1699,41 @@ internal fun JengaImageViewerSample() {
 }
 
 @Composable
+internal fun JengaImageViewerCloseAtEndSample() {
+    var open by remember {
+        mutableStateOf(
+            value = true,
+        )
+    }
+    if (open) {
+        JengaImageViewer(
+            onDismissRequest = { open = false },
+            title = "National ID, front",
+            closeContentDescription = "Close",
+            actions = {
+                JengaIconButton(
+                    onClick = { },
+                    variant = JengaIconButtonVariant.Overlay,
+                ) {
+                    JengaIcon(
+                        imageVector = JengaIcons.Camera,
+                        contentDescription = "Retake",
+                    )
+                }
+            },
+            closeButtonPosition = JengaImageViewerCloseButtonPosition.End,
+            content = {
+                JengaImage(
+                    url = "https://example.com/photo.jpg",
+                    contentDescription = null,
+                    fit = JengaImageFit.Contain,
+                )
+            },
+        )
+    }
+}
+
+@Composable
 internal fun JengaDatePickerSample() {
     var date by remember {
         mutableStateOf<LocalDate?>(
@@ -1333,6 +1775,7 @@ internal fun JengaDatePickerDialogSample() {
             },
             previousMonthContentDescription = "Previous month",
             nextMonthContentDescription = "Next month",
+            title = "Payment date",
         )
     }
 }
@@ -1379,6 +1822,139 @@ internal fun JengaCalendarRangeSample() {
             )
         },
     )
+}
+
+@Composable
+internal fun JengaWeeklyCalendarSample() {
+    val today = remember { JengaCalendarDefaults.today() }
+    // Any date in the week: the calendar starts the row on firstDayOfWeek.
+    var week by remember {
+        mutableStateOf(
+            value = today,
+        )
+    }
+    var selected by remember {
+        mutableStateOf<LocalDate?>(
+            value = today,
+        )
+    }
+    JengaWeeklyCalendar(
+        week = week,
+        selectedDate = selected,
+        onSelectedDateChange = { selected = it },
+        onPreviousWeek = {
+            week = week.minus(
+                value = 7,
+                unit = DateTimeUnit.DAY,
+            )
+        },
+        onNextWeek = {
+            week = week.plus(
+                value = 7,
+                unit = DateTimeUnit.DAY,
+            )
+        },
+        weekTitle = { start, end -> "${start.day} ${start.month.name} – ${end.day} ${end.month.name}" },
+        dayOfWeekLabel = {
+            it.name.take(
+                n = 3,
+            )
+        },
+        previousWeekContentDescription = "Previous week",
+        nextWeekContentDescription = "Next week",
+        // The day the app's locale starts the week on; Monday by default.
+        firstDayOfWeek = DayOfWeek.MONDAY,
+        today = today,
+        dateContentDescription = { date ->
+            val day = "${date.dayOfWeek.name} ${date.day} ${date.month.name}"
+            if (date == today) "$day, today" else day
+        },
+    )
+}
+
+@Composable
+internal fun JengaWeeklyCalendarDayContentSample() {
+    // A payment streak: a check on the days paid up to today, a lock on the next two
+    // days, joined by bands. The band colors are read here: dayBackground is not
+    // composable.
+    val today = remember { JengaCalendarDefaults.today() }
+    var selected by remember {
+        mutableStateOf<LocalDate?>(
+            value = today,
+        )
+    }
+    val paid = remember {
+        (-2..0).map { days ->
+            today.plus(
+                value = days,
+                unit = DateTimeUnit.DAY,
+            )
+        }
+    }
+    val locked = remember {
+        (1..2).map { days ->
+            today.plus(
+                value = days,
+                unit = DateTimeUnit.DAY,
+            )
+        }
+    }
+    val paidBand = JengaTheme.colors.successContainer
+    val lockedBand = JengaTheme.colors.errorContainer
+    JengaWeeklyCalendar(
+        week = today,
+        selectedDate = selected,
+        onSelectedDateChange = { selected = it },
+        onPreviousWeek = {},
+        onNextWeek = {},
+        weekTitle = { start, end -> "${start.day} ${start.month.name} – ${end.day} ${end.month.name}" },
+        dayOfWeekLabel = {
+            it.name.take(
+                n = 3,
+            )
+        },
+        previousWeekContentDescription = "Previous week",
+        nextWeekContentDescription = "Next week",
+        today = today,
+        // The description carries what the icon means: the icon itself is not read.
+        dateContentDescription = { date ->
+            val day = "${date.dayOfWeek.name} ${date.day} ${date.month.name}"
+            when (date) {
+                in paid -> "$day, paid"
+                in locked -> "$day, locked"
+                else -> day
+            }
+        },
+        // Set to false to put the icon in place of the number.
+        showDayNumber = true,
+        dayBackground = { date ->
+            when (date) {
+                in paid -> paidBand
+                in locked -> lockedBand
+                else -> Color.Unspecified
+            }
+        },
+    ) { date ->
+        // On a band, an icon takes the band's on-container color. It would not show
+        // on the selected fill: leave the tint unset there, and the icon takes the
+        // selected content color.
+        val isSelected = date == selected
+        when (date) {
+            in paid -> JengaIcon(
+                imageVector = JengaIcons.CheckCircle,
+                contentDescription = null,
+                tint = if (isSelected) Color.Unspecified else JengaTheme.colors.onSuccessContainer,
+                size = 20.dp,
+            )
+
+            in locked -> JengaIcon(
+                imageVector = JengaIcons.Lock,
+                contentDescription = null,
+                tint = if (isSelected) Color.Unspecified else JengaTheme.colors.onErrorContainer,
+                size = 20.dp,
+            )
+        }
+    }
 }
 
 @Composable
@@ -1443,6 +2019,115 @@ internal fun JengaBarChartSample() {
         barContentDescription = { "${it.label}, ${it.value}" },
         selectedIndex = selected,
         onSelect = { selected = it },
+    )
+}
+
+@Composable
+internal fun JengaBarChartTargetSample() {
+    // Thousands collected on each day of this week. Thursday is today; the rest has no data yet.
+    val days = listOf(
+        JengaBarChartEntry(
+            label = "Mon",
+            value = 32f,
+        ),
+        JengaBarChartEntry(
+            label = "Tue",
+            value = 41f,
+        ),
+        JengaBarChartEntry(
+            label = "Wed",
+            value = 28f,
+        ),
+        JengaBarChartEntry(
+            label = "Thu",
+            value = 48.2f,
+        ),
+        JengaBarChartEntry(
+            label = "Fri",
+            value = 0f,
+        ),
+        JengaBarChartEntry(
+            label = "Sat",
+            value = 0f,
+        ),
+        JengaBarChartEntry(
+            label = "Sun",
+            value = 0f,
+        ),
+    )
+    val today = 3
+    val daysToCome = setOf("Fri", "Sat", "Sun")
+    var selected by remember {
+        mutableIntStateOf(
+            value = today,
+        )
+    }
+    JengaBarChart(
+        entries = days,
+        barContentDescription = { day ->
+            if (day.label in daysToCome) "${day.label}, no data yet" else "${day.label}, ${day.value} thousand"
+        },
+        contentDescription = "Collections this week",
+        selectedIndex = selected,
+        onSelect = { selected = it },
+        highlightedIndices = setOf(today),
+        emptyIndices = days.indices.filter { days[it].label in daysToCome }.toSet(),
+        maxValue = 50f,
+        target = JengaChartTarget(
+            value = 40f,
+            label = "Target",
+            contentDescription = "Target 40 thousand a day",
+        ),
+        colors = JengaBarChartDefaults.highlightColors(),
+    )
+}
+
+@Composable
+internal fun JengaLineChartSample() {
+    // The share of customers paying on time, in percent, over six months.
+    val months = listOf(
+        JengaLineChartEntry(
+            label = "Jun",
+            value = 72f,
+        ),
+        JengaLineChartEntry(
+            label = "Jul",
+            value = 75f,
+        ),
+        JengaLineChartEntry(
+            label = "Aug",
+            value = 79f,
+        ),
+        JengaLineChartEntry(
+            label = "Sep",
+            value = 81f,
+        ),
+        JengaLineChartEntry(
+            label = "Oct",
+            value = 84f,
+        ),
+        JengaLineChartEntry(
+            label = "Nov",
+            value = 86f,
+        ),
+    )
+    // Nothing selected: the latest month is the emphasised point.
+    var selected by remember {
+        mutableStateOf<Int?>(
+            value = null,
+        )
+    }
+    JengaLineChart(
+        entries = months,
+        pointContentDescription = { "${it.label}, ${it.value.toInt()}%" },
+        contentDescription = "Customers paying on time",
+        selectedIndex = selected,
+        onSelect = { selected = it },
+        target = JengaChartTarget(
+            value = 90f,
+            label = "Target",
+            contentDescription = "Target 90%",
+        ),
     )
 }
 
@@ -1533,6 +2218,97 @@ internal fun JengaStepIndicatorSample() {
     JengaStepIndicator(
         steps = steps,
         stepContentDescription = { index, step -> "Step ${index + 1} of ${steps.size}, ${step.label}" },
+    )
+}
+
+@Composable
+internal fun JengaStepIndicatorNumberedSample() {
+    val steps = listOf(
+        JengaStep(
+            label = "Details",
+            state = JengaStepState.Done,
+        ),
+        JengaStep(
+            label = "Product",
+            state = JengaStepState.Current,
+        ),
+        JengaStep(
+            label = "Documents",
+            state = JengaStepState.Pending,
+        ),
+        JengaStep(
+            label = "Sign",
+            state = JengaStepState.Pending,
+        ),
+    )
+    JengaStepIndicator(
+        steps = steps,
+        stepContentDescription = { index, step -> "Step ${index + 1} of ${steps.size}, ${step.label}" },
+        variant = JengaStepIndicatorVariant.Numbered,
+    )
+}
+
+@Composable
+internal fun JengaStepIndicatorCompactSample() {
+    val names = listOf(
+        "Customer details",
+        "Product and plan",
+        "Documents",
+        "Agreement",
+    )
+    val current = 1
+    val steps = names.mapIndexed { index, name ->
+        JengaStep(
+            label = name,
+            state = when {
+                index < current -> JengaStepState.Done
+                index == current -> JengaStepState.Current
+                else -> JengaStepState.Pending
+            },
+        )
+    }
+    JengaStack(
+        space = JengaTheme.spacing.sm,
+        content = {
+            JengaStepIndicator(
+                steps = steps,
+                stepContentDescription = { index, step -> "Step ${index + 1} of ${steps.size}, ${step.label}" },
+                variant = JengaStepIndicatorVariant.Compact,
+            )
+            // The compact variant draws no labels: name the current step once, under the row.
+            JengaText(
+                text = "Step ${current + 1} of ${steps.size} · ${names[current]}",
+                style = JengaTheme.typography.caption,
+                color = JengaTheme.colors.textMuted,
+            )
+        },
+    )
+}
+
+@Composable
+internal fun JengaStepIndicatorEdgeToEdgeSample() {
+    val steps = listOf(
+        JengaStep(
+            label = "Details",
+            state = JengaStepState.Done,
+        ),
+        JengaStep(
+            label = "Product",
+            state = JengaStepState.Current,
+        ),
+        JengaStep(
+            label = "Documents",
+            state = JengaStepState.Pending,
+        ),
+        JengaStep(
+            label = "Sign",
+            state = JengaStepState.Pending,
+        ),
+    )
+    JengaStepIndicator(
+        steps = steps,
+        stepContentDescription = { index, step -> "Step ${index + 1} of ${steps.size}, ${step.label}" },
+        arrangement = JengaStepIndicatorArrangement.EdgeToEdge,
     )
 }
 

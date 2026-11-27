@@ -23,6 +23,9 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import dev.drewhamilton.poko.Poko
+import io.github.joelkanyi.jenga.component.badge.JengaBadge
+import io.github.joelkanyi.jenga.component.badge.JengaBadgeTone
+import io.github.joelkanyi.jenga.component.badge.jengaBadgeCountText
 import io.github.joelkanyi.jenga.component.text.JengaText
 import io.github.joelkanyi.jenga.theme.JengaTheme
 import io.github.joelkanyi.jenga.theme.LocalJengaContentColor
@@ -136,7 +139,11 @@ public object JengaNavigationRailItemDefaults {
  * landscape or tablet layout): an icon and a label, with a filled background
  * when [selected]. Stack items in a column; the caller owns the layout.
  *
+ * With a [badgeCount] above zero, a [JengaBadge] with the count follows the label (after the dot,
+ * when [showDot] is set).
+ *
  * @sample io.github.joelkanyi.jenga.samples.JengaNavigationRailItemSample
+ * @sample io.github.joelkanyi.jenga.samples.JengaNavigationRailItemBadgeSample
  *
  * @param label the destination name.
  * @param selected whether this item is the current destination.
@@ -153,6 +160,14 @@ public object JengaNavigationRailItemDefaults {
  * @param selectedTextStyle the label text style while selected; defaults to [textStyle] with the
  *   theme's [JengaNavigationRailItemStyle.selectedTextStyle] merged on top.
  * @param colors the color set; defaults to [JengaNavigationRailItemDefaults.colors].
+ * @param badgeCount the count shown in a badge after the label. Zero or less shows no badge; above
+ *   99 the badge reads "99+".
+ * @param badgeContentDescription what a screen reader says for the badge, after the label (e.g.
+ *   "3 new", so the item reads "Notifications, 3 new"). When null the badge text is read.
+ *   The icon's `contentDescription` should be null so screen readers read the label and the
+ *   count: those two are the item's text, and an icon description is kept apart from them as the
+ *   item's content description.
+ * @param badgeTone the badge's tone; see [JengaBadgeTone].
  */
 @Composable
 public fun JengaNavigationRailItem(
@@ -169,7 +184,11 @@ public fun JengaNavigationRailItem(
     textStyle: TextStyle = JengaNavigationRailItemDefaults.textStyle,
     selectedTextStyle: TextStyle = textStyle.merge(JengaTheme.components.navigationRailItem?.selectedTextStyle),
     colors: JengaNavigationRailItemColors = JengaNavigationRailItemDefaults.colors(),
+    badgeCount: Int = 0,
+    badgeContentDescription: String? = null,
+    badgeTone: JengaBadgeTone = JengaBadgeTone.Error,
 ) {
+    val badgeText = jengaBadgeCountText(badgeCount)
     val contentColor = when {
         !enabled -> colors.disabledContent
         selected -> colors.selectedContent
@@ -203,6 +222,48 @@ public fun JengaNavigationRailItem(
                         .background(colors.dot),
                 )
             }
+            if (badgeText != null) {
+                JengaNavigationItemBadge(
+                    text = badgeText,
+                    description = badgeContentDescription ?: badgeText,
+                    tone = badgeTone,
+                )
+            }
         }
     }
+}
+
+@Deprecated("Kept for binary compatibility", level = DeprecationLevel.HIDDEN)
+@Composable
+public fun JengaNavigationRailItem(
+    label: String,
+    selected: Boolean,
+    onClick: () -> Unit,
+    icon: @Composable () -> Unit,
+    modifier: Modifier = Modifier,
+    enabled: Boolean = true,
+    showDot: Boolean = false,
+    minHeight: Dp = JengaTheme.components.navigationRailItem?.minHeight ?: JengaNavigationRailItemDefaults.MinHeight,
+    shape: Shape = JengaNavigationRailItemDefaults.shape,
+    contentPadding: PaddingValues = JengaNavigationRailItemDefaults.contentPadding,
+    textStyle: TextStyle = JengaNavigationRailItemDefaults.textStyle,
+    selectedTextStyle: TextStyle = textStyle.merge(JengaTheme.components.navigationRailItem?.selectedTextStyle),
+    colors: JengaNavigationRailItemColors = JengaNavigationRailItemDefaults.colors(),
+) {
+    JengaNavigationRailItem(
+        label = label,
+        selected = selected,
+        onClick = onClick,
+        icon = icon,
+        modifier = modifier,
+        enabled = enabled,
+        showDot = showDot,
+        minHeight = minHeight,
+        shape = shape,
+        contentPadding = contentPadding,
+        textStyle = textStyle,
+        selectedTextStyle = selectedTextStyle,
+        colors = colors,
+        badgeCount = 0,
+    )
 }

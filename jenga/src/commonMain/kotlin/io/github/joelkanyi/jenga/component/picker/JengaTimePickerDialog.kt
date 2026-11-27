@@ -11,8 +11,8 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.window.Dialog
 import io.github.joelkanyi.jenga.component.feedback.JengaDialogActions
+import io.github.joelkanyi.jenga.component.feedback.JengaPickerDialogTitle
 import io.github.joelkanyi.jenga.component.feedback.jengaDialogCard
-import io.github.joelkanyi.jenga.component.text.JengaText
 import io.github.joelkanyi.jenga.theme.JengaTheme
 import kotlinx.datetime.LocalTime
 
@@ -56,27 +56,68 @@ public fun JengaTimePickerDialog(
 ) {
     var time by remember { mutableStateOf(initialTime) }
     Dialog(onDismissRequest = onDismissRequest) {
-        Column(modifier = modifier.jengaDialogCard(), verticalArrangement = Arrangement.spacedBy(JengaTheme.spacing.md)) {
-            JengaText(title, style = JengaTheme.typography.titleMedium, color = JengaTheme.colors.textPrimary)
-            JengaTimeInput(
-                time = time,
-                onTimeChange = { time = it },
-                hourLabel = hourLabel,
-                minuteLabel = minuteLabel,
-                amLabel = amLabel,
-                pmLabel = pmLabel,
-                modifier = Modifier.fillMaxWidth(),
-                style = style,
-                is24Hour = is24Hour,
-                minuteStep = minuteStep,
-            )
-            JengaDialogActions(
-                confirmLabel = confirmLabel,
-                dismissLabel = dismissLabel,
-                confirmEnabled = true,
-                onConfirm = { onConfirm(time) },
-                onDismiss = onDismissRequest,
-            )
-        }
+        JengaTimePickerDialogSurface(
+            time = time,
+            onTimeChange = { time = it },
+            onDismissRequest = onDismissRequest,
+            onConfirm = onConfirm,
+            title = title,
+            confirmLabel = confirmLabel,
+            dismissLabel = dismissLabel,
+            hourLabel = hourLabel,
+            minuteLabel = minuteLabel,
+            amLabel = amLabel,
+            pmLabel = pmLabel,
+            modifier = modifier,
+            style = style,
+            is24Hour = is24Hour,
+            minuteStep = minuteStep,
+        )
+    }
+}
+
+/**
+ * The card inside [JengaTimePickerDialog], without the dialog window, so previews can
+ * render it. Stateless: the dialog holds the picked time outside its window.
+ */
+@Composable
+internal fun JengaTimePickerDialogSurface(
+    time: LocalTime,
+    onTimeChange: (LocalTime) -> Unit,
+    onDismissRequest: () -> Unit,
+    onConfirm: (LocalTime) -> Unit,
+    title: String,
+    confirmLabel: String,
+    dismissLabel: String,
+    hourLabel: String,
+    minuteLabel: String,
+    amLabel: String,
+    pmLabel: String,
+    style: JengaTimeInputStyle,
+    is24Hour: Boolean,
+    minuteStep: Int,
+    modifier: Modifier = Modifier,
+) {
+    Column(modifier = modifier.jengaDialogCard(), verticalArrangement = Arrangement.spacedBy(JengaTheme.spacing.md)) {
+        JengaPickerDialogTitle(title)
+        JengaTimeInput(
+            time = time,
+            onTimeChange = onTimeChange,
+            hourLabel = hourLabel,
+            minuteLabel = minuteLabel,
+            amLabel = amLabel,
+            pmLabel = pmLabel,
+            modifier = Modifier.fillMaxWidth(),
+            style = style,
+            is24Hour = is24Hour,
+            minuteStep = minuteStep,
+        )
+        JengaDialogActions(
+            confirmLabel = confirmLabel,
+            dismissLabel = dismissLabel,
+            confirmEnabled = true,
+            onConfirm = { onConfirm(time) },
+            onDismiss = onDismissRequest,
+        )
     }
 }

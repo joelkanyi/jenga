@@ -26,6 +26,91 @@ internal fun JengaNavigationBarRtlPreview() {
     JengaTheme { RtlPreview { NavBarShowcase() } }
 }
 
+@JengaBlockPreviews
+@Composable
+internal fun JengaNavigationBarBadgePreview() {
+    JengaTheme { NavBarBadgeShowcase() }
+}
+
+@Preview(name = "RTL", showBackground = true)
+@Composable
+internal fun JengaNavigationBarBadgeRtlPreview() {
+    JengaTheme { RtlPreview { NavBarBadgeShowcase() } }
+}
+
+@Composable
+private fun NavBarBadgeShowcase() {
+    Column(
+        modifier = Modifier.background(JengaTheme.colors.background),
+        verticalArrangement = Arrangement.spacedBy(JengaTheme.spacing.lg),
+    ) {
+        // Pill indicator: a badge on the selected item, then 12, 99+ and 0 (hidden) on unselected ones.
+        BadgeBar(indicator = JengaNavIndicator.Pill, selectedCount = 3)
+        // Classic indicator, same counts.
+        BadgeBar(indicator = JengaNavIndicator.None, selectedCount = 3)
+        // The same bar with no badge on the selected item, to compare icon and label positions.
+        BadgeBar(indicator = JengaNavIndicator.Pill, selectedCount = 0)
+        // Five items, 99+ on the last one: the badge stays inside the item, so the edge does not cut it.
+        JengaNavigationBar {
+            listOf(JengaIcons.Sun, JengaIcons.Search, JengaIcons.Calendar, JengaIcons.Ticket).forEachIndexed { index, itemIcon ->
+                JengaNavigationBarItem(
+                    selected = index == 0,
+                    onClick = {},
+                    icon = { JengaIcon(itemIcon, contentDescription = null) },
+                    label = "Item ${index + 1}",
+                    indicator = JengaNavIndicator.Pill,
+                )
+            }
+            JengaNavigationBarItem(
+                selected = false,
+                onClick = {},
+                icon = { JengaIcon(JengaIcons.Bell, contentDescription = null) },
+                label = "Alerts",
+                indicator = JengaNavIndicator.Pill,
+                badgeCount = 100,
+            )
+        }
+    }
+}
+
+@Composable
+private fun BadgeBar(indicator: JengaNavIndicator, selectedCount: Int) {
+    JengaNavigationBar {
+        JengaNavigationBarItem(
+            selected = true,
+            onClick = {},
+            icon = { JengaIcon(JengaIcons.Bell, contentDescription = null) },
+            label = "Alerts",
+            indicator = indicator,
+            badgeCount = selectedCount,
+        )
+        JengaNavigationBarItem(
+            selected = false,
+            onClick = {},
+            icon = { JengaIcon(JengaIcons.Ticket, contentDescription = null) },
+            label = "Tickets",
+            indicator = indicator,
+            badgeCount = 12,
+        )
+        JengaNavigationBarItem(
+            selected = false,
+            onClick = {},
+            icon = { JengaIcon(JengaIcons.Package, contentDescription = null) },
+            label = "Stock",
+            indicator = indicator,
+            badgeCount = 100,
+        )
+        JengaNavigationBarItem(
+            selected = false,
+            onClick = {},
+            icon = { JengaIcon(JengaIcons.Search, contentDescription = null) },
+            label = "Search",
+            indicator = indicator,
+            badgeCount = 0,
+        )
+    }
+}
+
 @Composable
 private fun NavBarShowcase() {
     Column(

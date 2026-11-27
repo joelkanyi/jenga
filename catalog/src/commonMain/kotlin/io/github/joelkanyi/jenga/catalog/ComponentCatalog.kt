@@ -1,6 +1,7 @@
 package io.github.joelkanyi.jenga.catalog
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
@@ -8,6 +9,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -20,11 +22,13 @@ import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.state.ToggleableState
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
@@ -34,10 +38,14 @@ import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import io.github.joelkanyi.jenga.component.action.JengaAction
 import io.github.joelkanyi.jenga.component.avatar.JengaAvatar
+import io.github.joelkanyi.jenga.component.avatar.JengaAvatarColors
+import io.github.joelkanyi.jenga.component.avatar.JengaAvatarDefaults
 import io.github.joelkanyi.jenga.component.avatar.JengaAvatarSize
 import io.github.joelkanyi.jenga.component.badge.JengaBadge
 import io.github.joelkanyi.jenga.component.badge.JengaBadgeTone
 import io.github.joelkanyi.jenga.component.banner.JengaBanner
+import io.github.joelkanyi.jenga.component.banner.JengaBannerActionPosition
+import io.github.joelkanyi.jenga.component.banner.JengaBannerEmphasis
 import io.github.joelkanyi.jenga.component.banner.JengaBannerTone
 import io.github.joelkanyi.jenga.component.banner.JengaInfoBar
 import io.github.joelkanyi.jenga.component.button.JengaButton
@@ -51,6 +59,7 @@ import io.github.joelkanyi.jenga.component.calendar.JengaCalendar
 import io.github.joelkanyi.jenga.component.calendar.JengaCalendarDefaults
 import io.github.joelkanyi.jenga.component.calendar.JengaDatePicker
 import io.github.joelkanyi.jenga.component.calendar.JengaDatePickerDialog
+import io.github.joelkanyi.jenga.component.calendar.JengaWeeklyCalendar
 import io.github.joelkanyi.jenga.component.calendar.rememberJengaCalendarState
 import io.github.joelkanyi.jenga.component.camera.JengaCaptureFrame
 import io.github.joelkanyi.jenga.component.camera.JengaCaptureShape
@@ -59,7 +68,11 @@ import io.github.joelkanyi.jenga.component.card.JengaCard
 import io.github.joelkanyi.jenga.component.card.JengaCardFooter
 import io.github.joelkanyi.jenga.component.card.JengaCardVariant
 import io.github.joelkanyi.jenga.component.chart.JengaBarChart
+import io.github.joelkanyi.jenga.component.chart.JengaBarChartDefaults
 import io.github.joelkanyi.jenga.component.chart.JengaBarChartEntry
+import io.github.joelkanyi.jenga.component.chart.JengaChartTarget
+import io.github.joelkanyi.jenga.component.chart.JengaLineChart
+import io.github.joelkanyi.jenga.component.chart.JengaLineChartEntry
 import io.github.joelkanyi.jenga.component.chip.JengaChip
 import io.github.joelkanyi.jenga.component.divider.JengaDivider
 import io.github.joelkanyi.jenga.component.expandable.JengaExpandableRow
@@ -67,6 +80,7 @@ import io.github.joelkanyi.jenga.component.fab.JengaExtendedFab
 import io.github.joelkanyi.jenga.component.fab.JengaFab
 import io.github.joelkanyi.jenga.component.feedback.JengaBottomSheet
 import io.github.joelkanyi.jenga.component.feedback.JengaDialog
+import io.github.joelkanyi.jenga.component.feedback.JengaDialogActionsLayout
 import io.github.joelkanyi.jenga.component.feedback.JengaListSheet
 import io.github.joelkanyi.jenga.component.feedback.JengaSideSheet
 import io.github.joelkanyi.jenga.component.feedback.JengaSnackbar
@@ -76,6 +90,7 @@ import io.github.joelkanyi.jenga.component.feedback.rememberJengaSheetState
 import io.github.joelkanyi.jenga.component.feedback.rememberJengaSnackbarHostState
 import io.github.joelkanyi.jenga.component.icon.JengaIcon
 import io.github.joelkanyi.jenga.component.icon.JengaIconTile
+import io.github.joelkanyi.jenga.component.icon.JengaIconTileSize
 import io.github.joelkanyi.jenga.component.icon.JengaIcons
 import io.github.joelkanyi.jenga.component.image.JengaImage
 import io.github.joelkanyi.jenga.component.layout.JengaBox
@@ -86,18 +101,24 @@ import io.github.joelkanyi.jenga.component.layout.JengaSection
 import io.github.joelkanyi.jenga.component.layout.JengaSpacer
 import io.github.joelkanyi.jenga.component.layout.JengaStack
 import io.github.joelkanyi.jenga.component.layout.JengaWrap
+import io.github.joelkanyi.jenga.component.link.JengaInlineLink
 import io.github.joelkanyi.jenga.component.link.JengaLink
+import io.github.joelkanyi.jenga.component.link.JengaLinkDefaults
+import io.github.joelkanyi.jenga.component.link.JengaTextWithLinks
+import io.github.joelkanyi.jenga.component.link.appendJengaLink
 import io.github.joelkanyi.jenga.component.list.JengaCheckboxListItem
 import io.github.joelkanyi.jenga.component.list.JengaKeyValueEmphasis
 import io.github.joelkanyi.jenga.component.list.JengaKeyValueRow
 import io.github.joelkanyi.jenga.component.list.JengaListItem
 import io.github.joelkanyi.jenga.component.list.JengaRadioListItem
 import io.github.joelkanyi.jenga.component.media.JengaImageViewer
+import io.github.joelkanyi.jenga.component.media.JengaImageViewerCloseButtonPosition
 import io.github.joelkanyi.jenga.component.media.JengaMediaHero
 import io.github.joelkanyi.jenga.component.menu.JengaDropdownMenu
 import io.github.joelkanyi.jenga.component.menu.JengaDropdownMenuDivider
 import io.github.joelkanyi.jenga.component.menu.JengaDropdownMenuItem
 import io.github.joelkanyi.jenga.component.menu.JengaDropdownMenuItemTone
+import io.github.joelkanyi.jenga.component.navigation.JengaNavIndicator
 import io.github.joelkanyi.jenga.component.navigation.JengaNavigationBar
 import io.github.joelkanyi.jenga.component.navigation.JengaNavigationBarItem
 import io.github.joelkanyi.jenga.component.navigation.JengaNavigationRailItem
@@ -142,9 +163,12 @@ import io.github.joelkanyi.jenga.component.stat.JengaStatTile
 import io.github.joelkanyi.jenga.component.stat.JengaStatTone
 import io.github.joelkanyi.jenga.component.state.JengaEmptyState
 import io.github.joelkanyi.jenga.component.state.JengaErrorState
+import io.github.joelkanyi.jenga.component.state.JengaStateLayout
 import io.github.joelkanyi.jenga.component.status.JengaStatusPill
 import io.github.joelkanyi.jenga.component.stepindicator.JengaStep
 import io.github.joelkanyi.jenga.component.stepindicator.JengaStepIndicator
+import io.github.joelkanyi.jenga.component.stepindicator.JengaStepIndicatorArrangement
+import io.github.joelkanyi.jenga.component.stepindicator.JengaStepIndicatorVariant
 import io.github.joelkanyi.jenga.component.stepindicator.JengaStepState
 import io.github.joelkanyi.jenga.component.stepper.JengaStepper
 import io.github.joelkanyi.jenga.component.swipe.JengaSwipeToDismiss
@@ -161,6 +185,7 @@ import io.github.joelkanyi.jenga.component.timeline.JengaTimelineMarkerStyle
 import io.github.joelkanyi.jenga.component.timeline.JengaTimelinePosition
 import io.github.joelkanyi.jenga.component.timeline.JengaTimelineState
 import io.github.joelkanyi.jenga.component.tooltip.JengaTooltip
+import io.github.joelkanyi.jenga.component.tooltip.JengaTooltipBox
 import io.github.joelkanyi.jenga.component.verdict.JengaVerdictBar
 import io.github.joelkanyi.jenga.component.verdict.JengaVerdictSublines
 import io.github.joelkanyi.jenga.component.verdict.JengaVerdictTone
@@ -171,10 +196,14 @@ import io.github.joelkanyi.jenga.theme.JengaComponentStyles
 import io.github.joelkanyi.jenga.theme.JengaTheme
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import kotlinx.datetime.DateTimeUnit
+import kotlinx.datetime.DayOfWeek
 import kotlinx.datetime.LocalDate
 import kotlinx.datetime.LocalTime
-import kotlinx.datetime.Month
 import kotlinx.datetime.YearMonth
+import kotlinx.datetime.daysUntil
+import kotlinx.datetime.minus
+import kotlinx.datetime.plus
 import kotlin.math.roundToInt
 import kotlin.time.Duration.Companion.minutes
 import kotlin.time.Duration.Companion.seconds
@@ -493,6 +522,96 @@ fun componentEntries(): List<CatalogEntry> = listOf(
                                 text = "Unavailable",
                                 onClick = {},
                                 enabled = false,
+                            )
+                        },
+                    )
+                },
+            )
+        },
+    ),
+    CatalogEntry(
+        name = "Inline link",
+        group = "Actions",
+        description = "A link inside a sentence: underlined, wraps with the text.",
+        keywords = "link inline text sentence terms hyperlink annotated underline",
+        code = """
+            JengaTextWithLinks(
+                text = "By continuing, the customer accepts the terms of the agreement and the privacy policy.",
+                links = listOf(
+                    JengaInlineLink(
+                        text = "terms of the agreement",
+                        onClick = {},
+                    ),
+                    JengaInlineLink(
+                        text = "privacy policy",
+                        onClick = {},
+                    ),
+                ),
+                color = JengaTheme.colors.textSecondary,
+            )
+
+            // Or build the text yourself. The string is built once, so read
+            // the callback through rememberUpdatedState.
+            @Composable
+            fun SupportLine(
+                onCallSupport: () -> Unit,
+            ) {
+                val linkStyles = JengaLinkDefaults.inlineStyles()
+                val currentOnCallSupport by rememberUpdatedState(onCallSupport)
+                JengaText(
+                    text = remember(linkStyles) {
+                        buildAnnotatedString {
+                            append("Need help? ")
+                            appendJengaLink(
+                                text = "Call support",
+                                styles = linkStyles,
+                                onClick = { currentOnCallSupport() },
+                            )
+                            append(".")
+                        }
+                    },
+                )
+            }
+        """.trimIndent(),
+        demo = {
+            ActionFeedback(
+                content = { confirm ->
+                    JengaStack(
+                        space = JengaTheme.spacing.md,
+                        content = {
+                            JengaTextWithLinks(
+                                text = "By continuing, the customer accepts the terms of the agreement " +
+                                    "and the privacy policy.",
+                                links = listOf(
+                                    JengaInlineLink(
+                                        text = "terms of the agreement",
+                                        onClick = { confirm("Opening the terms") },
+                                    ),
+                                    JengaInlineLink(
+                                        text = "privacy policy",
+                                        onClick = { confirm("Opening the privacy policy") },
+                                    ),
+                                ),
+                                color = JengaTheme.colors.textSecondary,
+                            )
+                            val linkStyles = JengaLinkDefaults.inlineStyles()
+                            val currentConfirm by rememberUpdatedState(confirm)
+                            JengaText(
+                                text = remember(linkStyles) {
+                                    buildAnnotatedString {
+                                        append(
+                                            text = "Need help? ",
+                                        )
+                                        appendJengaLink(
+                                            text = "Call support",
+                                            styles = linkStyles,
+                                            onClick = { currentConfirm("Calling support") },
+                                        )
+                                        append(
+                                            text = ".",
+                                        )
+                                    }
+                                },
                             )
                         },
                     )
@@ -958,8 +1077,8 @@ fun componentEntries(): List<CatalogEntry> = listOf(
     CatalogEntry(
         name = "Checkbox",
         group = "Selection",
-        description = "A box for a single on or off choice.",
-        keywords = "check tick",
+        description = "A box for a single on or off choice, with a mixed state for \"Select all\".",
+        keywords = "check tick mixed indeterminate select all",
         code = """
             var checked by remember {
                 mutableStateOf(
@@ -970,6 +1089,22 @@ fun componentEntries(): List<CatalogEntry> = listOf(
                 checked = checked,
                 onCheckedChange = { checked = it },
             )
+            // Three states: the caller picks the next one.
+            var state by remember {
+                mutableStateOf(
+                    value = ToggleableState.Indeterminate,
+                )
+            }
+            JengaCheckbox(
+                state = state,
+                onClick = {
+                    state = if (state == ToggleableState.On) {
+                        ToggleableState.Off
+                    } else {
+                        ToggleableState.On
+                    }
+                },
+            )
         """.trimIndent(),
         demo = {
             var checked by remember {
@@ -977,9 +1112,29 @@ fun componentEntries(): List<CatalogEntry> = listOf(
                     value = true,
                 )
             }
-            JengaCheckbox(
-                checked = checked,
-                onCheckedChange = { checked = it },
+            var state by remember {
+                mutableStateOf(
+                    value = ToggleableState.Indeterminate,
+                )
+            }
+            JengaInline(
+                space = JengaTheme.spacing.sm,
+                content = {
+                    JengaCheckbox(
+                        checked = checked,
+                        onCheckedChange = { checked = it },
+                    )
+                    JengaCheckbox(
+                        state = state,
+                        onClick = {
+                            state = if (state == ToggleableState.On) {
+                                ToggleableState.Off
+                            } else {
+                                ToggleableState.On
+                            }
+                        },
+                    )
+                },
             )
         },
     ),
@@ -1093,25 +1248,48 @@ fun componentEntries(): List<CatalogEntry> = listOf(
     CatalogEntry(
         name = "Checkbox list item",
         group = "Selection",
-        description = "A list row with a checkbox, for picking several options.",
-        keywords = "checkbox multi select list row",
+        description = "A list row with a checkbox, for picking several options; a \"Select all\" row shows the mixed state.",
+        keywords = "checkbox multi select list row mixed indeterminate select all",
         code = """
-            var checked by remember {
+            var battery by remember {
                 mutableStateOf(
                     value = true,
                 )
             }
-            JengaCheckboxListItem(
-                headline = "Battery",
-                checked = checked,
-                onCheckedChange = { checked = it },
-            )
+            var panel by remember {
+                mutableStateOf(
+                    value = false,
+                )
+            }
             JengaCheckboxListItem(
                 headline = "Inverter",
                 checked = false,
                 onCheckedChange = {},
                 supporting = "Saving",
                 loading = true,
+            )
+            JengaCheckboxListItem(
+                headline = "Select all",
+                state = when {
+                    battery && panel -> ToggleableState.On
+                    battery || panel -> ToggleableState.Indeterminate
+                    else -> ToggleableState.Off
+                },
+                onClick = {
+                    val all = !(battery && panel)
+                    battery = all
+                    panel = all
+                },
+            )
+            JengaCheckboxListItem(
+                headline = "Battery",
+                checked = battery,
+                onCheckedChange = { battery = it },
+            )
+            JengaCheckboxListItem(
+                headline = "Panel",
+                checked = panel,
+                onCheckedChange = { panel = it },
             )
         """.trimIndent(),
         demo = {
@@ -1129,6 +1307,26 @@ fun componentEntries(): List<CatalogEntry> = listOf(
                 space = JengaTheme.spacing.none,
                 content = {
                     JengaCheckboxListItem(
+                        headline = "Inverter",
+                        checked = false,
+                        onCheckedChange = {},
+                        supporting = "Saving",
+                        loading = true,
+                    )
+                    JengaCheckboxListItem(
+                        headline = "Select all",
+                        state = when {
+                            battery && panel -> ToggleableState.On
+                            battery || panel -> ToggleableState.Indeterminate
+                            else -> ToggleableState.Off
+                        },
+                        onClick = {
+                            val all = !(battery && panel)
+                            battery = all
+                            panel = all
+                        },
+                    )
+                    JengaCheckboxListItem(
                         headline = "Battery",
                         checked = battery,
                         onCheckedChange = { battery = it },
@@ -1137,13 +1335,6 @@ fun componentEntries(): List<CatalogEntry> = listOf(
                         headline = "Panel",
                         checked = panel,
                         onCheckedChange = { panel = it },
-                    )
-                    JengaCheckboxListItem(
-                        headline = "Inverter",
-                        checked = false,
-                        onCheckedChange = {},
-                        supporting = "Saving",
-                        loading = true,
                     )
                 },
             )
@@ -1443,8 +1634,8 @@ fun componentEntries(): List<CatalogEntry> = listOf(
     CatalogEntry(
         name = "Banner",
         group = "Feedback",
-        description = "An inline, tinted message tied to a status.",
-        keywords = "inline message info error",
+        description = "An inline, tinted message tied to a status, with an optional action and close, and a prominent look for the result of a check.",
+        keywords = "inline message info error alert close dismiss prominent result verdict check",
         code = """
             JengaBanner(
                 message = "Working offline; scans will sync later.",
@@ -1454,18 +1645,81 @@ fun componentEntries(): List<CatalogEntry> = listOf(
                 message = "Already scanned.",
                 tone = JengaBannerTone.Error,
             )
+            var visible by remember {
+                mutableStateOf(
+                    value = true,
+                )
+            }
+            if (visible) {
+                JengaBanner(
+                    message = "KES 3,000 received.",
+                    tone = JengaBannerTone.Success,
+                    title = "Deposit confirmed",
+                    action = {
+                        JengaLink(
+                            text = "View receipt",
+                            onClick = {},
+                        )
+                    },
+                    actionPosition = JengaBannerActionPosition.Below,
+                    onDismiss = { visible = false },
+                    dismissContentDescription = "Dismiss",
+                )
+            }
+            JengaBanner(
+                message = "All products are available on a payment plan.",
+                tone = JengaBannerTone.Success,
+                title = "Credit approved",
+                emphasis = JengaBannerEmphasis.Prominent,
+            )
         """.trimIndent(),
         demo = {
-            JengaStack(
-                space = JengaTheme.spacing.sm,
-                content = {
-                    JengaBanner(
-                        message = "Working offline; scans will sync later.",
-                        tone = JengaBannerTone.Info,
-                    )
-                    JengaBanner(
-                        message = "Already scanned.",
-                        tone = JengaBannerTone.Error,
+            var visible by remember {
+                mutableStateOf(
+                    value = true,
+                )
+            }
+            ActionFeedback(
+                content = { confirm ->
+                    JengaStack(
+                        space = JengaTheme.spacing.sm,
+                        content = {
+                            JengaBanner(
+                                message = "Working offline; scans will sync later.",
+                                tone = JengaBannerTone.Info,
+                            )
+                            JengaBanner(
+                                message = "Already scanned.",
+                                tone = JengaBannerTone.Error,
+                            )
+                            if (visible) {
+                                JengaBanner(
+                                    message = "KES 3,000 received.",
+                                    tone = JengaBannerTone.Success,
+                                    title = "Deposit confirmed",
+                                    action = {
+                                        JengaLink(
+                                            text = "View receipt",
+                                            onClick = { confirm("Opening receipt") },
+                                        )
+                                    },
+                                    actionPosition = JengaBannerActionPosition.Below,
+                                    onDismiss = { visible = false },
+                                    dismissContentDescription = "Dismiss",
+                                )
+                            } else {
+                                JengaLink(
+                                    text = "Show the banner again",
+                                    onClick = { visible = true },
+                                )
+                            }
+                            JengaBanner(
+                                message = "All products are available on a payment plan.",
+                                tone = JengaBannerTone.Success,
+                                title = "Credit approved",
+                                emphasis = JengaBannerEmphasis.Prominent,
+                            )
+                        },
                     )
                 },
             )
@@ -1544,6 +1798,51 @@ fun componentEntries(): List<CatalogEntry> = listOf(
                         },
                         actionLabel = "Retry",
                         onAction = { confirm("Retrying") },
+                    )
+                },
+            )
+        },
+    ),
+    CatalogEntry(
+        name = "Full-screen state",
+        group = "Feedback",
+        description = "An empty or error state that fills the screen, with full-width actions pinned at the bottom and an optional second action.",
+        keywords = "error empty full screen fill no connection offline session expired update required support second action",
+        code = """
+            JengaErrorState(
+                title = "No internet connection",
+                description = "Check mobile data or Wi-Fi and try again.",
+                icon = {
+                    JengaIcon(
+                        imageVector = JengaIcons.CloudOff,
+                        contentDescription = null,
+                    )
+                },
+                actionLabel = "Try again",
+                onAction = {},
+                secondaryActionLabel = "Contact support",
+                onSecondaryAction = {},
+                layout = JengaStateLayout.FillScreen,
+            )
+        """.trimIndent(),
+        demo = {
+            ActionFeedback(
+                content = { confirm ->
+                    JengaErrorState(
+                        title = "No internet connection",
+                        modifier = Modifier.height(420.dp),
+                        description = "Check mobile data or Wi-Fi and try again.",
+                        icon = {
+                            JengaIcon(
+                                imageVector = JengaIcons.CloudOff,
+                                contentDescription = null,
+                            )
+                        },
+                        actionLabel = "Try again",
+                        onAction = { confirm("Retrying") },
+                        secondaryActionLabel = "Contact support",
+                        onSecondaryAction = { confirm("Opening support") },
+                        layout = JengaStateLayout.FillScreen,
                     )
                 },
             )
@@ -1642,14 +1941,16 @@ fun componentEntries(): List<CatalogEntry> = listOf(
     CatalogEntry(
         name = "Snackbar",
         group = "Feedback",
-        description = "A brief message with an optional action.",
-        keywords = "toast action undo",
+        description = "A brief message with an optional action and close.",
+        keywords = "toast action undo close dismiss",
         code = """
             JengaSnackbar(
                 message = "Saved offline",
                 tone = JengaSnackbarTone.Neutral,
                 actionLabel = "Undo",
                 onAction = {},
+                onDismiss = {},
+                dismissContentDescription = "Dismiss",
             )
         """.trimIndent(),
         demo = {
@@ -1664,6 +1965,8 @@ fun componentEntries(): List<CatalogEntry> = listOf(
                     tone = JengaSnackbarTone.Neutral,
                     actionLabel = "Undo",
                     onAction = { visible = false },
+                    onDismiss = { visible = false },
+                    dismissContentDescription = "Dismiss",
                 )
             } else {
                 JengaLink(
@@ -1676,16 +1979,123 @@ fun componentEntries(): List<CatalogEntry> = listOf(
     CatalogEntry(
         name = "Tooltip",
         group = "Feedback",
-        description = "A small label that explains an element.",
-        keywords = "hint label",
+        description = "A small label that explains an element. JengaTooltipBox shows it next to the element, pointing at it and kept on screen.",
+        keywords = "hint label pointer arrow caret info tip anchor popup",
+        stage = CatalogStage.Overlay,
         code = """
+            var expanded by remember {
+                mutableStateOf(
+                    value = false,
+                )
+            }
+            JengaInline(
+                space = JengaTheme.spacing.none,
+                content = {
+                    JengaText(
+                        text = "Deposit",
+                        style = JengaTheme.typography.label,
+                    )
+                    JengaTooltipBox(
+                        text = "First payment before the device is unlocked. Usually KES 3,000 for the iMax 3000.",
+                        content = {
+                            JengaIcon(
+                                imageVector = JengaTheme.icons.info,
+                                contentDescription = "What is the deposit?",
+                                size = JengaTheme.sizing.iconSmall,
+                            )
+                        },
+                    )
+                },
+            )
+            JengaInline(
+                modifier = Modifier.fillMaxWidth(),
+                space = JengaTheme.spacing.none,
+                content = {
+                    JengaText(
+                        text = "Last synced 14:02",
+                        modifier = Modifier.weight(1f),
+                    )
+                    JengaTooltipBox(
+                        text = "Sales made offline upload when the device is back online.",
+                        expanded = expanded,
+                        onDismissRequest = { expanded = false },
+                        content = {
+                            JengaIconButton(
+                                onClick = { expanded = !expanded },
+                                content = {
+                                    JengaIcon(
+                                        imageVector = JengaTheme.icons.info,
+                                        contentDescription = "About syncing",
+                                    )
+                                },
+                            )
+                        },
+                    )
+                },
+            )
             JengaTooltip(
                 text = "Re-admit this attendee",
             )
         """.trimIndent(),
-        demo = {
-            JengaTooltip(
-                text = "Re-admit this attendee",
+        demo = { startOpen ->
+            var expanded by remember {
+                mutableStateOf(
+                    value = startOpen,
+                )
+            }
+            JengaStack(
+                modifier = Modifier.fillMaxWidth(),
+                space = JengaTheme.spacing.md,
+                content = {
+                    JengaInline(
+                        space = JengaTheme.spacing.none,
+                        content = {
+                            JengaText(
+                                text = "Deposit",
+                                style = JengaTheme.typography.label,
+                            )
+                            JengaTooltipBox(
+                                text = "First payment before the device is unlocked. Usually KES 3,000 for the iMax 3000.",
+                                content = {
+                                    JengaIcon(
+                                        imageVector = JengaTheme.icons.info,
+                                        contentDescription = "What is the deposit?",
+                                        size = JengaTheme.sizing.iconSmall,
+                                    )
+                                },
+                            )
+                        },
+                    )
+                    JengaInline(
+                        modifier = Modifier.fillMaxWidth(),
+                        space = JengaTheme.spacing.none,
+                        content = {
+                            JengaText(
+                                text = "Last synced 14:02",
+                                modifier = Modifier.weight(1f),
+                            )
+                            JengaTooltipBox(
+                                text = "Sales made offline upload when the device is back online.",
+                                expanded = expanded,
+                                onDismissRequest = { expanded = false },
+                                content = {
+                                    JengaIconButton(
+                                        onClick = { expanded = !expanded },
+                                        content = {
+                                            JengaIcon(
+                                                imageVector = JengaTheme.icons.info,
+                                                contentDescription = "About syncing",
+                                            )
+                                        },
+                                    )
+                                },
+                            )
+                        },
+                    )
+                    JengaTooltip(
+                        text = "Re-admit this attendee",
+                    )
+                },
             )
         },
     ),
@@ -1754,6 +2164,99 @@ fun componentEntries(): List<CatalogEntry> = listOf(
                     dismissButton = {
                         JengaButton(
                             text = "Cancel",
+                            onClick = { open = false },
+                            variant = JengaButtonVariant.Ghost,
+                        )
+                    },
+                )
+            }
+        },
+    ),
+    CatalogEntry(
+        name = "Dialog with icon and stacked actions",
+        group = "Feedback",
+        description = "A confirmation with an icon on top and full-width actions: the action first, the way out below.",
+        keywords = "alert modal confirm destructive icon stacked full width",
+        stage = CatalogStage.Overlay,
+        code = """
+            var open by remember {
+                mutableStateOf(
+                    value = false,
+                )
+            }
+            JengaButton(
+                text = "Confirmation",
+                onClick = { open = true },
+                variant = JengaButtonVariant.Outline,
+            )
+            if (open) {
+                JengaDialog(
+                    onDismissRequest = { open = false },
+                    icon = {
+                        JengaIconTile(
+                            icon = JengaIcons.Warning,
+                            contentDescription = null,
+                            tone = JengaBadgeTone.Error,
+                            size = JengaIconTileSize.Large,
+                            shape = JengaTheme.shapes.pill,
+                        )
+                    },
+                    title = "Cancel this sale?",
+                    text = "The sale and its documents will be removed. This cannot be undone.",
+                    actionsLayout = JengaDialogActionsLayout.Stacked,
+                    confirmButton = {
+                        JengaButton(
+                            text = "Cancel sale",
+                            onClick = { open = false },
+                            variant = JengaButtonVariant.Danger,
+                        )
+                    },
+                    dismissButton = {
+                        JengaButton(
+                            text = "Keep sale",
+                            onClick = { open = false },
+                            variant = JengaButtonVariant.Ghost,
+                        )
+                    },
+                )
+            }
+        """.trimIndent(),
+        demo = { startOpen ->
+            var open by remember {
+                mutableStateOf(
+                    value = startOpen,
+                )
+            }
+            JengaButton(
+                text = "Confirmation",
+                onClick = { open = true },
+                variant = JengaButtonVariant.Outline,
+            )
+            if (open) {
+                JengaDialog(
+                    onDismissRequest = { open = false },
+                    icon = {
+                        JengaIconTile(
+                            icon = JengaIcons.Warning,
+                            contentDescription = null,
+                            tone = JengaBadgeTone.Error,
+                            size = JengaIconTileSize.Large,
+                            shape = JengaTheme.shapes.pill,
+                        )
+                    },
+                    title = "Cancel this sale?",
+                    text = "The sale and its documents will be removed. This cannot be undone.",
+                    actionsLayout = JengaDialogActionsLayout.Stacked,
+                    confirmButton = {
+                        JengaButton(
+                            text = "Cancel sale",
+                            onClick = { open = false },
+                            variant = JengaButtonVariant.Danger,
+                        )
+                    },
+                    dismissButton = {
+                        JengaButton(
+                            text = "Keep sale",
                             onClick = { open = false },
                             variant = JengaButtonVariant.Ghost,
                         )
@@ -2230,6 +2733,114 @@ fun componentEntries(): List<CatalogEntry> = listOf(
         },
     ),
     CatalogEntry(
+        name = "Navigation bar with a count",
+        group = "Navigation",
+        description = "A count badge at the top end of an item's icon; hidden at 0, 99+ above 99.",
+        keywords = "bottom nav badge count unread notifications",
+        code = """
+            var selected by remember {
+                mutableIntStateOf(
+                    value = 0,
+                )
+            }
+            val unread = 3
+            JengaNavigationBar(
+                content = {
+                    JengaNavigationBarItem(
+                        selected = selected == 0,
+                        onClick = { selected = 0 },
+                        icon = {
+                            JengaIcon(
+                                imageVector = JengaIcons.Search,
+                                contentDescription = null,
+                            )
+                        },
+                        label = "Events",
+                        indicator = JengaNavIndicator.Pill,
+                    )
+                    JengaNavigationBarItem(
+                        selected = selected == 1,
+                        onClick = { selected = 1 },
+                        icon = {
+                            JengaIcon(
+                                imageVector = JengaIcons.Bell,
+                                contentDescription = null,
+                            )
+                        },
+                        label = "Notifications",
+                        indicator = JengaNavIndicator.Pill,
+                        badgeCount = unread,
+                        badgeContentDescription = "${'$'}unread new",
+                    )
+                    JengaNavigationBarItem(
+                        selected = selected == 2,
+                        onClick = { selected = 2 },
+                        icon = {
+                            JengaIcon(
+                                imageVector = JengaIcons.Ticket,
+                                contentDescription = null,
+                            )
+                        },
+                        label = "Tickets",
+                        indicator = JengaNavIndicator.Pill,
+                        badgeCount = 120,
+                    )
+                },
+            )
+        """.trimIndent(),
+        demo = {
+            var selected by remember {
+                mutableIntStateOf(
+                    value = 0,
+                )
+            }
+            val unread = 3
+            JengaNavigationBar(
+                content = {
+                    JengaNavigationBarItem(
+                        selected = selected == 0,
+                        onClick = { selected = 0 },
+                        icon = {
+                            JengaIcon(
+                                imageVector = JengaIcons.Search,
+                                contentDescription = null,
+                            )
+                        },
+                        label = "Events",
+                        indicator = JengaNavIndicator.Pill,
+                    )
+                    JengaNavigationBarItem(
+                        selected = selected == 1,
+                        onClick = { selected = 1 },
+                        icon = {
+                            JengaIcon(
+                                imageVector = JengaIcons.Bell,
+                                contentDescription = null,
+                            )
+                        },
+                        label = "Notifications",
+                        indicator = JengaNavIndicator.Pill,
+                        badgeCount = unread,
+                        badgeContentDescription = "$unread new",
+                    )
+                    JengaNavigationBarItem(
+                        selected = selected == 2,
+                        onClick = { selected = 2 },
+                        icon = {
+                            JengaIcon(
+                                imageVector = JengaIcons.Ticket,
+                                contentDescription = null,
+                            )
+                        },
+                        label = "Tickets",
+                        indicator = JengaNavIndicator.Pill,
+                        badgeCount = 120,
+                    )
+                },
+            )
+        },
+    ),
+    CatalogEntry(
         name = "Bottom bar",
         group = "Navigation",
         description = "A footer row of actions for the current screen.",
@@ -2286,6 +2897,96 @@ fun componentEntries(): List<CatalogEntry> = listOf(
                                     JengaIcon(
                                         imageVector = JengaIcons.History,
                                         contentDescription = "History",
+                                    )
+                                },
+                            )
+                        },
+                    )
+                },
+            )
+        },
+    ),
+    CatalogEntry(
+        name = "Bottom bar actions",
+        group = "Navigation",
+        description = "Two actions side by side when both labels fit on one line, otherwise stacked with the primary on top. Shown at most 360dp wide, so the long labels stack.",
+        keywords = "action bar footer adaptive stack primary secondary",
+        code = """
+            JengaStack(
+                modifier = Modifier.widthIn(
+                    max = 360.dp,
+                ),
+                space = JengaTheme.spacing.md,
+                content = {
+                    JengaBottomBar(
+                        primaryAction = {
+                            JengaButton(
+                                text = "Save",
+                                onClick = {},
+                            )
+                        },
+                        secondaryAction = {
+                            JengaButton(
+                                text = "Cancel",
+                                onClick = {},
+                                variant = JengaButtonVariant.Neutral,
+                            )
+                        },
+                    )
+                    JengaBottomBar(
+                        primaryAction = {
+                            JengaButton(
+                                text = "Sajili mauzo na utume ujumbe",
+                                onClick = {},
+                            )
+                        },
+                        secondaryAction = {
+                            JengaButton(
+                                text = "Hifadhi kama rasimu kwa sasa",
+                                onClick = {},
+                                variant = JengaButtonVariant.Neutral,
+                            )
+                        },
+                    )
+                },
+            )
+        """.trimIndent(),
+        demo = {
+            ActionFeedback(
+                content = { confirm ->
+                    JengaStack(
+                        modifier = Modifier.widthIn(
+                            max = 360.dp,
+                        ),
+                        space = JengaTheme.spacing.md,
+                        content = {
+                            JengaBottomBar(
+                                primaryAction = {
+                                    JengaButton(
+                                        text = "Save",
+                                        onClick = { confirm("Saved") },
+                                    )
+                                },
+                                secondaryAction = {
+                                    JengaButton(
+                                        text = "Cancel",
+                                        onClick = { confirm("Cancelled") },
+                                        variant = JengaButtonVariant.Neutral,
+                                    )
+                                },
+                            )
+                            JengaBottomBar(
+                                primaryAction = {
+                                    JengaButton(
+                                        text = "Sajili mauzo na utume ujumbe",
+                                        onClick = { confirm("Mauzo yamesajiliwa") },
+                                    )
+                                },
+                                secondaryAction = {
+                                    JengaButton(
+                                        text = "Hifadhi kama rasimu kwa sasa",
+                                        onClick = { confirm("Rasimu imehifadhiwa") },
+                                        variant = JengaButtonVariant.Neutral,
                                     )
                                 },
                             )
@@ -2434,8 +3135,8 @@ fun componentEntries(): List<CatalogEntry> = listOf(
     CatalogEntry(
         name = "Avatar",
         group = "Data display",
-        description = "Initials or an image, in three sizes or a custom diameter.",
-        keywords = "initials profile picture diameter",
+        description = "Initials or an image, in three sizes or a custom diameter, in brand, neutral or custom colors.",
+        keywords = "initials profile picture diameter colors neutral grey",
         code = """
             JengaAvatar(
                 name = "Joel Kanyi",
@@ -2453,25 +3154,108 @@ fun componentEntries(): List<CatalogEntry> = listOf(
                 diameter = 72.dp,
                 textStyle = JengaTheme.typography.headingSmall,
             )
-        """.trimIndent(),
-        demo = {
+            // Neutral avatars sit on a surface, such as a list row or card.
             JengaInline(
+                modifier = Modifier
+                    .clip(
+                        shape = JengaTheme.shapes.md,
+                    )
+                    .background(
+                        color = JengaTheme.colors.surface,
+                    )
+                    .border(
+                        width = 1.dp,
+                        color = JengaTheme.colors.border,
+                        shape = JengaTheme.shapes.md,
+                    )
+                    .padding(
+                        all = JengaTheme.spacing.md,
+                    ),
                 content = {
                     JengaAvatar(
-                        name = "Joel Kanyi",
-                        size = JengaAvatarSize.Small,
+                        name = "Jane Wanjiru",
+                        colors = JengaAvatarDefaults.neutralColors(),
                     )
                     JengaAvatar(
-                        name = "Ada Lovelace",
+                        colors = JengaAvatarDefaults.neutralColors(),
+                        content = {
+                            JengaIcon(
+                                imageVector = JengaIcons.User,
+                                contentDescription = "No name yet",
+                            )
+                        },
                     )
                     JengaAvatar(
-                        name = "Grace Hopper",
-                        size = JengaAvatarSize.Large,
+                        name = "Peter Kamau",
+                        colors = JengaAvatarColors(
+                            container = JengaTheme.colors.infoContainer,
+                            content = JengaTheme.colors.onInfoContainer,
+                        ),
                     )
-                    JengaAvatar(
-                        name = "Alan Turing",
-                        diameter = 72.dp,
-                        textStyle = JengaTheme.typography.headingSmall,
+                },
+            )
+        """.trimIndent(),
+        demo = {
+            JengaStack(
+                content = {
+                    JengaInline(
+                        content = {
+                            JengaAvatar(
+                                name = "Joel Kanyi",
+                                size = JengaAvatarSize.Small,
+                            )
+                            JengaAvatar(
+                                name = "Ada Lovelace",
+                            )
+                            JengaAvatar(
+                                name = "Grace Hopper",
+                                size = JengaAvatarSize.Large,
+                            )
+                            JengaAvatar(
+                                name = "Alan Turing",
+                                diameter = 72.dp,
+                                textStyle = JengaTheme.typography.headingSmall,
+                            )
+                        },
+                    )
+                    JengaInline(
+                        modifier = Modifier
+                            .clip(
+                                shape = JengaTheme.shapes.md,
+                            )
+                            .background(
+                                color = JengaTheme.colors.surface,
+                            )
+                            .border(
+                                width = 1.dp,
+                                color = JengaTheme.colors.border,
+                                shape = JengaTheme.shapes.md,
+                            )
+                            .padding(
+                                all = JengaTheme.spacing.md,
+                            ),
+                        content = {
+                            JengaAvatar(
+                                name = "Jane Wanjiru",
+                                colors = JengaAvatarDefaults.neutralColors(),
+                            )
+                            JengaAvatar(
+                                colors = JengaAvatarDefaults.neutralColors(),
+                                content = {
+                                    JengaIcon(
+                                        imageVector = JengaIcons.User,
+                                        contentDescription = "No name yet",
+                                    )
+                                },
+                            )
+                            JengaAvatar(
+                                name = "Peter Kamau",
+                                colors = JengaAvatarColors(
+                                    container = JengaTheme.colors.infoContainer,
+                                    content = JengaTheme.colors.onInfoContainer,
+                                ),
+                            )
+                        },
                     )
                 },
             )
@@ -3641,6 +4425,86 @@ fun componentEntries(): List<CatalogEntry> = listOf(
         },
     ),
     CatalogEntry(
+        name = "Navigation rail item with a count",
+        group = "Navigation",
+        description = "A count badge after the label of a destination row.",
+        keywords = "rail side nav badge count unread notifications",
+        code = """
+            var selected by remember {
+                mutableIntStateOf(
+                    value = 0,
+                )
+            }
+            val unread = 3
+            JengaStack(
+                space = JengaTheme.spacing.none,
+                content = {
+                    JengaNavigationRailItem(
+                        label = "Tickets",
+                        selected = selected == 0,
+                        onClick = { selected = 0 },
+                        icon = {
+                            JengaIcon(
+                                imageVector = JengaIcons.Ticket,
+                                contentDescription = null,
+                            )
+                        },
+                    )
+                    JengaNavigationRailItem(
+                        label = "Notifications",
+                        selected = selected == 1,
+                        onClick = { selected = 1 },
+                        icon = {
+                            JengaIcon(
+                                imageVector = JengaIcons.Bell,
+                                contentDescription = null,
+                            )
+                        },
+                        badgeCount = unread,
+                        badgeContentDescription = "${'$'}unread new",
+                    )
+                },
+            )
+        """.trimIndent(),
+        demo = {
+            var selected by remember {
+                mutableIntStateOf(
+                    value = 0,
+                )
+            }
+            val unread = 3
+            JengaStack(
+                space = JengaTheme.spacing.none,
+                content = {
+                    JengaNavigationRailItem(
+                        label = "Tickets",
+                        selected = selected == 0,
+                        onClick = { selected = 0 },
+                        icon = {
+                            JengaIcon(
+                                imageVector = JengaIcons.Ticket,
+                                contentDescription = null,
+                            )
+                        },
+                    )
+                    JengaNavigationRailItem(
+                        label = "Notifications",
+                        selected = selected == 1,
+                        onClick = { selected = 1 },
+                        icon = {
+                            JengaIcon(
+                                imageVector = JengaIcons.Bell,
+                                contentDescription = null,
+                            )
+                        },
+                        badgeCount = unread,
+                        badgeContentDescription = "$unread new",
+                    )
+                },
+            )
+        },
+    ),
+    CatalogEntry(
         name = "Thumbnail strip",
         group = "Media",
         description = "A row of square thumbnails with an add tile.",
@@ -3972,6 +4836,87 @@ fun componentEntries(): List<CatalogEntry> = listOf(
         },
     ),
     CatalogEntry(
+        name = "Image viewer with the close at the end",
+        group = "Media",
+        description = "The title leads; actions and the close button sit at the end.",
+        keywords = "photo image viewer close end trailing position",
+        stage = CatalogStage.Overlay,
+        code = """
+            var open by remember {
+                mutableStateOf(
+                    value = false,
+                )
+            }
+            JengaButton(
+                text = "Close at the end",
+                onClick = { open = true },
+                variant = JengaButtonVariant.Outline,
+            )
+            if (open) {
+                JengaImageViewer(
+                    onDismissRequest = { open = false },
+                    title = "National ID, front",
+                    closeContentDescription = "Close",
+                    actions = {
+                        JengaIconButton(
+                            onClick = {},
+                            variant = JengaIconButtonVariant.Overlay,
+                        ) {
+                            JengaIcon(
+                                imageVector = JengaIcons.Camera,
+                                contentDescription = "Retake",
+                            )
+                        }
+                    },
+                    closeButtonPosition = JengaImageViewerCloseButtonPosition.End,
+                    content = {
+                        JengaIcon(
+                            imageVector = JengaIcons.Image,
+                            contentDescription = null,
+                        )
+                    },
+                )
+            }
+        """.trimIndent(),
+        demo = { startOpen ->
+            var open by remember {
+                mutableStateOf(
+                    value = startOpen,
+                )
+            }
+            JengaButton(
+                text = "Close at the end",
+                onClick = { open = true },
+                variant = JengaButtonVariant.Outline,
+            )
+            if (open) {
+                JengaImageViewer(
+                    onDismissRequest = { open = false },
+                    title = "National ID, front",
+                    closeContentDescription = "Close",
+                    actions = {
+                        JengaIconButton(
+                            onClick = {},
+                            variant = JengaIconButtonVariant.Overlay,
+                        ) {
+                            JengaIcon(
+                                imageVector = JengaIcons.Camera,
+                                contentDescription = "Retake",
+                            )
+                        }
+                    },
+                    closeButtonPosition = JengaImageViewerCloseButtonPosition.End,
+                    content = {
+                        JengaIcon(
+                            imageVector = JengaIcons.Image,
+                            contentDescription = null,
+                        )
+                    },
+                )
+            }
+        },
+    ),
+    CatalogEntry(
         name = "Image viewer with pages",
         group = "Media",
         description = "Swipe between several images, each zoomed on its own.",
@@ -4026,13 +4971,10 @@ fun componentEntries(): List<CatalogEntry> = listOf(
         description = "A month calendar for picking one date.",
         keywords = "date calendar day picker",
         code = """
+            val today = remember { JengaCalendarDefaults.today() }
             var date by remember {
                 mutableStateOf<LocalDate?>(
-                    value = LocalDate(
-                        year = 2026,
-                        month = 3,
-                        day = 18,
-                    ),
+                    value = today,
                 )
             }
             JengaDatePicker(
@@ -4056,13 +4998,10 @@ fun componentEntries(): List<CatalogEntry> = listOf(
             )
         """.trimIndent(),
         demo = {
+            val today = remember { JengaCalendarDefaults.today() }
             var date by remember {
                 mutableStateOf<LocalDate?>(
-                    value = LocalDate(
-                        year = 2026,
-                        month = 3,
-                        day = 18,
-                    ),
+                    value = today,
                 )
             }
             JengaDatePicker(
@@ -4089,10 +5028,11 @@ fun componentEntries(): List<CatalogEntry> = listOf(
     CatalogEntry(
         name = "Date picker dialog",
         group = "Inputs",
-        description = "A date picker in a dialog; here limited to adults' birth dates, with a year grid behind the title.",
-        keywords = "date calendar dialog modal range birth year",
+        description = "A date picker in a dialog with an optional title; here limited to adults' birth dates, with a year grid behind the month.",
+        keywords = "date calendar dialog modal range birth year title",
         stage = CatalogStage.Overlay,
         code = """
+            val today = remember { JengaCalendarDefaults.today() }
             var open by remember {
                 mutableStateOf(
                     value = false,
@@ -4107,14 +5047,14 @@ fun componentEntries(): List<CatalogEntry> = listOf(
                 JengaDatePickerDialog(
                     onDismissRequest = { open = false },
                     onConfirm = { open = false },
+                    title = "Date of birth",
                     dateRange = LocalDate(
                         year = 1906,
                         month = 1,
                         day = 1,
-                    )..LocalDate(
-                        year = 2008,
-                        month = 10,
-                        day = 28,
+                    )..today.minus(
+                        value = 18,
+                        unit = DateTimeUnit.YEAR,
                     ),
                     yearPickerLabel = { "Choose year, ${'$'}{it.year}" },
                     confirmLabel = "OK",
@@ -4138,6 +5078,7 @@ fun componentEntries(): List<CatalogEntry> = listOf(
             }
         """.trimIndent(),
         demo = { startOpen ->
+            val today = remember { JengaCalendarDefaults.today() }
             var open by remember {
                 mutableStateOf(
                     value = startOpen,
@@ -4152,14 +5093,14 @@ fun componentEntries(): List<CatalogEntry> = listOf(
                 JengaDatePickerDialog(
                     onDismissRequest = { open = false },
                     onConfirm = { open = false },
+                    title = "Date of birth",
                     dateRange = LocalDate(
                         year = 1906,
                         month = 1,
                         day = 1,
-                    )..LocalDate(
-                        year = 2008,
-                        month = 10,
-                        day = 28,
+                    )..today.minus(
+                        value = 18,
+                        unit = DateTimeUnit.YEAR,
                     ),
                     yearPickerLabel = { "Choose year, ${it.year}" },
                     confirmLabel = "OK",
@@ -4189,16 +5130,22 @@ fun componentEntries(): List<CatalogEntry> = listOf(
         description = "A paging month grid where every day cell is your own content.",
         keywords = "calendar month grid range custom",
         code = """
+            val today = remember { JengaCalendarDefaults.today() }
+            val thisMonth = YearMonth(
+                year = today.year,
+                month = today.month,
+            )
             val state =
                 rememberJengaCalendarState(
-                    startMonth = YearMonth(
-                        year = 2026,
-                        month = Month.JANUARY,
+                    startMonth = thisMonth.minus(
+                        value = 6,
+                        unit = DateTimeUnit.MONTH,
                     ),
-                    endMonth = YearMonth(
-                        year = 2026,
-                        month = Month.DECEMBER,
+                    endMonth = thisMonth.plus(
+                        value = 6,
+                        unit = DateTimeUnit.MONTH,
                     ),
+                    firstVisibleMonth = thisMonth,
                 )
             JengaCalendar(
                 state = state,
@@ -4207,7 +5154,7 @@ fun componentEntries(): List<CatalogEntry> = listOf(
                         day = day,
                         selected = day.date == picked,
                         enabled = true,
-                        isToday = false,
+                        isToday = day.date == today,
                         onClick = { picked = day.date },
                     )
                 },
@@ -4219,15 +5166,21 @@ fun componentEntries(): List<CatalogEntry> = listOf(
                     value = null,
                 )
             }
+            val today = remember { JengaCalendarDefaults.today() }
+            val thisMonth = YearMonth(
+                year = today.year,
+                month = today.month,
+            )
             val state = rememberJengaCalendarState(
-                startMonth = YearMonth(
-                    year = 2026,
-                    month = Month.JANUARY,
+                startMonth = thisMonth.minus(
+                    value = 6,
+                    unit = DateTimeUnit.MONTH,
                 ),
-                endMonth = YearMonth(
-                    year = 2026,
-                    month = Month.DECEMBER,
+                endMonth = thisMonth.plus(
+                    value = 6,
+                    unit = DateTimeUnit.MONTH,
                 ),
+                firstVisibleMonth = thisMonth,
             )
             JengaCalendar(
                 state = state,
@@ -4236,9 +5189,385 @@ fun componentEntries(): List<CatalogEntry> = listOf(
                         day = day,
                         selected = day.date == picked,
                         enabled = true,
-                        isToday = false,
+                        isToday = day.date == today,
                         onClick = { picked = day.date },
                     )
+                },
+            )
+        },
+    ),
+    CatalogEntry(
+        name = "Weekly calendar",
+        group = "Inputs",
+        description = "One week of days in a row: pick a day and move between weeks.",
+        keywords = "weekly calendar week strip day horizontal planner",
+        code = """
+            val today = remember { JengaCalendarDefaults.today() }
+            // Any date in the week to show: the calendar starts the row on Monday.
+            var week by remember {
+                mutableStateOf(
+                    value = today,
+                )
+            }
+            // The day after today (the day before, on a Sunday), so today's ring shows.
+            var date by remember {
+                mutableStateOf<LocalDate?>(
+                    value = if (today.dayOfWeek == DayOfWeek.SUNDAY) {
+                        today.minus(
+                            value = 1,
+                            unit = DateTimeUnit.DAY,
+                        )
+                    } else {
+                        today.plus(
+                            value = 1,
+                            unit = DateTimeUnit.DAY,
+                        )
+                    },
+                )
+            }
+            JengaWeeklyCalendar(
+                week = week,
+                selectedDate = date,
+                onSelectedDateChange = { date = it },
+                onPreviousWeek = {
+                    week = week.minus(
+                        value = 7,
+                        unit = DateTimeUnit.DAY,
+                    )
+                },
+                onNextWeek = {
+                    week = week.plus(
+                        value = 7,
+                        unit = DateTimeUnit.DAY,
+                    )
+                },
+                weekTitle = { start, end ->
+                    val months = listOf(
+                        start,
+                        end,
+                    ).map { day ->
+                        day.month.name.take(
+                            n = 3,
+                        ).lowercase().replaceFirstChar(
+                            transform = Char::uppercase,
+                        )
+                    }
+                    "${'$'}{start.day} ${'$'}{months[0]} – ${'$'}{end.day} ${'$'}{months[1]}"
+                },
+                dayOfWeekLabel = {
+                    it.name.take(
+                        n = 3,
+                    ).lowercase().replaceFirstChar(
+                        transform = Char::uppercase,
+                    )
+                },
+                previousWeekContentDescription = "Previous week",
+                nextWeekContentDescription = "Next week",
+                today = today,
+                isMarked = { today.daysUntil(it) % 3 == 0 },
+            )
+        """.trimIndent(),
+        demo = {
+            val today = remember { JengaCalendarDefaults.today() }
+            // Any date in the week to show: the calendar starts the row on Monday.
+            var week by remember {
+                mutableStateOf(
+                    value = today,
+                )
+            }
+            // The day after today (the day before, on a Sunday), so today's ring shows.
+            var date by remember {
+                mutableStateOf<LocalDate?>(
+                    value = if (today.dayOfWeek == DayOfWeek.SUNDAY) {
+                        today.minus(
+                            value = 1,
+                            unit = DateTimeUnit.DAY,
+                        )
+                    } else {
+                        today.plus(
+                            value = 1,
+                            unit = DateTimeUnit.DAY,
+                        )
+                    },
+                )
+            }
+            JengaWeeklyCalendar(
+                week = week,
+                selectedDate = date,
+                onSelectedDateChange = { date = it },
+                onPreviousWeek = {
+                    week = week.minus(
+                        value = 7,
+                        unit = DateTimeUnit.DAY,
+                    )
+                },
+                onNextWeek = {
+                    week = week.plus(
+                        value = 7,
+                        unit = DateTimeUnit.DAY,
+                    )
+                },
+                weekTitle = { start, end ->
+                    val months = listOf(
+                        start,
+                        end,
+                    ).map { day ->
+                        day.month.name.take(
+                            n = 3,
+                        ).lowercase().replaceFirstChar(
+                            transform = Char::uppercase,
+                        )
+                    }
+                    "${start.day} ${months[0]} – ${end.day} ${months[1]}"
+                },
+                dayOfWeekLabel = {
+                    it.name.take(
+                        n = 3,
+                    ).lowercase().replaceFirstChar(
+                        transform = Char::uppercase,
+                    )
+                },
+                previousWeekContentDescription = "Previous week",
+                nextWeekContentDescription = "Next week",
+                today = today,
+                isMarked = { today.daysUntil(it) % 3 == 0 },
+            )
+        },
+    ),
+    CatalogEntry(
+        name = "Weekly calendar with day content",
+        group = "Inputs",
+        description = "Your own content under each day's number, and bands that join runs of days.",
+        keywords = "weekly calendar week strip day content slot icon paid locked streak band payment",
+        code = """
+            val today = remember { JengaCalendarDefaults.today() }
+            // Any date in the week to show: the calendar starts the row on Monday.
+            var week by remember {
+                mutableStateOf(
+                    value = today,
+                )
+            }
+            // The day after today (the day before, on a Sunday), so today's ring shows.
+            var date by remember {
+                mutableStateOf<LocalDate?>(
+                    value = if (today.dayOfWeek == DayOfWeek.SUNDAY) {
+                        today.minus(
+                            value = 1,
+                            unit = DateTimeUnit.DAY,
+                        )
+                    } else {
+                        today.plus(
+                            value = 1,
+                            unit = DateTimeUnit.DAY,
+                        )
+                    },
+                )
+            }
+            // Paid from two days ago up to today; the next two days are locked.
+            val paid = remember(today) {
+                (-2..0).map { days ->
+                    today.plus(
+                        value = days,
+                        unit = DateTimeUnit.DAY,
+                    )
+                }
+            }
+            val locked = remember(today) {
+                (1..2).map { days ->
+                    today.plus(
+                        value = days,
+                        unit = DateTimeUnit.DAY,
+                    )
+                }
+            }
+            val paidBand = JengaTheme.colors.successContainer
+            val lockedBand = JengaTheme.colors.errorContainer
+            JengaWeeklyCalendar(
+                week = week,
+                selectedDate = date,
+                onSelectedDateChange = { date = it },
+                onPreviousWeek = {
+                    week = week.minus(
+                        value = 7,
+                        unit = DateTimeUnit.DAY,
+                    )
+                },
+                onNextWeek = {
+                    week = week.plus(
+                        value = 7,
+                        unit = DateTimeUnit.DAY,
+                    )
+                },
+                weekTitle = { start, end ->
+                    val months = listOf(
+                        start,
+                        end,
+                    ).map { day ->
+                        day.month.name.take(
+                            n = 3,
+                        ).lowercase().replaceFirstChar(
+                            transform = Char::uppercase,
+                        )
+                    }
+                    "${'$'}{start.day} ${'$'}{months[0]} – ${'$'}{end.day} ${'$'}{months[1]}"
+                },
+                dayOfWeekLabel = {
+                    it.name.take(
+                        n = 3,
+                    ).lowercase().replaceFirstChar(
+                        transform = Char::uppercase,
+                    )
+                },
+                previousWeekContentDescription = "Previous week",
+                nextWeekContentDescription = "Next week",
+                today = today,
+                dateContentDescription = { day ->
+                    when (day) {
+                        in paid -> "${'$'}day, paid"
+                        in locked -> "${'$'}day, locked"
+                        else -> day.toString()
+                    }
+                },
+                dayBackground = { day ->
+                    when (day) {
+                        in paid -> paidBand
+                        in locked -> lockedBand
+                        else -> Color.Unspecified
+                    }
+                },
+                dayContent = { day ->
+                    val selected = day == date
+                    when (day) {
+                        in paid -> JengaIcon(
+                            imageVector = JengaIcons.CheckCircle,
+                            contentDescription = null,
+                            tint = if (selected) Color.Unspecified else JengaTheme.colors.onSuccessContainer,
+                            size = 20.dp,
+                        )
+
+                        in locked -> JengaIcon(
+                            imageVector = JengaIcons.Lock,
+                            contentDescription = null,
+                            tint = if (selected) Color.Unspecified else JengaTheme.colors.onErrorContainer,
+                            size = 20.dp,
+                        )
+                    }
+                },
+            )
+        """.trimIndent(),
+        demo = {
+            val today = remember { JengaCalendarDefaults.today() }
+            // Any date in the week to show: the calendar starts the row on Monday.
+            var week by remember {
+                mutableStateOf(
+                    value = today,
+                )
+            }
+            // The day after today (the day before, on a Sunday), so today's ring shows.
+            var date by remember {
+                mutableStateOf<LocalDate?>(
+                    value = if (today.dayOfWeek == DayOfWeek.SUNDAY) {
+                        today.minus(
+                            value = 1,
+                            unit = DateTimeUnit.DAY,
+                        )
+                    } else {
+                        today.plus(
+                            value = 1,
+                            unit = DateTimeUnit.DAY,
+                        )
+                    },
+                )
+            }
+            // Paid from two days ago up to today; the next two days are locked.
+            val paid = remember(today) {
+                (-2..0).map { days ->
+                    today.plus(
+                        value = days,
+                        unit = DateTimeUnit.DAY,
+                    )
+                }
+            }
+            val locked = remember(today) {
+                (1..2).map { days ->
+                    today.plus(
+                        value = days,
+                        unit = DateTimeUnit.DAY,
+                    )
+                }
+            }
+            val paidBand = JengaTheme.colors.successContainer
+            val lockedBand = JengaTheme.colors.errorContainer
+            JengaWeeklyCalendar(
+                week = week,
+                selectedDate = date,
+                onSelectedDateChange = { date = it },
+                onPreviousWeek = {
+                    week = week.minus(
+                        value = 7,
+                        unit = DateTimeUnit.DAY,
+                    )
+                },
+                onNextWeek = {
+                    week = week.plus(
+                        value = 7,
+                        unit = DateTimeUnit.DAY,
+                    )
+                },
+                weekTitle = { start, end ->
+                    val months = listOf(
+                        start,
+                        end,
+                    ).map { day ->
+                        day.month.name.take(
+                            n = 3,
+                        ).lowercase().replaceFirstChar(
+                            transform = Char::uppercase,
+                        )
+                    }
+                    "${start.day} ${months[0]} – ${end.day} ${months[1]}"
+                },
+                dayOfWeekLabel = {
+                    it.name.take(
+                        n = 3,
+                    ).lowercase().replaceFirstChar(
+                        transform = Char::uppercase,
+                    )
+                },
+                previousWeekContentDescription = "Previous week",
+                nextWeekContentDescription = "Next week",
+                today = today,
+                dateContentDescription = { day ->
+                    when (day) {
+                        in paid -> "$day, paid"
+                        in locked -> "$day, locked"
+                        else -> day.toString()
+                    }
+                },
+                dayBackground = { day ->
+                    when (day) {
+                        in paid -> paidBand
+                        in locked -> lockedBand
+                        else -> Color.Unspecified
+                    }
+                },
+                dayContent = { day ->
+                    val selected = day == date
+                    when (day) {
+                        in paid -> JengaIcon(
+                            imageVector = JengaIcons.CheckCircle,
+                            contentDescription = null,
+                            tint = if (selected) Color.Unspecified else JengaTheme.colors.onSuccessContainer,
+                            size = 20.dp,
+                        )
+
+                        in locked -> JengaIcon(
+                            imageVector = JengaIcons.Lock,
+                            contentDescription = null,
+                            tint = if (selected) Color.Unspecified else JengaTheme.colors.onErrorContainer,
+                            size = 20.dp,
+                        )
+                    }
                 },
             )
         },
@@ -4387,6 +5716,140 @@ fun componentEntries(): List<CatalogEntry> = listOf(
                 barContentDescription = { "${it.label}, ${it.value}" },
                 selectedIndex = selected,
                 onSelect = { selected = it },
+            )
+        },
+    ),
+    CatalogEntry(
+        name = "Bar chart with a target",
+        group = "Data display",
+        description = "A dashed target line, today highlighted, days to come empty, and a ring on the selected bar.",
+        keywords = "chart bar graph data target goal highlight today empty week ring",
+        code = """
+            var selected by remember {
+                mutableIntStateOf(
+                    value = 3,
+                )
+            }
+            val days =
+                listOf("Mon" to 32f, "Tue" to 41f, "Wed" to 28f, "Thu" to 48.2f, "Fri" to 0f, "Sat" to 0f, "Sun" to 0f)
+                    .map { (day, thousands) ->
+                        JengaBarChartEntry(
+                            label = day,
+                            value = thousands,
+                        )
+                    }
+            val daysToCome = setOf("Fri", "Sat", "Sun")
+            JengaBarChart(
+                entries = days,
+                barContentDescription = { day ->
+                    if (day.label in daysToCome) "${'$'}{day.label}, no data yet" else "${'$'}{day.label}, ${'$'}{day.value} thousand"
+                },
+                contentDescription = "Collections this week",
+                selectedIndex = selected,
+                onSelect = { selected = it },
+                highlightedIndices = setOf(3),
+                emptyIndices = days.indices.filter { days[it].label in daysToCome }.toSet(),
+                maxValue = 50f,
+                target = JengaChartTarget(
+                    value = 40f,
+                    label = "Target",
+                    contentDescription = "Target 40 thousand a day",
+                ),
+                colors = JengaBarChartDefaults.highlightColors(),
+            )
+        """.trimIndent(),
+        demo = {
+            var selected by remember {
+                mutableIntStateOf(
+                    value = 3,
+                )
+            }
+            val days =
+                listOf("Mon" to 32f, "Tue" to 41f, "Wed" to 28f, "Thu" to 48.2f, "Fri" to 0f, "Sat" to 0f, "Sun" to 0f)
+                    .map { (day, thousands) ->
+                        JengaBarChartEntry(
+                            label = day,
+                            value = thousands,
+                        )
+                    }
+            val daysToCome = setOf("Fri", "Sat", "Sun")
+            JengaBarChart(
+                entries = days,
+                barContentDescription = { day ->
+                    if (day.label in daysToCome) "${day.label}, no data yet" else "${day.label}, ${day.value} thousand"
+                },
+                contentDescription = "Collections this week",
+                selectedIndex = selected,
+                onSelect = { selected = it },
+                highlightedIndices = setOf(3),
+                emptyIndices = days.indices.filter { days[it].label in daysToCome }.toSet(),
+                maxValue = 50f,
+                target = JengaChartTarget(
+                    value = 40f,
+                    label = "Target",
+                    contentDescription = "Target 40 thousand a day",
+                ),
+                colors = JengaBarChartDefaults.highlightColors(),
+            )
+        },
+    ),
+    CatalogEntry(
+        name = "Line chart",
+        group = "Data display",
+        description = "One line through a point per entry, the selected or latest point emphasised, with an optional target line.",
+        keywords = "chart line graph data trend month point target goal gridlines",
+        code = """
+            var selected by remember {
+                mutableStateOf<Int?>(
+                    value = null,
+                )
+            }
+            val months =
+                listOf("Jun" to 72f, "Jul" to 75f, "Aug" to 79f, "Sep" to 81f, "Oct" to 84f, "Nov" to 86f)
+                    .map { (month, percent) ->
+                        JengaLineChartEntry(
+                            label = month,
+                            value = percent,
+                        )
+                    }
+            JengaLineChart(
+                entries = months,
+                pointContentDescription = { "${'$'}{it.label}, ${'$'}{it.value.toInt()}%" },
+                contentDescription = "Customers paying on time",
+                selectedIndex = selected,
+                onSelect = { selected = it },
+                target = JengaChartTarget(
+                    value = 90f,
+                    label = "Target",
+                    contentDescription = "Target 90%",
+                ),
+            )
+        """.trimIndent(),
+        demo = {
+            var selected by remember {
+                mutableStateOf<Int?>(
+                    value = null,
+                )
+            }
+            val months =
+                listOf("Jun" to 72f, "Jul" to 75f, "Aug" to 79f, "Sep" to 81f, "Oct" to 84f, "Nov" to 86f)
+                    .map { (month, percent) ->
+                        JengaLineChartEntry(
+                            label = month,
+                            value = percent,
+                        )
+                    }
+            JengaLineChart(
+                entries = months,
+                pointContentDescription = { "${it.label}, ${it.value.toInt()}%" },
+                contentDescription = "Customers paying on time",
+                selectedIndex = selected,
+                onSelect = { selected = it },
+                target = JengaChartTarget(
+                    value = 90f,
+                    label = "Target",
+                    contentDescription = "Target 90%",
+                ),
             )
         },
     ),
@@ -4549,6 +6012,103 @@ fun componentEntries(): List<CatalogEntry> = listOf(
         },
     ),
     CatalogEntry(
+        name = "Snackbar with a leading item",
+        group = "Feedback",
+        description = "One small item before the message, in place of the tone dot: an icon or a counter.",
+        keywords = "snackbar toast leading start icon counter badge count status",
+        code = """
+            JengaSnackbar(
+                message = "12 visits synced",
+                leadingContent = {
+                    JengaIcon(
+                        imageVector = JengaIcons.CheckCircle,
+                        contentDescription = null,
+                    )
+                },
+            )
+            JengaSnackbar(
+                message = "Photos still uploading",
+                actionLabel = "View",
+                onAction = {},
+                leadingContent = {
+                    JengaBadge(
+                        text = "3",
+                    )
+                },
+            )
+            // Through a host:
+            val host = rememberJengaSnackbarHostState()
+            val scope = rememberCoroutineScope()
+            JengaButton(
+                text = "Sync visits",
+                onClick = {
+                    scope.launch {
+                        host.showSnackbar(
+                            message = "12 visits synced",
+                            leadingContent = {
+                                JengaIcon(
+                                    imageVector = JengaIcons.CheckCircle,
+                                    contentDescription = null,
+                                )
+                            },
+                        )
+                    }
+                },
+            )
+            JengaSnackbarHost(
+                hostState = host,
+            )
+        """.trimIndent(),
+        demo = {
+            val host = rememberJengaSnackbarHostState()
+            val scope = rememberCoroutineScope()
+            JengaStack(
+                space = JengaTheme.spacing.sm,
+                content = {
+                    JengaSnackbar(
+                        message = "12 visits synced",
+                        leadingContent = {
+                            JengaIcon(
+                                imageVector = JengaIcons.CheckCircle,
+                                contentDescription = null,
+                            )
+                        },
+                    )
+                    JengaSnackbar(
+                        message = "Photos still uploading",
+                        actionLabel = "View",
+                        onAction = {},
+                        leadingContent = {
+                            JengaBadge(
+                                text = "3",
+                            )
+                        },
+                    )
+                    JengaButton(
+                        text = "Sync visits",
+                        onClick = {
+                            scope.launch {
+                                host.showSnackbar(
+                                    message = "12 visits synced",
+                                    leadingContent = {
+                                        JengaIcon(
+                                            imageVector = JengaIcons.CheckCircle,
+                                            contentDescription = null,
+                                        )
+                                    },
+                                )
+                            }
+                        },
+                        variant = JengaButtonVariant.Outline,
+                    )
+                    JengaSnackbarHost(
+                        hostState = host,
+                    )
+                },
+            )
+        },
+    ),
+    CatalogEntry(
         name = "Timeline with your own markers",
         group = "Data display",
         description = "Timeline rows with any marker and any content; positions worked out from the list.",
@@ -4624,8 +6184,8 @@ fun componentEntries(): List<CatalogEntry> = listOf(
     CatalogEntry(
         name = "Step indicator",
         group = "Navigation",
-        description = "A row of steps for a multi-step flow: done, current, pending or locked.",
-        keywords = "steps stepper progress wizard flow checkout",
+        description = "A row of steps for a multi-step flow: done, current, pending or locked, with a dot or the step number, with or without labels, centered or edge to edge.",
+        keywords = "steps stepper progress wizard flow checkout numbered number compact edge arrangement",
         code = """
             val steps =
                 listOf(
@@ -4648,6 +6208,32 @@ fun componentEntries(): List<CatalogEntry> = listOf(
                     "Step ${'$'}{index + 1} of 3, ${'$'}{step.label}"
                 },
             )
+            JengaStepIndicator(
+                steps = steps,
+                stepContentDescription = { index, step ->
+                    "Step ${'$'}{index + 1} of 3, ${'$'}{step.label}"
+                },
+                variant = JengaStepIndicatorVariant.Numbered,
+            )
+            JengaStepIndicator(
+                steps = steps,
+                stepContentDescription = { index, step ->
+                    "Step ${'$'}{index + 1} of 3, ${'$'}{step.label}"
+                },
+                variant = JengaStepIndicatorVariant.Compact,
+            )
+            JengaText(
+                text = "Step 2 of 3 · Choices",
+                style = JengaTheme.typography.caption,
+                color = JengaTheme.colors.textMuted,
+            )
+            JengaStepIndicator(
+                steps = steps,
+                stepContentDescription = { index, step ->
+                    "Step ${'$'}{index + 1} of 3, ${'$'}{step.label}"
+                },
+                arrangement = JengaStepIndicatorArrangement.EdgeToEdge,
+            )
         """.trimIndent(),
         demo = {
             var current by remember {
@@ -4669,10 +6255,43 @@ fun componentEntries(): List<CatalogEntry> = listOf(
                     },
                 )
             }
-            JengaStepIndicator(
-                steps = steps,
-                stepContentDescription = { index, step -> "Step ${index + 1} of 3, ${step.label}" },
-                onStepClick = { current = it },
+            JengaStack(
+                space = JengaTheme.spacing.lg,
+                content = {
+                    JengaStepIndicator(
+                        steps = steps,
+                        stepContentDescription = { index, step -> "Step ${index + 1} of 3, ${step.label}" },
+                        onStepClick = { current = it },
+                    )
+                    JengaStepIndicator(
+                        steps = steps,
+                        stepContentDescription = { index, step -> "Step ${index + 1} of 3, ${step.label}" },
+                        variant = JengaStepIndicatorVariant.Numbered,
+                        onStepClick = { current = it },
+                    )
+                    JengaStack(
+                        space = JengaTheme.spacing.sm,
+                        content = {
+                            JengaStepIndicator(
+                                steps = steps,
+                                stepContentDescription = { index, step -> "Step ${index + 1} of 3, ${step.label}" },
+                                variant = JengaStepIndicatorVariant.Compact,
+                                onStepClick = { current = it },
+                            )
+                            JengaText(
+                                text = "Step ${current + 1} of 3 · ${steps[current].label}",
+                                style = JengaTheme.typography.caption,
+                                color = JengaTheme.colors.textMuted,
+                            )
+                        },
+                    )
+                    JengaStepIndicator(
+                        steps = steps,
+                        stepContentDescription = { index, step -> "Step ${index + 1} of 3, ${step.label}" },
+                        arrangement = JengaStepIndicatorArrangement.EdgeToEdge,
+                        onStepClick = { current = it },
+                    )
+                },
             )
         },
     ),

@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.state.ToggleableState
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -139,5 +140,36 @@ internal fun JengaSelectionListItemsStatesPreview() {
             )
             JengaCheckboxListItem(headline = "Clean the panel", checked = false, onCheckedChange = {}, loading = true)
         }
+    }
+}
+
+@JengaBlockPreviews
+@Composable
+internal fun JengaCheckboxListItemMixedPreview() {
+    JengaTheme { CheckboxListItemMixedShowcase() }
+}
+
+@Preview(name = "RTL", showBackground = true)
+@Composable
+internal fun JengaCheckboxListItemMixedRtlPreview() {
+    JengaTheme { RtlPreview { CheckboxListItemMixedShowcase() } }
+}
+
+/** A "Select all" row in each state, enabled then disabled, and one with the box at the end. */
+@Composable
+private fun CheckboxListItemMixedShowcase() {
+    Column(modifier = Modifier.background(JengaTheme.colors.surface)) {
+        JengaCheckboxListItem(headline = "Select all", state = ToggleableState.Indeterminate, onClick = {}, supporting = "2 of 4 ticked")
+        JengaCheckboxListItem(headline = "Select all", state = ToggleableState.On, onClick = {}, supporting = "4 of 4 ticked")
+        JengaCheckboxListItem(headline = "Select all", state = ToggleableState.Off, onClick = {})
+        JengaCheckboxListItem(headline = "Select all", state = ToggleableState.Indeterminate, onClick = {}, enabled = false)
+        JengaCheckboxListItem(headline = "Select all", state = ToggleableState.On, onClick = {}, enabled = false)
+        JengaCheckboxListItem(headline = "Select all", state = ToggleableState.Off, onClick = {}, enabled = false)
+        JengaCheckboxListItem(
+            headline = "Select all",
+            state = ToggleableState.Indeterminate,
+            onClick = {},
+            controlPosition = JengaControlPosition.Trailing,
+        )
     }
 }
